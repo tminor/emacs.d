@@ -1,0 +1,2999 @@
+
+* Intro
+:PROPERTIES:
+:HASH:     -1219145088731201443
+:MODIFIED: 2019-03-05 11:12
+:END:
+
+I've used [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org][this config]] as an inspiration for a lot of what follows.
+
+Some conventions:
+- Headlines with TODOs /should/ have some accompanying ;; TODO:
+  comments in code blocks that follow
+- General is used for consistent and (somewhat) friendly key binding
+
+* Bootstrap
+:PROPERTIES:
+:HASH:     -634621256199735332
+:MODIFIED: 2019-03-02 13:51
+:END:
+
+In this section, we:
+
+- Make sure Emacs knows about repositories such as MELPA
+- Bootstrap =use-package=
+- And set up our =load-path=
+
+** Package repositories
+:PROPERTIES:
+:HASH:     2221530528979376582
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+NOTE: For Windows, I needed GnuTLS DLLs. (Emacs for Windows isn't
+built with TLS support.)  Instructions found [[http://חנוך.se/diary/how_to_enable_GnuTLS_for_Emacs_24_on_Windows/index.en.html][here]].
+
+This snippet enables all necessary repositories on start up.  Added
+org ELPA to get all of the nice =org-contrib= packages that I may
+someday want.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
+
+  (add-to-list 'package-archives
+               '("org" . "http://orgmode.org/elpa/") t)
+#+END_SRC
+
+** =use-package= bootstrap
+:PROPERTIES:
+:HASH:     -1219410247609385735
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+=use-package= provides consistent and sane package management and
+configuration.
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+#+END_SRC
+
+** Load path
+:PROPERTIES:
+:HASH:     179941136988799616
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** Elisp
+:PROPERTIES:
+:HASH:     -1519255571228548134
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Add non-package provided Elisp to Emacs's =load-path=:
+
+#+BEGIN_SRC emacs-lisp
+  (let ((default-directory "~/.emacs.d/lisp/"))
+    (normal-top-level-add-subdirs-to-load-path))
+#+END_SRC
+
+*** Emacs's $PATH
+:PROPERTIES:
+:HASH:     1496186630541564113
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+TODO: Find a better way for this.
+
+Inform Emacs of executabels not otherwise found in =$PATH=:
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'exec-path "/home/tminor/.gem/ruby/bin/")
+#+END_SRC
+
+* Make Emacs Friendlier
+:PROPERTIES:
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-02 19:03
+:END:
+
+** Key bindings
+:PROPERTIES:
+:HASH:     -838906256427721949
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** General
+:PROPERTIES:
+:HASH:     -947062249372245618
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :demand t
+    :config
+    (general-evil-setup t)
+    (general-override-mode)
+    (general-auto-unbind-keys)
+    (general-create-definer tm/leader-def
+      :states '(normal motion visual emacs insert)
+      :keymaps '(local override)
+      :prefix "SPC"
+      :non-normal-prefix "M-SPC"
+      :prefix-command 'tm/prefix-command
+      :prefix-map 'tm/prefix-map))
+#+END_SRC
+
+*** Evil mode
+:PROPERTIES:
+:HASH:     -2286428206059364418
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install =evil= for =vi= style editing:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :demand t
+    :init
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode 1))
+#+END_SRC
+
+**** =evil-collection=
+:PROPERTIES:
+:HASH:     273880987241361299
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-collection
+    :custom
+    (evil-collection-company-use-tng nil)
+    (evil-collection-setup-minibuffer t)
+    (evil-collection-term-sync-state-and-mode-p t)
+    :init
+    (evil-collection-init))
+#+END_SRC
+
+** Emacs Navigation
+:PROPERTIES:
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Navigating in Emacs can be challenging. In this section, we'll make
+changes that provide more sane methods for dealing with windows,
+buffers, etc.
+
+*** Buffer management
+:PROPERTIES:
+:HASH:     -2047250715978622418
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+=ibuffer= provides a menu for manipulating buffers.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ibuffer
+    :ensure t
+    :general
+    (tm/leader-def
+      "B" 'ibuffer)
+    :config
+    (autoload 'ibuffer "ibuffer" "List buffers." t))
+#+END_SRC
+
+*** Lines, cursors, marks, etc.
+:PROPERTIES:
+:HASH:     -2272296285636966640
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+**** Cursor
+:PROPERTIES:
+:HASH:     137908319250381
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Highlight line containing cursor:
+
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode +1)
+#+END_SRC
+
+Multiple cursors for editing more than one line at the same time:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package multiple-cursors
+    :ensure t
+    :general
+    (tm/leader-def
+      :infix "M"
+      :prefix-command 'tm/multiple-cursor-prefix-command
+      "" '(:which-key "multiple-cursors prefix" :ignore t)
+      "c" 'mc/edit-lines
+      ">" 'mc/mark-next-like-this
+      "<" 'mc/mark-previous-like-this
+      "C-<" 'mc/mark-all-like-this)
+    :init
+    (require 'multiple-cursors))
+#+END_SRC
+
+**** Indentation
+:PROPERTIES:
+:HASH:     466669433152681881
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install =highlight-indent-guides= for indentation indicators in
+=prog-mode=:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-indent-guides
+    :ensure t
+    :init
+    (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+    (setq highlight-indent-guides-method 'column))
+#+END_SRC
+
+*** Window management
+:PROPERTIES:
+:HASH:     1959899654456516101
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+**** Undo/redo window layout changes
+:PROPERTIES:
+:HASH:     -1268621220814266236
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+From =winner-mode= docstring:
+
+#+BEGIN_QUOTE
+Winner mode is a global minor mode that records the changes in
+the window configuration (i.e. how the frames are partitioned
+into windows) so that the changes can be "undone" using the
+command ‘winner-undo’.  By default this one is bound to the key
+sequence ‘C-c <left>’.  If you change your mind (while undoing),
+you can press ‘C-c <right>’ (calling ‘winner-redo’).
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+  (use-package winner
+    :ensure t
+    :general
+    (tm/leader-def
+      :infix "w"
+      :prefix-command 'tm/window-prefix-command
+      :prefix-map 'tm/window-prefix-map
+      "" '(:which-key "window prefix" :ignore t)
+      "u" 'winner-undo
+      "C-r" 'winner-redo)
+    :config
+    (winner-mode 1))
+#+END_SRC
+
+**** Workspace management
+:PROPERTIES:
+:HASH:     -865239432332721965
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install =eyebrowse= for i3 style workspace management:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eyebrowse
+    :ensure t
+    :general
+    (tm/leader-def
+      :infix "e"
+      :prefix-command 'tm/eyebrowse-prefix-command
+      "" '(:ignore t :which-key "eyebrowse prefix")
+      "s" 'eyebrowse-switch-to-window-config
+      "l" 'eyebrowse-next-window-config
+      "h" 'eyebrowse-prev-window-config
+      "r" 'eyebrowse-rename-window-config
+      "c" 'eyebrowse-close-window-config
+      "'" 'eyebrowse-last-window-config
+      "0" 'eyebrowse-switch-to-window-config-0
+      "1" 'eyebrowse-switch-to-window-config-1
+      "2" 'eyebrowse-switch-to-window-config-2
+      "3" 'eyebrowse-switch-to-window-config-3
+      "4" 'eyebrowse-switch-to-window-config-4
+      "5" 'eyebrowse-switch-to-window-config-5
+      "6" 'eyebrowse-switch-to-window-config-6
+      "7" 'eyebrowse-switch-to-window-config-7
+      "8" 'eyebrowse-switch-to-window-config-8
+      "9" 'eyebrowse-switch-to-window-config-9)
+    :init
+    (setq eyebrowse-keymap-prefix "")
+    (global-unset-key (kbd "C-c C-w"))
+    :defer 1
+    :config
+    (setq eyebrowse-switch-back-and-forth t)
+    (setq eyebrowse-wrap-around t)
+    (setq eyebrowse-new-workspace t)
+    (eyebrowse-mode))
+#+END_SRC
+
+**** Switching/deleting/etc. windows
+:PROPERTIES:
+:HASH:     -2209058396951891580
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install =ace-window= for more sane window management:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ace-window
+    :ensure t
+    :init
+    (custom-set-faces '(aw-leading-char-face
+                        ((t (:foreground "red" :height 3.0)))))
+    :config
+    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+    :general
+    (tm/leader-def
+      :infix "w"
+      :prefix-command 'tm/window-prefix-command
+      "" '(:which-key "window prefix" :ignore t )
+      "m" 'ace-window
+      "d" 'ace-delete-window
+      "s" 'ace-swap-window))
+#+END_SRC
+
+*** File and project browsing
+:PROPERTIES:
+:HASH:     -1231981350854228757
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+**** Projectile
+:PROPERTIES:
+:HASH:     988129332208312494
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+[[https://github.com/bbatsov/projectile][Project interaction via projectile]]:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :init
+    (use-package ripgrep
+      :ensure t)
+    (use-package projectile-ripgrep
+      :ensure t)
+    :config
+    (projectile-mode +1)
+    (setq projectile-completion-system 'ivy)
+    :general
+    (tm/leader-def
+      "p" '(:keymap projectile-command-map
+                    :package projectile
+                    :which-key "projectile prefix")))
+#+END_SRC
+
+** Interface (GUI)
+:PROPERTIES:
+:HASH:     899302048992830596
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** GUI elements (scrollbar, menu bars)
+:PROPERTIES:
+:HASH:     -978959088109004257
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Disable the scroll bar by default:
+
+#+BEGIN_SRC emacs-lisp
+  (toggle-scroll-bar -1)
+#+END_SRC
+
+=toggle-scroll-bar= doesn't seem to work with new frames. Try this
+instead:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/disable-scroll-bars (frame)
+    "Toggle scrollbar in FRAME."
+    (modify-frame-parameters frame
+                             '((vertical-scroll-bars . nil)
+                               (horizontal-scroll-bars . nil))))
+
+  (add-hook 'after-make-frame-functions 'tm/disable-scroll-bars)
+#+END_SRC
+
+When using macOS, I preferred Emacs to be maximized. I'm not sure what
+effect this has elsewhere, but at least while using i3 it doesn't do
+anything noticeable. From [[https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up][here]]:
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+END_SRC
+
+Hide tool bar and menu bar:
+
+#+BEGIN_SRC emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+#+END_SRC
+
+*** Startup
+:PROPERTIES:
+:HASH:     1786603268827270657
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Don't show the startup message:
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+#+END_SRC
+
+*** Mode-line
+:PROPERTIES:
+:HASH:     -1951704627168751325
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init
+    (use-package all-the-icons
+      :demand t
+      :init
+      (unless (file-exists-p (cl-case window-system
+                               (x (concat (or (getenv "XDG_DATA_HOME")
+                                              (concat (getenv "HOME") "/.local/share"))
+                                          "/fonts/"))
+                               (mac (concat (getenv "HOME") "/Library/Fonts/"))
+                               (ns (concat (getenv "HOME") "/Library/Fonts/"))))
+        (all-the-icons-install-fonts t)))
+    :config
+    (setq doom-modeline-buffer-file-name-style 'truncate-all)
+    (setq doom-modeline-enable-word-count t)
+    (setq doom-modeline-icon t)
+    (setq doom-modeline-height 45)
+    :defer t
+    :hook (after-init . doom-modeline-init))
+#+END_SRC
+
+
+** Help/Info
+:PROPERTIES:
+:HASH:     1680481562127342845
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helpful
+    :ensure t
+    :general
+    (tm/leader-def
+      :infix "h"
+      :prefix-command 'tm/help-prefix-command
+      :prefix-map 'tm/help-prefix-map
+      "" '(:which-key "help prefix" :ignore t)
+      "s" 'helpful-symbol
+      "k" 'helpful-key))
+#+END_SRC
+
+Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+]] later.
+
+** Completion (Ivy/Counsel/Swiper)
+:PROPERTIES:
+:HASH:     -1897885014209900197
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for completion and other fun.
+
+*** Ivy
+:PROPERTIES:
+:HASH:     643954175335726571
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :ensure t
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t
+          ivy-count-format "%d/%d ")
+    :general
+    (ivy-minibuffer-map
+     "M-j" 'ivy-next-line
+     "M-k" 'ivy-previous-line)
+    (tm/leader-def
+      "b" 'ivy-switch-buffer))
+#+END_SRC
+
+*** Counsel
+:PROPERTIES:
+:HASH:     -1203211376311288787
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel
+    :general
+    ("M-x" 'counsel-M-x
+     "C-x C-f" 'counsel-find-file)
+    (imap minibuffer-local-command
+      "C-r" 'counsel-minibuffer-history)
+    (tm/leader-def
+      "x" 'counsel-M-x
+      "y" 'counsel-yank-pop)
+    (tm/leader-def
+      :infix "f"
+      :prefix-command 'tm/find-prefix-command
+      "" '(:which-key "find prefix" :ignore t)
+      "f" 'counsel-find-file
+      "F" 'find-file-other-window
+      "j" 'counsel-file-jump
+      "l" 'counsel-locate)
+    (tm/leader-def
+      :infix "h"
+      :prefix-command 'tm/help-prefix-command
+      "" '(:which-key "help prefix" :ignore t)
+      "F" 'counsel-describe-face
+      "b" 'counsel-descbinds
+      "f" 'counsel-describe-function
+      "v" 'counsel-describe-variable)
+    (tm/leader-def
+      :infix "s"
+      :prefix-command 'tm/search-prefix-command
+      "" '(:which-key "search prefix" :ignore t)
+      "r" 'counsel-rg
+      "s" 'counsel-grep-or-swiper)
+    :custom
+    (counsel-find-file-ignore-regexp "\\`\\.")
+    (counsel-yank-pop-preselect-last t)
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable)
+    :config
+    (when (eq system-type 'darwin)
+      (setq counsel-locate-cmd 'counsel-locate-cmd-mdfind))
+
+    (setq conusel-org-goto-display-style 'path
+          counsel-org-headline-path-separator ": "
+          counsel-org-goto-face-style 'org
+          counsel-org-headline-display-todo t
+          counsel-grep-base-command "rg -Sz -M 120 --no-heading --line-number --color never %s %s"
+          counsel-rg-base-command "rg -Sz -M 120 --no-heading --line-number --color never %s ."
+          counsel-yank-pop-separator "\n─────────────────────────\n"
+          counsel-find-file-ignore-regexp (rx (or (group string-start (char ".#"))
+                                                  (group (char "~#") string-end)
+                                                  (group ".elc" string-end)
+                                                  (group ".pyc" string-end)
+                                                  (group ".import.scm" string-end)
+                                                  (group ".so" string-end))))
+    (counsel-mode 1)
+    (defalias 'locate #'counsel-locate)
+
+    (ivy-add-actions
+     'counsel-find-file
+     '(("e"
+        (lambda (f)
+          (let ((default-directory (if (file-directory-p f)
+                                       f
+                                     (file-name-directory f))))
+            (d/eshell-here)))
+        "eshell"))))
+#+END_SRC
+
+*** Swiper
+:PROPERTIES:
+:HASH:     1846047537942753920
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :ensure t)
+#+END_SRC
+
+** Themes
+:PROPERTIES:
+:HASH:     2031869142119754036
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+=cherry-blossom-theme= is my preferred theme. I hope to adapt
+[[https://github.com/hlissner/emacs-doom-themes][emacs-doom-themes]] to increase its coverage of different modes.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cherry-blossom-theme
+    :ensure t)
+#+END_SRC
+
+* Prog-mode
+:PROPERTIES:
+:HASH:     -823233193442489145
+:MODIFIED: 2019-03-02 17:40
+:END:
+
+** PowerShell
+:PROPERTIES:
+:HASH:     -988907078781740968
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Powershell syntax highlighting:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package powershell
+    :ensure t)
+#+END_SRC
+
+** =puppet-mode=
+:PROPERTIES:
+:HASH:     -237958960844955016
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Syntax highlighting for Puppet:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package puppet-mode
+    :ensure t)
+#+END_SRC
+
+** TODO Complete Any Mode
+:PROPERTIES:
+:HASH:     -1047449494176183267
+:MODIFIED: 2019-03-05 17:15
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-04 Mon 16:51]
+:END:
+
+General completion mechanism:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook 'company-mode)
+    (setq company-idle-delay 0.02))
+#+END_SRC
+
+*** Python
+:PROPERTIES:
+:HASH:     1177377737238254456
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Python JEDI backend for =company-mode=.
+
+NOTE: Don't forget to install =virtualenv= (=$ pip install
+virtualenv=) and run =M-x jedi:install-server=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-jedi
+  :ensure t
+  :config
+    (defun tm/python-mode-hook ()
+      (add-to-list 'company-backends 'company-jedi))
+    (add-hook 'python-mode-hook 'tm/python-mode-hook))
+#+END_SRC
+
+*** Shell
+:PROPERTIES:
+:HASH:     -1782480538166429242
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+=company-shell= provides completion for fish and binaries found on =$PATH=.
+
+Find more documentation [[https://github.com/Alexander-Miller/company-shell][here]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-shell
+  :ensure t
+  :config
+    (add-to-list 'company-backends
+                 '(company-shell company-shell-env company-fish-shell))
+    (setq company-shell-clean-manpage t))
+#+END_SRC
+
+** =rainbow-delimiters=
+:PROPERTIES:
+:HASH:     -1737744087313935732
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+This makes hunting down paren pairs easier in Elisp:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+** MarkDown
+:PROPERTIES:
+:HASH:     1182532753411954573
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+MarkDown syntax highlighting:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t)
+#+END_SRC
+
+** Fish Mode
+:PROPERTIES:
+:HASH:     -486922436460423370
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Sometimes fish one liners become long enough to deserve writing a
+script! Fish syntax highlighting:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package fish-mode
+    :ensure t)
+#+END_SRC
+
+** TODO Ruby
+:PROPERTIES:
+:HASH:     -2013105852128631895
+:MODIFIED: 2019-03-05 17:15
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-04 Mon 16:51]
+:END:
+
+I've had some trouble with this package; mostly because I don't
+understand Gemfiles and such. It would probably be worth figuring out
+how to make it work. And once that's done, more configuration.
+
+#+BEGIN_QUOTE
+Robe is a code assistance tool that uses a Ruby REPL subprocess with
+your application or gem code loaded, to provide information about
+loaded classes and modules, and where each method is defined.
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+  (use-package robe
+    :ensure t
+    :config
+    (add-hook 'ruby-mode-hook 'robe-mode)
+    (eval-after-load 'company
+    '(push 'company-robe company-backends)))
+#+END_SRC
+
+** Lisp
+:PROPERTIES:
+:HASH:     -2205447758621586418
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+[[http://sachachua.com/blog/2015/04/2015-04-08-emacs-lisp-development-tips-with-john-wiegley/][Notes]] from Sacha Chua and John Wiegly youtube video.
+
+=evil-mode= alternative to paredit:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lispy
+      :ensure t
+      :init
+      (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
+      (add-hook 'lisp-mode-hook #'lispy-mode))
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lispyville
+    :ensure t
+    :init
+    (with-eval-after-load 'lispyville
+      (lispyville-set-key-theme
+       '(slurp/barf-cp
+         mark-toggle)))
+    (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
+    (add-hook 'emacs-lisp-mode-hook
+              (lambda () (setq-local lisp-indent-function
+                                     #'tm/lisp-indent-function)))
+    :after (lispy))
+#+END_SRC
+
+eldoc mode (stolen from John Wiegley's [[https://github.com/jwiegley/dot-emacs/blob/4e87553c2f2d21e30be885bdfba83b40c4bf0bed/init.el][emacs config]]):
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eldoc
+    :diminish
+    :hook ((c-mode-common emacs-lisp-mode) . eldoc-mode))
+#+END_SRC
+
+*** Elisp
+:PROPERTIES:
+:HASH:     -1965267850245680226
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+By default, =lisp-indent-function= indents =:keywords= improperly:
+
+#+BEGIN_QUOTE
+(:token token
+        :token-quality quality)
+#+END_QUOTE
+
+To fix this, define a new function to use for =lisp-indent-function=
+(solution from [[https://emacs.stackexchange.com/a/10233][here]]):
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load "lisp-mode"
+    '(defun tm/lisp-indent-function (indent-point state)
+       "This function is the normal value of the variable `lisp-indent-function'.
+  The function `calculate-lisp-indent' calls this to determine
+  if the arguments of a Lisp function call should be indented specially.
+  INDENT-POINT is the position at which the line being indented begins.
+  Point is located at the point to indent under (for default indentation);
+  STATE is the `parse-partial-sexp' state for that position.
+  If the current line is in a call to a Lisp function that has a non-nil
+  property `lisp-indent-function' (or the deprecated `lisp-indent-hook'),
+  it specifies how to indent.  The property value can be:
+  ,* `defun', meaning indent `defun'-style
+    \(this is also the case if there is no property and the function
+    has a name that begins with \"def\", and three or more arguments);
+  ,* an integer N, meaning indent the first N arguments specially
+    (like ordinary function arguments), and then indent any further
+    arguments like a body;
+  ,* a function to call that returns the indentation (or nil).
+    `lisp-indent-function' calls this function with the same two arguments
+    that it itself received.
+  This function returns either the indentation to use, or nil if the
+  Lisp function does not specify a special indentation."
+       (let ((normal-indent (current-column))
+             (orig-point (point)))
+         (goto-char (1+ (elt state 1)))
+         (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
+         (cond
+          ;; car of form doesn't seem to be a symbol, or is a keyword
+          ((and (elt state 2)
+                (or (not (looking-at "\\sw\\|\\s_"))
+                    (looking-at ":")))
+           (if (not (> (save-excursion (forward-line 1) (point))
+                       calculate-lisp-indent-last-sexp))
+               (progn (goto-char calculate-lisp-indent-last-sexp)
+                      (beginning-of-line)
+                      (parse-partial-sexp (point)
+                                          calculate-lisp-indent-last-sexp 0 t)))
+           ;; Indent under the list or under the first sexp on the same line as
+           ;; calculate-lisp-indent-last-sexp.  Note that first thing on that
+           ;; line has to be complete sexp since we are inside the innermost
+           ;; containing sexp.
+           (backward-prefix-chars)
+           (current-column))
+          ((and (save-excursion
+                  (goto-char indent-point)
+                  (skip-syntax-forward " ")
+                  (not (looking-at ":")))
+                (save-excursion
+                  (goto-char orig-point)
+                  (looking-at ":")))
+           (save-excursion
+             (goto-char (+ 2 (elt state 1)))
+             (current-column)))
+          (t
+           (let ((function (buffer-substring (point)
+                                             (progn (forward-sexp 1) (point))))
+                 method)
+             (setq method (or (function-get (intern-soft function)
+                                            'lisp-indent-function)
+                              (get (intern-soft function) 'lisp-indent-hook)))
+             (cond ((or (eq method 'defun)
+                        (and (null method)
+                             (> (length function) 3)
+                             (string-match "\\`def" function)))
+                    (lisp-indent-defform state indent-point))
+                   ((integerp method)
+                    (lisp-indent-specform method state
+                                          indent-point normal-indent))
+                   (method
+                    (funcall method indent-point state)))))))))
+#+END_SRC
+** TODO Miscellany
+:PROPERTIES:
+:HASH:     806926865369948694
+:MODIFIED: 2019-03-05 17:15
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-05 Tue 11:15]
+:END:
+
+Highlight TODO and other keywords in comments:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hl-todo
+    :ensure t
+    :config
+    (global-hl-todo-mode t))
+#+END_SRC
+
+Use yasnippet. Configure it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :config
+    ;; TODO: More configuration, more research
+    (yas-global-mode 1))
+#+END_SRC
+
+Code folding (based stupidly on indentation):
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yafolding
+    :ensure t
+    :config
+    (add-to-list 'evil-fold-list
+                 '((yafolding-mode)
+                   :open-all yafolding-toggle-all
+                   :close-all yafolding-toggle-all
+                   :toggle yafolding-toggle-element))
+    (add-hook 'prog-mode-hook (lambda () (yafolding-mode))))
+#+END_SRC
+
+Syntax checking:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :config
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+    (setq flycheck-rubocoprc "/home/tminor/.config/rubocop/.rubocop.yml"))
+#+END_SRC
+
+* Shell and Term Modes
+:PROPERTIES:
+:HASH:     -1910432554334820556
+:MODIFIED: 2019-03-02 17:40
+:END:
+
+** TODO =term-mode=
+:PROPERTIES:
+:HASH:     -1570438392334455797
+:MODIFIED: 2019-03-05 11:15
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-04 Mon 16:50]
+:END:
+
+Moving to using Emacs as a primary terminal emulator is probably
+something I should work towards.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package multi-term
+    :ensure t)
+#+END_SRC
+
+** TODO Eshell
+:PROPERTIES:
+:HASH:     -1846815538596949072
+:MODIFIED: 2019-03-05 11:15
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-04 Mon 16:51]
+:END:
+
+Eshell should also probably become part of my workflow.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package egp
+    :init
+    (load "~/.emacs.d/lisp/egp.el")
+    :commands egp-theme)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eshell
+    :custom
+    (eshell-prompt-function #'egp-theme))
+#+END_SRC
+
+*** Elisp
+:PROPERTIES:
+:HASH:     91445299929856593
+:MODIFIED: 2019-03-05 13:23
+:END:
+
+A quick internet search said that Eshell doesn't have anything like
+brace expansion built in. [[https://emacs.stackexchange.com/a/9521][This]] Stack Exchange post provides a
+solution:
+
+#+BEGIN_SRC emacs-lisp
+(defun eshell-brace-expansion (str)
+  (let* ((parts (split-string str "[{}]"))
+         (prefix (car parts))
+         (body   (nth 1 parts))
+         (suffix (nth 2 parts)))
+    (mapcar (lambda (x) (concat prefix x suffix))
+            (split-string body ","))))
+#+END_SRC
+
+Used like this:
+
+#+BEGIN_QUOTE
+ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
+#+END_QUOTE
+
+* Mail
+:PROPERTIES:
+:HASH:     10544087936
+:MODIFIED: 2019-03-04 17:25
+:END:
+
+** TODO Notmuch
+:PROPERTIES:
+:HASH:     -2263715131652751389
+:MODIFIED: 2019-03-05 17:15
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-05 Tue 10:30]
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package notmuch
+    :init
+    ;; Org/HTML deps
+    (use-package htmlize
+      :ensure t)
+    (use-package org-mime
+      :ensure t)
+    (require 'org-mime)
+    (use-package w3m
+      :ensure t
+      :config
+      (require 'mime-w3m))
+    :ensure t
+    :general
+    (tm/leader-def
+      "/" 'notmuch)
+    ;; TODO: Revisit notmuch bindings
+    ;; (tm/leader-def
+    ;;   :keymaps 'message-mode-map
+    ;;   :infix "P"
+    ;;   "" '(:which-key "notmuch-prettify prefix" :ignore t)
+    ;;   "h" 'org-mime-htmlize)
+    :config
+    ;; Help Emacs find notmuch and load it
+    (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+    (setq exec-path (append exec-path '("/usr/local/bin")))
+    (autoload 'notmuch "notmuch" "notmuch mail" t)
+
+    ;; Tell Emacs how to send mail
+    (setq message-send-mail-function 'message-send-mail-with-sendmail
+          sendmail-program "/usr/bin/msmtp")
+
+    ;; Configure Fcc
+    (setq notmuch-fcc-dirs "work/Sent +sent -new"
+          notmuch-maildir-use-notmuch-insert t)
+
+    ;; Other variables
+    (setq notmuch-search-oldest-first nil
+          message-kill-buffer-on-exit t
+          notmuch-show-indent-messages-width 4
+          notmuch-multipart/alternative-discouraged '("text/html" "text/plain")
+          notmuch-archive-tags '("-inbox" "+archive"))
+
+    ;; Turn on org-struct mode in message-mode
+    (add-hook 'message-mode-hook 'turn-on-orgstruct++)
+
+    ;; Render HTML with w3m
+    (setq mm-text-html-renderer 'w3m)
+
+    ;; Activate line highlighting only for feed
+    (add-hook 'notmuch-search-mode
+              (lambda ()
+                (if (eq (buffer-name) "*notmuch-saved-search-feed*")
+                    (setq notmuch-search-line-faces '(("git-commits" . '(:foreground "green"))
+                                                      ("nagios" . '(:foreground "red"))
+                                                      ("servicenow" . '(:foreground "yellow"))
+                                                      ("tenshi-uga" . '(:foreground "DodgerBlue1"))
+                                                      ("tenshi-db300" . '(:foreground "DodgerBlue1"))
+                                                      ("ssladmin" . '(:foreground "pink"))
+                                                      ("unread" . '(:background "gray15")))))))
+
+    ;; Saved searches for notmuch-hello
+    (setq notmuch-saved-searches
+          '((:name "inbox"
+             :query "tag:inbox"
+             :key "i"
+             :count-query "tag:inbox and tag:unread")
+            (:name "feed"
+             :query "date:\"2hours..now\"")
+            (:name "nagios-gluu"
+             :query "subject:\"/idp-demo-prod/\" and tag:nagios-gluu and date:30days..today"
+             :count-query "subject:\"/idp-demo-prod/\" and tag:nagios-gluu and date:30days..today and tag:unread")
+            (:name "nagios"
+             :query "tag:nagios not 'subject:\"/Project: gluu/\"' and date:3days..today"
+             :count-query "tag:nagios not 'subject:\"/Project: gluu/\"' and date:3days..today and tag:unread")
+            (:name "git messages"
+             :query "tag:git and date:4days..today"
+             :count-query "tag:git and date:4days..today and tag:unread")
+            (:name "service now"
+             :query "tag:servicenow and date:3days..today and not subject:\"/(Resolved|Closed)/\""
+             :count-query "tag:servicenow and date:3days..today and not subject:\"/(Resolved|Closed)/\" and tag:unread")
+            (:name "ssl" :query "tag:ssladmin and date:6days..today")
+            (:name "cron daemon"
+             :query "date:4days..today and from:\"(Cron Daemon)\""
+             :count-query "date:4days..today and from:\"(Cron Daemon)\" and tag:unread")
+            (:name "tenshi"
+             :query "date:2days..today and tag:tenshi-db300 or tag:tenshi-uga"
+             :count-query "date:2days..today and tag:tenshi-db300 or tag:tenshi-uga and tag:unread")
+            (:name "notmuch list"
+             :query "tag:lists/notmuch and date:1month..today")
+            (:name "emacs bug list"
+             :query "date:10days.. and tag:lists/bug-gnu-emacs")
+            (:name "emacs lists"
+             :query "(tag:lists/help-gnu-emacs or tag:lists/emacs-devel) and date:15days..today")
+            (:name "davmail-users list"
+             :query "tag:lists/davmail-users and date:1month..")
+            (:name "dns-operations list"
+             :query "tag:lists/dns-operations and date:1month..")
+            (:name "fedora users list"
+             :query "tag:lists/users and date:1month..today")
+            (:name "followed list threads"
+             :query "tag:follow")
+            (:name "sent"
+             :query "tag:sent"
+             :key "t")
+            (:name "drafts"
+             :query "tag:draft"
+             :key "d"))))
+#+END_SRC
+
+** Elisp
+:PROPERTIES:
+:HASH:     2746081904768
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** Sending
+:PROPERTIES:
+:HASH:     11258241906136640
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+**** Signatures
+:PROPERTIES:
+:HASH:     2151424297811103253
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(defvar tm/signature-alist '((?f "Formal"
+			      (lambda () (insert-file-contents
+					  "~/org/sigs/formal")))
+			  (?i "Informal"
+			      (lambda () (insert-file-contents
+					  "~/org/sigs/informal")))))
+
+(defun tm/signature-choose ()
+  "Lets the user choose the animal and takes the corresponding action.
+Returns whatever the action returns."
+  (interactive)
+  (let ((choice (read-char-choice (mapconcat (lambda (item) (format "%c: %s" (car item) (cadr item))) tm/signature-alist "; ")
+                  (mapcar #'car tm/signature-alist))))
+    (funcall (nth 2 (assoc choice tm/signature-alist)))))
+
+(add-hook 'notmuch-message-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-w") #'tm/signature-choose)))
+#+END_SRC
+
+*** Alerts
+:PROPERTIES:
+:HASH:     -573265242011458389
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/notmuch-notify ()
+    "Generate desktop notifcations for new mail.
+
+  Utilize `notmuch-call-notmuch-sexp' to fetch the latest messages
+  tagged inbox and send a notification to the desktop"
+    (let* ((latest-messages
+            (apply
+             #'notmuch-call-notmuch-sexp
+             '("search"
+               "--format=sexp"
+               "--format-version=4"
+               "--sort=newest-first"
+               "tag:inbox"
+               "date:45secs..")))
+           (who)
+           (when)
+           (what)
+           (mail-message)
+           (body))
+      (mapcar (lambda (mail-message)
+                (setq when (plist-get mail-message :date_relative))
+                (setq who (if (string-match-p "|"
+                                              (plist-get mail-message :authors))
+                              (progn (string-match "[[:space:],]\\{0,2\\}\\([a-zA-z[:space:]]+\\)|"
+                                                   (plist-get mail-message
+                                                              :authors))
+                                     (match-string 1 (plist-get mail-message
+                                                                :authors)))
+                            (plist-get mail-message :authors)))
+                (setq what (plist-get mail-message :subject))
+                (setq body (format "<b>%s</b>\n<b>%s</b>\n\n%s" when who what))
+                (notifications-notify :title "New message(s)!\n"
+                                      :body body
+                                      :app-name "notmuchmail"))
+              latest-messages)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/notmuch-unread ()
+    "Show unread message count in mode-line."
+    (let* ((unread-mail (apply
+                         #'notmuch-call-notmuch-sexp
+                         '("search"
+                           "--format=sexp"
+                           "--format-version=4"
+                           "--sort=newest-first"
+                           "--output=messages"
+                           "tag:inbox"
+                           "and tag:unread"))))
+      (if (> (length unread-mail) 0)
+          (setq global-mode-string
+                (propertize
+                 (format "%s %s"
+                         (all-the-icons-material "mail" :face 'all-the-icons-cyan-alt)
+                         (length unread-mail)) 'font-lock-face '(:foreground "#61dafb")))
+        (setq global-mode-string nil))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'notmuch-after-tag-hook #'tm/notmuch-unread)
+#+END_SRC
+
+* Org-mode
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-05 11:12
+:END:
+
+** Config
+:PROPERTIES:
+:HASH:     -2070399783400171293
+:MODIFIED: 2019-03-05 17:30
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :ensure t
+
+    :general
+
+    (tm/leader-def
+      :infix "o"
+      :prefix-command 'tm/org-prefix-command
+      :prefix-map 'tm/org-prefix-map
+      "" '(:which-key "org prefix" :ignor t)
+      "a" 'org-agenda
+      "c" 'org-capture
+      "b" 'org-switchb)
+
+    (org-agenda-mode-map
+     :keymaps 'override
+     "j" 'org-agenda-next-item
+     "k" 'org-agenda-previous-item
+     "J" 'tm/org-agenda-next-header
+     "K" 'tm/org-agenda-previous-header)
+
+    :init
+
+    ;; Use UTF8 bullets instead of asterisks for Org headings
+    (use-package org-bullets
+      :ensure t
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+    ;; Evil key bindings in Org mode
+    (use-package evil-org
+      :ensure t
+      :after org
+      :config
+      (add-hook 'org-mode-hook 'evil-org-mode)
+      (add-hook 'evil-org-mode-hook
+                (lambda ()
+                  (evil-org-set-key-theme)))
+      (require 'evil-org-agenda)
+      (evil-org-agenda-set-keys))
+
+    :config
+
+    ;; Set org file base directory
+    (setq org-base-directory "~/org/")
+
+    ;; Increase indentation based on heading level
+    (setq org-startup-indented t)
+
+    ;; Set default capture file
+    (setq org-default-notes-file "~/org/capture.org")
+
+    ;; Enable syntax highlighting for code blocks
+    ;;
+    ;; TODO: Tweak org source block faces
+    (setq org-src-fontify-natively t)
+
+    ;; Tweak tag placement when window sizes change
+    (add-hook 'window-configuration-change-hook 'tm/place-agenda-tags)
+    (add-hook 'window-configuration-change-hook 'tm/place-org-tags)
+
+    ;; Remove inherited tags when refiling
+    (add-hook 'org-after-refile-insert-hook 'tm/org-remove-inherited-local-tags)
+
+    ;; Add modified time property when Org mode files are saved
+    ;;
+    ;; TODO: Refine these functions
+    (add-hook 'before-save-hook (lambda ()
+                                  (when (eq major-mode 'org-mode)
+                                    (org-map-entries #'tm/update-modification-time
+                                                     nil
+                                                     'file #'tm/skip-nonmodified))))
+
+    ;;  ;;;;;;;;;;;;;;;;;;;
+    ;;
+    ;; `org-refile' section
+    ;;
+    ;;  ;;;;;;;;;;;;;;;;;;;
+
+    (setq org-refile-targets
+          '((nil :maxlevel . 1)
+            (org-agenda-files :maxlevel . 1)))
+    (setq org-outline-path-complete-in-steps nil)
+    (setq org-refile-use-outline-path 'file)
+
+    ;;  ;;;;;;;;;;;;;;;;;;;;
+    ;;
+    ;; `org-capture' section
+    ;;
+    ;;  ;;;;;;;;;;;;;;;;;;;;
+
+    ;; Capture templates
+    ;;
+    ;; TODO: Set deadlines automatically
+    ;; TODO: Add capture template for Emacs config modifications
+    ;; TODO: Don't prompt for priority; template for each urgency
+    ;; TODO: Break long strings (I've already wrapped them in `concat')
+    (setq org-capture-templates
+          (quote (("t" "Templates for TODOs.")
+                  ;; Urgent/high priority TODOs
+                  ("tu" "TODO that should be done soon."
+                   entry (file "~/org/todo.org")
+                   (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\nSCHEDULED: %^{(SCHEDULED) }t\n:PROPERTIES:\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
+                  ;; Non-urgent TODOs
+                  ("tl" "TODO that can be done later."
+                   entry (file "~/org/todo.org")
+                   (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\n:PROPERTIES:\nDEADLINE: %^{(DEADLINE) }t\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
+                  ;; NOTE for notes.org
+                  ("n" ":NOTE: about something to remember in notes.org."
+                   entry (file+function "~/org/notes.org" org-ask-location)
+                   "* %? %^{Tags, please}g")
+                  ;; Archive LINK and LINK HTML
+                  ("l" "LINK to save for posterity."
+                   entry (file "~/org/links.org")
+                   "* LINK [[%x][%?]]\n%U\n:PROPERTIES:\n:CONTEXT: %a\n:END:")
+                  ;; Low friction quick capture for later processing
+                  ("s" "STUFF for quick capture."
+                   entry (file "~/org/capture.org")
+                   "* STUFF %?\n%U\n%f\n%a\n")
+                  ("p" "Templates for PROJECTs.")
+                  ;; Create new PROJECT
+                  ("pp" "New PROJECT containing NOTEs and TODOs."
+                   entry (file "~/org/projects.org")
+                   (concat "* PROJECT [#%^{Priority: |C|B|A}] %?\nDEADLINE:%^{(DEADLINE) Date and time, please}t\n:PROPERTIES:\n:CONTEXT: %a\n:END:"))
+                  ;; Create new TODO under PROJECT
+                  ("pt" "TODO associated with a project."
+                   entry (file+function "~/org/projects.org" org-ask-location)
+                   (concat "* TODO [#%^{Priority: |C|B|A}] %?\n:PROPERTIES:\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
+                  ("pu" "Urgent TODO associated with a project."
+                   entry (file+function "~/org/projects.org" org-ask-location)
+                   (concat "* TODO [#%^{Priority: |C|B|A}] %?\n:SCHEDULED: %^{(SCHEDULED) }t\n:PROPERTIES:\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
+                  ;; Add :NOTE: to subheading of currently clocked entry
+                  ("c" ":NOTE: for currently clocked entry."
+                   item (function org-capture-clocked-note)
+                   "- %?"))))
+
+    ;; ;;;;;;;;;;;;;;;;;;;;
+    ;;
+    ;; `org-agenda' section
+    ;;
+    ;; ;;;;;;;;;;;;;;;;;;;;
+
+    ;; Org agenda files
+    (setq org-agenda-files '("~/org/projects.org"
+                             "~/org/capture.org"
+                             "~/org/someday.org"
+                             "~/org/calendar.org"
+                             "~/org/todo.org"
+                             "~/org/notes.org"
+                             "~/org/links.org"
+                             "~/org/mobile-capture.org"))
+
+    ;; Don't show scheduled TODOs in `org-agenda'
+    (setq org-agenda-todo-ignore-scheduled t)
+
+    ;; Tell `org-agenda' to use `current-buffer' to avoid destroying
+    ;; precious window layouts
+    (setq org-agenda-window-setup 'current-window)
+
+    ;; Define `org-stuck-projects'
+    (setq org-stuck-projects '("/PROJECT" ("NEXT" "TODO") nil ""))
+
+    ;; Customize `org-agenda-column-view' layout
+    (setq org-columns-default-format "%3PRIORITY %Effort(Estim){:} %60ITEM %TODO")
+
+    ;; Create overly complicated `org-agenda' custom commands
+    ;;
+    ;; TODO: Clean out commands that aren't used
+    (setq org-agenda-custom-commands
+          (quote (("n" "Morning Ritual"
+                   ((agenda ""
+                            ((org-agenda-prefix-format " %-6.6e: %t")))
+                    (todo "STUFF"
+                          ((org-agenda-overriding-header "Stuff to Refile")
+                           (org-tags-match-list-sublevels nil)
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
+                    (tags-todo "-CANCELLED/!NEXT"
+                               ((org-agenda-overriding-header "Tasks to Complete Next")
+                                (org-tags-match-list-sublevels t)
+                                (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                            'scheduled))
+                                (org-agenda-sorting-strategy
+                                 '(priority-down))))
+                    (todo "WAITING|HOLD"
+                          ((org-agenda-overriding-header "Waiting and Postponed Tasks")
+                           (org-agenda-include-inactive-timestamps t)
+                           (org-tags-match-list-sublevels t)
+                           (org-agenda-sorting-strategy
+                            '(priority-down))
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: %5(org-entry-get nil \"MODIFIED\") ")))
+                    (tags "quick/!+TODO"
+                          ((org-agenda-overriding-header "Two Minute Tasks")
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                       'scheduled))
+                           (org-agenda-sorting-strategy
+                            '(priority-down))
+                           (org-tags-match-list-sublevels nil)
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
+                    (tags "PROJECTS/!+TODO"
+                          ((org-agenda-overriding-header "Tasks Not NEXT in Projects")
+                           (org-tags-match-list-sublevels t)
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                       'scheduled))
+                           (org-agenda-sorting-strategy
+                            '(priority-down))
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: "))))
+                   nil)
+                  ("r" "Weekly Review"
+                   ((agenda ""
+                            ((org-agenda-prefix-format " %-6.6e: %t")))
+                    (todo "STUFF"
+                          ((org-agenda-overriding-header "Stuff to Refile")
+                           (org-tags-match-list-sublevels nil)
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
+                    (stuck ""
+                           ((org-agenda-overriding-header "Review Stuck Projects")
+                            (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
+                    (todo "MAYBE"
+                          ((org-agenda-overriding-header "Review Someday Items")
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
+                    (todo "WAITING|HOLD"
+                          ((org-agenda-overriding-header "Waiting and Postponed Tasks")
+                           (org-agenda-include-inactive-timestamps t)
+                           (org-tags-match-list-sublevels t)
+                           (org-agenda-sorting-strategy
+                            '(priority-down effort-down deadline-up))
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: %5(org-entry-get nil \"MODIFIED\") ")))
+                    (todo "DONE|CANCELLED"
+                          ((org-agenda-overriding-header "Archive Completed or Cancelled Tasks")
+                           (org-agenda-include-inactive-timestamps t)
+                           (org-tags-match-list-sublevels t)
+                           (org-agenda-prefix-format "  %-20.20c: ")))
+                    (tags "QUICK/!+TODO"
+                          ((org-agenda-overriding-header "Two Minute Tasks")
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                       'scheduled))
+                           (org-agenda-sorting-strategy
+                            '(priority-down effort-down deadline-up))
+                           (org-tags-match-list-sublevels nil)
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
+                    (tags "PROJECTS/!+TODO"
+                          ((org-agenda-overriding-header "Tasks Not NEXT in Projects")
+                           (org-tags-match-list-sublevels t)
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                       'scheduled))
+                           (org-agenda-sorting-strategy
+                            '(priority-down effort-down deadline-up))
+                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))))
+                  ("d" "Daily Agenda"
+                   ((tags "quick/!+TODO"
+                          ((org-agenda-overriding-header "Two Minute Tasks")
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                       'scheduled))
+                           (org-agenda-sorting-strategy
+                            '(priority-down))
+                           (org-tags-match-list-sublevels nil)))
+                    (tags "PROJECTS/!+TODO"
+                          ((org-agenda-overriding-header "Tasks Not NEXT in Projects")
+                           (org-tags-match-list-sublevels t)
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                       'scheduled))
+                           (org-agenda-sorting-strategy
+                            '(priority-down))))
+                    (agenda "" nil)))))))
+#+END_SRC
+
+** Elisp
+:PROPERTIES:
+:HASH:     2746081904768
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** Tag placement
+:PROPERTIES:
+:HASH:     -1543904491706964296
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/place-agenda-tags ()
+      "Flush tags to right side of agenda window."
+      (with-current-buffer
+          (buffer-name)
+        (if (derived-mode-p 'org-agenda-mode)
+            (progn
+              (setq org-agenda-tags-column (abs (- 20 (window-width))))
+              (setq org-habit-graph-column (abs (- 65 (window-width))))
+              (org-agenda-align-tags))
+          nil)))
+
+  (defun tm/place-org-tags ()
+      "Align tags with right side of current window."
+      (with-current-buffer
+          (buffer-name)
+        (if (derived-mode-p 'org-mode)
+            (progn
+              (setq org-tags-column (abs (- 30 (window-width))))
+              (org-align-all-tags))
+          nil)))
+#+END_SRC
+
+*** =org-capture= functions
+:PROPERTIES:
+:HASH:     1023498959633493614
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; https://stackoverflow.com/a/24787118
+  (defun tm/org-ask-location ()
+    "Prompt for refile location."
+    (setq org-refile-use-outline-path nil)
+    (let* ((org-refile-targets '((nil :maxlevel . 1)))
+           (hd (condition-case nil
+                   (car (org-refile-get-location "Headline" nil t))
+                 (error (car org-refile-history)))))
+      (goto-char (point-min))
+      (outline-next-heading)
+      (if (re-search-forward
+           (format org-complex-heading-regexp-format (regexp-quote hd))
+           nil t)
+          (goto-char (point-at-bol))
+        (goto-char (point-max))
+        (or (bolp) (insert "\n"))
+        (insert "* " hd "\n")))
+    (end-of-line)
+    (setq org-refile-use-outline-path 'file))
+
+  (defun org-capture-clocked-note ()
+      "Add list item to TODO's :NOTE: heading."
+      (let (region-begin
+            region-end
+            eol
+            heading-text)
+        (if (and (markerp org-clock-hd-marker)
+                 (marker-buffer org-clock-hd-marker))
+            (progn (set-buffer (marker-buffer org-clock-hd-marker))
+                   (org-capture-put-target-region-and-position)
+                   (widen)
+                   (goto-char org-clock-hd-marker)
+                   (setq heading-text (nth 4 (org-heading-components)))
+                   ;; Try to find the first subheading; if it exists,
+                   ;; check that it's one with a :NOTE: tag. If it doesn't
+                   ;; have a :NOTE: tag or if the heading doesn't have a
+                   ;; subheading, make sure that its first subheading is
+                   ;; created and has a :NOTE: tag.
+                   (if (org-goto-first-child)
+                       ;; Make sure first subheading has a :NOTE: tag.
+                       ;; Return point to beginning of parent if it does.
+                       ;; Insert new subheading directly under the parent
+                       ;; with :NOTE: tag if the first subheading isn't
+                       ;; the one we expect (and also return point to
+                       ;; beginning of parent).
+                       (progn
+                         (org-goto-first-child)
+                         (org-end-of-line)
+                         (setq eol (point))
+                         (org-beginning-of-line)
+                         (if (re-search-forward ":NOTE:$" eol t)
+                             (org-backward-element)
+                           (progn
+                             (org-backward-element)
+                             (org-set-tags-to ":NOTE:")
+                             (org-backward-element))))
+                     ;; Else: if `org-goto-first-child' returns nil,
+                     ;; create a new subheading with :NOTE: tag.
+                     (progn
+                       (org-end-of-line)
+                       (org-insert-subheading 1)
+                       (insert (format "Notes to remember about %s" heading-text))
+                       (org-set-tags-to ":NOTE:")
+                       (org-backward-element)))
+                   (org-goto-first-child)
+                   (if (re-search-forward "^-.*$" nil t)
+                       (progn
+                         ;; (goto-char (re-search-forward "^-.*$" nil))
+                         (newline 1))
+                     (progn
+                       (goto-char (re-search-forward "^$" nil))
+                       (newline 1))))
+          (error "No running clock that could be used as capture target"))))
+#+END_SRC
+
+
+*** =org-agenda= functions
+:PROPERTIES:
+:HASH:     1785312398235969895
+:MODIFIED: 2019-03-05 17:21
+:END:
+
+**** Add modified date property to headings in Org mode file
+:PROPERTIES:
+:HASH:     1785312398235969895
+:MODIFIED: 2019-03-05 17:30
+:END:
+
+Functions for calculating last update time per Org heading (from
+[[https://emacs.stackexchange.com/a/39376][here]]):
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/getentryhash ()
+    "Get the hash sum of the text in current entry, except :HASH: and :MODIFIED: property texts."
+    (save-excursion
+      (let* ((beg (progn (org-back-to-heading) (point)))
+             (end (progn
+                    (forward-char)
+                    (if (not (re-search-forward "^\*+ " (point-max) t))
+                        (point-max)
+                      (match-beginning 0))))
+             (full-str (buffer-substring beg end))
+             (str-nohash (if (string-match "^ *:HASH:.+\n" full-str)
+                             (replace-match "" nil nil full-str)
+                           full-str))
+             (str-nohash-nomod (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
+                                   (replace-match "" nil nil str-nohash)
+                                 str-nohash))
+             (str-nohash-nomod-nopropbeg (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
+                                             (replace-match "" nil nil str-nohash-nomod)
+                                           str-nohash-nomod))
+             (str-nohash-nomod-nopropbeg-end (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
+                                                 (replace-match "" nil nil str-nohash-nomod-nopropbeg)
+                                               str-nohash-nomod-nopropbeg)))
+        ;; BODY
+        (sxhash str-nohash-nomod-nopropbeg-end))))
+
+  (defun tm/update-modification-time ()
+    "Set the :MODIFIED: property of the current entry to NOW and update :HASH: property."
+    (org-set-property "HASH" (format "%s" (yant/getentryhash)))
+    (org-set-property "MODIFIED" (format-time-string "%Y-%m-%d %H:%M")))
+
+  (defun tm/skip-nonmodified ()
+    "Skip org entries, which were not modified according to the :HASH: property"
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+      (if (string= (org-entry-get (point) "HASH" nil) (format "%s" (yant/getentryhash)))
+      next-headline
+        nil)))
+#+END_SRC
+
+**** More convenient movement
+:PROPERTIES:
+:HASH:     1785312398235969895
+:MODIFIED: 2019-03-05 17:30
+:END:
+
+Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
+
+#+BEGIN_SRC emacs-lisp
+  (require 'org-agenda)
+
+  (defun tm/org-agenda-next-header ()
+    "Jump to the next header in an agenda series."
+    (interactive)
+    (tm/org-agenda-goto-header))
+
+  (defun tm/org-agenda-previous-header ()
+    "Jump to the previous header in an agenda series."
+    (interactive)
+    (tm/org-agenda-goto-header t))
+
+  (defun tm/org-agenda-goto-header (&optional backwards)
+    "Find the next agenda series header forwards or BACKWARDS."
+    (let ((pos (save-excursion
+                 (goto-char (if backwards
+                                (line-beginning-position)
+                              (line-end-position)))
+                 (let* ((find-func (if backwards
+                                       'previous-single-property-change
+                                     'next-single-property-change))
+                        (end-func (if backwards
+                                      'max
+                                    'min))
+                        (all-pos-raw (list (funcall find-func (point) 'org-agenda-structural-header)
+                                           (funcall find-func (point) 'org-agenda-date-header)))
+                        (all-pos (cl-remove-if-not 'numberp all-pos-raw))
+                        (prop-pos (if all-pos (apply end-func all-pos) nil)))
+                   prop-pos))))
+      (if pos (goto-char pos))
+      (if backwards (goto-char (line-beginning-position)))))
+#+END_SRC
+
+
+*** =org-refile= functions
+:PROPERTIES:
+:HASH:     1418401885741103974
+:MODIFIED: 2019-03-05 17:30
+:END:
+
+From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/org-remove-inherited-local-tags ()
+    "Remove local tags that can be inherited instead."
+    (let* ((target-tags-local (org-get-tags-at nil 'local))
+           ;; We have to remove the local tags otherwise they would not show up
+           ;; as being inherited if they are present on parents---the local tag
+           ;; would "override" the parent
+           (target-tags-inherited
+            (unwind-protect
+                (progn
+                  (org-set-tags-to nil)
+                  (org-get-tags-at))
+              (org-set-tags-to target-tags-local))))
+      (-each target-tags-local
+        (lambda (tag)
+          (when (member tag target-tags-inherited)
+            (org-toggle-tag tag 'off))))))
+#+END_SRC
+
+** Task States
+:PROPERTIES:
+:HASH:     1606825696475980231
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Documentation [[https://orgmode.org/manual/Workflow-states.html][here]].
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+  '((sequence "TODO(t!)" "WAITING(w@)" "HOLD(h@)" "NEXT(n@)" "MAYBE(m@)" "STUFF(s!)" "PROJECT(p!)" "|" "DONE(d@)" "CANCELLED(c@)")))
+#+END_SRC
+
+Using =org-habits= helps to track repeated tasks.
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-habit)
+(add-to-list 'org-modules "org-habit")
+(setq org-habit-graph-column 80
+      org-habit-show-habits-only-for-today t)
+#+END_SRC
+
+Enable log changes in =LOGBOOK= drawer.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-log-into-drawer t)
+#+END_SRC
+
+Enable fast task state selection:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-use-fast-todo-selection t)
+#+END_SRC
+
+Task state faces:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("MAYBE" :foreground "yellow" :weight bold)
+              ("PROJECT" :foreground "purple" :weight bold)
+              ("STUFF" :foreground "cyan" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold)
+              ("MEETING" :foreground "forest green" :weight bold))))
+#+END_SRC
+
+And priority faces:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-priority-faces '((?A . (:foreground "red" :weight 'bold))
+                           (?B . (:foreground "yellow"))
+                           (?C . (:foreground "green"))))
+#+END_SRC
+
+** Blog Publishing
+:PROPERTIES:
+:HASH:     -508865561446328561
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** =org2jekyll=
+:PROPERTIES:
+:HASH:     -508865561446328561
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
+
+Define the following variables:
+- =org2jekyll-source-directory=: The directory where =*.org= blog posts are stored.
+- =org2jekyll-jekyll-directory=: Path to a Jekyll site.
+- =org2jekyll-posts-dir=: The directory where Jekyll posts are stored.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org2jekyll
+  :ensure t
+  :defer 3
+  :config
+  (setq org2jekyll-blog-author       "tminor"
+        org2jekyll-source-directory  (expand-file-name "~/org/blog")
+        org2jekyll-jekyll-directory  (expand-file-name "~/blog")
+        org2jekyll-jekyll-drafts-dir ""
+        org2jekyll-jekyll-posts-dir  "_posts/"
+        org-publish-project-alist
+            `(("default"
+                :base-directory ,(org2jekyll-input-directory)
+                :base-extension "org"
+                ;; :publishing-directory "/ssh:user@host:~/html/notebook/"
+                :publishing-directory ,(org2jekyll-output-directory)
+                :publishing-function org-html-publish-to-html
+                :headline-levels 4
+                :section-numbers nil
+                :with-toc nil
+                :html-head "<link rel=\"stylesheet\" href=\"./css/style.css\" type=\"text/css\"/>"
+                :html-preamble t
+                :recursive t
+                :make-index t
+                :html-extension "html"
+                :body-only t)
+
+            ("post"
+                :base-directory ,(org2jekyll-input-directory)
+                :base-extension "org"
+                :publishing-directory ,(org2jekyll-output-directory org2jekyll-jekyll-posts-dir)
+                :publishing-function org-html-publish-to-html
+                :headline-levels 4
+                :section-numbers nil
+                :with-toc nil
+                :html-head "<link rel='stylesheet' href='https://blog.tminor.io/assets/core.css'>"
+                :html-preamble t
+                :recursive t
+                :make-index t
+                :html-extension "html"
+                :body-only t)
+
+            ("images"
+                :base-directory ,(org2jekyll-input-directory "img")
+                :base-extension "jpg\\|gif\\|png"
+                :publishing-directory ,(org2jekyll-output-directory "img")
+                :publishing-function org-publish-attachment
+                :recursive t)
+
+            ("js"
+                :base-directory ,(org2jekyll-input-directory "js")
+                :base-extension "js"
+                :publishing-directory ,(org2jekyll-output-directory "js")
+                :publishing-function org-publish-attachment
+                :recursive t)
+
+            ("css"
+                :base-directory ,(org2jekyll-input-directory "css")
+                :base-extension "css\\|el"
+                :publishing-directory ,(org2jekyll-output-directory "css")
+                :publishing-function org-publish-attachment
+                :recursive t)
+
+            ("web" :components ("images" "js" "css")))))
+#+END_SRC
+
+*** Creating a Blog Post
+:PROPERTIES:
+:HASH:     -508865561446328561
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+1. Invoke =org2jekyll-create-draft=, select your layout and follow the prompts in the mini buffer.
+2. Write your post.
+3. Publish it with =org2jekyll-publish=.
+
+* Hydra
+:PROPERTIES:
+:HASH:     169047581120
+:MODIFIED: 2019-03-02 17:40
+:END:
+
+** Hydra Bootstrap
+:PROPERTIES:
+:HASH:     2244164991449656466
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Make sure hydra is installed.
+
+#+BEGIN_SRC emacs-lisp
+(use-package hydra
+  :ensure t)
+#+END_SRC
+
+** Window Management
+:PROPERTIES:
+:HASH:     1959195950329798149
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** hydra Window Functions
+:PROPERTIES:
+:HASH:     593261976847696897
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+The following functions are used in =hydra-window=.
+
+#+BEGIN_SRC emacs-lisp
+(defun hydra-move-splitter-left (arg)
+  "Move window splitter left."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'right))
+      (shrink-window-horizontally arg)
+    (enlarge-window-horizontally arg)))
+
+(defun hydra-move-splitter-right (arg)
+  "Move window splitter right."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'right))
+      (enlarge-window-horizontally arg)
+    (shrink-window-horizontally arg)))
+
+(defun hydra-move-splitter-up (arg)
+  "Move window splitter up."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'up))
+      (enlarge-window arg)
+    (shrink-window arg)))
+
+(defun hydra-move-splitter-down (arg)
+  "Move window splitter down."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'up))
+      (shrink-window arg)
+    (enlarge-window arg)))
+#+END_SRC
+
+*** hydra-window
+:PROPERTIES:
+:HASH:     -597235663269452721
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+From [[https://github.com/abo-abo/hydra/wiki/Window-Management][the wiki]].
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-window (global-map "<f5>")
+    "
+  Movement^^        ^Split^         ^Switch^            ^Resize^
+  ----------------------------------------------------------------
+  _h_ ←            _v_ertical          _b_uffer         _q_ X←
+  _j_ ↓            _x_ horizontal      _f_ind files     _w_ X↓
+  _k_ ↑            _z_ undo            _a_ce 1          _e_ X↑
+  _l_ →            _Z_ reset           _s_wap           _r_ X→
+  _F_ollow         _D_lt Other         _S_ave        max_i_mize
+  _SPC_ cancel     _o_nly this         _d_elete    zoom _I_n
+                                             ^^^^^^zoom _O_ut
+  "
+    ("h" windmove-left)
+    ("j" windmove-down)
+    ("k" windmove-up)
+    ("l" windmove-right)
+    ("q" hydra-move-splitter-left)
+    ("w" hydra-move-splitter-down)
+    ("e" hydra-move-splitter-up)
+    ("r" hydra-move-splitter-right)
+    ("b" helm-mini)
+    ("f" helm-find-files)
+    ("F" follow-mode)
+    ("a" (lambda ()
+           (interactive)
+           (ace-window 1)
+           (add-hook 'ace-window-end-once-hook
+                     'hydra-window/body)))
+    ("v" (lambda ()
+           (interactive)
+           (split-window-right)
+           (windmove-right)))
+    ("x" (lambda ()
+           (interactive)
+           (split-window-below)
+           (windmove-down)))
+    ("s" (lambda ()
+           (interactive)
+           (ace-window 4)
+           (add-hook 'ace-window-end-once-hook
+                     'hydra-window/body)))
+    ("S" save-buffer)
+    ("d" delete-window)
+    ("D" (lambda ()
+           (interactive)
+           (ace-window 16)
+           (add-hook 'ace-window-end-once-hook
+                     'hydra-window/body)))
+    ("o" delete-other-windows)
+    ("i" ace-maximize-window)
+    ("z" (progn
+           (winner-undo)
+           (setq this-command 'winner-undo)))
+    ("Z" winner-redo)
+    ("I" text-scale-increase)
+    ("O" text-scale-decrease)
+    ("SPC" nil))
+     ;("SPC" hydra-pop "exit" :color "blue"))
+
+  (global-set-key (kbd "C-c M-v") 'hydra-window/body)
+#+END_SRC
+
+** Dired
+:PROPERTIES:
+:HASH:     412923922215214483
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-dired (:hint nil :color pink)
+  "
+_+_ mkdir          _v_iew           _m_ark             _(_ details        _i_nsert-subdir    wdired
+_C_opy             _O_ view other   _U_nmark all       _)_ omit-mode      _$_ hide-subdir    C-x C-q : edit
+_D_elete           _o_pen other     _u_nmark           _l_ redisplay      _w_ kill-subdir    C-c C-c : commit
+_R_ename           _M_ chmod        _t_oggle           _g_ revert buf     _e_ ediff          C-c ESC : abort
+_Y_ rel symlink    _G_ chgrp        _E_xtension mark   _s_ort             _=_ pdiff
+_S_ymlink          ^ ^              _F_ind marked      _._ toggle hydra   \\ flyspell
+_r_sync            ^ ^              ^ ^                ^ ^                _?_ summary
+_z_ compress-file  _A_ find regexp
+_Z_ compress       _Q_ repl regexp
+
+T - tag prefix
+"
+  ("\\" dired-do-ispell)
+  ("(" dired-hide-details-mode)
+  (")" dired-omit-mode)
+  ("+" dired-create-directory)
+  ("=" diredp-ediff)         ;; smart diff
+  ("?" dired-summary)
+  ("$" diredp-hide-subdir-nomove)
+  ("A" dired-do-find-regexp)
+  ("C" dired-do-copy)        ;; Copy all marked files
+  ("D" dired-do-delete)
+  ("E" dired-mark-extension)
+  ("e" dired-ediff-files)
+  ("F" dired-do-find-marked-files)
+  ("G" dired-do-chgrp)
+  ("g" revert-buffer)        ;; read all directories again (refresh)
+  ("i" dired-maybe-insert-subdir)
+  ("l" dired-do-redisplay)   ;; relist the marked or singel directory
+  ("M" dired-do-chmod)
+  ("m" dired-mark)
+  ("O" dired-display-file)
+  ("o" dired-find-file-other-window)
+  ("Q" dired-do-find-regexp-and-replace)
+  ("R" dired-do-rename)
+  ("r" dired-do-rsynch)
+  ("S" dired-do-symlink)
+  ("s" dired-sort-toggle-or-edit)
+  ("t" dired-toggle-marks)
+  ("U" dired-unmark-all-marks)
+  ("u" dired-unmark)
+  ("v" dired-view-file)      ;; q to exit, s to search, = gets line #
+  ("w" dired-kill-subdir)
+  ("Y" dired-do-relsymlink)
+  ("z" diredp-compress-this-file)
+  ("Z" dired-do-compress)
+  ("q" nil)
+  ;("." hydra-pop "exit" :color "blue"))
+  ("." nil))
+
+(define-key dired-mode-map "." 'hydra-dired/body)
+#+END_SRC
+
+** Projectile
+:PROPERTIES:
+:HASH:     1208299698538677392
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+For projectile fun:
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-projectile-other-window (:color teal)
+  "projectile-other-window"
+  ("f"  projectile-find-file-other-window        "file")
+  ("g"  projectile-find-file-dwim-other-window   "file dwim")
+  ("d"  projectile-find-dir-other-window         "dir")
+  ("b"  projectile-switch-to-buffer-other-window "buffer")
+  ("q"  hydra-pop                                "exit"))
+  ;("q"  nil                                      "cancel" :color "blue"))
+
+(defhydra hydra-projectile (:color teal
+                            :hint nil)
+  "
+     PROJECTILE: %(projectile-project-root)
+
+     Find File            Search/Tags          Buffers                Cache
+------------------------------------------------------------------------------------------
+  _F_: file            _R_: ripgrep           _i_: Ibuffer           _c_: cache clear
+ _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
+ _fd_: file curr dir   _o_: multi-occur       _K_: Kill all buffers  _X_: cleanup non-existing
+  _r_: recent file            ^^              _s_: Switch project    _z_: cache current
+  _d_: dir
+
+"
+  ("b"   projectile-switch-to-buffer)
+  ("c"   projectile-invalidate-cache)
+  ("d"   projectile-find-dir)
+  ("F"   projectile-find-file)
+  ("ff"  projectile-find-file-dwim)
+  ("fd"  projectile-find-file-in-directory)
+  ("g"   ggtags-update-tags)
+  ("s-g" ggtags-update-tags)
+  ("i"   projectile-ibuffer)
+  ("K"   projectile-kill-buffers)
+  ("s-k" projectile-kill-buffers)
+  ("m"   projectile-multi-occur)
+  ("o"   projectile-multi-occur)
+  ("s-p" projectile-switch-project "switch project")
+  ("p"   projectile-switch-project)
+  ("s"   projectile-switch-project)
+  ("R"   projectile-ripgrep)
+  ("r"   projectile-recentf)
+  ("x"   projectile-remove-known-project)
+  ("X"   projectile-cleanup-known-projects)
+  ("z"   projectile-cache-current-file)
+  ("`"   hydra-projectile-other-window/body "other window")
+  ;("q"   hydra-pop "exit" :color "blue"))
+  ("q"   nil "cancel"))
+#+END_SRC
+
+** Magit
+:PROPERTIES:
+:HASH:     -161092125374219222
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(defun matcha-magit-dir ()
+  "Return `magit-toplevel' if `magit' is loaded, otherwise."
+  (if (featurep 'magit)
+      (magit-toplevel)
+    "Not yet loaded."))
+
+(defun matcha-magit-status-pick-repository ()
+  "Calls `magit-status' with a prefix argument to allow picking the repository."
+  (interactive)
+  (let ((current-prefix-arg '(4))) ; C-u
+    (call-interactively 'magit-status)))
+
+(defun matcha-magit-status-or-switch-buffer ()
+  "Switch to existing `magit-status' without updating or run `magit-status'.
+If `magit' is not yet loaded yet, just call `magit-status' directly."
+  (interactive)
+  (if (not (featurep 'magit))
+      (magit-status-internal default-directory)
+    (if-let (magit-buffer
+             (magit-mode-get-buffer
+              #'magit-status-mode nil nil
+              (magit-buffer-lock-value #'magit-status-mode nil)))
+        (switch-to-buffer magit-buffer)
+      (magit-status-internal default-directory))))
+
+(defhydra hydra-magit-log (:color "blue" :hint nil)
+  "
+   Magit Log: %s(matcha-magit-dir)
+    File                       Branch                  Reflog
+  ------------------------------------------------------------------------------
+    _f_ Current File         _p_ Pick Branch            _P_ Pick Branch
+    _F_ Current File Popup   _c_ Current Branch         _C_ Current Branch
+    _u_ Unmerged Commits     _h_ Head Branch            _H_ Head Branch
+                           ^^_o_ Local + Head
+                           ^^_a_ Local + Remote + Head
+                           ^^_A_ Everything
+"
+  ("f" magit-log-buffer-file)
+  ("F" magit-log-buffer-file-popup)
+  ("u" magit-cherry)
+  ("p" magit-log-other)
+  ("c" magit-log-current)
+  ("h" magit-log-head)
+  ("o" magit-log-branches)
+  ("a" magit-log-all-branches)
+  ("A" magit-log-all)
+  ("P" magit-reflog)
+  ("C" magit-reflog-current)
+  ("H" magit-reflog-head)
+  ("q" nil))
+
+(defhydra hydra-magit (:color "blue" :hint nil)
+  "
+   Magit: %s(matcha-magit-dir)
+    Status                    Blame                 ?
+  ------------------------------------------------------------------------------
+    _s_ Status               _b_ Blame               _p_ File Popup
+    _g_ Switch to Status     _j_ Blob Next           _d_ Dispatch
+    _L_ List Repos           _k_ Blob Previous       _l_ Log
+    _r_ Pick Repo
+    Search                           Diff            Repository
+  ------------------------------------------------------------------------------
+    _f_ Find File                _ef_ Ediff Files        ^^_c_ Clone
+    _F_ Find File Other Window   _eb_ Ediff Buffers
+                               ^^_ed_ Ediff Directories
+"
+  ("p" magit-file-popup)
+  ("d" magit-dispatch-popup)
+  ("f" magit-find-file)
+  ("F" magit-find-file-other-window)
+  ("j" magit-blob-next)
+  ("k" magit-blob-previous)
+  ("b" magit-blame-addition)
+  ("l" matcha-magit-log/body)
+  ("L" magit-list-repositories)
+  ("r" matcha-magit-status-pick-repository)
+  ("g" matcha-magit-status-or-switch-buffer)
+  ("s" magit-status)
+  ("c" magit-clone)
+  ("ef" ediff-files)
+  ("eF" ediff-files3)
+  ("eb" ediff-buffers)
+  ("eB" ediff-buffers3)
+  ("ed" ediff-directories)
+  ("eD" ediff-directories3)
+  ("q" nil))
+#+END_SRC
+
+** Notmuch
+:PROPERTIES:
+:HASH:     586024545352502535
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-notmuch-tree-mode (:color "blue")
+  "Tree"
+  ("?" (notmuch-tree-close-message-pane-and #'notmuch-help) "Help")
+  ("q" notmuch-tree-quit "Quit")
+  ("s" notmuch-tree-to-search "Search")
+  ("m" (notmuch-tree-close-message-pane-and #'notmuch-mua-new-mail)
+   "Compose")
+  ("J" (notmuch-tree-close-message-pane-and #'notmuch-jump-search) "Jump")
+  ("S" notmuch-search-from-tree-current-query "Search from Query")
+  ("|" notmuch-show-pipe-message "Show Pipe Message")
+  ("w" notmuch-show-save-attachments "Save Attachments")
+  ("v" notmuch-show-view-all-mime-parts "View All Mime Parts")
+  ("c" hydra-notmuch-show-stash-command/body "Show Stash Commands")
+  ("b" notmuch-show-resend-message "Resend Message")
+  ("$" (notmuch-tree-to-message-pane #'notmuch-show-toggle-process-crypto)
+   "Process Crypto")
+  ("f" (notmuch-tree-close-message-pane-and #'notmuch-show-forward-message)
+   "Forward Message")
+  ("r" (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender)
+   "Reply To Sender")
+  ("R" (notmuch-tree-close-message-pane-and #'notmuch-show-reply) "Reply")
+  ("V" (notmuch-tree-close-message-pane-and #'notmuch-show-view-raw-message)
+   "View Raw Message")
+  ("RET" notmuch-tree-show-message "Show Message")
+  ("x" notmuch-tree-quit "Quit")
+  ("A" notmuch-tree-archive-thread "Archive Thread")
+  ("a" notmuch-tree-archive-message-then-next "Archive Message Then Next")
+  ("z" notmuch-tree-to-tree "Tree to Tree")
+  ("n" notmuch-tree-next-matching-message "Next Matching Message")
+  ("p" notmuch-tree-prev-matching-message "Previous Matching Message")
+  ("N" notmuch-tree-next-message "Next Message")
+  ("P" notmuch-tree-prev-message "Previous Message")
+  ("C-p" notmuch-tree-prev-thread "Previous Thread")
+  ("C-n" notmuch-tree-next-thread "Next Thread")
+  ("k" notmuch-tag-jump "Tag Jump")
+  ("-" notmuch-tree-remove-tag "Remove Tag")
+  ("+" notmuch-tree-add-tag "Add Tag")
+  ("*" notmuch-tree-tag-thread "Tag Thread")
+  ("e" notmuch-tree-resume-message "Resume Message"))
+
+(defhydra hydra-notmuch-search-mode (:color "blue")
+  "Search"
+  ("J" notmuch-jump-search "Jump Search")
+  ("K" notmuch-tag-jump "Tag Jump")
+  ("L" notmuch-search-filter "Search Filter")
+  ("C" compose-mail-other-frame "Compose Mail Other Frame")
+  ("O" notmuch-search-toggle-order "Toggle Order")
+  ("R" notmuch-search-reply-to-thread "Reply to Thread")
+  ("Z" notmuch-tree-from-search-current-query "Tree from current Query")
+  ("a" notmuch-search-archive-thread "Archive Thread")
+  ("c" compose-mail "Compose Mail")
+  ("d" +notmuch-search-toggle-delete "Toggle Delete")
+  ("m" hydra-notmuch-common/body "Common Commands")
+  ("n" notmuch-search-next-thread "Next Thread")
+  ("o" compose-mail-other-window "Compose Mail Other Window")
+  ("p" notmuch-search-previous-thread "Previous Thread")
+  ("q" notmuch-bury-or-kill-this-buffer "Bury or Kill Buffer")
+  ("r" notmuch-search-reply-to-thread-sender "Reply to Thread Sender")
+  ("t" notmuch-search-filter-by-tag "Filter by Tag")
+  ("z" hydra-notmuch-search-stash/body "Search Stash Map")
+  ("*" notmuch-search-tag-all "Tag All")
+  ("-" notmuch-search-remove-tag "Remove Tag")
+  ("+" notmuch-search-add-tag "Add Tag")
+  ("<" notmuch-search-first-thread "First Thread")
+  (">" notmuch-search-last-thread "Last Thread")
+  ("RET" notmuch-search-show-thread "Show Thread"))
+
+(defhydra hydra-notmuch-search-stash (:color "blue")
+  "Stash"
+  ("i" notmuch-search-stash-thread-id "Stash Thread Id")
+  ("q" notmuch-stash-query "Stash Query")
+  ("?" notmuch-subkeymap-help "Help"))
+
+(defhydra hydra-notmuch-common (:color "blue")
+  "Common Commands"
+  ("?" notmuch-help "Help")
+  ("q" notmuch-bury-or-kill-this-buffer "Bury or Kill Buffer")
+  ("s" notmuch-search "Search")
+  ("z" notmuch-tree "Tree")
+  ("m" notmuch-mua-new-mail "Mua New Mail")
+  ("gr" notmuch-refresh-this-buffer "Refresh this Buffer")
+  ("gR" notmuch-refresh-all-buffers "Refresh all Buffers")
+  ("Z" notmuch-poll-and-refresh-this-buffer "Poll and Refresh this Buffer")
+  ("J" notmuch-jump-search "Jump Search"))
+
+(defhydra hydra-notmuch-hello-mode (:color "blue")
+  "Hello"
+  ("m" hydra-notmuch-common/body "Common Commands"))
+
+(defhydra hydra-notmuch-show-stash-commands (:color "blue")
+  "Show Stash Commands"
+  ("c" notmuch-show-stash-cc "CC")
+  ("d" notmuch-show-stash-date "Date")
+  ("F" notmuch-show-stash-filename "Filename")
+  ("f" notmuch-show-stash-from "From")
+  ("i" notmuch-show-stash-message-id "Message Id")
+  ("I" notmuch-show-stash-message-id-stripped "Message Id Stripped")
+  ("s" notmuch-show-stash-subject "Subject")
+  ("T" notmuch-show-stash-tags "Tags")
+  ("t" notmuch-show-stash-to "To")
+  ("l" notmuch-show-stash-mlarchive-link "Archive Link")
+  ("L" notmuch-show-stash-mlarchive-link-and-go "Archive Link and Go")
+  ("G" notmuch-show-stash-git-send-email "Git Send Email")
+  ("?" notmuch-subkeymap-help "Help"))
+
+(defhydra hydra-notmuch-show-part (:color "blue")
+  "Show Part"
+  ("s" notmuch-show-save-part "Save Part")
+  ("v" notmuch-show-view-part "View Part")
+  ("o" notmuch-show-interactively-view-part "Show Interactively View Part")
+  ("|" notmuch-show-pipe-part "Show Pipe Part")
+  ("m" notmuch-show-choose-mime-of-part "Show Choose Mime of Part")
+  ("?" notmuch-subkeymap-help "Help"))
+
+(defhydra hydra-notmuch-show-mode (:color "blue" :hint nil)
+  "
+   Show: %(notmuch-show-get-subject)
+    ^^Compose^^             ^^Tags^^         ^^Archive Then^^       ^^Misc^^
+  ------------------------------------------------------------------------------
+  _F_ Forward Open      ^_d_ Delete    ^^_A_ -> Message     ^_l_ Filter Thread
+  _R_ Reply             ^_K_ Jump      ^^_a_ Msg Or Thread  ^_m_ Common
+  _r_ Reply Sender      ^_-_ Remove    ^^_X_ -> Exit        ^_w_ Save Attachments
+  _S_ Resend Message    ^_+_ Add       ^^_x_ Msg Or Exit    ^_._ Attachments
+  _e_ Resume Draft      ^_*_ Tag All                      ^^^^^_|_ Pipe
+  _f_ Forward Message
+
+    ^^Navigate^^                ^^View^^                ^^Toggle^^
+  ------------------------------------------------------------------------------
+  _j_ Next Thread         ^^_N_ Next Message      ^^_h_ Headers
+  _k_ Previous Thread     ^^_P_ Previous Message  ^^_t_ Truncate Lines
+  _n_ Next Message        ^^_V_ Raw Message       ^^_!_ Elide Non Matching
+  _p_ Previous Message    ^^_#_ Print Message     ^^_$_ Process Crypto
+  _y_ Rewind              ^^_Z_ Tree              ^^_<_ Thread Indentation
+  _z_ Advance             ^^_c_ Stash             ^^_T_ All Messages
+                                                ^^^^^^^^_RET_ Message
+"
+  ("l" notmuch-show-filter-thread)
+  ("m" hydra-notmuch-common/body)
+  ("w" notmuch-show-save-attachments)
+  ("." hydra-notmuch-show-part/body)
+  ("|" notmuch-show-pipe-message)
+  ("F" notmuch-show-forward-open-messages)
+  ("R" notmuch-show-reply)
+  ("r" notmuch-show-reply-sender)
+  ("S" notmuch-show-resend-message)
+  ("e" notmuch-show-resume-message)
+  ("f" notmuch-show-forward-message)
+  ("h" notmuch-show-toggle-visibility-headers)
+  ("t" toggle-truncate-lines)
+  ("!" notmuch-show-toggle-elide-non-matching)
+  ("$" notmuch-show-toggle-process-crypto)
+  ("<" notmuch-show-toggle-thread-indentation)
+  ("T" notmuch-show-open-or-close-all)
+  ("RET" notmuch-show-toggle-message)
+  ("d" +notmuch-show-toggle-delete)
+  ("K" notmuch-tag-jump)
+  ("-" notmuch-show-remove-tag)
+  ("+" notmuch-show-add-tag)
+  ("*" notmuch-show-tag-all)
+  ("A" notmuch-show-archive-thread-then-next)
+  ("X" notmuch-show-archive-thread-then-exit)
+  ("a" notmuch-show-archive-message-then-next-or-next-thread)
+  ("x" notmuch-show-archive-message-then-next-or-exit)
+  ("j" notmuch-show-next-thread-show :color red)
+  ("k" notmuch-show-previous-thread-show :color red)
+  ("n" notmuch-show-next-open-message :color red)
+  ("p" notmuch-show-previous-open-message :color red)
+  ("y" notmuch-show-rewind)
+  ("z" notmuch-show-advance-and-archive)
+  ("N" notmuch-show-next-message :color red)
+  ("P" notmuch-show-previous-message :color red)
+  ("V" notmuch-show-view-raw-message)
+  ("#" notmuch-show-print-message)
+  ("Z" notmuch-tree-from-show-current-query)
+  ("c" hydra-notmuch-show-stash-command/body))
+
+(defun hydra-notmuch-set-launcher ()
+  "Set `hydra' launcher for `notmuch'."
+  (matcha-set-mode-command
+   :mode 'notmuch-hello-mode :command #'hydra-notmuch-hello-mode/body)
+  (matcha-set-mode-command
+   :mode 'notmuch-show-mode :command #'hydra-notmuch-show-mode/body)
+  (matcha-set-mode-command
+   :mode 'notmuch-tree-mode :command #'hydra-notmuch-tree-mode/body)
+  (matcha-set-mode-command
+   :mode 'notmuch-search-mode :command #'hydra-notmuch-search-mode/body))
+#+END_SRC
+
+** Org Agenda
+:PROPERTIES:
+:HASH:     -69048731092457891
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-org-agenda (:pre (setq which-key-inhibit t)
+                                 :post (setq which-key-inhibit nil)
+                                 :hint none)
+  "
+Org agenda (_q_uit)
+
+^Clock^      ^Visit entry^              ^Date^             ^Other^
+^-----^----  ^-----------^------------  ^----^-----------  ^-----^---------
+_ci_ in      _SPC_ in other window      _ds_ schedule      _gr_ reload
+_co_ out     _TAB_ & go to location     _dd_ set deadline  _._  go to today
+_cq_ cancel  _RET_ & del other windows  _dt_ timestamp     _gd_ go to date
+_cj_ jump    _o_   link                 _+_  do later      ^^
+^^           ^^                         _-_  do earlier    ^^
+^^           ^^                         ^^                 ^^
+^View^          ^Filter^                 ^Headline^         ^Toggle mode^
+^----^--------  ^------^---------------  ^--------^-------  ^-----------^----
+_vd_ day        _ft_ by tag              _ht_ set status    _tf_ follow
+_vw_ week       _fr_ refine by tag       _hk_ kill          _tl_ log
+_vt_ fortnight  _fc_ by category         _hr_ refile        _ta_ archive trees
+_vm_ month      _fh_ by top headline     _hA_ archive       _tA_ archive files
+_vy_ year       _fx_ by regexp           _h:_ set tags      _tr_ clock report
+_vn_ next span  _fd_ delete all filters  _hp_ set priority  _td_ diaries
+_vp_ prev span  ^^                       ^^                 ^^
+_vr_ reset      ^^                       ^^                 ^^
+^^              ^^                       ^^                 ^^
+"
+  ;; Entry
+  ("hA" org-agenda-archive-default)
+  ("hk" org-agenda-kill)
+  ("hp" org-agenda-priority)
+  ("hr" org-agenda-refile)
+  ("h:" org-agenda-set-tags)
+  ("ht" org-agenda-todo)
+  ;; Visit entry
+  ("o"   link-hint-open-link :exit t)
+  ("<tab>" org-agenda-goto :exit t)
+  ("TAB" org-agenda-goto :exit t)
+  ("SPC" org-agenda-show-and-scroll-up)
+  ("RET" org-agenda-switch-to :exit t)
+  ;; Date
+  ("dt" org-agenda-date-prompt)
+  ("dd" org-agenda-deadline)
+  ("+" org-agenda-do-date-later)
+  ("-" org-agenda-do-date-earlier)
+  ("ds" org-agenda-schedule)
+  ;; View
+  ("vd" org-agenda-day-view)
+  ("vw" org-agenda-week-view)
+  ("vt" org-agenda-fortnight-view)
+  ("vm" org-agenda-month-view)
+  ("vy" org-agenda-year-view)
+  ("vn" org-agenda-later)
+  ("vp" org-agenda-earlier)
+  ("vr" org-agenda-reset-view)
+  ;; Toggle mode
+  ("ta" org-agenda-archives-mode)
+  ("tA" (org-agenda-archives-mode 'files))
+  ("tr" org-agenda-clockreport-mode)
+  ("tf" org-agenda-follow-mode)
+  ("tl" org-agenda-log-mode)
+  ("td" org-agenda-toggle-diary)
+  ;; Filter
+  ("fc" org-agenda-filter-by-category)
+  ("fx" org-agenda-filter-by-regexp)
+  ("ft" org-agenda-filter-by-tag)
+  ("fr" org-agenda-filter-by-tag-refine)
+  ("fh" org-agenda-filter-by-top-headline)
+  ("fd" org-agenda-filter-remove-all)
+  ;; Clock
+  ("cq" org-agenda-clock-cancel)
+  ("cj" org-agenda-clock-goto :exit t)
+  ("ci" org-agenda-clock-in :exit t)
+  ("co" org-agenda-clock-out)
+  ;; Other
+  ("q" nil :exit t)
+  ("gd" org-agenda-goto-date)
+  ("." org-agenda-goto-today)
+  ("gr" org-agenda-redo))
+#+END_SRC
+
+** Multiple-cursors
+:PROPERTIES:
+:HASH:     896418686631676365
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(defhydra hydra-multiple-cursors (:hint nil)
+  "
+ Up^^             Down^^           Miscellaneous           % 2(mc/num-cursors) cursor%s(if (> (mc/num-cursors) 1) \"s\" \"\")
+------------------------------------------------------------------
+ [_p_]   Next     [_n_]   Next     [_l_] Edit lines  [_0_] Insert numbers
+ [_P_]   Skip     [_N_]   Skip     [_a_] Mark all    [_A_] Insert letters
+ [_M-p_] Unmark   [_M-n_] Unmark   [_s_] Search
+ [Click] Cursor at point       [_q_] Quit"
+  ("l" mc/edit-lines :exit t)
+  ("a" mc/mark-all-like-this :exit t)
+  ("n" mc/mark-next-like-this)
+  ("N" mc/skip-to-next-like-this)
+  ("M-n" mc/unmark-next-like-this)
+  ("p" mc/mark-previous-like-this)
+  ("P" mc/skip-to-previous-like-this)
+  ("M-p" mc/unmark-previous-like-this)
+  ("s" mc/mark-all-in-region-regexp :exit t)
+  ("0" mc/insert-numbers :exit t)
+  ("A" mc/insert-letters :exit t)
+  ("<mouse-1>" mc/add-cursor-on-click)
+  ;; Help with click recognition in this hydra
+  ("<down-mouse-1>" ignore)
+  ("<drag-mouse-1>" ignore)
+  ("q" nil))
+#+END_SRC
+
+** Hydra for hydras above
+:PROPERTIES:
+:HASH:     -1549122272347755066
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Remembering keys is hard, so here's a hydra that should add a menu for
+other hydras:
+
+#+BEGIN_SRC emacs-lisp
+(defvar hydra-stack nil)
+
+(defun hydra-push (expr)
+  (push `(lambda () ,expr) hydra-stack))
+
+(defun hydra-pop ()
+  (interactive)
+  (let ((x (pop hydra-stack)))
+    (when x
+      (funcall x))))
+
+(defhydra hydra-hydras-menu (:color teal)
+  "
+     Hydras List
+---------------------
+_d_:  hydra-dired
+_c_:  hydra-multiple-cursors
+_pp_: hydra-projectile
+_pw_: hydra-projectile-other-window
+_w_:  hydra-window
+_ml_: hydra-magit-log
+_mm_: hydra-magit
+_n_:  hydra-notmuch-show-mode
+_o_:  hydra-org-agenda
+
+"
+  ("d" (progn
+         (hydra-dired/body)
+         (hydra-push '(hydra-dired/body)))
+       "visit hydra-dired")
+  ("c" (progn
+         (hydra-multiple-cursors/body)
+         (hydra-push '(hydra-multiple-cursors/body)))
+       "visit hydra-multiple-cursors")
+  ("ml" (progn
+         (hydra-magit-log/body)
+         (hydra-push '(hydra-magit-log/body)))
+       "visit hydra-magit-log")
+  ("mm" (progn
+         (hydra-magit/body)
+         (hydra-push '(hydra-magit/body)))
+       "visit hydra-magit")
+  ("n" (progn
+         (hydra-notmuch-show-mode/body)
+         (hydra-push '(hydra-notmuch-show-mode/body)))
+       "visit hydra-notmuch-show-mode")
+  ("o" (progn
+         (hydra-org-agenda/body)
+         (hydra-push '(hydra-org-agenda/body)))
+       "visit hydra-org-agenda")
+  ("pp" (progn
+         (hydra-projectile/body)
+         (hydra-push '(hydra-projectile/body)))
+       "visit hydra-projectile")
+  ("pw" (progn
+         (hydra-projectile-other-window/body)
+         (hydra-push '(hydra-projectile-other-window/body)))
+       "visit hydra-projectile-other-window")
+  ("w" (progn
+         (hydra-window/body)
+         (hydra-push '(hydra-window/body)))
+       "visit hydra-window")
+  ("q" hydra-pop "exit" :exit t))
+
+(global-set-key (kbd "C-c h") 'hydra-hydras-menu/body)
+#+END_SRC
+
+* Other
+:PROPERTIES:
+:HASH:     10539259680
+:MODIFIED: 2019-03-02 17:40
+:END:
+** Kill whitespace when saving
+:PROPERTIES:
+:HASH:     235965361912391494
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+** eshell
+:PROPERTIES:
+:HASH:     931114834085182346
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Maybe some day I'll be good enough to use eshell...
+
+#+BEGIN_SRC emacs-lisp
+  (use-package esh-autosuggest
+    :hook (eshell-mode . esh-autosuggest-mode)
+    ;;If you have use-package-hook-name-suffix set to nil, uncomment and use the
+    ;;line below instead:
+    ;:hook (eshell-mode-hook . esh-autosuggest-mode)
+    :ensure t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package fish-completion
+    :hook (eshell-mode . fish-completion-mode))
+#+END_SRC
+
+** Emacs fish completion
+:PROPERTIES:
+:HASH:     323350578313107061
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+This works... but I really dislike the fact that it opens auto
+complete suggestions in a separate buffer. Also, fish works really
+well with =ansi-term=.
+
+#+BEGIN_SRC emacs-lisp
+(when (and (executable-find "fish")
+           (require 'fish-completion nil t))
+  (global-fish-completion-mode))
+#+END_SRC
+
+** SSH and GPG keys
+:PROPERTIES:
+:HASH:     1689636696509137386
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Install =keychain-environment= so Emacs can use [[https://github.com/funtoo/keychain][keychain]] to access SSH
+and GPG keys.
+
+#+BEGIN_SRC emacs-lisp
+(use-package keychain-environment
+  :ensure t
+  :init
+  (keychain-refresh-environment))
+#+END_SRC
+
+** shell-mode
+:PROPERTIES:
+:HASH:     2219397869461753545
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+NOTE: This isn't used. Maybe some day I'll figure out a way to enjoy
+using =shell-mode= or =ansi-term=.
+
+Reference for everything below found [[http://manuel-uberti.github.io/emacs/2017/10/07/m-x-shell/][here]].
+
+Set =/bin/bash= as the default shell.
+
+#+BEGIN_SRC emacs-lisp
+;;(setq explicit-shell-file-name "/bin/bash")
+#+END_SRC
+
+Better history.
+
+#+BEGIN_SRC emacs-lisp
+(unbind-key "C-c C-l" shell-mode-map)
+(bind-key "C-c C-l" #'counsel-shell-history shell-mode-map)
+#+END_SRC
+
+Full window when invoking =shell-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(setq
+ display-buffer-alist
+ `(
+   ;; … other stuff …
+   (,(rx bos "*shell")
+    (display-buffer-same-window)
+    (reusable-frames . nil))
+   ;; … other stuff …
+  ))
+#+END_SRC
+
+** Elisp for various things
+:PROPERTIES:
+:HASH:     -391112383145093235
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+*** Activate miscellaneous minor modes for arbitrary file names
+:PROPERTIES:
+:HASH:     2152944041743733024
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Activate minor modes based on file names (from [[https://stackoverflow.com/a/13946304][here)]]:
+
+#+BEGIN_SRC emacs-lisp
+(defvar auto-minor-mode-alist ()
+  "Alist of filename patterns vs correpsonding minor mode
+functions, see `auto-mode-alist' All elements of this alist are
+checked, meaning you can enable multiple minor modes for the same
+regexp.")
+
+(defun enable-minor-mode-based-on-extension ()
+  "Check file name against `auto-minor-mode-alist' to enable minor modes
+the checking happens for all pairs in auto-minor-mode-alist"
+  (when buffer-file-name
+    (let ((name (file-name-sans-versions buffer-file-name))
+	  (remote-id (file-remote-p buffer-file-name))
+	  (case-fold-search auto-mode-case-fold)
+	  (alist auto-minor-mode-alist))
+      ;; Remove remote file name identification.
+      (when (and (stringp remote-id)
+		 (string-match-p (regexp-quote remote-id) name))
+	(setq name (substring name (match-end 0))))
+      (while (and alist (caar alist) (cdar alist))
+	(if (string-match-p (caar alist) name)
+	    (funcall (cdar alist) 1))
+	(setq alist (cdr alist))))))
+
+(add-hook 'find-file-hook #'enable-minor-mode-based-on-extension)
+
+;; Activate `auto-revert-mode' for calendar.org
+(add-to-list 'auto-minor-mode-alist '("\\calendar.org\\'" . auto-revert-mode))
+;; And don't tell me when it's been reverted
+(setq auto-revert-verbose nil)
+#+END_SRC
+
+*** Testing/reloading init.el
+:PROPERTIES:
+:HASH:     1261172946643100622
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Test init.el file to make sure it's fine:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/test-emacs (init-file)
+    "Evaluate INIT-FILE. Return buffer with errors if any are found.
+
+  With a prefix argument, assume INIT-FILE is `~/.emacs.d/init.el'."
+    (interactive (if current-prefix-arg
+                     (list "~/.emacs.d/init.el")
+                   (list (expand-file-name (read-file-name "Init file: ")))))
+    (require 'async)
+    (let ((command (format
+                    "emacs --batch --eval \"
+  (condition-case e
+      (progn
+        (load \\\"%s\\\")
+        (message \\\"-OK-\\\"))
+    (error
+     (message \\\"ERROR!\\\")
+     (signal (car e) (cdr e))))\"" init-file)))
+      (async-start
+       `(lambda () (shell-command-to-string ,command))
+       `(lambda (output)
+          (if (string-match "-OK-" output)
+              (when ,(called-interactively-p 'any)
+                (message "All is well"))
+            (switch-to-buffer-other-window "*startup error*")
+            (delete-region (point-min) (point-max))
+            (insert output)
+            (search-backward "ERROR!"))))))
+#+END_SRC
+
+Reload init file:
+
+#+BEGIN_SRC emacs-lisp
+(defun tm/reload-init ()
+  "Reload init.el."
+  (interactive)
+  (load-file "/home/tminor/.emacs.d/init.el"))
+
+(global-set-key (kbd "C-c r") 'reload-init)
+(global-set-key (kbd "C-c t") 'ora-test-emacs)
+#+END_SRC
+
+** Try
+:PROPERTIES:
+:HASH:     -197119128755719431
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Enables temporarily downloading and installing packages for the purpose
+of test driving. I discovered it [[http://cestlaz.github.io/posts/using-emacs-1-setup/#.Wb03a44pCfU][here]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package try
+  :ensure t)
+#+END_SRC
+
+** Which Key
+:PROPERTIES:
+:HASH:     1905220011752055783
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+This a nice package that helps Emacs neophytes such as myself. It lists
+possible key chord completion given at least one key press.
+I found out about it [[http://cestlaz.github.io/posts/using-emacs-1-setup/#.Wb03a44pCfU][here]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+#+END_SRC
+
+** Rainbow Mode
+:PROPERTIES:
+:HASH:     1493017327255420820
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Rainbow mode changes the background of any color name. This includes hexidecimal
+representation of colors.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-mode
+  :ensure t)
+#+END_SRC
+
+** Speed Typing
+:PROPERTIES:
+:HASH:     2246594080186080957
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+I need to be better at typing...
+
+#+BEGIN_SRC emacs-lisp
+(use-package speed-type
+  :ensure t
+  :config
+    (setq speed-type--gb-url-format
+      "http://www.gutenberg.org/cache/epub/%d/pg%d.txt"))
+#+END_SRC
+
+** Spell check
+:PROPERTIES:
+:HASH:     -711399502064739493
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+Spell checking with flyspell:
+
+#+BEGIN_SRC emacs-lisp
+(use-package flyspell
+  :ensure t
+  :config
+  (add-hook 'text-mode-hook 'flyspell-mode))
+#+END_SRC
+
+** Dependencies
+:PROPERTIES:
+:HASH:     -1556426998193198821
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(use-package request
+  :ensure t)
+(use-package jabber
+  :ensure t)
+#+END_SRC
+
+** File type modes (not =prog-mode= files)
+:PROPERTIES:
+:HASH:     597391532532998440
+:MODIFIED: 2019-03-05 17:15
+:END:
+
+File types like csv, yaml, etc.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package csv-mode
+    :ensure t)
+#+END_SRC
