@@ -4,7 +4,18 @@
 ;; You may delete these explanatory comments.
 (require 'package)
 (package-initialize)
+
 (setq package-enable-at-startup nil)
+
+(setq gc-cons-threshold 400000000
+      gc-cons-percentage 0.6
+      file-name-handler-alist nil)
+
+(add-hook 'after-init-hook
+          `(lambda ()
+             (setq gc-cons-threshold (default-value 'gc-cons-threshold)
+                   gc-cons-percentage (default-value 'gc-cons-percentage)
+                   file-name-handler-alist (default-value 'file-name-handler-alist))))
 
 (require 'org)
 (org-babel-load-file
