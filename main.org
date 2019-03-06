@@ -1,8 +1,8 @@
 
 * Intro
 :PROPERTIES:
-:HASH:     -1219145088731201443
-:MODIFIED: 2019-03-05 11:12
+:HASH:     -589744004590098429
+:MODIFIED: 2019-03-06 09:20
 :END:
 
 I've used [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org][this config]] as an inspiration for a lot of what follows.
@@ -11,6 +11,14 @@ Some conventions:
 - Headlines with TODOs /should/ have some accompanying ;; TODO:
   comments in code blocks that follow
 - General is used for consistent and (somewhat) friendly key binding
+- Some headings have subheadings titled "Elisp"; these sections
+  contain Emacs Lisp code written by me or taken from someone on the
+  internet
+  - All of these /should/ have a =tm/= prefix; this is not an attempt
+    at plagiarism (when stolen from the internet); it is, rather, an
+    attempt at consistent namespacing for times when I use
+    =describe-fuction= and the like to find
+    functions/variables/etc. I've added over time
 
 * Bootstrap
 :PROPERTIES:
@@ -26,8 +34,8 @@ In this section, we:
 
 ** Package repositories
 :PROPERTIES:
-:HASH:     2221530528979376582
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -634621256199735332
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 NOTE: For Windows, I needed GnuTLS DLLs. (Emacs for Windows isn't
@@ -47,8 +55,8 @@ someday want.
 
 ** =use-package= bootstrap
 :PROPERTIES:
-:HASH:     -1219410247609385735
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -634621256199735332
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 =use-package= provides consistent and sane package management and
@@ -65,14 +73,14 @@ configuration.
 
 ** Load path
 :PROPERTIES:
-:HASH:     179941136988799616
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -634621256199735332
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 *** Elisp
 :PROPERTIES:
-:HASH:     -1519255571228548134
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -634621256199735332
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Add non-package provided Elisp to Emacs's =load-path=:
@@ -84,8 +92,8 @@ Add non-package provided Elisp to Emacs's =load-path=:
 
 *** Emacs's $PATH
 :PROPERTIES:
-:HASH:     1496186630541564113
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -634621256199735332
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 TODO: Find a better way for this.
@@ -104,14 +112,14 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 ** Key bindings
 :PROPERTIES:
-:HASH:     -838906256427721949
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 *** General
 :PROPERTIES:
-:HASH:     -947062249372245618
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
@@ -134,8 +142,8 @@ Install [[https://github.com/noctuid/general.el#about][general.el]] for key bind
 
 *** Evil mode
 :PROPERTIES:
-:HASH:     -2286428206059364418
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Install =evil= for =vi= style editing:
@@ -151,8 +159,8 @@ Install =evil= for =vi= style editing:
 
 **** =evil-collection=
 :PROPERTIES:
-:HASH:     273880987241361299
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -167,8 +175,8 @@ Install =evil= for =vi= style editing:
 
 ** Emacs Navigation
 :PROPERTIES:
-:HASH:     -1113862052483974333
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Navigating in Emacs can be challenging. In this section, we'll make
@@ -177,8 +185,8 @@ buffers, etc.
 
 *** Buffer management
 :PROPERTIES:
-:HASH:     -2047250715978622418
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 =ibuffer= provides a menu for manipulating buffers.
@@ -195,14 +203,14 @@ buffers, etc.
 
 *** Lines, cursors, marks, etc.
 :PROPERTIES:
-:HASH:     -2272296285636966640
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 **** Cursor
 :PROPERTIES:
-:HASH:     137908319250381
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Highlight line containing cursor:
@@ -231,8 +239,8 @@ Multiple cursors for editing more than one line at the same time:
 
 **** Indentation
 :PROPERTIES:
-:HASH:     466669433152681881
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Install =highlight-indent-guides= for indentation indicators in
@@ -248,14 +256,14 @@ Install =highlight-indent-guides= for indentation indicators in
 
 *** Window management
 :PROPERTIES:
-:HASH:     1959899654456516101
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 **** Undo/redo window layout changes
 :PROPERTIES:
-:HASH:     -1268621220814266236
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 From =winner-mode= docstring:
@@ -286,8 +294,8 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 
 **** Workspace management
 :PROPERTIES:
-:HASH:     -865239432332721965
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Install =eyebrowse= for i3 style workspace management:
@@ -329,8 +337,8 @@ Install =eyebrowse= for i3 style workspace management:
 
 **** Switching/deleting/etc. windows
 :PROPERTIES:
-:HASH:     -2209058396951891580
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Install =ace-window= for more sane window management:
@@ -355,14 +363,14 @@ Install =ace-window= for more sane window management:
 
 *** File and project browsing
 :PROPERTIES:
-:HASH:     -1231981350854228757
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 **** Projectile
 :PROPERTIES:
-:HASH:     988129332208312494
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 [[https://github.com/bbatsov/projectile][Project interaction via projectile]]:
@@ -387,14 +395,14 @@ Install =ace-window= for more sane window management:
 
 ** Interface (GUI)
 :PROPERTIES:
-:HASH:     899302048992830596
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 *** GUI elements (scrollbar, menu bars)
 :PROPERTIES:
-:HASH:     -978959088109004257
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Disable the scroll bar by default:
@@ -433,8 +441,8 @@ Hide tool bar and menu bar:
 
 *** Startup
 :PROPERTIES:
-:HASH:     1786603268827270657
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Don't show the startup message:
@@ -445,8 +453,8 @@ Don't show the startup message:
 
 *** Mode-line
 :PROPERTIES:
-:HASH:     -1951704627168751325
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
@@ -474,11 +482,10 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
     :hook (after-init . doom-modeline-init))
 #+END_SRC
 
-
 ** Help/Info
 :PROPERTIES:
-:HASH:     1680481562127342845
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
@@ -500,16 +507,16 @@ Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+
 
 ** Completion (Ivy/Counsel/Swiper)
 :PROPERTIES:
-:HASH:     -1897885014209900197
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for completion and other fun.
 
 *** Ivy
 :PROPERTIES:
-:HASH:     643954175335726571
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -529,8 +536,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Counsel
 :PROPERTIES:
-:HASH:     -1203211376311288787
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -603,8 +610,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Swiper
 :PROPERTIES:
-:HASH:     1846047537942753920
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -614,8 +621,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 ** Themes
 :PROPERTIES:
-:HASH:     2031869142119754036
-:MODIFIED: 2019-03-05 17:15
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-06 08:49
 :END:
 
 =cherry-blossom-theme= is my preferred theme. I hope to adapt
@@ -628,14 +635,22 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 * Prog-mode
 :PROPERTIES:
-:HASH:     -823233193442489145
-:MODIFIED: 2019-03-02 17:40
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 08:46
 :END:
 
-** PowerShell
+** Language modes
 :PROPERTIES:
-:HASH:     -988907078781740968
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+Syntax highlighting, etc.
+
+*** PowerShell
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
 :END:
 
 Powershell syntax highlighting:
@@ -645,10 +660,10 @@ Powershell syntax highlighting:
     :ensure t)
 #+END_SRC
 
-** =puppet-mode=
+*** =puppet-mode=
 :PROPERTIES:
-:HASH:     -237958960844955016
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
 :END:
 
 Syntax highlighting for Puppet:
@@ -658,83 +673,10 @@ Syntax highlighting for Puppet:
     :ensure t)
 #+END_SRC
 
-** TODO Complete Any Mode
+*** MarkDown
 :PROPERTIES:
-:HASH:     -1047449494176183267
-:MODIFIED: 2019-03-05 17:15
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-03-04 Mon 16:51]
-:END:
-
-General completion mechanism:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :config
-    (add-hook 'prog-mode-hook 'company-mode)
-    (setq company-idle-delay 0.02))
-#+END_SRC
-
-*** Python
-:PROPERTIES:
-:HASH:     1177377737238254456
-:MODIFIED: 2019-03-05 17:15
-:END:
-
-Python JEDI backend for =company-mode=.
-
-NOTE: Don't forget to install =virtualenv= (=$ pip install
-virtualenv=) and run =M-x jedi:install-server=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package company-jedi
-  :ensure t
-  :config
-    (defun tm/python-mode-hook ()
-      (add-to-list 'company-backends 'company-jedi))
-    (add-hook 'python-mode-hook 'tm/python-mode-hook))
-#+END_SRC
-
-*** Shell
-:PROPERTIES:
-:HASH:     -1782480538166429242
-:MODIFIED: 2019-03-05 17:15
-:END:
-
-=company-shell= provides completion for fish and binaries found on =$PATH=.
-
-Find more documentation [[https://github.com/Alexander-Miller/company-shell][here]].
-
-#+BEGIN_SRC emacs-lisp
-(use-package company-shell
-  :ensure t
-  :config
-    (add-to-list 'company-backends
-                 '(company-shell company-shell-env company-fish-shell))
-    (setq company-shell-clean-manpage t))
-#+END_SRC
-
-** =rainbow-delimiters=
-:PROPERTIES:
-:HASH:     -1737744087313935732
-:MODIFIED: 2019-03-05 17:15
-:END:
-
-This makes hunting down paren pairs easier in Elisp:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-#+END_SRC
-
-** MarkDown
-:PROPERTIES:
-:HASH:     1182532753411954573
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
 :END:
 
 MarkDown syntax highlighting:
@@ -744,10 +686,10 @@ MarkDown syntax highlighting:
     :ensure t)
 #+END_SRC
 
-** Fish Mode
+*** Fish Mode
 :PROPERTIES:
-:HASH:     -486922436460423370
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
 :END:
 
 Sometimes fish one liners become long enough to deserve writing a
@@ -758,10 +700,10 @@ script! Fish syntax highlighting:
     :ensure t)
 #+END_SRC
 
-** TODO Ruby
+*** TODO Ruby
 :PROPERTIES:
-:HASH:     -2013105852128631895
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -786,10 +728,13 @@ loaded classes and modules, and where each method is defined.
     '(push 'company-robe company-backends)))
 #+END_SRC
 
-** Lisp
+*** TODO Lisp
 :PROPERTIES:
-:HASH:     -2205447758621586418
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-06 Wed 08:45]
 :END:
 
 [[http://sachachua.com/blog/2015/04/2015-04-08-emacs-lisp-development-tips-with-john-wiegley/][Notes]] from Sacha Chua and John Wiegly youtube video.
@@ -830,8 +775,20 @@ eldoc mode (stolen from John Wiegley's [[https://github.com/jwiegley/dot-emacs/b
 
 *** Elisp
 :PROPERTIES:
-:HASH:     -1965267850245680226
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+**** Formatting
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+***** Indent keywords properly
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
 :END:
 
 By default, =lisp-indent-function= indents =:keywords= improperly:
@@ -916,10 +873,77 @@ To fix this, define a new function to use for =lisp-indent-function=
                    (method
                     (funcall method indent-point state)))))))))
 #+END_SRC
+
+***** TODO Auto align :keywords "value" pairs
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-06 Wed 08:46]
+:END:
+
+** TODO Complete Any Mode
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-04 Mon 16:51]
+:END:
+
+General completion mechanism:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook 'company-mode)
+    (setq company-idle-delay 0.02))
+#+END_SRC
+
+*** Python
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+Python JEDI backend for =company-mode=.
+
+NOTE: Don't forget to install =virtualenv= (=$ pip install
+virtualenv=) and run =M-x jedi:install-server=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-jedi
+  :ensure t
+  :config
+    (defun tm/python-mode-hook ()
+      (add-to-list 'company-backends 'company-jedi))
+    (add-hook 'python-mode-hook 'tm/python-mode-hook))
+#+END_SRC
+
+*** Shell
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+=company-shell= provides completion for fish and binaries found on =$PATH=.
+
+Find more documentation [[https://github.com/Alexander-Miller/company-shell][here]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-shell
+  :ensure t
+  :config
+    (add-to-list 'company-backends
+                 '(company-shell company-shell-env company-fish-shell))
+    (setq company-shell-clean-manpage t))
+#+END_SRC
 ** TODO Miscellany
 :PROPERTIES:
-:HASH:     806926865369948694
-:MODIFIED: 2019-03-05 17:15
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 11:15]
@@ -968,16 +992,87 @@ Syntax checking:
     (setq flycheck-rubocoprc "/home/tminor/.config/rubocop/.rubocop.yml"))
 #+END_SRC
 
+*** =rainbow-delimiters=
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+This makes hunting down paren pairs easier in Elisp:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+** Version control
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+*** Magit
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :general
+    (tm/leader-def
+      :infix "m"
+      :prefix-command 'tm/magit-prefix-command
+      :prefix-map 'tm/magit-prefix-map
+      "" '(:which-key "magit prefix" :ignore t)
+      "B" 'tm/magit-blame-toggle
+      "C" 'magit-clone
+      "L" 'magit-log-buffer-file
+      "a" 'magit-submodule-add
+      "b" 'magit-branch
+      "c" 'magit-checkout
+      "f" 'magit-find-file
+      "l" 'magit-log-all
+      "s" 'magit-status
+      "p" 'magit-file-popup)
+    :config
+    (setq magit-diff-refine-hunk t
+          auto-revert-check-vc-info t
+          git-commit-summary-max-length 50
+          git-commit-major-mode 'org-mode))
+#+END_SRC
+
+*** Elisp
+:PROPERTIES:
+:HASH:     11050576340372672
+:MODIFIED: 2019-03-06 09:20
+:END:
+
+From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#functions-7][here]]:
+
+#+BEGIN_SRC emacs-lisp
+  (defun d/magit-blame-toggle ()
+    "Toggle magit-blame-mode on and off interactively.
+
+  Source: https://git.io/vQKub"
+    (interactive)
+    (if (bound-and-true-p magit-blame-mode)
+        (magit-blame-quit)
+      (call-interactively 'magit-blame)))
+#+END_SRC
 * Shell and Term Modes
 :PROPERTIES:
-:HASH:     -1910432554334820556
-:MODIFIED: 2019-03-02 17:40
+:HASH:     -1910432554737473740
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 ** TODO =term-mode=
 :PROPERTIES:
-:HASH:     -1570438392334455797
-:MODIFIED: 2019-03-05 11:15
+:HASH:     -1910432554737473740
+:MODIFIED: 2019-03-06 08:46
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:50]
@@ -993,8 +1088,8 @@ something I should work towards.
 
 ** TODO Eshell
 :PROPERTIES:
-:HASH:     -1846815538596949072
-:MODIFIED: 2019-03-05 11:15
+:HASH:     -1910432554737473740
+:MODIFIED: 2019-03-06 08:46
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1017,8 +1112,8 @@ Eshell should also probably become part of my workflow.
 
 *** Elisp
 :PROPERTIES:
-:HASH:     91445299929856593
-:MODIFIED: 2019-03-05 13:23
+:HASH:     -1910432554737473740
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 A quick internet search said that Eshell doesn't have anything like
@@ -1049,8 +1144,8 @@ ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     -2263715131652751389
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10544087936
+:MODIFIED: 2019-03-06 08:46
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1169,20 +1264,20 @@ ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
 
 ** Elisp
 :PROPERTIES:
-:HASH:     2746081904768
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10544087936
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 *** Sending
 :PROPERTIES:
-:HASH:     11258241906136640
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10544087936
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 **** Signatures
 :PROPERTIES:
-:HASH:     2151424297811103253
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10544087936
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1207,8 +1302,8 @@ Returns whatever the action returns."
 
 *** Alerts
 :PROPERTIES:
-:HASH:     -573265242011458389
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10544087936
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1280,18 +1375,22 @@ Returns whatever the action returns."
 :MODIFIED: 2019-03-05 11:12
 :END:
 
-** Config
+** Org-mode
 :PROPERTIES:
-:HASH:     -2070399783400171293
-:MODIFIED: 2019-03-05 17:30
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
+
+*** Config
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :ensure t
-
     :general
-
     (tm/leader-def
       :infix "o"
       :prefix-command 'tm/org-prefix-command
@@ -1300,22 +1399,12 @@ Returns whatever the action returns."
       "a" 'org-agenda
       "c" 'org-capture
       "b" 'org-switchb)
-
-    (org-agenda-mode-map
-     :keymaps 'override
-     "j" 'org-agenda-next-item
-     "k" 'org-agenda-previous-item
-     "J" 'tm/org-agenda-next-header
-     "K" 'tm/org-agenda-previous-header)
-
     :init
-
     ;; Use UTF8 bullets instead of asterisks for Org headings
     (use-package org-bullets
       :ensure t
       :config
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
     ;; Evil key bindings in Org mode
     (use-package evil-org
       :ensure t
@@ -1324,20 +1413,13 @@ Returns whatever the action returns."
       (add-hook 'org-mode-hook 'evil-org-mode)
       (add-hook 'evil-org-mode-hook
                 (lambda ()
-                  (evil-org-set-key-theme)))
-      (require 'evil-org-agenda)
-      (evil-org-agenda-set-keys))
-
+                  (evil-org-set-key-theme))))
     :config
-
     ;; Set org file base directory
     (setq org-base-directory "~/org/")
 
-    ;; Increase indentation based on heading level
+    ;; Add indentation based on heading level
     (setq org-startup-indented t)
-
-    ;; Set default capture file
-    (setq org-default-notes-file "~/org/capture.org")
 
     ;; Enable syntax highlighting for code blocks
     ;;
@@ -1345,11 +1427,7 @@ Returns whatever the action returns."
     (setq org-src-fontify-natively t)
 
     ;; Tweak tag placement when window sizes change
-    (add-hook 'window-configuration-change-hook 'tm/place-agenda-tags)
     (add-hook 'window-configuration-change-hook 'tm/place-org-tags)
-
-    ;; Remove inherited tags when refiling
-    (add-hook 'org-after-refile-insert-hook 'tm/org-remove-inherited-local-tags)
 
     ;; Add modified time property when Org mode files are saved
     ;;
@@ -1360,76 +1438,166 @@ Returns whatever the action returns."
                                                      nil
                                                      'file #'tm/skip-nonmodified))))
 
+    ;; Define TODO/DONE-state keywords
+    (setq org-todo-keywords
+          '((sequence "TODO(t!)"
+                      "WAITING(w@)"
+                      "HOLD(h@)"
+                      "NEXT(n@)"
+                      "MAYBE(m@)"
+                      "STUFF(s!)"
+                      "PROJECT(p!)"
+                      "|"
+                      "DONE(d@)"
+                      "CANCELLED(c@)")))
+
+    ;; Enable state change logging in :LOGBOOK: drawer
+    (setq org-log-into-drawer t)
+
+    ;; Enable fast todo selection
+    (setq org-use-fast-todo-selection t)
+
+    ;; Faces
+    ;;
+    ;; TODO: Find a better way to move this into a theme
+    ;; Task state faces
+    (setq org-todo-keyword-faces
+          '(("TODO" :foreground "red" :weight bold)
+            ("NEXT" :foreground "blue" :weight bold)
+            ("DONE" :foreground "forest green" :weight bold)
+            ("WAITING" :foreground "orange" :weight bold)
+            ("MAYBE" :foreground "yellow" :weight bold)
+            ("PROJECT" :foreground "purple" :weight bold)
+            ("STUFF" :foreground "cyan" :weight bold)
+            ("HOLD" :foreground "magenta" :weight bold)
+            ("CANCELLED" :foreground "forest green" :weight bold)
+            ("MEETING" :foreground "forest green" :weight bold)))
+
+    ;; Priority faces
+    (setq org-priority-faces '((?A . (:foreground "red" :weight 'bold))
+                               (?B . (:foreground "yellow"))
+                               (?C . (:foreground "green"))))
+
     ;;  ;;;;;;;;;;;;;;;;;;;
     ;;
     ;; `org-refile' section
     ;;
     ;;  ;;;;;;;;;;;;;;;;;;;
 
+    ;; Define refile targets and specify max level so we aren't bombarded
+    ;; with too many choices
     (setq org-refile-targets
           '((nil :maxlevel . 1)
             (org-agenda-files :maxlevel . 1)))
+
+    ;; Using `ivy' or similar negates the need for Org's native complete
+    ;; in steps for refiling
     (setq org-outline-path-complete-in-steps nil)
+
+    ;; Include file name in refile targets
     (setq org-refile-use-outline-path 'file)
 
-    ;;  ;;;;;;;;;;;;;;;;;;;;
+    ;; Hooks
     ;;
-    ;; `org-capture' section
-    ;;
-    ;;  ;;;;;;;;;;;;;;;;;;;;
+    ;; Remove inherited tags when refiling
+    (add-hook 'org-after-refile-insert-hook
+              'tm/org-remove-inherited-local-tags))
+#+END_SRC
 
-    ;; Capture templates
-    ;;
-    ;; TODO: Set deadlines automatically
-    ;; TODO: Add capture template for Emacs config modifications
-    ;; TODO: Don't prompt for priority; template for each urgency
-    ;; TODO: Break long strings (I've already wrapped them in `concat')
-    (setq org-capture-templates
-          (quote (("t" "Templates for TODOs.")
-                  ;; Urgent/high priority TODOs
-                  ("tu" "TODO that should be done soon."
-                   entry (file "~/org/todo.org")
-                   (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\nSCHEDULED: %^{(SCHEDULED) }t\n:PROPERTIES:\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
-                  ;; Non-urgent TODOs
-                  ("tl" "TODO that can be done later."
-                   entry (file "~/org/todo.org")
-                   (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\n:PROPERTIES:\nDEADLINE: %^{(DEADLINE) }t\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
-                  ;; NOTE for notes.org
-                  ("n" ":NOTE: about something to remember in notes.org."
-                   entry (file+function "~/org/notes.org" org-ask-location)
-                   "* %? %^{Tags, please}g")
-                  ;; Archive LINK and LINK HTML
-                  ("l" "LINK to save for posterity."
-                   entry (file "~/org/links.org")
-                   "* LINK [[%x][%?]]\n%U\n:PROPERTIES:\n:CONTEXT: %a\n:END:")
-                  ;; Low friction quick capture for later processing
-                  ("s" "STUFF for quick capture."
-                   entry (file "~/org/capture.org")
-                   "* STUFF %?\n%U\n%f\n%a\n")
-                  ("p" "Templates for PROJECTs.")
-                  ;; Create new PROJECT
-                  ("pp" "New PROJECT containing NOTEs and TODOs."
-                   entry (file "~/org/projects.org")
-                   (concat "* PROJECT [#%^{Priority: |C|B|A}] %?\nDEADLINE:%^{(DEADLINE) Date and time, please}t\n:PROPERTIES:\n:CONTEXT: %a\n:END:"))
-                  ;; Create new TODO under PROJECT
-                  ("pt" "TODO associated with a project."
-                   entry (file+function "~/org/projects.org" org-ask-location)
-                   (concat "* TODO [#%^{Priority: |C|B|A}] %?\n:PROPERTIES:\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
-                  ("pu" "Urgent TODO associated with a project."
-                   entry (file+function "~/org/projects.org" org-ask-location)
-                   (concat "* TODO [#%^{Priority: |C|B|A}] %?\n:SCHEDULED: %^{(SCHEDULED) }t\n:PROPERTIES:\n:CONTEXT: %a\n:Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n:END:"))
-                  ;; Add :NOTE: to subheading of currently clocked entry
-                  ("c" ":NOTE: for currently clocked entry."
-                   item (function org-capture-clocked-note)
-                   "- %?"))))
+*** Elisp
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
 
-    ;; ;;;;;;;;;;;;;;;;;;;;
-    ;;
-    ;; `org-agenda' section
-    ;;
-    ;; ;;;;;;;;;;;;;;;;;;;;
+**** Tag placement
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
 
-    ;; Org agenda files
+#+BEGIN_SRC emacs-lisp
+  (defun tm/place-agenda-tags ()
+      "Flush tags to right side of agenda window."
+      (with-current-buffer
+          (buffer-name)
+        (if (derived-mode-p 'org-agenda-mode)
+            (progn
+              (setq org-agenda-tags-column (abs (- 20 (window-width))))
+              (setq org-habit-graph-column (abs (- 65 (window-width))))
+              (org-agenda-align-tags))
+          nil)))
+
+  (defun tm/place-org-tags ()
+      "Align tags with right side of current window."
+      (with-current-buffer
+          (buffer-name)
+        (if (derived-mode-p 'org-mode)
+            (progn
+              (setq org-tags-column (abs (- 30 (window-width))))
+              (org-align-all-tags))
+          nil)))
+#+END_SRC
+
+**** Org-refile functions
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
+
+From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/org-remove-inherited-local-tags ()
+    "Remove local tags that can be inherited instead."
+    (let* ((target-tags-local (org-get-tags-at nil 'local))
+           ;; We have to remove the local tags otherwise they would not show up
+           ;; as being inherited if they are present on parents---the local tag
+           ;; would "override" the parent
+           (target-tags-inherited
+            (unwind-protect
+                (progn
+                  (org-set-tags-to nil)
+                  (org-get-tags-at))
+              (org-set-tags-to target-tags-local))))
+      (-each target-tags-local
+        (lambda (tag)
+          (when (member tag target-tags-inherited)
+            (org-toggle-tag tag 'off))))))
+#+END_SRC
+
+** Org-agenda
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
+
+*** Config
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-agenda
+    :general
+    (org-agenda-mode-map
+     :keymaps 'override
+     "j" 'org-agenda-next-item
+     "k" 'org-agenda-previous-item
+     "J" 'tm/org-agenda-next-header
+     "K" 'tm/org-agenda-previous-header)
+    :init
+    (use-package evil-org-agenda
+      :config
+      (evil-org-agenda-set-keys))
+    :config
+    ;; Hooks
+    ;;
+    ;; Place tags flush with right side of window
+    (add-hook 'window-configuration-change-hook 'tm/place-agenda-tags)
+
+    ;; Files that `org-agenda' uses to populate its commands/views
     (setq org-agenda-files '("~/org/projects.org"
                              "~/org/capture.org"
                              "~/org/someday.org"
@@ -1553,45 +1721,201 @@ Returns whatever the action returns."
                     (agenda "" nil)))))))
 #+END_SRC
 
-** Elisp
+*** Elisp
 :PROPERTIES:
-:HASH:     2746081904768
-:MODIFIED: 2019-03-05 17:15
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
 
-*** Tag placement
+**** Add modified date property to headings in Org mode file
 :PROPERTIES:
-:HASH:     -1543904491706964296
-:MODIFIED: 2019-03-05 17:15
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
+
+Functions for calculating last update time per Org heading (from
+[[https://emacs.stackexchange.com/a/39376][here]]):
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/getentryhash ()
+    "Get the hash sum of the text in current entry, except :HASH: and :MODIFIED: property texts."
+    (save-excursion
+      (let* ((beg (progn (org-back-to-heading) (point)))
+             (end (progn
+                    (forward-char)
+                    (if (not (re-search-forward "^\*+ " (point-max) t))
+                        (point-max)
+                      (match-beginning 0))))
+             (full-str (buffer-substring beg end))
+             (str-nohash (if (string-match "^ *:HASH:.+\n" full-str)
+                             (replace-match "" nil nil full-str)
+                           full-str))
+             (str-nohash-nomod (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
+                                   (replace-match "" nil nil str-nohash)
+                                 str-nohash))
+             (str-nohash-nomod-nopropbeg (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
+                                             (replace-match "" nil nil str-nohash-nomod)
+                                           str-nohash-nomod))
+             (str-nohash-nomod-nopropbeg-end (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
+                                                 (replace-match "" nil nil str-nohash-nomod-nopropbeg)
+                                               str-nohash-nomod-nopropbeg)))
+        ;; BODY
+        (sxhash str-nohash-nomod-nopropbeg-end))))
+
+  (defun tm/update-modification-time ()
+    "Set the :MODIFIED: property of the current entry to NOW and update :HASH: property."
+    (org-set-property "HASH" (format "%s" (tm/getentryhash)))
+    (org-set-property "MODIFIED" (format-time-string "%Y-%m-%d %H:%M")))
+
+  (defun tm/skip-nonmodified ()
+    "Skip org entries, which were not modified according to the :HASH: property"
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+      (if (string= (org-entry-get (point) "HASH" nil) (format "%s" (tm/getentryhash)))
+      next-headline
+        nil)))
+#+END_SRC
+
+**** More convenient movement
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
+
+Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
+
+#+BEGIN_SRC emacs-lisp
+  (require 'org-agenda)
+
+  (defun tm/org-agenda-next-header ()
+    "Jump to the next header in an agenda series."
+    (interactive)
+    (tm/org-agenda-goto-header))
+
+  (defun tm/org-agenda-previous-header ()
+    "Jump to the previous header in an agenda series."
+    (interactive)
+    (tm/org-agenda-goto-header t))
+
+  (defun tm/org-agenda-goto-header (&optional backwards)
+    "Find the next agenda series header forwards or BACKWARDS."
+    (let ((pos (save-excursion
+                 (goto-char (if backwards
+                                (line-beginning-position)
+                              (line-end-position)))
+                 (let* ((find-func (if backwards
+                                       'previous-single-property-change
+                                     'next-single-property-change))
+                        (end-func (if backwards
+                                      'max
+                                    'min))
+                        (all-pos-raw (list (funcall find-func (point) 'org-agenda-structural-header)
+                                           (funcall find-func (point) 'org-agenda-date-header)))
+                        (all-pos (cl-remove-if-not 'numberp all-pos-raw))
+                        (prop-pos (if all-pos (apply end-func all-pos) nil)))
+                   prop-pos))))
+      (if pos (goto-char pos))
+      (if backwards (goto-char (line-beginning-position)))))
+#+END_SRC
+
+** Org-capture
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
+:END:
+
+*** Config
+:PROPERTIES:
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (defun tm/place-agenda-tags ()
-      "Flush tags to right side of agenda window."
-      (with-current-buffer
-          (buffer-name)
-        (if (derived-mode-p 'org-agenda-mode)
-            (progn
-              (setq org-agenda-tags-column (abs (- 20 (window-width))))
-              (setq org-habit-graph-column (abs (- 65 (window-width))))
-              (org-agenda-align-tags))
-          nil)))
+  (use-package org-capture
+    :config
+    ;; Set default capture file
+    (setq org-default-notes-file "~/org/capture.org")
 
-  (defun tm/place-org-tags ()
-      "Align tags with right side of current window."
-      (with-current-buffer
-          (buffer-name)
-        (if (derived-mode-p 'org-mode)
-            (progn
-              (setq org-tags-column (abs (- 30 (window-width))))
-              (org-align-all-tags))
-          nil)))
+    ;; Capture templates
+    ;;
+    ;; TODO: Set deadlines automatically
+    ;; TODO: Add capture template for Emacs config modifications
+    ;; TODO: Don't prompt for priority; template for each urgency
+    (setq org-capture-templates
+          '(("t" "Templates for TODOs.")
+            ;; Urgent/high priority TODOs
+            ("tu" "TODO that should be done soon."
+             entry (file "~/org/todo.org")
+             (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\n"
+                     "SCHEDULED: %^{(SCHEDULED) }t\n"
+                     ":PROPERTIES:\n"
+                     ":CONTEXT: %a\n"
+                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                     ":END:"))
+
+            ;; Non-urgent TODOs
+            ("tl" "TODO that can be done later."
+             entry (file "~/org/todo.org")
+             (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\n"
+                     ":PROPERTIES:\n"
+                     "DEADLINE: %^{(DEADLINE) }t\n"
+                     ":CONTEXT: %a\n"
+                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                     ":END:"))
+
+            ;; NOTE for notes.org
+            ("n" ":NOTE: about something to remember in notes.org."
+             entry (file+function "~/org/notes.org" org-ask-location)
+             "* %? %^{Tags, please}g")
+
+            ;; Archive LINK and LINK HTML
+            ("l" "LINK to save for posterity."
+             entry (file "~/org/links.org")
+             "* LINK [[%x][%?]]\n%U\n:PROPERTIES:\n:CONTEXT: %a\n:END:")
+
+            ;; Low friction quick capture for later processing
+            ("s" "STUFF for quick capture."
+             entry (file "~/org/capture.org")
+             "* STUFF %?\n%U\n%f\n%a\n")
+
+            ("p" "Templates for PROJECTs.")
+
+            ;; Create new PROJECT
+            ("pp" "New PROJECT containing NOTEs and TODOs."
+             entry (file "~/org/projects.org")
+             (concat "* PROJECT [#%^{Priority: |C|B|A}] %?\n"
+                     "DEADLINE:%^{(DEADLINE)}t\n"
+                     ":PROPERTIES:\n"
+                     ":CONTEXT: %a\n"
+                     ":END:"))
+
+            ;; Create new TODO under PROJECT
+            ("pt" "TODO associated with a project."
+             entry (file+function "~/org/projects.org" org-ask-location)
+             (concat "* TODO [#%^{Priority: |C|B|A}] %?\n"
+                     ":PROPERTIES:\n"
+                     ":CONTEXT: %a\n"
+                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                     ":END:"))
+
+            ("pu" "Urgent TODO associated with a project."
+             entry (file+function "~/org/projects.org" org-ask-location)
+             (concat "* TODO [#%^{Priority: |C|B|A}] %?\n"
+                     ":SCHEDULED: %^{(SCHEDULED) }t\n"
+                     ":PROPERTIES:\n"
+                     ":CONTEXT: %a\n"
+                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                     ":END:"))
+
+            ;; Add :NOTE: to subheading of currently clocked entry
+            ("c" ":NOTE: for currently clocked entry."
+             item (function org-capture-clocked-note)
+             "- %?"))))
 #+END_SRC
 
-*** =org-capture= functions
+*** Elisp
 :PROPERTIES:
-:HASH:     1023498959633493614
-:MODIFIED: 2019-03-05 17:15
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1670,143 +1994,11 @@ Returns whatever the action returns."
           (error "No running clock that could be used as capture target"))))
 #+END_SRC
 
-
-*** =org-agenda= functions
-:PROPERTIES:
-:HASH:     1785312398235969895
-:MODIFIED: 2019-03-05 17:21
-:END:
-
-**** Add modified date property to headings in Org mode file
-:PROPERTIES:
-:HASH:     1785312398235969895
-:MODIFIED: 2019-03-05 17:30
-:END:
-
-Functions for calculating last update time per Org heading (from
-[[https://emacs.stackexchange.com/a/39376][here]]):
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/getentryhash ()
-    "Get the hash sum of the text in current entry, except :HASH: and :MODIFIED: property texts."
-    (save-excursion
-      (let* ((beg (progn (org-back-to-heading) (point)))
-             (end (progn
-                    (forward-char)
-                    (if (not (re-search-forward "^\*+ " (point-max) t))
-                        (point-max)
-                      (match-beginning 0))))
-             (full-str (buffer-substring beg end))
-             (str-nohash (if (string-match "^ *:HASH:.+\n" full-str)
-                             (replace-match "" nil nil full-str)
-                           full-str))
-             (str-nohash-nomod (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
-                                   (replace-match "" nil nil str-nohash)
-                                 str-nohash))
-             (str-nohash-nomod-nopropbeg (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
-                                             (replace-match "" nil nil str-nohash-nomod)
-                                           str-nohash-nomod))
-             (str-nohash-nomod-nopropbeg-end (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
-                                                 (replace-match "" nil nil str-nohash-nomod-nopropbeg)
-                                               str-nohash-nomod-nopropbeg)))
-        ;; BODY
-        (sxhash str-nohash-nomod-nopropbeg-end))))
-
-  (defun tm/update-modification-time ()
-    "Set the :MODIFIED: property of the current entry to NOW and update :HASH: property."
-    (org-set-property "HASH" (format "%s" (yant/getentryhash)))
-    (org-set-property "MODIFIED" (format-time-string "%Y-%m-%d %H:%M")))
-
-  (defun tm/skip-nonmodified ()
-    "Skip org entries, which were not modified according to the :HASH: property"
-    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
-      (if (string= (org-entry-get (point) "HASH" nil) (format "%s" (yant/getentryhash)))
-      next-headline
-        nil)))
-#+END_SRC
-
-**** More convenient movement
-:PROPERTIES:
-:HASH:     1785312398235969895
-:MODIFIED: 2019-03-05 17:30
-:END:
-
-Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
-
-#+BEGIN_SRC emacs-lisp
-  (require 'org-agenda)
-
-  (defun tm/org-agenda-next-header ()
-    "Jump to the next header in an agenda series."
-    (interactive)
-    (tm/org-agenda-goto-header))
-
-  (defun tm/org-agenda-previous-header ()
-    "Jump to the previous header in an agenda series."
-    (interactive)
-    (tm/org-agenda-goto-header t))
-
-  (defun tm/org-agenda-goto-header (&optional backwards)
-    "Find the next agenda series header forwards or BACKWARDS."
-    (let ((pos (save-excursion
-                 (goto-char (if backwards
-                                (line-beginning-position)
-                              (line-end-position)))
-                 (let* ((find-func (if backwards
-                                       'previous-single-property-change
-                                     'next-single-property-change))
-                        (end-func (if backwards
-                                      'max
-                                    'min))
-                        (all-pos-raw (list (funcall find-func (point) 'org-agenda-structural-header)
-                                           (funcall find-func (point) 'org-agenda-date-header)))
-                        (all-pos (cl-remove-if-not 'numberp all-pos-raw))
-                        (prop-pos (if all-pos (apply end-func all-pos) nil)))
-                   prop-pos))))
-      (if pos (goto-char pos))
-      (if backwards (goto-char (line-beginning-position)))))
-#+END_SRC
-
-
-*** =org-refile= functions
-:PROPERTIES:
-:HASH:     1418401885741103974
-:MODIFIED: 2019-03-05 17:30
-:END:
-
-From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/org-remove-inherited-local-tags ()
-    "Remove local tags that can be inherited instead."
-    (let* ((target-tags-local (org-get-tags-at nil 'local))
-           ;; We have to remove the local tags otherwise they would not show up
-           ;; as being inherited if they are present on parents---the local tag
-           ;; would "override" the parent
-           (target-tags-inherited
-            (unwind-protect
-                (progn
-                  (org-set-tags-to nil)
-                  (org-get-tags-at))
-              (org-set-tags-to target-tags-local))))
-      (-each target-tags-local
-        (lambda (tag)
-          (when (member tag target-tags-inherited)
-            (org-toggle-tag tag 'off))))))
-#+END_SRC
-
 ** Task States
 :PROPERTIES:
-:HASH:     1606825696475980231
-:MODIFIED: 2019-03-05 17:15
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
-
-Documentation [[https://orgmode.org/manual/Workflow-states.html][here]].
-
-#+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords
-  '((sequence "TODO(t!)" "WAITING(w@)" "HOLD(h@)" "NEXT(n@)" "MAYBE(m@)" "STUFF(s!)" "PROJECT(p!)" "|" "DONE(d@)" "CANCELLED(c@)")))
-#+END_SRC
 
 Using =org-habits= helps to track repeated tasks.
 
@@ -1817,52 +2009,22 @@ Using =org-habits= helps to track repeated tasks.
       org-habit-show-habits-only-for-today t)
 #+END_SRC
 
-Enable log changes in =LOGBOOK= drawer.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-log-into-drawer t)
-#+END_SRC
-
-Enable fast task state selection:
-
-#+BEGIN_SRC emacs-lisp
-(setq org-use-fast-todo-selection t)
-#+END_SRC
-
-Task state faces:
-
-#+BEGIN_SRC emacs-lisp
-(setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "red" :weight bold)
-              ("NEXT" :foreground "blue" :weight bold)
-              ("DONE" :foreground "forest green" :weight bold)
-              ("WAITING" :foreground "orange" :weight bold)
-              ("MAYBE" :foreground "yellow" :weight bold)
-              ("PROJECT" :foreground "purple" :weight bold)
-              ("STUFF" :foreground "cyan" :weight bold)
-              ("HOLD" :foreground "magenta" :weight bold)
-              ("CANCELLED" :foreground "forest green" :weight bold)
-              ("MEETING" :foreground "forest green" :weight bold))))
-#+END_SRC
-
-And priority faces:
-
-#+BEGIN_SRC emacs-lisp
-(setq org-priority-faces '((?A . (:foreground "red" :weight 'bold))
-                           (?B . (:foreground "yellow"))
-                           (?C . (:foreground "green"))))
-#+END_SRC
-
-** Blog Publishing
+** TODO Blog Publishing
 :PROPERTIES:
-:HASH:     -508865561446328561
-:MODIFIED: 2019-03-05 17:15
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-06 Wed 08:47]
+:END:
+
+I never use this (because I never blog). I should re-evaluate this
+(and blog more) and decide if moving to Hugo would be better/easier.
 
 *** =org2jekyll=
 :PROPERTIES:
-:HASH:     -508865561446328561
-:MODIFIED: 2019-03-05 17:15
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
@@ -1940,8 +2102,8 @@ Define the following variables:
 
 *** Creating a Blog Post
 :PROPERTIES:
-:HASH:     -508865561446328561
-:MODIFIED: 2019-03-05 17:15
+:HASH:     690710421753024
+:MODIFIED: 2019-03-06 08:48
 :END:
 
 1. Invoke =org2jekyll-create-draft=, select your layout and follow the prompts in the mini buffer.
@@ -1956,8 +2118,8 @@ Define the following variables:
 
 ** Hydra Bootstrap
 :PROPERTIES:
-:HASH:     2244164991449656466
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Make sure hydra is installed.
@@ -1969,14 +2131,14 @@ Make sure hydra is installed.
 
 ** Window Management
 :PROPERTIES:
-:HASH:     1959195950329798149
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 *** hydra Window Functions
 :PROPERTIES:
-:HASH:     593261976847696897
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 The following functions are used in =hydra-window=.
@@ -2017,8 +2179,8 @@ The following functions are used in =hydra-window=.
 
 *** hydra-window
 :PROPERTIES:
-:HASH:     -597235663269452721
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 From [[https://github.com/abo-abo/hydra/wiki/Window-Management][the wiki]].
@@ -2088,8 +2250,8 @@ From [[https://github.com/abo-abo/hydra/wiki/Window-Management][the wiki]].
 
 ** Dired
 :PROPERTIES:
-:HASH:     412923922215214483
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2150,8 +2312,8 @@ T - tag prefix
 
 ** Projectile
 :PROPERTIES:
-:HASH:     1208299698538677392
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 For projectile fun:
@@ -2208,8 +2370,8 @@ For projectile fun:
 
 ** Magit
 :PROPERTIES:
-:HASH:     -161092125374219222
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2303,8 +2465,8 @@ If `magit' is not yet loaded yet, just call `magit-status' directly."
 
 ** Notmuch
 :PROPERTIES:
-:HASH:     586024545352502535
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2498,8 +2660,8 @@ If `magit' is not yet loaded yet, just call `magit-status' directly."
 
 ** Org Agenda
 :PROPERTIES:
-:HASH:     -69048731092457891
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2585,8 +2747,8 @@ _vr_ reset      ^^                       ^^                 ^^
 
 ** Multiple-cursors
 :PROPERTIES:
-:HASH:     896418686631676365
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2618,8 +2780,8 @@ _vr_ reset      ^^                       ^^                 ^^
 
 ** Hydra for hydras above
 :PROPERTIES:
-:HASH:     -1549122272347755066
-:MODIFIED: 2019-03-05 17:15
+:HASH:     169047581120
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Remembering keys is hard, so here's a hydra that should add a menu for
@@ -2700,8 +2862,8 @@ _o_:  hydra-org-agenda
 :END:
 ** Kill whitespace when saving
 :PROPERTIES:
-:HASH:     235965361912391494
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2710,8 +2872,8 @@ _o_:  hydra-org-agenda
 
 ** eshell
 :PROPERTIES:
-:HASH:     931114834085182346
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Maybe some day I'll be good enough to use eshell...
@@ -2732,8 +2894,8 @@ Maybe some day I'll be good enough to use eshell...
 
 ** Emacs fish completion
 :PROPERTIES:
-:HASH:     323350578313107061
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 This works... but I really dislike the fact that it opens auto
@@ -2748,8 +2910,8 @@ well with =ansi-term=.
 
 ** SSH and GPG keys
 :PROPERTIES:
-:HASH:     1689636696509137386
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Install =keychain-environment= so Emacs can use [[https://github.com/funtoo/keychain][keychain]] to access SSH
@@ -2764,8 +2926,8 @@ and GPG keys.
 
 ** shell-mode
 :PROPERTIES:
-:HASH:     2219397869461753545
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 NOTE: This isn't used. Maybe some day I'll figure out a way to enjoy
@@ -2802,14 +2964,14 @@ Full window when invoking =shell-mode=.
 
 ** Elisp for various things
 :PROPERTIES:
-:HASH:     -391112383145093235
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 *** Activate miscellaneous minor modes for arbitrary file names
 :PROPERTIES:
-:HASH:     2152944041743733024
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Activate minor modes based on file names (from [[https://stackoverflow.com/a/13946304][here)]]:
@@ -2848,8 +3010,8 @@ the checking happens for all pairs in auto-minor-mode-alist"
 
 *** Testing/reloading init.el
 :PROPERTIES:
-:HASH:     1261172946643100622
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Test init.el file to make sure it's fine:
@@ -2898,8 +3060,8 @@ Reload init file:
 
 ** Try
 :PROPERTIES:
-:HASH:     -197119128755719431
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Enables temporarily downloading and installing packages for the purpose
@@ -2912,8 +3074,8 @@ of test driving. I discovered it [[http://cestlaz.github.io/posts/using-emacs-1-
 
 ** Which Key
 :PROPERTIES:
-:HASH:     1905220011752055783
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 This a nice package that helps Emacs neophytes such as myself. It lists
@@ -2929,8 +3091,8 @@ I found out about it [[http://cestlaz.github.io/posts/using-emacs-1-setup/#.Wb03
 
 ** Rainbow Mode
 :PROPERTIES:
-:HASH:     1493017327255420820
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Rainbow mode changes the background of any color name. This includes hexidecimal
@@ -2943,8 +3105,8 @@ representation of colors.
 
 ** Speed Typing
 :PROPERTIES:
-:HASH:     2246594080186080957
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 I need to be better at typing...
@@ -2959,8 +3121,8 @@ I need to be better at typing...
 
 ** Spell check
 :PROPERTIES:
-:HASH:     -711399502064739493
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 Spell checking with flyspell:
@@ -2974,8 +3136,8 @@ Spell checking with flyspell:
 
 ** Dependencies
 :PROPERTIES:
-:HASH:     -1556426998193198821
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2987,8 +3149,8 @@ Spell checking with flyspell:
 
 ** File type modes (not =prog-mode= files)
 :PROPERTIES:
-:HASH:     597391532532998440
-:MODIFIED: 2019-03-05 17:15
+:HASH:     10539259680
+:MODIFIED: 2019-03-06 08:46
 :END:
 
 File types like csv, yaml, etc.
