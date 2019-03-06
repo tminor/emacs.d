@@ -20,6 +20,67 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
+** Table of Contents                                                                                         :TOC:
+:PROPERTIES:
+:HASH:     -1302248861476810370
+:MODIFIED: 2019-03-06 10:01
+:END:
+
+
+- [[#intro][Intro]]
+- [[#bootstrap][Bootstrap]]
+  - [[#package-repositories][Package repositories]]
+  - [[#use-package-bootstrap][=use-package= bootstrap]]
+  - [[#load-path][Load path]]
+- [[#make-emacs-friendlier][Make Emacs Friendlier]]
+  - [[#key-bindings][Key bindings]]
+  - [[#emacs-navigation][Emacs Navigation]]
+  - [[#interface-gui][Interface (GUI)]]
+  - [[#helpinfo][Help/Info]]
+  - [[#completion-ivycounselswiper][Completion (Ivy/Counsel/Swiper)]]
+  - [[#themes][Themes]]
+- [[#prog-mode][Prog-mode]]
+  - [[#language-modes][Language modes]]
+  - [[#complete-any-mode][Complete Any Mode]]
+  - [[#miscellany][Miscellany]]
+  - [[#version-control][Version control]]
+- [[#shell-and-term-modes][Shell and Term Modes]]
+  - [[#term-mode][=term-mode=]]
+  - [[#eshell][Eshell]]
+- [[#mail][Mail]]
+  - [[#notmuch][Notmuch]]
+  - [[#elisp][Elisp]]
+- [[#org-mode][Org-mode]]
+  - [[#org-mode-1][Org-mode]]
+  - [[#org-agenda][Org-agenda]]
+  - [[#org-capture][Org-capture]]
+  - [[#task-states][Task States]]
+  - [[#blog-publishing][Blog Publishing]]
+- [[#hydra][Hydra]]
+  - [[#hydra-bootstrap][Hydra Bootstrap]]
+  - [[#window-management][Window Management]]
+  - [[#dired][Dired]]
+  - [[#projectile][Projectile]]
+  - [[#magit][Magit]]
+  - [[#notmuch-1][Notmuch]]
+  - [[#org-agenda-1][Org Agenda]]
+  - [[#multiple-cursors][Multiple-cursors]]
+  - [[#hydra-for-hydras-above][Hydra for hydras above]]
+- [[#other][Other]]
+  - [[#kill-whitespace-when-saving][Kill whitespace when saving]]
+  - [[#eshell-1][eshell]]
+  - [[#emacs-fish-completion][Emacs fish completion]]
+  - [[#ssh-and-gpg-keys][SSH and GPG keys]]
+  - [[#shell-mode][shell-mode]]
+  - [[#elisp-for-various-things][Elisp for various things]]
+  - [[#try][Try]]
+  - [[#which-key][Which Key]]
+  - [[#rainbow-mode][Rainbow Mode]]
+  - [[#speed-typing][Speed Typing]]
+  - [[#spell-check][Spell check]]
+  - [[#dependencies][Dependencies]]
+  - [[#file-type-modes-not-prog-mode-files][File type modes (not =prog-mode= files)]]
+
 * Bootstrap
 :PROPERTIES:
 :HASH:     -634621256199735332
@@ -1145,7 +1206,7 @@ ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
 ** TODO Notmuch
 :PROPERTIES:
 :HASH:     10544087936
-:MODIFIED: 2019-03-06 08:46
+:MODIFIED: 2019-03-06 09:59
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1265,19 +1326,19 @@ ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
 ** Elisp
 :PROPERTIES:
 :HASH:     10544087936
-:MODIFIED: 2019-03-06 08:46
+:MODIFIED: 2019-03-06 09:59
 :END:
 
 *** Sending
 :PROPERTIES:
 :HASH:     10544087936
-:MODIFIED: 2019-03-06 08:46
+:MODIFIED: 2019-03-06 09:59
 :END:
 
 **** Signatures
 :PROPERTIES:
 :HASH:     10544087936
-:MODIFIED: 2019-03-06 08:46
+:MODIFIED: 2019-03-06 09:59
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1303,7 +1364,7 @@ Returns whatever the action returns."
 *** Alerts
 :PROPERTIES:
 :HASH:     10544087936
-:MODIFIED: 2019-03-06 08:46
+:MODIFIED: 2019-03-06 09:59
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1369,6 +1430,17 @@ Returns whatever the action returns."
   (add-hook 'notmuch-after-tag-hook #'tm/notmuch-unread)
 #+END_SRC
 
+*** TODO Reminders for sent mail
+:PROPERTIES:
+:HASH:     10544087936
+:MODIFIED: 2019-03-06 09:59
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-06 Wed 09:32]
+:END:
+
+Reminders a la Gmail about sent mail that hasn't received a response.
+
 * Org-mode
 :PROPERTIES:
 :HASH:     690710421753024
@@ -1378,13 +1450,13 @@ Returns whatever the action returns."
 ** Org-mode
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 *** Config
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1415,6 +1487,12 @@ Returns whatever the action returns."
                 (lambda ()
                   (evil-org-set-key-theme))))
     :config
+    ;; Add TOC for any heading with :TOC: tag
+    (use-package toc-org
+      :ensure t
+      :config
+      (add-hook 'org-mode-hook 'toc-org-mode))
+
     ;; Set org file base directory
     (setq org-base-directory "~/org/")
 
@@ -1507,13 +1585,13 @@ Returns whatever the action returns."
 *** Elisp
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 **** Tag placement
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1542,7 +1620,7 @@ Returns whatever the action returns."
 **** Org-refile functions
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
@@ -1569,13 +1647,13 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 ** Org-agenda
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 *** Config
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1724,13 +1802,13 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 *** Elisp
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 **** Add modified date property to headings in Org mode file
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 Functions for calculating last update time per Org heading (from
@@ -1778,7 +1856,7 @@ Functions for calculating last update time per Org heading (from
 **** More convenient movement
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
@@ -1820,13 +1898,13 @@ Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber
 ** Org-capture
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 *** Config
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1915,7 +1993,7 @@ Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber
 *** Elisp
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1997,7 +2075,7 @@ Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber
 ** Task States
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 Using =org-habits= helps to track repeated tasks.
@@ -2012,7 +2090,7 @@ Using =org-habits= helps to track repeated tasks.
 ** TODO Blog Publishing
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:47]
@@ -2024,7 +2102,7 @@ I never use this (because I never blog). I should re-evaluate this
 *** =org2jekyll=
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
@@ -2103,7 +2181,7 @@ Define the following variables:
 *** Creating a Blog Post
 :PROPERTIES:
 :HASH:     690710421753024
-:MODIFIED: 2019-03-06 08:48
+:MODIFIED: 2019-03-06 10:00
 :END:
 
 1. Invoke =org2jekyll-create-draft=, select your layout and follow the prompts in the mini buffer.
