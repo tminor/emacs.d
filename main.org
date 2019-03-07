@@ -181,13 +181,13 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 ** Key bindings
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 *** General
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
@@ -211,7 +211,7 @@ Install [[https://github.com/noctuid/general.el#about][general.el]] for key bind
 *** Evil mode
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Install =evil= for =vi= style editing:
@@ -228,7 +228,7 @@ Install =evil= for =vi= style editing:
 **** =evil-collection=
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -244,7 +244,7 @@ Install =evil= for =vi= style editing:
 *** Which-key
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 After pressing a prefix key and waiting a short time, [[https://github.com/justbur/emacs-which-key][which-key]]
@@ -271,7 +271,7 @@ provides a pop-up for possible completion candidates.
 ** Emacs Navigation
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Navigating in Emacs can be challenging. In this section, we'll make
@@ -281,7 +281,7 @@ buffers, etc.
 *** Buffer management
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 =ibuffer= provides a menu for manipulating buffers.
@@ -299,13 +299,13 @@ buffers, etc.
 *** Lines, cursors, marks, etc.
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 **** Cursor
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Highlight line containing cursor:
@@ -335,7 +335,7 @@ Multiple cursors for editing more than one line at the same time:
 **** Indentation
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Install =highlight-indent-guides= for indentation indicators in
@@ -352,13 +352,13 @@ Install =highlight-indent-guides= for indentation indicators in
 *** Window management
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 **** Undo/redo window layout changes
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 From =winner-mode= docstring:
@@ -390,7 +390,7 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 **** Workspace management
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Install =eyebrowse= for i3 style workspace management:
@@ -433,7 +433,7 @@ Install =eyebrowse= for i3 style workspace management:
 **** Switching/deleting/etc. windows
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Install =ace-window= for more sane window management:
@@ -456,16 +456,32 @@ Install =ace-window= for more sane window management:
       "s" 'ace-swap-window))
 #+END_SRC
 
+**** Window splitting/deleting
+:PROPERTIES:
+:HASH:     -1963024755265275210
+:MODIFIED: 2019-03-07 08:50
+:END:
+
+Remap =C-x {2,3,0}= commands:
+
+#+BEGIN_SRC emacs-lisp
+  (tm/leader-def
+    "1" 'delete-other-windows
+    "2" 'split-window-below
+    "3" 'split-window-right
+    "0" 'delete-window)
+#+END_SRC
+
 *** File and project browsing
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 **** Projectile
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 [[https://github.com/bbatsov/projectile][Project interaction via projectile]]:
@@ -491,13 +507,13 @@ Install =ace-window= for more sane window management:
 ** Interface (GUI)
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 *** GUI elements (scrollbar, menu bars)
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Disable the scroll bar by default:
@@ -537,7 +553,7 @@ Hide tool bar and menu bar:
 *** Startup
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Don't show the startup message:
@@ -549,7 +565,7 @@ Don't show the startup message:
 *** Mode-line
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
@@ -580,7 +596,7 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 ** Help/Info
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
@@ -603,7 +619,7 @@ Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+
 ** Completion (Ivy/Counsel/Swiper)
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for completion and other fun.
@@ -611,7 +627,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 *** Ivy
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -632,7 +648,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 *** Counsel
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -706,7 +722,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 *** Swiper
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -717,7 +733,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 *** All-the-icons for Ivy/Counsel
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -729,7 +745,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 ** Themes
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 =cherry-blossom-theme= is my preferred theme. I hope to adapt
@@ -743,13 +759,13 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 ** Config management
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 *** Custom set variables/faces/etc.
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 =custom.el= tends to litter =init.el= with things that are hard to
@@ -767,7 +783,7 @@ puts changes here.
 *** No-littering in =~/.emacs.d=
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 [[https://github.com/tarsius/no-littering/][no-littering]]
@@ -783,7 +799,7 @@ puts changes here.
 *** Try packages temporarily
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Enables temporarily downloading and installing packages for the
@@ -797,7 +813,7 @@ purpose of test driving. I discovered it [[http://cestlaz.github.io/posts/using-
 *** Testing/reloading init.el
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Test init.el file to make sure it's fine:
@@ -858,13 +874,13 @@ Bind them to some keys:
 ** Cleanup
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 *** Delete specified buffers at midnight
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 Given a list of regular expressions, kill matched buffer names at
@@ -882,7 +898,7 @@ midnight.
 ** Clipboard management
 :PROPERTIES:
 :HASH:     -1963024755265275210
-:MODIFIED: 2019-03-06 17:41
+:MODIFIED: 2019-03-07 08:50
 :END:
 
 #+BEGIN_SRC emacs-lisp
