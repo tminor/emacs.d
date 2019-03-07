@@ -42,6 +42,7 @@ Some conventions:
   - [[#themes][Themes]]
   - [[#config-management][Config management]]
   - [[#clipboard-management][Clipboard management]]
+  - [[#cleaningtidying][Cleaning/tidying]]
 - [[#prog-mode][Prog-mode]]
   - [[#language-modes][Language modes]]
   - [[#complete-any-mode][Complete any mode]]
@@ -209,14 +210,14 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 ** Key bindings
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -838906256427721949
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 *** General
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -838906256427721949
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
@@ -239,8 +240,8 @@ Install [[https://github.com/noctuid/general.el#about][general.el]] for key bind
 
 *** Evil mode
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -838906256427721949
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Install =evil= for =vi= style editing:
@@ -256,8 +257,8 @@ Install =evil= for =vi= style editing:
 
 **** =evil-collection=
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -838906256427721949
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -272,8 +273,8 @@ Install =evil= for =vi= style editing:
 
 *** Which-key
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -838906256427721949
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 After pressing a prefix key and waiting a short time, [[https://github.com/justbur/emacs-which-key][which-key]]
@@ -296,8 +297,8 @@ provides a pop-up for possible completion candidates.
 
 ** Emacs Navigation
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Navigating in Emacs can be challenging. In this section, we'll make
@@ -306,8 +307,8 @@ buffers, etc.
 
 *** Buffer management
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 =ibuffer= provides a menu for manipulating buffers.
@@ -324,14 +325,14 @@ buffers, etc.
 
 *** Lines, cursors, marks, etc.
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 **** Cursor
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Highlight line containing cursor:
@@ -360,8 +361,8 @@ Multiple cursors for editing more than one line at the same time:
 
 **** Indentation
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Install =highlight-indent-guides= for indentation indicators in
@@ -377,14 +378,14 @@ Install =highlight-indent-guides= for indentation indicators in
 
 *** Window management
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 **** Undo/redo window layout changes
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 From =winner-mode= docstring:
@@ -415,8 +416,8 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 
 **** Workspace management
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Install =eyebrowse= for i3 style workspace management:
@@ -458,8 +459,8 @@ Install =eyebrowse= for i3 style workspace management:
 
 **** Switching/deleting/etc. windows
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Install =ace-window= for more sane window management:
@@ -484,14 +485,14 @@ Install =ace-window= for more sane window management:
 
 *** File and project browsing
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 **** Projectile
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1113862052483974333
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 [[https://github.com/bbatsov/projectile][Project interaction via projectile]]:
@@ -516,14 +517,14 @@ Install =ace-window= for more sane window management:
 
 ** Interface (GUI)
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     899302048992830596
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 *** GUI elements (scrollbar, menu bars)
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     899302048992830596
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Disable the scroll bar by default:
@@ -562,8 +563,8 @@ Hide tool bar and menu bar:
 
 *** Startup
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     899302048992830596
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Don't show the startup message:
@@ -574,8 +575,8 @@ Don't show the startup message:
 
 *** Mode-line
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     899302048992830596
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
@@ -605,8 +606,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 
 ** Help/Info
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     1680481562127342845
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
@@ -628,16 +629,16 @@ Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+
 
 ** Completion (Ivy/Counsel/Swiper)
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1897885014209900197
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for completion and other fun.
 
 *** Ivy
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1897885014209900197
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -657,8 +658,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Counsel
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1897885014209900197
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -731,8 +732,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Swiper
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1897885014209900197
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -742,8 +743,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** All-the-icons for Ivy/Counsel
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -1897885014209900197
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -754,8 +755,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 #+END_SRC
 ** Themes
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     2031869142119754036
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 =cherry-blossom-theme= is my preferred theme. I hope to adapt
@@ -768,14 +769,14 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 ** Config management
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -255871378894702387
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 *** Try packages temporarily
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -255871378894702387
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Enables temporarily downloading and installing packages for the
@@ -788,8 +789,8 @@ purpose of test driving. I discovered it [[http://cestlaz.github.io/posts/using-
 
 *** Testing/reloading init.el
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:25
+:HASH:     -255871378894702387
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Test init.el file to make sure it's fine:
@@ -849,14 +850,14 @@ Bind them to some keys:
 
 ** Clipboard management
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:32
+:HASH:     -1549530288639930896
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 *** Clipboard monitoring
 :PROPERTIES:
-:HASH:     -1963024755265275210
-:MODIFIED: 2019-03-07 13:32
+:HASH:     -1549530288639930896
+:MODIFIED: 2019-03-07 14:01
 :END:
 
 Sync contents of X clipboard to kill ring:
@@ -885,6 +886,32 @@ Ensure =kill-ring= is saved between sessions:
     :config
     (savehist-mode 1)
     (add-to-list 'savehist-additional-variables 'kill-ring))
+#+END_SRC
+
+** Cleaning/tidying
+:PROPERTIES:
+:HASH:     1604505156192718687
+:MODIFIED: 2019-03-07 14:01
+:END:
+
+*** Buffer cleanup
+:PROPERTIES:
+:HASH:     -1392778595975714456
+:MODIFIED: 2019-03-07 14:02
+:END:
+
+Clean up matching buffers at midnight:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package midnight
+    :config
+    ;; TODO: Decide what needs cleaning and define here
+    (setq clean-buffer-list-delay-general 2
+          clean-buffer-list-kill-regexps '("\\`\\*Man "
+                                           "\\`\\*helpful "
+                                           "\\`\\*notmuch-"
+                                           "\\`\\magit"))
+    (midnight-mode))
 #+END_SRC
 
 * Prog-mode
