@@ -1526,8 +1526,8 @@ and GPG keys.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     659005496
-:MODIFIED: 2019-03-07 16:10
+:HASH:     530512379093374346
+:MODIFIED: 2019-03-07 16:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1654,8 +1654,8 @@ and GPG keys.
 
 ** Elisp
 :PROPERTIES:
-:HASH:     659005496
-:MODIFIED: 2019-03-07 16:10
+:HASH:     179967223717759716
+:MODIFIED: 2019-03-07 16:43
 :END:
 
 *** Sending
@@ -1772,22 +1772,20 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 * Org-mode
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -850461984269202717
+:MODIFIED: 2019-03-07 16:43
 :END:
-
-test
 
 ** Org-mode
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -850461984269202929
+:MODIFIED: 2019-03-07 16:43
 :END:
 
 *** Config
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -2154502013584024369
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1928,14 +1926,14 @@ test
 
 *** Elisp
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     2748610496648
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 **** Tag placement
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     2748610496648
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1963,8 +1961,8 @@ test
 
 **** Org-refile functions
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     2748610496648
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
@@ -1990,20 +1988,20 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 ** Org-agenda
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -969502394185843472
+:MODIFIED: 2019-03-07 16:43
 :END:
 
 *** Elisp
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     2748610496648
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 **** Add modified date property to headings in Org mode file
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     1899051546922688790
+:MODIFIED: 2019-03-07 16:41
 :END:
 
 Functions for calculating last update time per Org heading (from
@@ -2045,10 +2043,21 @@ Functions for calculating last update time per Org heading (from
   (defun tm/update-modification-time ()
     "Set the :MODIFIED: property of the current entry to NOW and
   update :HASH: property."
-    (org-set-property "HASH"
-                      (format "%s" (tm/getentryhash)))
-    (org-set-property "MODIFIED"
-                      (format-time-string "%Y-%m-%d %H:%M")))
+    (save-excursion
+      (save-restriction
+        (let* ((beg
+                (progn
+                  (org-back-to-heading)
+                  (point)))
+               (end
+                (progn
+                  (outline-next-heading)
+                  (- (point) 1))))
+          (narrow-to-region beg end)
+          (org-set-property "HASH"
+                            (format "%s" (tm/getentryhash)))
+          (org-set-property "MODIFIED"
+                            (format-time-string "%Y-%m-%d %H:%M"))))))
 
   (defun tm/skip-nonmodified ()
     "Skip headings whose :MODIFIED: properties are unchanged."
@@ -2064,8 +2073,8 @@ Functions for calculating last update time per Org heading (from
 
 **** More convenient movement
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -1439660543959359505
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
@@ -2106,8 +2115,8 @@ Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber
 
 **** Auto-refresh specified files when they change on disk
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -300557567572295318
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 Activate minor modes based on file names (from [[https://stackoverflow.com/a/13946304][here)]]:
@@ -2141,8 +2150,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -137487481642406929
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2300,14 +2309,14 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 ** Org-capture
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -1732704381928392116
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 *** Config
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -1732704381928392116
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2395,8 +2404,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Elisp
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     -1732704381928392116
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2477,8 +2486,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 ** TODO Blog Publishing
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     297549561005720616
+:MODIFIED: 2019-03-07 16:27
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:47]
@@ -2489,8 +2498,8 @@ I never use this (because I never blog). I should re-evaluate this
 
 *** =org2jekyll=
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     297549561005720616
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
@@ -2568,8 +2577,8 @@ Define the following variables:
 
 *** Creating a Blog Post
 :PROPERTIES:
-:HASH:     227666307030218987
-:MODIFIED: 2019-03-07 16:22
+:HASH:     297549561005720616
+:MODIFIED: 2019-03-07 16:27
 :END:
 
 1. Invoke =org2jekyll-create-draft=, select your layout and follow the prompts in the mini buffer.
