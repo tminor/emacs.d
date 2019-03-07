@@ -1778,14 +1778,14 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** Org-mode
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:35
+:HASH:     11246022048402624
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 *** Config
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:35
+:HASH:     11246022048402624
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1925,14 +1925,14 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Elisp
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:35
+:HASH:     11246022048402624
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 **** Tag placement
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:35
+:HASH:     11246022048402624
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1960,8 +1960,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 **** Org-refile functions
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:35
+:HASH:     11246022048402624
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
@@ -1987,20 +1987,20 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 ** Org-agenda
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     -1732704381319149120
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 *** Elisp
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     43977767946368
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 **** Add modified date property to headings in Org mode file
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     449289835304713528
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 Functions for calculating last update time per Org heading (from
@@ -2008,47 +2008,64 @@ Functions for calculating last update time per Org heading (from
 
 #+BEGIN_SRC emacs-lisp
   (defun tm/getentryhash ()
-    "Get the hash sum of the text in current entry, except :HASH: and :MODIFIED: property texts."
+    "Get the hash sum of the text in current entry, except :HASH:
+  and :MODIFIED: property texts."
     (save-excursion
-      (let* ((beg (progn (org-back-to-heading) (point)))
-             (end (progn
-                    (forward-char)
-                    (if (not (re-search-forward "^\*+ " (point-max) t))
-                        (point-max)
-                      (match-beginning 0))))
-             (full-str (buffer-substring beg end))
-             (str-nohash (if (string-match "^ *:HASH:.+\n" full-str)
-                             (replace-match "" nil nil full-str)
-                           full-str))
-             (str-nohash-nomod (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
-                                   (replace-match "" nil nil str-nohash)
-                                 str-nohash))
-             (str-nohash-nomod-nopropbeg (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
-                                             (replace-match "" nil nil str-nohash-nomod)
-                                           str-nohash-nomod))
-             (str-nohash-nomod-nopropbeg-end (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
-                                                 (replace-match "" nil nil str-nohash-nomod-nopropbeg)
-                                               str-nohash-nomod-nopropbeg)))
-        ;; BODY
+      (let* ((beg
+              (progn
+                (org-back-to-heading)
+                (point)))
+             (end
+              (progn
+                (forward-char)
+                (if (not (re-search-forward "^\*+ " (point-max) t))
+                    (point-max)
+                  (match-beginning 0))))
+             (full-str
+              (buffer-substring beg end))
+             (str-nohash
+              (if (string-match "^ *:HASH:.+\n" full-str)
+                  (replace-match "" nil nil full-str)
+                full-str))
+             (str-nohash-nomod
+              (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
+                  (replace-match "" nil nil str-nohash)
+                str-nohash))
+             (str-nohash-nomod-nopropbeg
+              (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
+                  (replace-match "" nil nil str-nohash-nomod)
+                str-nohash-nomod))
+             (str-nohash-nomod-nopropbeg-end
+              (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
+                  (replace-match "" nil nil str-nohash-nomod-nopropbeg)
+                str-nohash-nomod-nopropbeg)))
         (sxhash str-nohash-nomod-nopropbeg-end))))
 
   (defun tm/update-modification-time ()
-    "Set the :MODIFIED: property of the current entry to NOW and update :HASH: property."
-    (org-set-property "HASH" (format "%s" (tm/getentryhash)))
-    (org-set-property "MODIFIED" (format-time-string "%Y-%m-%d %H:%M")))
+    "Set the :MODIFIED: property of the current entry to NOW and
+  update :HASH: property."
+    (org-set-property "HASH"
+                      (format "%s" (tm/getentryhash)))
+    (org-set-property "MODIFIED"
+                      (format-time-string "%Y-%m-%d %H:%M")))
 
   (defun tm/skip-nonmodified ()
-    "Skip org entries, which were not modified according to the :HASH: property"
-    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
-      (if (string= (org-entry-get (point) "HASH" nil) (format "%s" (tm/getentryhash)))
-      next-headline
+    "Skip org entries, which were not modified according to the
+  :HASH: property"
+    (let ((next-headline
+           (save-excursion
+             (or (outline-next-heading)
+                 (point-max)))))
+      (if (string= (org-entry-get (point) "HASH" nil)
+                   (format "%s" (tm/getentryhash)))
+          next-headline
         nil)))
 #+END_SRC
 
 **** More convenient movement
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     23861388787187443
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
@@ -2089,8 +2106,8 @@ Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber
 
 **** Auto-refresh specified files when they change on disk
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     -197235062729337245
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 Activate minor modes based on file names (from [[https://stackoverflow.com/a/13946304][here)]]:
@@ -2124,8 +2141,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     -2199799706278510957
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2283,14 +2300,14 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 ** Org-capture
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     -53154000289946425
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 *** Config
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     -53154000289946425
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2378,8 +2395,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Elisp
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     -53154000289946425
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2460,8 +2477,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 ** TODO Blog Publishing
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     149106957664141960
+:MODIFIED: 2019-03-07 14:39
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:47]
@@ -2472,8 +2489,8 @@ I never use this (because I never blog). I should re-evaluate this
 
 *** =org2jekyll=
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     149106957664141960
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
@@ -2551,8 +2568,8 @@ Define the following variables:
 
 *** Creating a Blog Post
 :PROPERTIES:
-:HASH:     690710421753024
-:MODIFIED: 2019-03-06 16:36
+:HASH:     149106957664141960
+:MODIFIED: 2019-03-07 14:39
 :END:
 
 1. Invoke =org2jekyll-create-draft=, select your layout and follow the prompts in the mini buffer.
