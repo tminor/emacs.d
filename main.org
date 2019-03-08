@@ -22,8 +22,8 @@ Some conventions:
 
 ** Table of Contents                                                                                         :TOC:
 :PROPERTIES:
-:HASH:     1232210582870272074
-:MODIFIED: 2019-03-08 10:42
+:HASH:     78190e712a4139f467e8794cfecaaa76
+:MODIFIED: 2019-03-08 15:36:52
 :END:
 
 - [[#intro][Intro]]
@@ -78,8 +78,8 @@ Some conventions:
 
 ** TODO Large config changes
 :PROPERTIES:
-:HASH:     22240049601939013
-:MODIFIED: 2019-03-08 10:42
+:HASH:     a809178df0a73cfec59f739a040c6354
+:MODIFIED: 2019-03-08 15:48:05
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 10:55]
@@ -90,7 +90,7 @@ Some conventions:
 
 * Bootstrap
 :PROPERTIES:
-:HASH:     bc2b26cba707fcc92ad03ff0afd7fdeb
+:HASH:     8c2a0caf8fbd97dc266b5553bec99564
 :MODIFIED: 2019-03-08 14:47:24
 :END:
 
@@ -204,8 +204,8 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 * Make Emacs Friendlier
 :PROPERTIES:
-:HASH:     51e7fbcb66eeb071a74da1c92f5be9e3
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     2e091ba324c4ad4bb9d9a18c3357c6eb
+:MODIFIED: 2019-03-08 15:48:05
 :END:
 
 ** Key bindings
@@ -977,8 +977,8 @@ Clean up matching buffers at midnight:
 
 * Prog-mode
 :PROPERTIES:
-:HASH:     d51f5e7fb56c0d848014a1c4af6c7774
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     90d4d36e3c0c9c492cefe319acf21374
+:MODIFIED: 2019-03-08 15:48:05
 :END:
 
 ** Language modes
@@ -1430,8 +1430,8 @@ From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#function
 #+END_SRC
 * Shell and Term Modes
 :PROPERTIES:
-:HASH:     3499f294ed32bfa73d7978794bbedff9
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     7c791981d7972ac86100ae2ec527dbae
+:MODIFIED: 2019-03-08 15:48:05
 :END:
 
 ** TODO Term-mode
@@ -1783,8 +1783,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 * Org-mode
 :PROPERTIES:
-:HASH:     56efecd8b9e38af93b1d4d83200d980a
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     1ec6d96ffcc20597ffd547966ecf91ee
+:MODIFIED: 2019-03-08 15:48:05
 :END:
 
 ** Org-mode
@@ -2066,23 +2066,24 @@ Functions for calculating last update time per Org heading (from
 
   (defun tm/skip-nonmodified ()
     "Skip headings whose :MODIFIED: properties are unchanged."
-    (let* ((next-headline
-            (save-excursion
-              (or (outline-next-heading)
-                  (point-max))))
-           (beg
-            (progn
-              (org-back-to-heading)
-              (point)))
-           (end
-            (progn
-              (outline-next-heading)
-              (- (point) 1))))
-      (narrow-to-region beg end)
-      (if (string= (org-entry-get (point) "HASH" nil)
-                   (format "%s" (tm/getentryhash)))
-          next-headline
-        nil)))
+    (let ((next-headline
+           (save-excursion
+             (or (outline-next-heading)
+                 (point-max)))))
+      (save-restriction
+        (let* ((beg
+                (progn
+                  (org-back-to-heading)
+                  (point)))
+               (end
+                (progn
+                  (outline-next-heading)
+                  (- (point) 1))))
+          (narrow-to-region beg end)
+          (if (string= (org-entry-get (point) "HASH" nil)
+                       (format "%s" (tm/getentryhash)))
+              next-headline
+            nil)))))
 #+END_SRC
 
 **** More convenient movement
@@ -2601,8 +2602,8 @@ Define the following variables:
 
 * Hydra
 :PROPERTIES:
-:HASH:     5d2bb55f8298f10392db15f1737a4994
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     5e6e39921e99257f5dec24edd71c7ccd
+:MODIFIED: 2019-03-08 15:48:05
 :END:
 
 ** Hydra bootstrap
@@ -3346,8 +3347,8 @@ _o_:  hydra-org-agenda
 
 * Other
 :PROPERTIES:
-:HASH:     45d59d4a6f9da3b7d345060e56119ed5
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     4bad01946f576f1858db6dc458a7ff7a
+:MODIFIED: 2019-03-08 15:48:05
 :END:
 
 ** Kill whitespace when saving
