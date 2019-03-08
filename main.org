@@ -23,7 +23,7 @@ Some conventions:
 ** Table of Contents                                                                                         :TOC:
 :PROPERTIES:
 :HASH:     78190e712a4139f467e8794cfecaaa76
-:MODIFIED: 2019-03-08 15:36:52
+:MODIFIED: 2019-03-08 15:50:50
 :END:
 
 - [[#intro][Intro]]
@@ -102,8 +102,8 @@ In this section, we:
 
 ** Package repositories
 :PROPERTIES:
-:HASH:     -1420591557128573739
-:MODIFIED: 2019-03-08 10:42
+:HASH:     5f1c05eee66b46ec95b319e1032edc81
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 NOTE: For Windows, I needed GnuTLS DLLs. (Emacs for Windows isn't
@@ -123,8 +123,8 @@ someday want.
 
 ** Use-package bootstrap
 :PROPERTIES:
-:HASH:     -2286241354130032384
-:MODIFIED: 2019-03-08 10:42
+:HASH:     2283195e68aaec1226ce96d9982b8c3a
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 =use-package= provides consistent and sane package management and
@@ -141,8 +141,8 @@ configuration.
 
 ** No-littering
 :PROPERTIES:
-:HASH:     -1086683924538657449
-:MODIFIED: 2019-03-08 10:42
+:HASH:     c20149043a5c4b15e9866a1b9181053a
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Keep files we don't manage from accumulating in =~/.emacs.d/=:
@@ -171,14 +171,14 @@ Keep files we don't manage from accumulating in =~/.emacs.d/=:
 
 ** Load path
 :PROPERTIES:
-:HASH:     541204579147648023
-:MODIFIED: 2019-03-08 10:42
+:HASH:     d8e0bd6c649de49b656336b237438d72
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 *** Elisp
 :PROPERTIES:
-:HASH:     -474308953321643104
-:MODIFIED: 2019-03-08 10:42
+:HASH:     2962e4541e9a12c921dc2471bf7ee31b
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Add non-package provided Elisp to Emacs's =load-path=:
@@ -190,8 +190,8 @@ Add non-package provided Elisp to Emacs's =load-path=:
 
 *** Emacs's =$PATH=
 :PROPERTIES:
-:HASH:     1819970503634981492
-:MODIFIED: 2019-03-08 10:42
+:HASH:     8ff34d280287eac613e76429c2b7f79d
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 TODO: Find a better way for this.
@@ -210,14 +210,14 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 ** Key bindings
 :PROPERTIES:
-:HASH:     1960290444164841075
-:MODIFIED: 2019-03-08 10:42
+:HASH:     065b29dcb7f339c8b012d7309865c245
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
-*** General
+*** General.el
 :PROPERTIES:
-:HASH:     1905826780093479969
-:MODIFIED: 2019-03-08 10:42
+:HASH:     b6d5afa1789a85bfd13a014e18b3f170
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
@@ -240,8 +240,8 @@ Install [[https://github.com/noctuid/general.el#about][general.el]] for key bind
 
 *** Evil mode
 :PROPERTIES:
-:HASH:     1342148528031229406
-:MODIFIED: 2019-03-08 10:42
+:HASH:     bf5b8f82af947215d62b1c5988aead70
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 Install =evil= for =vi= style editing:
@@ -257,8 +257,8 @@ Install =evil= for =vi= style editing:
 
 **** =evil-collection=
 :PROPERTIES:
-:HASH:     -629434100225457876
-:MODIFIED: 2019-03-08 10:42
+:HASH:     2daa3a0ba1685c1c3498c9986cb0b715
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -273,8 +273,8 @@ Install =evil= for =vi= style editing:
 
 *** Which-key
 :PROPERTIES:
-:HASH:     590824677387453724
-:MODIFIED: 2019-03-08 10:42
+:HASH:     0d356961187545f6692afc99e55b044a
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 After pressing a prefix key and waiting a short time, [[https://github.com/justbur/emacs-which-key][which-key]]
@@ -297,8 +297,8 @@ provides a pop-up for possible completion candidates.
 
 ** Emacs navigation
 :PROPERTIES:
-:HASH:     139764164433340347
-:MODIFIED: 2019-03-08 10:42
+:HASH:     4779231949f3e304a921508cb6807dfa
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 Navigating in Emacs can be challenging. In this section, we'll make
@@ -307,8 +307,8 @@ buffers, etc.
 
 *** Buffer management
 :PROPERTIES:
-:HASH:     1973586762933726745
-:MODIFIED: 2019-03-08 10:42
+:HASH:     794c355ab7eb70de527342edfcb76025
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 =ibuffer= provides a menu for manipulating buffers.
@@ -325,14 +325,14 @@ buffers, etc.
 
 *** Lines, cursors, marks, etc.
 :PROPERTIES:
-:HASH:     -1256154465461207536
-:MODIFIED: 2019-03-08 10:42
+:HASH:     0c308dd41f3dd35f05947ea71ca2bee3
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 **** Cursor
 :PROPERTIES:
-:HASH:     -180143446390447770
-:MODIFIED: 2019-03-08 10:42
+:HASH:     4b690e00ed1d98a148161f5ac0768662
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Highlight line containing cursor:
@@ -361,8 +361,8 @@ Multiple cursors for editing more than one line at the same time:
 
 **** Indentation
 :PROPERTIES:
-:HASH:     650341273814604086
-:MODIFIED: 2019-03-08 10:42
+:HASH:     a8b6f369e3c6b1e7065420a0c278841d
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Install =highlight-indent-guides= for indentation indicators in
@@ -378,14 +378,14 @@ Install =highlight-indent-guides= for indentation indicators in
 
 *** Window management
 :PROPERTIES:
-:HASH:     -695230777363034283
-:MODIFIED: 2019-03-08 10:42
+:HASH:     24ef076bad6be26be2c5115f0cd6099b
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 **** Undo/redo window layout changes
 :PROPERTIES:
-:HASH:     1129951554453559265
-:MODIFIED: 2019-03-08 10:42
+:HASH:     72c3a6fbd4e5d95ab71ef0ae754f386c
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 From =winner-mode= docstring:
@@ -416,8 +416,8 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 
 **** Workspace management
 :PROPERTIES:
-:HASH:     -1102258150610950720
-:MODIFIED: 2019-03-08 10:42
+:HASH:     cba25789cada8a610dd31d4f8d0e4f59
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Install =eyebrowse= for i3 style workspace management:
@@ -459,8 +459,8 @@ Install =eyebrowse= for i3 style workspace management:
 
 **** Switching/deleting/etc. windows
 :PROPERTIES:
-:HASH:     1954704866261673273
-:MODIFIED: 2019-03-08 10:42
+:HASH:     c3e882b6b052391572f757338d9b389c
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Install =ace-window= for more sane window management:
@@ -495,14 +495,14 @@ Add normal Emacs window commands to leader key:
 
 *** File and project browsing
 :PROPERTIES:
-:HASH:     2269001043965524992
-:MODIFIED: 2019-03-08 10:42
+:HASH:     4bdf49d60fde8362d7a733aabd6edf7f
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 **** Projectile
 :PROPERTIES:
-:HASH:     2003458114756438880
-:MODIFIED: 2019-03-08 10:42
+:HASH:     31c061f99f03b03c19fc0b3e08222785
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 [[https://github.com/bbatsov/projectile][Project interaction via projectile]]:
@@ -527,8 +527,8 @@ Add normal Emacs window commands to leader key:
 
 *** Scratch buffers
 :PROPERTIES:
-:HASH:     1915912866291740504
-:MODIFIED: 2019-03-08 10:42
+:HASH:     09fe545c7dece46196733ca6b6035958
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -567,8 +567,8 @@ Bind scratch buffer functions:
 
 *** Evaluating lisp
 :PROPERTIES:
-:HASH:     1477730756479662948
-:MODIFIED: 2019-03-08 10:42
+:HASH:     3c2a45b9bb449f71f6e6dbc05d66b27a
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -578,14 +578,14 @@ Bind scratch buffer functions:
 
 ** Interface (GUI)
 :PROPERTIES:
-:HASH:     -688232707818962414
-:MODIFIED: 2019-03-08 10:42
+:HASH:     6b801f9de511e52c14b77dca14401ea7
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 *** GUI elements (scrollbar, menu bars)
 :PROPERTIES:
-:HASH:     -832486390374097066
-:MODIFIED: 2019-03-08 10:42
+:HASH:     ec2c1286cc1164090a10a99fe10e1e2f
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Disable the scroll bar by default:
@@ -624,8 +624,8 @@ Hide tool bar and menu bar:
 
 *** Startup
 :PROPERTIES:
-:HASH:     61022114547302479
-:MODIFIED: 2019-03-08 10:42
+:HASH:     ff5dbf21a884a11c06cc48508e2ad7e9
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Don't show the startup message:
@@ -636,8 +636,8 @@ Don't show the startup message:
 
 *** Mode-line
 :PROPERTIES:
-:HASH:     1618567575652200941
-:MODIFIED: 2019-03-08 10:42
+:HASH:     52a1d1d7b01784ec42a7d597615fd768
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
@@ -667,8 +667,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 
 ** Help/Info
 :PROPERTIES:
-:HASH:     961327502104605085
-:MODIFIED: 2019-03-08 10:42
+:HASH:     25f4193dfc2e9a1053260983bc06149c
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
@@ -690,16 +690,16 @@ Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+
 
 ** Completion (Ivy/Counsel/Swiper)
 :PROPERTIES:
-:HASH:     1109479094251125585
-:MODIFIED: 2019-03-08 10:42
+:HASH:     462d979fad322d8e15bbea7128e48134
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for completion and other fun.
 
 *** Ivy
 :PROPERTIES:
-:HASH:     -1672823615384419332
-:MODIFIED: 2019-03-08 10:42
+:HASH:     d276b0a0254781f2bdad5f0783f438e2
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -719,8 +719,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Counsel
 :PROPERTIES:
-:HASH:     -2004298278991216220
-:MODIFIED: 2019-03-08 10:42
+:HASH:     d93bc85b11f31cd6a0c31c141931de45
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -793,8 +793,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Swiper
 :PROPERTIES:
-:HASH:     7211123195088882
-:MODIFIED: 2019-03-08 10:42
+:HASH:     d6ec3ce4b8a91c015cd53d5a595dbb51
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -804,8 +804,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** All-the-icons for Ivy/Counsel
 :PROPERTIES:
-:HASH:     -499066150805973329
-:MODIFIED: 2019-03-08 10:42
+:HASH:     e33487f664134465d68b0d0413ed790c
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -816,8 +816,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 #+END_SRC
 ** Themes
 :PROPERTIES:
-:HASH:     2115621614445797417
-:MODIFIED: 2019-03-08 10:42
+:HASH:     b4330a2e436a94dcb44cba42c997b3d9
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 =cherry-blossom-theme= is my preferred theme. I hope to adapt
@@ -830,14 +830,14 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 ** Config management
 :PROPERTIES:
-:HASH:     -696324241236971883
-:MODIFIED: 2019-03-08 10:42
+:HASH:     32b63b2323fd8b58c94b305cbc3a398a
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 *** Try packages temporarily
 :PROPERTIES:
-:HASH:     -2245347620124483035
-:MODIFIED: 2019-03-08 10:42
+:HASH:     b0b442a2592a27d734b3f2a5a09f3db3
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Enables temporarily downloading and installing packages for the
@@ -850,8 +850,8 @@ purpose of test driving. I discovered it [[http://cestlaz.github.io/posts/using-
 
 *** Testing/reloading init.el
 :PROPERTIES:
-:HASH:     1291666881152068264
-:MODIFIED: 2019-03-08 10:42
+:HASH:     ab2d550a0a4833e697f7e5ff58bfb173
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Test init.el file to make sure it's fine:
@@ -911,14 +911,14 @@ Bind them to some keys:
 
 ** Clipboard management
 :PROPERTIES:
-:HASH:     -690870535434198951
-:MODIFIED: 2019-03-08 10:42
+:HASH:     8d2040c3bbf4284bdf8e68e5edb46a11
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 *** Clipboard monitoring
 :PROPERTIES:
-:HASH:     -2123883910649419295
-:MODIFIED: 2019-03-08 10:42
+:HASH:     9e744d419cbd8c5bf8e6386d9ba4eacf
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Sync contents of X clipboard to kill ring:
@@ -951,14 +951,14 @@ Ensure =kill-ring= is saved between sessions:
 
 ** Cleaning/tidying
 :PROPERTIES:
-:HASH:     1797010083144600696
-:MODIFIED: 2019-03-08 10:42
+:HASH:     8ab3300d36591b24686a3e77931385cc
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 *** Buffer cleanup
 :PROPERTIES:
-:HASH:     -563886895184471639
-:MODIFIED: 2019-03-08 10:42
+:HASH:     2aeb1a3735fef65d10031f8e98363e2b
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Clean up matching buffers at midnight:
@@ -983,16 +983,16 @@ Clean up matching buffers at midnight:
 
 ** Language modes
 :PROPERTIES:
-:HASH:     -1303405877366860428
-:MODIFIED: 2019-03-08 10:42
+:HASH:     02c483ea42588716a19c373a00cdf8dd
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Syntax highlighting, etc.
 
 *** PowerShell
 :PROPERTIES:
-:HASH:     680708173821466712
-:MODIFIED: 2019-03-08 10:42
+:HASH:     06e799d1b44528cf268722d08a462f98
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Powershell syntax highlighting:
@@ -1004,8 +1004,8 @@ Powershell syntax highlighting:
 
 *** =puppet-mode=
 :PROPERTIES:
-:HASH:     -1464535921021842450
-:MODIFIED: 2019-03-08 10:42
+:HASH:     c318f2482acecb006135dd825c33d843
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Syntax highlighting for Puppet:
@@ -1019,8 +1019,8 @@ Syntax highlighting for Puppet:
 
 *** MarkDown
 :PROPERTIES:
-:HASH:     -175524838933372332
-:MODIFIED: 2019-03-08 10:42
+:HASH:     c59479b2eb922391a0bc1e36bcdd17ed
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 MarkDown syntax highlighting:
@@ -1032,8 +1032,8 @@ MarkDown syntax highlighting:
 
 *** Fish Mode
 :PROPERTIES:
-:HASH:     1908231131656199127
-:MODIFIED: 2019-03-08 10:42
+:HASH:     7e5da05ff0ed4e3a84b85619de447a02
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Sometimes fish one liners become long enough to deserve writing a
@@ -1046,8 +1046,8 @@ script! Fish syntax highlighting:
 
 *** TODO Ruby
 :PROPERTIES:
-:HASH:     1564286526703372391
-:MODIFIED: 2019-03-08 10:42
+:HASH:     bfcf9d454fbe973e86a132b62a43b84b
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1081,8 +1081,8 @@ loaded classes and modules, and where each method is defined.
 
 *** TODO Lisp
 :PROPERTIES:
-:HASH:     -1514884076218303158
-:MODIFIED: 2019-03-08 10:42
+:HASH:     9cecee71e81dfd807eeb8e853fde7a64
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:45]
@@ -1135,20 +1135,20 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
 
 *** Elisp
 :PROPERTIES:
-:HASH:     -1729559018287330588
-:MODIFIED: 2019-03-08 10:42
+:HASH:     55e5ffb39c78851888a18871af9febf8
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 **** Formatting
 :PROPERTIES:
-:HASH:     -2074073258012330767
-:MODIFIED: 2019-03-08 10:42
+:HASH:     a0d0cf2bb986e44e84f29d791e2501a4
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 ***** Indent keywords properly
 :PROPERTIES:
-:HASH:     1382804817138797355
-:MODIFIED: 2019-03-08 10:42
+:HASH:     57d44d33df95137bc7c45c9ca3e4119c
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 By default, =lisp-indent-function= indents =:keywords= improperly:
@@ -1236,8 +1236,8 @@ To fix this, define a new function to use for =lisp-indent-function=
 
 ***** TODO Auto align :keywords "value" pairs
 :PROPERTIES:
-:HASH:     278278360498317266
-:MODIFIED: 2019-03-08 10:42
+:HASH:     b245ac9701103d46a16aa5c675550ec0
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:46]
@@ -1245,8 +1245,8 @@ To fix this, define a new function to use for =lisp-indent-function=
 
 ** TODO Complete any mode
 :PROPERTIES:
-:HASH:     446268260076975948
-:MODIFIED: 2019-03-08 10:42
+:HASH:     c24b113b9999e1550d05c628abbbaa9b
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1264,8 +1264,8 @@ General completion mechanism:
 
 *** Python
 :PROPERTIES:
-:HASH:     -1652725531086255598
-:MODIFIED: 2019-03-08 10:42
+:HASH:     30488635960a7a57d5bad4e41eedb046
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Python JEDI backend for =company-mode=.
@@ -1284,8 +1284,8 @@ virtualenv=) and run =M-x jedi:install-server=.
 
 *** Shell
 :PROPERTIES:
-:HASH:     1286468417608480948
-:MODIFIED: 2019-03-08 10:42
+:HASH:     85998ea6cc948c609864558ba5ae43e8
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 =company-shell= provides completion for fish and binaries found on =$PATH=.
@@ -1302,8 +1302,8 @@ Find more documentation [[https://github.com/Alexander-Miller/company-shell][her
 #+END_SRC
 ** TODO Miscellany
 :PROPERTIES:
-:HASH:     -2281655850269876660
-:MODIFIED: 2019-03-08 10:42
+:HASH:     b91d66f85e6f44e0897fc16b653ef22c
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 11:15]
@@ -1359,8 +1359,8 @@ Syntax checking:
 
 *** =rainbow-delimiters=
 :PROPERTIES:
-:HASH:     2064867765747293715
-:MODIFIED: 2019-03-08 10:42
+:HASH:     eb8f9b5f30b1c51fcc581a776140e87f
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 This makes hunting down paren pairs easier in Elisp:
@@ -1374,14 +1374,14 @@ This makes hunting down paren pairs easier in Elisp:
 
 ** Version control
 :PROPERTIES:
-:HASH:     -544657571148613860
-:MODIFIED: 2019-03-08 10:42
+:HASH:     8d9a5fb1f24539513aa7494f92caaf48
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 *** Magit
 :PROPERTIES:
-:HASH:     -2071586974369451617
-:MODIFIED: 2019-03-08 10:42
+:HASH:     bb7f8d9ff9ddadf238c8a21c4ddebc4b
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1412,8 +1412,8 @@ This makes hunting down paren pairs easier in Elisp:
 
 *** Elisp
 :PROPERTIES:
-:HASH:     -1282539963022442519
-:MODIFIED: 2019-03-08 10:42
+:HASH:     e93f4e70a579e1e0cc61e2310499a079
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#functions-7][here]]:
@@ -1436,8 +1436,8 @@ From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#function
 
 ** TODO Term-mode
 :PROPERTIES:
-:HASH:     -1223869582172918931
-:MODIFIED: 2019-03-08 10:42
+:HASH:     1615fd61a0b9a0cfddf6763475f231e9
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:50]
@@ -1467,8 +1467,8 @@ something I should work towards.
 
 ** TODO Eshell
 :PROPERTIES:
-:HASH:     1293234105071587081
-:MODIFIED: 2019-03-08 10:42
+:HASH:     d891da95546fa80c946a723fa80142af
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1489,8 +1489,8 @@ Eshell should also probably become part of my workflow.
 
 *** Elisp
 :PROPERTIES:
-:HASH:     -1134549897894513989
-:MODIFIED: 2019-03-08 10:42
+:HASH:     194cf187ed28b78abaad8580f7264cd1
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 A quick internet search said that Eshell doesn't have anything like
@@ -1515,8 +1515,8 @@ ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
 
 ** SSH/GPG keys
 :PROPERTIES:
-:HASH:     1565778832129120140
-:MODIFIED: 2019-03-08 10:42
+:HASH:     ac21a7acedacaf233af250e8bcf5ba75
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Install =keychain-environment= so Emacs can use [[https://github.com/funtoo/keychain][keychain]] to access SSH
@@ -1537,8 +1537,8 @@ and GPG keys.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     530512379093374346
-:MODIFIED: 2019-03-08 10:42
+:HASH:     497382a23d085c702e2ef97eca809359
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1665,20 +1665,20 @@ and GPG keys.
 
 ** Elisp
 :PROPERTIES:
-:HASH:     179967223717759716
-:MODIFIED: 2019-03-08 10:42
+:HASH:     ba12765916563b3f00515d61783c7933
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 *** Sending
 :PROPERTIES:
-:HASH:     -49621387812730353
-:MODIFIED: 2019-03-08 10:42
+:HASH:     bfd4e36f7b78a41304a0ffaf94d8641e
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 **** Signatures
 :PROPERTIES:
-:HASH:     1539627874469293262
-:MODIFIED: 2019-03-08 10:42
+:HASH:     bcca16c42b05160ca1f0157b0d3c44db
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1703,8 +1703,8 @@ Returns whatever the action returns."
 
 *** Alerts
 :PROPERTIES:
-:HASH:     -92311309899017180
-:MODIFIED: 2019-03-08 10:42
+:HASH:     e23512cad33f707f5cbdc342138266f7
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1772,8 +1772,8 @@ Returns whatever the action returns."
 
 *** TODO Reminders for sent mail
 :PROPERTIES:
-:HASH:     2024110235403338267
-:MODIFIED: 2019-03-08 10:42
+:HASH:     ab24c782ddaadca26d2c549655a3ffea
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 09:32]
@@ -1789,14 +1789,14 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** Org-mode
 :PROPERTIES:
-:HASH:     -850461984269202929
-:MODIFIED: 2019-03-08 11:04
+:HASH:     f40e82b6ae092d1613e05d17f45e50c1
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 *** Config
 :PROPERTIES:
-:HASH:     1467767137746251864
-:MODIFIED: 2019-03-08 10:42
+:HASH:     89d8c053616b4672d05d21f5dc18febd
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1938,14 +1938,14 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Elisp
 :PROPERTIES:
-:HASH:     2748610496648
-:MODIFIED: 2019-03-07 16:27
+:HASH:     55e5ffb39c78851888a18871af9febf8
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 **** Tag placement
 :PROPERTIES:
-:HASH:     -1650381302585316059
-:MODIFIED: 2019-03-08 10:42
+:HASH:     8ee1aa3aa218557d747fff03e57be937
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1973,8 +1973,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 **** Org-refile functions
 :PROPERTIES:
-:HASH:     -858881665525942172
-:MODIFIED: 2019-03-08 10:42
+:HASH:     f847514018712eb68be765b1360e070f
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
@@ -2000,20 +2000,20 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 ** Org-agenda
 :PROPERTIES:
-:HASH:     4663b131940a8989dc4be50a821a15d3
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     41d3f193eaaac071532945c71c538817
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 *** Elisp
 :PROPERTIES:
-:HASH:     36ef114f1866ef384811dd43774cf1a5
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     55e5ffb39c78851888a18871af9febf8
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 **** Add modified date property to headings in Org mode file
 :PROPERTIES:
-:HASH:     51f810d7c11916be8601a6b4469cee79
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     b0c066de89a69d8a159b5c0f39dc8535
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Functions for calculating last update time per Org heading (from
@@ -2088,8 +2088,8 @@ Functions for calculating last update time per Org heading (from
 
 **** More convenient movement
 :PROPERTIES:
-:HASH:     86897ea9e7369c260ac473bdeafcf076
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     4f01861f68279253b01512c998c8c3cf
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
@@ -2130,8 +2130,8 @@ Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber
 
 **** Auto-refresh specified files when they change on disk
 :PROPERTIES:
-:HASH:     a1b9eb255cdfcbbe7dfda364215e823f
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     3cdaee95aa51037958c93867636832fb
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Activate minor modes based on file names (from [[https://stackoverflow.com/a/13946304][here)]]:
@@ -2165,8 +2165,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     -137487481642406929
-:MODIFIED: 2019-03-07 16:27
+:HASH:     c161d92865c546ccc51b06984fb92d48
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2324,14 +2324,14 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 ** Org-capture
 :PROPERTIES:
-:HASH:     -1677619089254042268
-:MODIFIED: 2019-03-08 11:04
+:HASH:     601b1d12b653c8928bc99dc44281c235
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 *** Config
 :PROPERTIES:
-:HASH:     1950482983751969559
-:MODIFIED: 2019-03-08 10:42
+:HASH:     371be7e47261dcce13d9563a780692be
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2419,8 +2419,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Elisp
 :PROPERTIES:
-:HASH:     -1728341861056207140
-:MODIFIED: 2019-03-08 10:42
+:HASH:     72d6cec81f4e2636c751eaf5b3bbd7f8
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2501,8 +2501,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 ** TODO Blog Publishing
 :PROPERTIES:
-:HASH:     1747979104473128003
-:MODIFIED: 2019-03-08 11:04
+:HASH:     65384ef23ee9196fe497f830cd82ef29
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:47]
@@ -2513,8 +2513,8 @@ I never use this (because I never blog). I should re-evaluate this
 
 *** =org2jekyll=
 :PROPERTIES:
-:HASH:     2125846031305862067
-:MODIFIED: 2019-03-08 10:42
+:HASH:     faa9575444c7e96f1b7d6fd2608933d4
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
@@ -2592,8 +2592,8 @@ Define the following variables:
 
 *** Creating a Blog Post
 :PROPERTIES:
-:HASH:     -618783463564743627
-:MODIFIED: 2019-03-08 10:42
+:HASH:     d628231bc1be949d8580001a964548b3
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 1. Invoke =org2jekyll-create-draft=, select your layout and follow the prompts in the mini buffer.
@@ -2608,8 +2608,8 @@ Define the following variables:
 
 ** Hydra bootstrap
 :PROPERTIES:
-:HASH:     -693796921639388817
-:MODIFIED: 2019-03-08 10:42
+:HASH:     2a0c5c1c1b196a0ac720a3297df17545
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Make sure hydra is installed.
@@ -2621,14 +2621,14 @@ Make sure hydra is installed.
 
 ** Window management
 :PROPERTIES:
-:HASH:     -696324241676857515
-:MODIFIED: 2019-03-08 10:42
+:HASH:     806bb5758f392a3ca70bf08383e72e57
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 *** hydra Window Functions
 :PROPERTIES:
-:HASH:     182461414691881180
-:MODIFIED: 2019-03-08 10:42
+:HASH:     49cee86c3193fa0485a86f7b4987a21f
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 The following functions are used in =hydra-window=.
@@ -2669,8 +2669,8 @@ The following functions are used in =hydra-window=.
 
 *** hydra-window
 :PROPERTIES:
-:HASH:     321926221361029436
-:MODIFIED: 2019-03-08 10:42
+:HASH:     95d76987d76100cbdfb620b1d0a0e5f8
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 From [[https://github.com/abo-abo/hydra/wiki/Window-Management][the wiki]].
@@ -2740,8 +2740,8 @@ From [[https://github.com/abo-abo/hydra/wiki/Window-Management][the wiki]].
 
 ** Dired
 :PROPERTIES:
-:HASH:     1640923248434013725
-:MODIFIED: 2019-03-08 10:42
+:HASH:     231e61f79b39583572eaa6a12cc0e9e8
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2802,8 +2802,8 @@ T - tag prefix
 
 ** Projectile
 :PROPERTIES:
-:HASH:     1211684620832709636
-:MODIFIED: 2019-03-08 10:42
+:HASH:     77b5bebd844757199261241a0c5701ff
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 For projectile fun:
@@ -2860,8 +2860,8 @@ For projectile fun:
 
 ** Magit
 :PROPERTIES:
-:HASH:     -108715657171634947
-:MODIFIED: 2019-03-08 10:42
+:HASH:     e1458d1eda5888068c5ba4dd22240087
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2955,8 +2955,8 @@ If `magit' is not yet loaded yet, just call `magit-status' directly."
 
 ** Notmuch
 :PROPERTIES:
-:HASH:     2073944986970711373
-:MODIFIED: 2019-03-08 10:42
+:HASH:     2ddb9d79bec19182987b02463a05f17a
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3150,8 +3150,8 @@ If `magit' is not yet loaded yet, just call `magit-status' directly."
 
 ** Org agenda
 :PROPERTIES:
-:HASH:     -1333335211307497625
-:MODIFIED: 2019-03-08 10:42
+:HASH:     c5228c33b74abe44f07d4bc13271c018
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3237,8 +3237,8 @@ _vr_ reset      ^^                       ^^                 ^^
 
 ** Multiple-cursors
 :PROPERTIES:
-:HASH:     -212671146619128824
-:MODIFIED: 2019-03-08 10:42
+:HASH:     4a5645a305de8acec62e69c94c7b1da0
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3270,8 +3270,8 @@ _vr_ reset      ^^                       ^^                 ^^
 
 ** Menu for all hydras
 :PROPERTIES:
-:HASH:     224925857972477028
-:MODIFIED: 2019-03-08 10:42
+:HASH:     7dbfffa34939a9c4320ff4a0cfcc291b
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Remembering keys is hard, so here's a hydra that should add a menu for
@@ -3353,8 +3353,8 @@ _o_:  hydra-org-agenda
 
 ** Kill whitespace when saving
 :PROPERTIES:
-:HASH:     2144635162323326375
-:MODIFIED: 2019-03-08 10:42
+:HASH:     66c11594d1ca3d8c66d26bc666450a2c
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3363,8 +3363,8 @@ _o_:  hydra-org-agenda
 
 ** Rainbow Mode
 :PROPERTIES:
-:HASH:     -1957737338599011458
-:MODIFIED: 2019-03-08 10:42
+:HASH:     29d81b2d98955795e11327fcc95aac1b
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Rainbow mode changes the background of any color name. This includes
@@ -3377,8 +3377,8 @@ hexidecimal representation of colors.
 
 ** Spell check
 :PROPERTIES:
-:HASH:     -615268453627327845
-:MODIFIED: 2019-03-08 10:42
+:HASH:     52f35f299fa2e93aebf493b09bc496af
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 Spell checking with flyspell:
@@ -3392,8 +3392,8 @@ Spell checking with flyspell:
 
 ** File type modes (not =prog-mode= files)
 :PROPERTIES:
-:HASH:     -772285575233768350
-:MODIFIED: 2019-03-08 10:42
+:HASH:     df94c7c8bff8eae153f792d18ce69f64
+:MODIFIED: 2019-03-08 15:50:43
 :END:
 
 File types like csv, yaml, etc.
