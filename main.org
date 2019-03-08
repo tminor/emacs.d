@@ -1535,7 +1535,6 @@ and GPG keys.
 :MODIFIED: 2019-03-08 14:47:24
 :END:
 
-
 ** TODO Notmuch
 :PROPERTIES:
 :HASH:     530512379093374346
@@ -2025,30 +2024,26 @@ Functions for calculating last update time per Org heading (from
     "Get the hash sum of the text in current entry, except :HASH:
   and :MODIFIED: property texts."
     (save-excursion
-        (let* ((beg
-                (progn
-                  (org-back-to-heading)
-                  (point)))
-               (end (point-max)))
-          (let* ((full-str
-                  (buffer-substring-no-properties beg end))
-                 (str-nohash
-                  (if (string-match "^ *:HASH:.+\n" full-str)
-                      (replace-match "" nil nil full-str)
-                    full-str))
-                 (str-nohash-nomod
-                  (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
-                      (replace-match "" nil nil str-nohash)
-                    str-nohash))
-                 (str-nohash-nomod-nopropbeg
-                  (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
-                      (replace-match "" nil nil str-nohash-nomod)
-                    str-nohash-nomod))
-                 (str-nohash-nomod-nopropbeg-end
-                  (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
-                      (replace-match "" nil nil str-nohash-nomod-nopropbeg)
-                    str-nohash-nomod-nopropbeg)))
-            (secure-hash 'md5 str-nohash-nomod-nopropbeg-end)))))
+      (let* ((full-str
+              (buffer-substring-no-properties (point-min)
+                                              (point-max)))
+             (str-nohash
+              (if (string-match "^ *:HASH:.+\n" full-str)
+                  (replace-match "" nil nil full-str)
+                full-str))
+             (str-nohash-nomod
+              (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
+                  (replace-match "" nil nil str-nohash)
+                str-nohash))
+             (str-nohash-nomod-nopropbeg
+              (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
+                  (replace-match "" nil nil str-nohash-nomod)
+                str-nohash-nomod))
+             (str-nohash-nomod-nopropbeg-end
+              (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
+                  (replace-match "" nil nil str-nohash-nomod-nopropbeg)
+                str-nohash-nomod-nopropbeg)))
+        (secure-hash 'md5 str-nohash-nomod-nopropbeg-end))))
 
   (defun tm/update-modification-time ()
     "Set the :MODIFIED: property of the current entry to NOW and
