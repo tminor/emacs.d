@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                         :TOC:
+** Table of Contents                                                                                        :TOC:
 :PROPERTIES:
 :HASH:     78190e712a4139f467e8794cfecaaa76
 :MODIFIED: 2019-03-08 15:50:50
@@ -416,8 +416,8 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 
 **** Workspace management
 :PROPERTIES:
-:HASH:     cba25789cada8a610dd31d4f8d0e4f59
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     f29fda3985ff25d1d1401a44b68cffc9
+:MODIFIED: 2019-03-08 17:00:41
 :END:
 
 Install =eyebrowse= for i3 style workspace management:
@@ -453,7 +453,9 @@ Install =eyebrowse= for i3 style workspace management:
     :config
     (setq eyebrowse-switch-back-and-forth t)
     (setq eyebrowse-wrap-around t)
-    (setq eyebrowse-new-workspace t)
+    (setq eyebrowse-new-workspace
+          (lambda ()
+            (get-buffer "*dashboard*")))
     (eyebrowse-mode))
 #+END_SRC
 
@@ -624,14 +626,28 @@ Hide tool bar and menu bar:
 
 *** Startup
 :PROPERTIES:
-:HASH:     ff5dbf21a884a11c06cc48508e2ad7e9
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     418def40bcd437c05587e38677bed1a1
+:MODIFIED: 2019-03-08 17:00:41
 :END:
 
 Don't show the startup message:
 
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
+#+END_SRC
+
+And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]]:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq initial-buffer-choice
+          (lambda ()
+            (get-buffer "*dashboard*")))
+    (setq dashboard-startup-banner 'logo)
+    (setq dashboard-center-content t))
 #+END_SRC
 
 *** Mode-line
