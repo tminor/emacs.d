@@ -385,7 +385,7 @@ Install =highlight-indent-guides= for indentation indicators in
 **** Undo/redo window layout changes
 :PROPERTIES:
 :HASH:     72c3a6fbd4e5d95ab71ef0ae754f386c
-:MODIFIED: 2019-03-08 15:50:42
+:MODIFIED: 2019-03-08 15:52:29
 :END:
 
 From =winner-mode= docstring:
