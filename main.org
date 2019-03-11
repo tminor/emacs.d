@@ -2246,8 +2246,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     628aac4674ae5f27fe1131246eb7700b
-:MODIFIED: 2019-03-11 15:46:37
+:HASH:     e91d953e6d7b81f7a8e802cfab6c54d0
+:MODIFIED: 2019-03-11 17:06:55
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2298,111 +2298,23 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (setq org-habit-graph-column 80
           org-habit-show-habits-only-for-today t)
 
-    ;; Create overly complicated `org-agenda' custom commands
-    ;;
-    ;; TODO: Clean out commands that aren't used
+    ;; Create `org-agenda' custom commands
     (setq org-agenda-custom-commands
-          (quote (("n" "Morning Ritual"
-                   ((agenda ""
-                            ((org-agenda-prefix-format " %-6.6e: %t")))
-                    (todo "STUFF"
-                          ((org-agenda-overriding-header "Stuff to Refile")
-                           (org-tags-match-list-sublevels nil)
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
-                    (tags-todo "-CANCELLED/!NEXT"
-                               ((org-agenda-overriding-header "Tasks to Complete Next")
-                                (org-tags-match-list-sublevels t)
-                                (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                            'scheduled))
-                                (org-agenda-sorting-strategy
-                                 '(priority-down))))
-                    (todo "WAITING|HOLD"
-                          ((org-agenda-overriding-header "Waiting and Postponed Tasks")
-                           (org-agenda-include-inactive-timestamps t)
-                           (org-tags-match-list-sublevels t)
-                           (org-agenda-sorting-strategy
-                            '(priority-down))
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: %5(org-entry-get nil \"MODIFIED\") ")))
-                    (tags "quick/!+TODO"
-                          ((org-agenda-overriding-header "Two Minute Tasks")
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                       'scheduled))
-                           (org-agenda-sorting-strategy
-                            '(priority-down))
-                           (org-tags-match-list-sublevels nil)
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
-                    (tags "PROJECTS/!+TODO"
-                          ((org-agenda-overriding-header "Tasks Not NEXT in Projects")
-                           (org-tags-match-list-sublevels t)
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                       'scheduled))
-                           (org-agenda-sorting-strategy
-                            '(priority-down))
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: "))))
-                   nil)
-                  ("r" "Weekly Review"
-                   ((agenda ""
-                            ((org-agenda-prefix-format " %-6.6e: %t")))
-                    (todo "STUFF"
-                          ((org-agenda-overriding-header "Stuff to Refile")
-                           (org-tags-match-list-sublevels nil)
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
-                    (stuck ""
-                           ((org-agenda-overriding-header "Review Stuck Projects")
-                            (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
-                    (todo "MAYBE"
-                          ((org-agenda-overriding-header "Review Someday Items")
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
-                    (todo "WAITING|HOLD"
-                          ((org-agenda-overriding-header "Waiting and Postponed Tasks")
-                           (org-agenda-include-inactive-timestamps t)
-                           (org-tags-match-list-sublevels t)
-                           (org-agenda-sorting-strategy
-                            '(priority-down effort-down deadline-up))
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: %5(org-entry-get nil \"MODIFIED\") ")))
-                    (todo "DONE|CANCELLED"
-                          ((org-agenda-overriding-header "Archive Completed or Cancelled Tasks")
-                           (org-agenda-include-inactive-timestamps t)
-                           (org-tags-match-list-sublevels t)
-                           (org-agenda-prefix-format "  %-20.20c: ")))
-                    (tags "QUICK/!+TODO"
-                          ((org-agenda-overriding-header "Two Minute Tasks")
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                       'scheduled))
-                           (org-agenda-sorting-strategy
-                            '(priority-down effort-down deadline-up))
-                           (org-tags-match-list-sublevels nil)
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))
-                    (tags "PROJECTS/!+TODO"
-                          ((org-agenda-overriding-header "Tasks Not NEXT in Projects")
-                           (org-tags-match-list-sublevels t)
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                       'scheduled))
-                           (org-agenda-sorting-strategy
-                            '(priority-down effort-down deadline-up))
-                           (org-agenda-prefix-format "  %-6.6e  %-20.20c: ")))))
-                  ("d" "Daily Agenda"
-                   ((tags "quick/!+TODO"
-                          ((org-agenda-overriding-header "Two Minute Tasks")
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                       'scheduled))
-                           (org-agenda-sorting-strategy
-                            '(priority-down))
-                           (org-tags-match-list-sublevels nil)))
-                    (tags "PROJECTS/!+TODO"
-                          ((org-agenda-overriding-header "Tasks Not NEXT in Projects")
-                           (org-tags-match-list-sublevels t)
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                       'scheduled))
-                           (org-agenda-sorting-strategy
-                            '(priority-down))))
-                    (agenda "" nil)))))))
+          '(("d" "Daily Agenda"
+             ((agenda ""
+                      ((org-agenda-prefix-format " %-6.6e: %t")
+                       (org-agenda-todo-ignore-scheduled 'past)))
+              (todo "TODO"
+                    ((org-agenda-prefix-format "  %-6.6e  %-20.20c: %5(org-entry-get nil \"MODIFIED\") ")
+                     (org-agenda-todo-ignore-scheduled t)
+                     (org-agenda-sorting-strategy
+                      '(effort-down)))))))))
 #+END_SRC
 
 *** Org-super-agenda
 :PROPERTIES:
-:HASH:     c6600390ed1068fa6654425e9b1163f1
-:MODIFIED: 2019-03-11 16:36:30
+:HASH:     3f29602e8ae900e8642f029b7a2142bb
+:MODIFIED: 2019-03-11 16:56:08
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2412,7 +2324,11 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (org-super-agenda-mode)
     (setq org-super-agenda-groups
           '((:name "High Priority"
-             :priority "A"))))
+             :priority "A")
+            (:name "Medium Priority"
+             :priority "B")
+            (:name "Low priority"
+             :priority "C"))))
 #+END_SRC
 
 ** Org-capture
