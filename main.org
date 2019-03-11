@@ -1849,8 +1849,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     89d8c053616b4672d05d21f5dc18febd
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     77ae91bb599dcde7a58d9e984faf01bb
+:MODIFIED: 2019-03-11 12:26:28
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1916,16 +1916,15 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
-          '((sequence "TODO(t!)"
-                      "WAITING(w@)"
-                      "HOLD(h@)"
-                      "NEXT(n@)"
-                      "MAYBE(m@)"
-                      "STUFF(s!)"
-                      "PROJECT(p!)"
+          '((sequence "TODO(t!)" 		; Plain TODO (not project related)
+                      "TASK(T!)"  	; TASK, under PROJECT parent
+                      "WAIT(w@)"  	; Waiting on someone/something
+                      "FUTURE(f@)"  	; Future log
+                      "PROJECT(p!)" 	; Project for related TASKs
                       "|"
                       "DONE(d@)"
-                      "CANCELLED(c@)")))
+                      "CANCELLED(c@)"
+                      "NOTE(n!)")))
 
     ;; Enable state change logging in :LOGBOOK: drawer
     (setq org-log-into-drawer t)
