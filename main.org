@@ -737,8 +737,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Counsel
 :PROPERTIES:
-:HASH:     d93bc85b11f31cd6a0c31c141931de45
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     1b972c614fca6957347c7266a56aeccf
+:MODIFIED: 2019-03-11 08:35:57
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -798,15 +798,17 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
     (counsel-mode 1)
     (defalias 'locate #'counsel-locate)
 
-    (ivy-add-actions
-     'counsel-find-file
-     '(("e"
-        (lambda (f)
-          (let ((default-directory (if (file-directory-p f)
-                                       f
-                                     (file-name-directory f))))
-            (d/eshell-here)))
-        "eshell"))))
+    ;; TODO: Copy this from dieggsy repo
+    ;; (ivy-add-actions
+    ;;  'counsel-find-file
+    ;;  '(("e"
+    ;;     (lambda (f)
+    ;;       (let ((default-directory (if (file-directory-p f)
+    ;;                                    f
+    ;;                                  (file-name-directory f))))
+    ;;         (d/eshell-here)))
+    ;;     "eshell")))
+    )
 #+END_SRC
 
 *** Swiper
@@ -1558,6 +1560,30 @@ and GPG keys.
 :HASH:     ba12765916563b3f00515d61783c7933
 :MODIFIED: 2019-03-08 15:50:43
 :END:
+
+*** Refresh specified buffer
+:PROPERTIES:
+:HASH:     0f33aff1779939ce54c8f32861df91eb
+:MODIFIED: 2019-03-08 18:19:02
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/notmuch-refresh-feed-buffer ()
+    "Invoke `notmuch-refresh-this-buffer' specified buffer.
+
+  The buffer is silently refreshed, i.e. they are not forced to
+  be displayed."
+    (interactive)
+    (dolist (buffer (buffer-list))
+      (let ((buffer-mode (buffer-local-value 'major-mode buffer)))
+        (when (and (memq buffer-mode '(notmuch-show-mode
+                                       notmuch-tree-mode
+                                       notmuch-search-mode
+                                       notmuch-hello-mode))
+                   (string= (buffer-name) "*notmuch-saved-search-feed*"))
+          (with-current-buffer buffer
+            (notmuch-refresh-this-buffer))))))
+#+END_SRC
 
 *** Setting faces
 :PROPERTIES:
