@@ -60,6 +60,7 @@ Some conventions:
   - [[#org-agenda][Org-agenda]]
   - [[#org-capture][Org-capture]]
   - [[#blog-publishing][Blog Publishing]]
+  - [[#find-way-to-order-sub-headings-in-org-agenda-files][Find way to order sub headings in org agenda files]]
 - [[#hydra][Hydra]]
   - [[#hydra-bootstrap][Hydra bootstrap]]
   - [[#window-management][Window management]]
@@ -75,6 +76,7 @@ Some conventions:
   - [[#rainbow-mode][Rainbow Mode]]
   - [[#spell-check][Spell check]]
   - [[#file-type-modes-not-prog-mode-files][File type modes (not =prog-mode= files)]]
+  - [[#try-emacs-ledger][Try emacs ledger]]
 
 ** TODO Large config changes
 :PROPERTIES:
@@ -497,6 +499,18 @@ Add normal Emacs window commands to leader key:
     "0" 'delete-window)
 #+END_SRC
 
+**** TODO [#C] Customize buffer placement
+:PROPERTIES:
+:HASH:     0f562609d82ab2b0a3f96fcb95bae5be
+:MODIFIED: 2019-03-11 16:03:20
+:Effort:   00:30
+:END:
+:LOGBOOK:
+- State "TODO"       from "STUFF"      [2019-02-18 Mon 10:42]
+:END:
+
+https://www.reddit.com/r/emacs/comments/aja311/first_trial_of_a_weekly_emacs_tipstricksetc_thread/eeum2yj?context=3
+
 *** File and project browsing
 :PROPERTIES:
 :HASH:     4bdf49d60fde8362d7a733aabd6edf7f
@@ -654,8 +668,8 @@ And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboar
 
 *** Mode-line
 :PROPERTIES:
-:HASH:     52a1d1d7b01784ec42a7d597615fd768
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     2296c1f31c706ca7c349a185114eea3d
+:MODIFIED: 2019-03-11 16:38:34
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
@@ -667,13 +681,14 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
     (use-package all-the-icons
       :demand t
       :init
-      (unless (file-exists-p (cl-case window-system
-                               (x (concat (or (getenv "XDG_DATA_HOME")
-                                              (concat (getenv "HOME") "/.local/share"))
-                                          "/fonts/"))
-                               (mac (concat (getenv "HOME") "/Library/Fonts/"))
-                               (ns (concat (getenv "HOME") "/Library/Fonts/"))))
-        (all-the-icons-install-fonts t)))
+      ;; (unless (file-exists-p (cl-case window-system
+      ;;                          (x (concat (or (getenv "XDG_DATA_HOME")
+      ;;                                         (concat (getenv "HOME") "/.local/share"))
+      ;;                                     "/fonts/"))
+      ;;                          (mac (concat (getenv "HOME") "/Library/Fonts/"))
+      ;;                          (ns (concat (getenv "HOME") "/Library/Fonts/"))))
+      ;;   (all-the-icons-install-fonts t))
+      )
     :config
     (setq doom-modeline-buffer-file-name-style 'truncate-all)
     (setq doom-modeline-enable-word-count t)
@@ -1640,13 +1655,17 @@ Returns whatever the action returns."
           (lambda () (local-set-key (kbd "C-c C-w") #'tm/signature-choose)))
 #+END_SRC
 
-*** Alerts
+*** TODO Alerts
 :PROPERTIES:
-:HASH:     e23512cad33f707f5cbdc342138266f7
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     1c99c9debe58fe1aaba6a1b926555f86
+:MODIFIED: 2019-03-11 16:43:36
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-11 Mon 16:42]
 :END:
 
 #+BEGIN_SRC emacs-lisp
+  ;; TODO: Start xfce4-notifyd if it's not started already
   (defun tm/notmuch-notify ()
     "Generate desktop notifcations for new mail.
 
@@ -1835,6 +1854,16 @@ Reminders a la Gmail about sent mail that hasn't received a response.
              :key "d"))))
 #+END_SRC
 
+*** TODO [#C] Evil mode in notmuch-tree
+:PROPERTIES:
+:HASH:     483640e7da22e7753b6ce90f88bd701d
+:MODIFIED: 2019-03-11 16:03:20
+:Effort:   01:00
+:END:
+:LOGBOOK:
+- State "TODO"       from "STUFF"      [2019-02-18 Mon 10:42]
+:END:
+[2019-02-12 Tue 08:36]
 * Org-mode
 :PROPERTIES:
 :HASH:     1ec6d96ffcc20597ffd547966ecf91ee
@@ -2370,6 +2399,22 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                     (agenda "" nil)))))))
 #+END_SRC
 
+*** Org-super-agenda
+:PROPERTIES:
+:HASH:     c6600390ed1068fa6654425e9b1163f1
+:MODIFIED: 2019-03-11 16:36:30
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-super-agenda
+    :ensure t
+    :config
+    (org-super-agenda-mode)
+    (setq org-super-agenda-groups
+          '((:name "High Priority"
+             :priority "A"))))
+#+END_SRC
+
 ** Org-capture
 :PROPERTIES:
 :HASH:     601b1d12b653c8928bc99dc44281c235
@@ -2397,17 +2442,20 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
            (call-interactively 'org-refile))))
 
     (tm/org-make-refile-command work-project-todos
-                                `((,(concat org-base-directory "work/work.org") :todo . "PROJECT")))
+                                `((,(concat org-work-directory "work.org") :todo . "PROJECT")))
     (tm/org-make-refile-command home-project-todos
-                                `((,(concat org-base-directory "home/home.org") :todo . "PROJECT")))
+                                `((,(concat org-home-directory "home.org") :todo . "PROJECT")))
+    (tm/org-make-refile-command emacs-config
+                                `((,(concat user-emacs-directory "main.org") :maxlevel . 9)))
     :general
     (tm/leader-def
-      :infix "o"
-      :prefix-command 'tm/org-prefix-command
-      :prefix-map 'tm/org-prefix-map
-      "" '(:which-key "org prefix" :ignore t)
-      "W" 'tm/org-refile-work-project-todos
-      "h" 'tm/org-refile-home-project-todos)
+      :infix "r"
+      :prefix-command 'tm/org-refile-prefix-command
+      :prefix-map 'tm/org-refile-prefix-map
+      "" '(:which-key "org-refile prefix" :ignore t)
+      "w" 'tm/org-refile-work-project-todos
+      "h" 'tm/org-refile-home-project-todos
+      "r" 'tm/org-refile-emacs-config)
     :config
     ;; Set default capture file
     (setq org-default-notes-file "~/org/capture.org")
@@ -2681,6 +2729,18 @@ Define the following variables:
 2. Write your post.
 3. Publish it with =org2jekyll-publish=.
 
+** TODO [#C] Find way to order sub headings in org agenda files
+:PROPERTIES:
+:HASH:     812fcc6eec0c9baa9452b109bcb6df96
+:MODIFIED: 2019-03-11 16:22:23
+:Effort:   01:00
+:END:
+:LOGBOOK:
+- State "TODO"       from "STUFF"      [2019-01-16 Wed 08:44]
+:END:
+[2019-01-16 Wed 08:30]
+projects.org
+[[file:~/org/projects.org::*Increase%20NotBefore%20threshold][Increase NotBefore threshold]]
 * Hydra
 :PROPERTIES:
 :HASH:     5e6e39921e99257f5dec24edd71c7ccd
@@ -3316,6 +3376,19 @@ _vr_ reset      ^^                       ^^                 ^^
   ("gr" org-agenda-redo))
 #+END_SRC
 
+*** TODO [#C] notmuch calendar/org-agenda things worth looking at
+:PROPERTIES:
+:HASH:     b484f6daf05e149c960265ca5d522440
+:MODIFIED: 2019-03-11 16:03:20
+:Effort:   00:10
+:END:
+:LOGBOOK:
+- State "TODO"       from "STUFF"      [2019-02-18 Mon 10:42]
+:END:
+
+https://github.com/larkery/emacs/blob/d89d5194f04caa2fc00454a7e6b94bcfd359fb64/site-lisp/notmuch-agenda.el
+
+[2019-02-14 Thu 09:38]
 ** Multiple-cursors
 :PROPERTIES:
 :HASH:     4a5645a305de8acec62e69c94c7b1da0
@@ -3483,3 +3556,12 @@ File types like csv, yaml, etc.
   (use-package csv-mode
     :ensure t)
 #+END_SRC
+** TODO [#C] Try emacs ledger
+:PROPERTIES:
+:HASH:     75dd6a32314294eada78cfd75fba9d5a
+:MODIFIED: 2019-03-11 16:03:20
+:Effort:   01:00
+:END:
+:LOGBOOK:
+- State "TODO"       from "STUFF"      [2019-01-17 Thu 08:45]
+:END:
