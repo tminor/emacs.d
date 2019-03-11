@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                                                                                        :TOC:
+** Table of Contents                                                                                        :TOC:
 :PROPERTIES:
 :HASH:     d9b1c751b4923bcf16cad2de5a217df8
 :MODIFIED: 2019-03-08 17:18:17
@@ -114,11 +114,11 @@ org ELPA to get all of the nice =org-contrib= packages that I may
 someday want.
 
 #+BEGIN_SRC emacs-lisp
-;  (add-to-list 'package-archives
-;               '("melpa" . "https://melpa.org/packages/") t)
-;
-;  (add-to-list 'package-archives
-;               '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
+
+  (add-to-list 'package-archives
+               '("org" . "http://orgmode.org/elpa/") t)
 #+END_SRC
 
 ** Use-package bootstrap
@@ -131,13 +131,12 @@ someday want.
 configuration.
 
 #+BEGIN_SRC emacs-lisp
-;  (unless (package-installed-p 'use-package)
-;    (package-refresh-contents)
-;    (package-install 'use-package))
-;
-;  (eval-when-compile
-;    (require 'use-package))
-(straight-use-package 'use-package)
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
 #+END_SRC
 
 ** No-littering
@@ -153,7 +152,7 @@ Keep files we don't manage from accumulating in =~/.emacs.d/=:
   (use-package recentf)
 
   (use-package no-littering
-    
+    :ensure t
     :config
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)
@@ -217,15 +216,15 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 *** General.el
 :PROPERTIES:
-:HASH:     693d5ed998a28f3356936d6c3ea7594a
-:MODIFIED: 2019-03-10 19:02:08
+:HASH:     b6d5afa1789a85bfd13a014e18b3f170
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
 
 #+BEGIN_SRC emacs-lisp
   (use-package general
-    
+    :demand t
     :config
     (general-evil-setup t)
     (general-override-mode)
@@ -241,15 +240,15 @@ Install [[https://github.com/noctuid/general.el#about][general.el]] for key bind
 
 *** Evil mode
 :PROPERTIES:
-:HASH:     f066938242dc0168737d2352e63efd2b
-:MODIFIED: 2019-03-10 19:02:08
+:HASH:     bf5b8f82af947215d62b1c5988aead70
+:MODIFIED: 2019-03-08 15:49:53
 :END:
 
 Install =evil= for =vi= style editing:
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-    
+    :demand t
     :init
     (setq evil-want-keybinding nil)
     :config
@@ -258,13 +257,12 @@ Install =evil= for =vi= style editing:
 
 **** =evil-collection=
 :PROPERTIES:
-:HASH:     50b488caed4b9c98c7e65aad9f1f9de7
-:MODIFIED: 2019-03-10 19:04:45
+:HASH:     2daa3a0ba1685c1c3498c9986cb0b715
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil-collection
-    
     :custom
     (evil-collection-company-use-tng nil)
     (evil-collection-setup-minibuffer t)
@@ -284,7 +282,7 @@ provides a pop-up for possible completion candidates.
 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
-    
+    :ensure t
     ;; :general
     ;; (tm/leader-def
     ;;   :infix "k"
@@ -317,7 +315,7 @@ buffers, etc.
 
 #+BEGIN_SRC emacs-lisp
   (use-package ibuffer
-    
+    :ensure t
     :general
     (tm/leader-def
       "B" 'ibuffer)
@@ -347,7 +345,7 @@ Multiple cursors for editing more than one line at the same time:
 
 #+BEGIN_SRC emacs-lisp
   (use-package multiple-cursors
-    
+    :ensure t
     :general
     (tm/leader-def
       :infix "M"
@@ -372,7 +370,7 @@ Install =highlight-indent-guides= for indentation indicators in
 
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-indent-guides
-    
+    :ensure t
     :init
     (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
     (setq highlight-indent-guides-method 'column))
@@ -403,7 +401,7 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 
 #+BEGIN_SRC emacs-lisp
   (use-package winner
-    
+    :ensure t
     :general
     (tm/leader-def
       :infix "w"
@@ -426,7 +424,7 @@ Install =eyebrowse= for i3 style workspace management:
 
 #+BEGIN_SRC emacs-lisp
   (use-package eyebrowse
-    
+    :ensure t
     :preface
     (defun tm/eyebrowse-dash ()
       (switch-to-buffer
@@ -473,7 +471,7 @@ Install =ace-window= for more sane window management:
 
 #+BEGIN_SRC emacs-lisp
   (use-package ace-window
-    
+    :ensure t
     :init
     (custom-set-faces '(aw-leading-char-face
                         ((t (:foreground "red" :height 3.0)))))
@@ -515,12 +513,12 @@ Add normal Emacs window commands to leader key:
 
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
-    
+    :ensure t
     :init
     (use-package ripgrep
-      )
+      :ensure t)
     (use-package projectile-ripgrep
-      )
+      :ensure t)
     :config
     (projectile-mode +1)
     (setq projectile-completion-system 'ivy)
@@ -644,7 +642,7 @@ And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboar
 
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
-    
+    :ensure t
     :config
     (dashboard-setup-startup-hook)
     (setq initial-buffer-choice
@@ -656,27 +654,26 @@ And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboar
 
 *** Mode-line
 :PROPERTIES:
-:HASH:     fe7e4337b446d066eb02d4cbf19ce93a
-:MODIFIED: 2019-03-10 20:16:01
+:HASH:     52a1d1d7b01784ec42a7d597615fd768
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
 
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
-    
+    :ensure t
     :init
     (use-package all-the-icons
       :demand t
       :init
-      (unless (file-exists-p
-               (cl-case window-system
-                 (x (concat (or (getenv "XDG_DATA_HOME")
-                                (concat (getenv "HOME") "/.local/share"))
-                            "/fonts/all-the-icons.ttf"))
-                 (mac (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf"))
-                 (ns (concat (getenv "HOME") "/Library/Fonts/all-the-icons.ttf"))))
-          (all-the-icons-install-fonts t)))
+      (unless (file-exists-p (cl-case window-system
+                               (x (concat (or (getenv "XDG_DATA_HOME")
+                                              (concat (getenv "HOME") "/.local/share"))
+                                          "/fonts/"))
+                               (mac (concat (getenv "HOME") "/Library/Fonts/"))
+                               (ns (concat (getenv "HOME") "/Library/Fonts/"))))
+        (all-the-icons-install-fonts t)))
     :config
     (setq doom-modeline-buffer-file-name-style 'truncate-all)
     (setq doom-modeline-enable-word-count t)
@@ -684,7 +681,6 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
     (setq doom-modeline-height 45)
     :defer t
     :hook (after-init . doom-modeline-init))
-
 #+END_SRC
 
 ** Help/Info
@@ -697,7 +693,7 @@ Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
 
 #+BEGIN_SRC emacs-lisp
   (use-package helpful
-    
+    :ensure t
     :general
     (tm/leader-def
       :infix "h"
@@ -726,7 +722,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
-    
+    :ensure t
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
@@ -741,13 +737,12 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Counsel
 :PROPERTIES:
-:HASH:     60339337aeeb54e5dbd013e2ee74569a
-:MODIFIED: 2019-03-10 19:03:56
+:HASH:     d93bc85b11f31cd6a0c31c141931de45
+:MODIFIED: 2019-03-08 15:50:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
-    
     :general
     ("M-x" 'counsel-M-x
      "C-x C-f" 'counsel-find-file)
@@ -822,7 +817,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
-    )
+    :ensure t)
 #+END_SRC
 
 *** All-the-icons for Ivy/Counsel
@@ -833,7 +828,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-ivy
-    
+    :ensure t
     :config
     (all-the-icons-ivy-setup))
 #+END_SRC
@@ -848,7 +843,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 #+BEGIN_SRC emacs-lisp
   (use-package cherry-blossom-theme
-    )
+    :ensure t)
 #+END_SRC
 
 ** Config management
@@ -868,7 +863,7 @@ purpose of test driving. I discovered it [[http://cestlaz.github.io/posts/using-
 
 #+BEGIN_SRC emacs-lisp
 (use-package try
-  )
+  :ensure t)
 #+END_SRC
 
 *** Testing/reloading init.el
@@ -948,7 +943,7 @@ Sync contents of X clipboard to kill ring:
 
 #+BEGIN_SRC emacs-lisp
   (use-package clipmon
-    
+    :ensure t
     :config
     (add-to-list 'after-init-hook 'clipmon-mode-start)
     (add-to-list 'after-init-hook 'clipmon-persist)
@@ -1022,7 +1017,7 @@ Powershell syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
   (use-package powershell
-    )
+    :ensure t)
 #+END_SRC
 
 *** =puppet-mode=
@@ -1035,7 +1030,7 @@ Syntax highlighting for Puppet:
 
 #+BEGIN_SRC emacs-lisp
   (use-package puppet-mode
-    
+    :ensure t
     :config
     (setq puppet-indent-level 4))
 #+END_SRC
@@ -1050,7 +1045,7 @@ MarkDown syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
-    )
+    :ensure t)
 #+END_SRC
 
 *** Fish Mode
@@ -1064,7 +1059,7 @@ script! Fish syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
   (use-package fish-mode
-    )
+    :ensure t)
 #+END_SRC
 
 *** TODO Ruby
@@ -1078,7 +1073,7 @@ script! Fish syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
   (use-package ruby-mode
-    
+    :ensure t
     :config
     (setq ruby-indent-level 4))
 #+END_SRC
@@ -1095,7 +1090,7 @@ loaded classes and modules, and where each method is defined.
 
 #+BEGIN_SRC emacs-lisp
   (use-package robe
-    
+    :ensure t
     :config
     (add-hook 'ruby-mode-hook 'robe-mode)
     (eval-after-load 'company
@@ -1117,7 +1112,7 @@ loaded classes and modules, and where each method is defined.
 
 #+BEGIN_SRC emacs-lisp
   (use-package lispy
-      
+      :ensure t
       :init
       (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
       (add-hook 'lisp-mode-hook #'lispy-mode))
@@ -1126,7 +1121,7 @@ loaded classes and modules, and where each method is defined.
 
 #+BEGIN_SRC emacs-lisp
   (use-package lispyville
-    
+    :ensure t
     :init
     (with-eval-after-load 'lispyville
       (lispyville-set-key-theme
@@ -1151,7 +1146,7 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
 
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-parentheses
-    
+    :ensure t
     :init
     (highlight-parentheses-mode 1))
 #+END_SRC
@@ -1279,7 +1274,7 @@ General completion mechanism:
 
 #+BEGIN_SRC emacs-lisp
   (use-package company
-    
+    :ensure t
     :config
     (add-hook 'prog-mode-hook 'company-mode)
     (setq company-idle-delay 0.02))
@@ -1298,7 +1293,7 @@ virtualenv=) and run =M-x jedi:install-server=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company-jedi
-  
+  :ensure t
   :config
     (defun tm/python-mode-hook ()
       (add-to-list 'company-backends 'company-jedi))
@@ -1317,7 +1312,7 @@ Find more documentation [[https://github.com/Alexander-Miller/company-shell][her
 
 #+BEGIN_SRC emacs-lisp
 (use-package company-shell
-  
+  :ensure t
   :config
     (add-to-list 'company-backends
                  '(company-shell company-shell-env company-fish-shell))
@@ -1336,7 +1331,7 @@ Highlight TODO and other keywords in comments:
 
 #+BEGIN_SRC emacs-lisp
   (use-package hl-todo
-    
+    :ensure t
     :config
     (global-hl-todo-mode t))
 #+END_SRC
@@ -1345,7 +1340,7 @@ Use yasnippet. Configure it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
-    
+    :ensure t
     :config
     ;; TODO: More configuration, more research
     (yas-global-mode 1))
@@ -1355,7 +1350,7 @@ Code folding (based stupidly on indentation):
 
 #+BEGIN_SRC emacs-lisp
   (use-package yafolding
-    
+    :ensure t
     :config
     (add-to-list 'evil-fold-list
                  '((yafolding-mode)
@@ -1369,7 +1364,7 @@ Syntax checking:
 
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
-    
+    :ensure t
     :config
     (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -1390,7 +1385,7 @@ This makes hunting down paren pairs easier in Elisp:
 
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters
-    
+    :ensure t
     :config
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
@@ -1409,7 +1404,7 @@ This makes hunting down paren pairs easier in Elisp:
 
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    
+    :ensure t
     :general
     (tm/leader-def
       :infix "m"
@@ -1471,7 +1466,7 @@ something I should work towards.
 
 #+BEGIN_SRC emacs-lisp
   (use-package multi-term
-    
+    :ensure t
     :config
     ;; I'm not quite sure what this does; it was in my init.el (it was
     ;; added by `custom.el')
@@ -1547,7 +1542,7 @@ and GPG keys.
 
 #+BEGIN_SRC emacs-lisp
   (use-package keychain-environment
-    
+    :ensure t
     :init
     (keychain-refresh-environment))
 #+END_SRC
@@ -1701,8 +1696,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     945cb92544fc0142d76cdeb48a0024b8
-:MODIFIED: 2019-03-10 19:13:00
+:HASH:     c88a64c5984144fe77fe543268b4364e
+:MODIFIED: 2019-03-08 18:01:33
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1710,20 +1705,18 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 #+BEGIN_SRC emacs-lisp
   (use-package notmuch
-    :if (executable-find "notmuch")
     :init
     ;; Org/HTML deps
     (use-package htmlize
-      )
+      :ensure t)
     (use-package org-mime
-      )
+      :ensure t)
     (require 'org-mime)
     (use-package w3m
-      
-      :if (executable-find "w3m")
+      :ensure t
       :config
       (require 'mime-w3m))
-    
+    :ensure t
     :general
     (tm/leader-def
       "/" 'notmuch)
@@ -1836,7 +1829,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    
+    :ensure t
     :general
     (tm/leader-def
       :infix "o"
@@ -1850,12 +1843,12 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     :init
     ;; Use UTF8 bullets instead of asterisks for Org headings
     (use-package org-bullets
-      
+      :ensure t
       :config
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
     ;; Evil key bindings in Org mode
     (use-package evil-org
-      
+      :ensure t
       :after org
       :config
       (add-hook 'org-mode-hook 'evil-org-mode)
@@ -1866,7 +1859,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
     (use-package toc-org
-      
+      :ensure t
       :config
       (add-hook 'org-mode-hook 'toc-org-mode))
 
@@ -2561,7 +2554,7 @@ Define the following variables:
 
 #+BEGIN_SRC emacs-lisp
 (use-package org2jekyll
-  
+  :ensure t
   :defer 3
   :config
   (setq org2jekyll-blog-author       "tminor"
@@ -2651,7 +2644,7 @@ Make sure hydra is installed.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
-  )
+  :ensure t)
 #+END_SRC
 
 ** Window management
@@ -3407,7 +3400,7 @@ hexidecimal representation of colors.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
-  )
+  :ensure t)
 #+END_SRC
 
 ** Spell check
@@ -3420,7 +3413,7 @@ Spell checking with flyspell:
 
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
-  
+  :ensure t
   :config
   (add-hook 'text-mode-hook 'flyspell-mode))
 #+END_SRC
@@ -3435,5 +3428,5 @@ File types like csv, yaml, etc.
 
 #+BEGIN_SRC emacs-lisp
   (use-package csv-mode
-    )
+    :ensure t)
 #+END_SRC
