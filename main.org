@@ -1849,8 +1849,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     715e8f6667321dd624a0bb7d6cf3896f
-:MODIFIED: 2019-03-11 14:00:49
+:HASH:     431750acad80c51ed1ef2fb93dbfba68
+:MODIFIED: 2019-03-11 15:46:37
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1891,6 +1891,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
     ;; Set org file base directory
     (setq org-base-directory "~/org/")
+    (setq org-work-directory (concat org-base-directory "work/"))
+    (setq org-home-directory (concat org-base-directory "home/"))
 
     ;; Add indentation based on heading level
     (setq org-startup-indented t)
@@ -1908,16 +1910,16 @@ Reminders a la Gmail about sent mail that hasn't received a response.
               (lambda ()
                 (when (eq major-mode 'org-mode)
                   (org-map-entries #'tm/update-modification-time ;; FUNC
-                                   nil                           ;; MATCH
-                                   'file                         ;; SCOPE
-                                   #'tm/skip-nonmodified))))     ;; SKIP
+                                   nil			   ;; MATCH
+                                   'file			   ;; SCOPE
+                                   #'tm/skip-nonmodified)))) ;; SKIP
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
-          '((sequence "TODO(t!)" 		; TODO for projects or one offs
-                      "WAIT(w@)"  	; Waiting on someone/something
-                      "FUTURE(f@)"  	; Future log
-                      "PROJECT(p!)" 	; Project for related TASKs
+          '((sequence "TODO(t!)"	       ; TODO for projects or one offs
+                      "WAIT(w@)"	       ; Waiting on someone/something
+                      "FUTURE(f@)"       ; Future log
+                      "PROJECT(p!)"      ; Project for related TASKs
                       "|"
                       "DONE(d@)"
                       "CANCELLED(c@)"
@@ -2215,8 +2217,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     c161d92865c546ccc51b06984fb92d48
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     628aac4674ae5f27fe1131246eb7700b
+:MODIFIED: 2019-03-11 15:46:37
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2243,14 +2245,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (add-to-list 'tm/auto-minor-mode-alist '("\\calendar.org\\'" . auto-revert-mode))
 
     ;; Files that `org-agenda' uses to populate its commands/views
-    (setq org-agenda-files '("~/org/projects.org"
-                             "~/org/capture.org"
-                             "~/org/someday.org"
-                             "~/org/calendar.org"
-                             "~/org/todo.org"
-                             "~/org/notes.org"
-                             "~/org/links.org"
-                             "~/org/mobile-capture.org"))
+    (setq org-agenda-files `(,(concat org-base-directory "capture.org")
+                             ,(concat org-work-directory "calendar/calendar.org")
+                             ,(concat org-work-directory "work.org")
+                             ,(concat org-home-directory "home.org")))
 
     ;; Don't show scheduled TODOs in `org-agenda'
     (setq org-agenda-todo-ignore-scheduled t)
