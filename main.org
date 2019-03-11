@@ -1849,8 +1849,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     77ae91bb599dcde7a58d9e984faf01bb
-:MODIFIED: 2019-03-11 12:26:28
+:HASH:     715e8f6667321dd624a0bb7d6cf3896f
+:MODIFIED: 2019-03-11 14:00:49
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1904,8 +1904,6 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     (add-hook 'window-configuration-change-hook 'tm/place-org-tags)
 
     ;; Add modified time property when Org mode files are saved
-    ;;
-    ;; TODO: Refine these functions
     (add-hook 'before-save-hook
               (lambda ()
                 (when (eq major-mode 'org-mode)
@@ -1916,8 +1914,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
-          '((sequence "TODO(t!)" 		; Plain TODO (not project related)
-                      "TASK(T!)"  	; TASK, under PROJECT parent
+          '((sequence "TODO(t!)" 		; TODO for projects or one offs
                       "WAIT(w@)"  	; Waiting on someone/something
                       "FUTURE(f@)"  	; Future log
                       "PROJECT(p!)" 	; Project for related TASKs
@@ -2383,8 +2380,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     371be7e47261dcce13d9563a780692be
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     ccd093acd9872b4a3c1f6706e22a91b2
+:MODIFIED: 2019-03-11 14:47:57
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2395,35 +2392,160 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
     ;; Capture templates
     ;;
-    ;; TODO: Set deadlines automatically
     ;; TODO: Add capture template for Emacs config modifications
     ;; TODO: Don't prompt for priority; template for each urgency
     (setq org-capture-templates
-          '(("t" "Templates for TODOs.")
-            ;; Urgent/high priority TODOs
-            ("tu" "TODO that should be done soon."
-             entry (file "~/org/todo.org")
-             (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\n"
-                     "SCHEDULED: %^{(SCHEDULED) }t\n"
-                     ":PROPERTIES:\n"
-                     ":CONTEXT: %a\n"
-                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
-                     ":END:"))
-
+          `(("p" "PROJECTs.")
+            ("pw" "PROJECTs at work.")
+            ("pwp" "New PROJECT for work."
+             entry (file+olp ,(concat org-base-directory "work/work.org") "Projects")
+             ,(concat "* PROJECT [#%^{Priority: |C|B|A}] %? %^g\n"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                      (time-add (current-time) (* 60 60 24 30 6))))\n"
+                      ":PROPERTIES:\n"
+                      ":CONTEXT: %a\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
+            ("pwu" "PROJECT TODO with high priority."
+             entry (file+olp ,(concat org-base-directory "work/work.org") "Projects")
+             ,(concat "* TODO [#A] %?\n"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30))))\n"
+                      ":PROPERTIES:\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
             ;; Non-urgent TODOs
-            ("tl" "TODO that can be done later."
-             entry (file "~/org/todo.org")
-             (concat "* TODO [#%^{Priority: |C|B|A}] %? %^g\n"
-                     ":PROPERTIES:\n"
-                     "DEADLINE: %^{(DEADLINE) }t\n"
-                     ":CONTEXT: %a\n"
-                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
-                     ":END:"))
+            ("pwl" "PROJECT TODO that can be done later."
+             entry (file+olp ,(concat org-base-directory "work/work.org") "Projects")
+             ,(concat "* TODO [#%^{Priority |C|B}] %?\n"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30 24 30))))\n"
+                      ":PROPERTIES:\n"
+                      ;; ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      ;;                (time-add (current-time) (* 60 30 24 30 3))))\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
 
-            ;; NOTE for notes.org
-            ("n" ":NOTE: about something to remember in notes.org."
-             entry (file+function "~/org/notes.org" org-ask-location)
-             "* %? %^{Tags, please}g")
+
+            ("ph" "PROJECTs at home.")
+            ("php" "New PROJECT for home."
+             entry (file+olp ,(concat org-base-directory "home/home.org") "Projects")
+             ,(concat "* PROJECT [#%^{Priority: |C|B|A}] %? %^g\n"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 60 24 30 6))))\n"
+                      ":PROPERTIES:\n"
+                      ":CONTEXT: %a\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
+            ("phu" "TODO with high priority."
+             entry (file+olp ,(concat org-base-directory "home/home.org") "Projects")
+             ,(concat "* TODO [#A] %?\n"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30))))\n"
+                      ":PROPERTIES:\n"
+                      ":CONTEXT: %a\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
+            ("phl" "PROJECT TODO that can be done later."
+             entry (file+olp ,(concat org-base-directory "home/home.org") "Projects")
+             ,(concat "* TODO [#%^{Priority: |C|B}] %?\n"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30 24 30))))\n"
+                      ":PROPERTIES:\n"
+                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30 24 30 3))))\n"
+                      ":CONTEXT: %a\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
+
+
+            ("t" "Tasks (One offs)")
+            ("tw" "For work")
+            ;; Urgent/high priority TODOs
+            ("twu" "TODO with high priority."
+             entry (file+olp+datetree ,(concat org-base-directory "work/work.org") "Tasks")
+             ,(concat "* TODO [#A] %? %^g\n"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30))))\n"
+                      ":PROPERTIES:\n"
+                      ":CONTEXT: %a\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
+            ;; Non-urgent TODOs
+            ("twl" "TODO that can be done later."
+             entry (file+olp+datetree ,(concat org-base-directory "work/work.org") "Tasks")
+             ,(concat "* TODO [#%^{Priority: |C|B}] %? %^g\n"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30 24 30))))\n"
+                      ":PROPERTIES:\n"
+                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30 24 30 3))))\n"
+                      ":CONTEXT: %a\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1)
+
+
+            ("th" "For home")
+            ;; Urgent/high priority TODOs
+            ("thu" "TODO with high priority."
+             entry (file+olp+datetree ,(concat org-base-directory "home/home.org") "Tasks")
+             ,(concat "* TODO [#A] %? %^g\n"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30))))\n"
+                      ":PROPERTIES:\n"
+                      ":CONTEXT: %a\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
+            ;; Non-urgent TODOs
+            ("thl" "TODO that can be done later."
+             entry (file+olp+datetree ,(concat org-base-directory "home/home.org") "Tasks")
+             ,(concat "* TODO [#%^{Priority: |C|B}] %? %^g\n"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30 24 30))))\n"
+                      ":PROPERTIES:\n"
+                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                                     (time-add (current-time) (* 60 30 24 30 3))))\n"
+                      ":CONTEXT: %a\n"
+                      ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
+                      ":END:")
+             :empty-lines 1
+             :unnarrowed t)
+
+            ;; TODO: Find way to link NOTE to TODO
+            ("n" "NOTEs")
+            ("nw" "NOTE for work."
+             entry (file+olp+datetree ,(concat org-base-directory "work/work.org") "Notes")
+             "* %? %^g\n"
+             :jump-to-captured t
+             :empty-lines 1
+             :unnarrowed t)
+            ("nh" "NOTE for home."
+             entry (file+olp+datetree ,(concat org-base-directory "home/home.org") "Notes")
+             "* %? %^g\n"
+             :jump-to-captured t
+             :empty-lines 1
+             :unnarrowed t)
+
+            ("C" "Emacs config improvements."
+             entry (file ,(concat user-emacs-directory "main.org"))
+             "* TODO ^?"
+             :empty-lines 1
+             :unnarrowed t)
 
             ;; Archive LINK and LINK HTML
             ("l" "LINK to save for posterity."
@@ -2431,60 +2553,26 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
              "* LINK [[%x][%?]]\n%U\n:PROPERTIES:\n:CONTEXT: %a\n:END:")
 
             ;; Low friction quick capture for later processing
-            ("s" "STUFF for quick capture."
+            ("c" "Quick capture."
              entry (file "~/org/capture.org")
-             "* STUFF %?\n%U\n%f\n%a\n")
-
-            ("p" "Templates for PROJECTs.")
-
-            ;; Create new PROJECT
-            ("pp" "New PROJECT containing NOTEs and TODOs."
-             entry (file "~/org/projects.org")
-             (concat "* PROJECT [#%^{Priority: |C|B|A}] %?\n"
-                     "DEADLINE:%^{(DEADLINE)}t\n"
-                     ":PROPERTIES:\n"
-                     ":CONTEXT: %a\n"
-                     ":END:"))
-
-            ;; Create new TODO under PROJECT
-            ("pt" "TODO associated with a project."
-             entry (file+function "~/org/projects.org" org-ask-location)
-             (concat "* TODO [#%^{Priority: |C|B|A}] %?\n"
-                     ":PROPERTIES:\n"
-                     ":CONTEXT: %a\n"
-                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
-                     ":END:"))
-
-            ("pu" "Urgent TODO associated with a project."
-             entry (file+function "~/org/projects.org" org-ask-location)
-             (concat "* TODO [#%^{Priority: |C|B|A}] %?\n"
-                     ":SCHEDULED: %^{(SCHEDULED) }t\n"
-                     ":PROPERTIES:\n"
-                     ":CONTEXT: %a\n"
-                     ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
-                     ":END:"))
-
-            ;; Add :NOTE: to subheading of currently clocked entry
-            ("c" ":NOTE: for currently clocked entry."
-             item (function org-capture-clocked-note)
-             "- %?"))))
+             "* %?\n%U\n%f\n%a\n"))))
 #+END_SRC
 
 *** Elisp
 :PROPERTIES:
-:HASH:     72d6cec81f4e2636c751eaf5b3bbd7f8
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     d59959f842b6bcdc54945224c5ee8526
+:MODIFIED: 2019-03-11 14:39:11
 :END:
 
 #+BEGIN_SRC emacs-lisp
   ;; https://stackoverflow.com/a/24787118
   (defun tm/org-ask-location ()
     "Prompt for refile location."
-    (setq org-refile-use-outline-path nil)
-    (let* ((org-refile-targets '((nil :maxlevel . 1)))
+    (let* ((org-refile-targets '((nil :maxlevel . 3)))
            (hd (condition-case nil
                    (car (org-refile-get-location "Headline" nil t))
                  (error (car org-refile-history)))))
+      (setq org-refile-use-outline-path nil)
       (goto-char (point-min))
       (outline-next-heading)
       (if (re-search-forward
@@ -2495,9 +2583,9 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
         (or (bolp) (insert "\n"))
         (insert "* " hd "\n")))
     (end-of-line)
-    (setq org-refile-use-outline-path 'file))
+    (setq org-refile-use-outline-path 'file) )
 
-  (defun org-capture-clocked-note ()
+  (defun tm/org-capture-clocked-note ()
       "Add list item to TODO's :NOTE: heading."
       (let (region-begin
             region-end
