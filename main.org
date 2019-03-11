@@ -2246,8 +2246,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     e91d953e6d7b81f7a8e802cfab6c54d0
-:MODIFIED: 2019-03-11 17:06:55
+:HASH:     30e58b6d18ce9ec84d9e91312d66967a
+:MODIFIED: 2019-03-11 17:49:32
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2302,8 +2302,12 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (setq org-agenda-custom-commands
           '(("d" "Daily Agenda"
              ((agenda ""
-                      ((org-agenda-prefix-format " %-6.6e: %t")
-                       (org-agenda-todo-ignore-scheduled 'past)))
+                      ((org-agenda-todo-ignore-scheduled 'past)
+                       (org-agenda-time-grid (quote
+                                              ((daily today remove-match)
+                                               (900 1100 1300 1500 1700)
+                                               "......" "----------------")))
+                       (org-agenda-span 'day)))
               (todo "TODO"
                     ((org-agenda-prefix-format "  %-6.6e  %-20.20c: %5(org-entry-get nil \"MODIFIED\") ")
                      (org-agenda-todo-ignore-scheduled t)
