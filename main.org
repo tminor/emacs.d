@@ -2380,12 +2380,36 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     ccd093acd9872b4a3c1f6706e22a91b2
-:MODIFIED: 2019-03-11 14:47:57
+:HASH:     e77210e36808e311185cafa3c46aedfd
+:MODIFIED: 2019-03-11 15:25:52
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-capture
+    :init
+    ;; https://fuco1.github.io/2019-02-10-Refiling-hydra-with-pre-defined-targets.html
+    (defmacro tm/org-make-refile-command (fn-suffix refile-targets)
+      "Generate a command to call `org-refile' with modified targets."
+      `(defun ,(intern (concat "tm/org-refile-" (symbol-name fn-suffix))) ()
+         ,(format "`org-refile' to %S" refile-targets)
+         (interactive)
+         (org-refile-cache-clear)
+         (let ((org-refile-target-verify-function nil)
+               (org-refile-targets ,refile-targets))
+           (call-interactively 'org-refile))))
+
+    (tm/org-make-refile-command work-project-todos
+                                `((,(concat org-base-directory "work/work.org") :todo . "PROJECT")))
+    (tm/org-make-refile-command home-project-todos
+                                `((,(concat org-base-directory "home/home.org") :todo . "PROJECT")))
+    :general
+    (tm/leader-def
+      :infix "o"
+      :prefix-command 'tm/org-prefix-command
+      :prefix-map 'tm/org-prefix-map
+      "" '(:which-key "org prefix" :ignore t)
+      "W" 'tm/org-refile-work-project-todos
+      "h" 'tm/org-refile-home-project-todos)
     :config
     ;; Set default capture file
     (setq org-default-notes-file "~/org/capture.org")
@@ -2400,7 +2424,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("pwp" "New PROJECT for work."
              entry (file+olp ,(concat org-base-directory "work/work.org") "Projects")
              ,(concat "* PROJECT [#%^{Priority: |C|B|A}] %? %^g\n"
-                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                       (time-add (current-time) (* 60 60 24 30 6))))\n"
                       ":PROPERTIES:\n"
                       ":CONTEXT: %a\n"
@@ -2410,7 +2434,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("pwu" "PROJECT TODO with high priority."
              entry (file+olp ,(concat org-base-directory "work/work.org") "Projects")
              ,(concat "* TODO [#A] %?\n"
-                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30))))\n"
                       ":PROPERTIES:\n"
                       ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
@@ -2421,11 +2445,11 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("pwl" "PROJECT TODO that can be done later."
              entry (file+olp ,(concat org-base-directory "work/work.org") "Projects")
              ,(concat "* TODO [#%^{Priority |C|B}] %?\n"
-                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30 24 30))))\n"
                       ":PROPERTIES:\n"
-                      ;; ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
-                      ;;                (time-add (current-time) (* 60 30 24 30 3))))\n"
+                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
+                                       (time-add (current-time) (* 60 30 24 30 3))))\n"
                       ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
                       ":END:")
              :empty-lines 1
@@ -2436,7 +2460,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("php" "New PROJECT for home."
              entry (file+olp ,(concat org-base-directory "home/home.org") "Projects")
              ,(concat "* PROJECT [#%^{Priority: |C|B|A}] %? %^g\n"
-                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 60 24 30 6))))\n"
                       ":PROPERTIES:\n"
                       ":CONTEXT: %a\n"
@@ -2446,7 +2470,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("phu" "TODO with high priority."
              entry (file+olp ,(concat org-base-directory "home/home.org") "Projects")
              ,(concat "* TODO [#A] %?\n"
-                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30))))\n"
                       ":PROPERTIES:\n"
                       ":CONTEXT: %a\n"
@@ -2457,10 +2481,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("phl" "PROJECT TODO that can be done later."
              entry (file+olp ,(concat org-base-directory "home/home.org") "Projects")
              ,(concat "* TODO [#%^{Priority: |C|B}] %?\n"
-                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30 24 30))))\n"
                       ":PROPERTIES:\n"
-                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30 24 30 3))))\n"
                       ":CONTEXT: %a\n"
                       ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
@@ -2475,7 +2499,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("twu" "TODO with high priority."
              entry (file+olp+datetree ,(concat org-base-directory "work/work.org") "Tasks")
              ,(concat "* TODO [#A] %? %^g\n"
-                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30))))\n"
                       ":PROPERTIES:\n"
                       ":CONTEXT: %a\n"
@@ -2487,10 +2511,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("twl" "TODO that can be done later."
              entry (file+olp+datetree ,(concat org-base-directory "work/work.org") "Tasks")
              ,(concat "* TODO [#%^{Priority: |C|B}] %? %^g\n"
-                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30 24 30))))\n"
                       ":PROPERTIES:\n"
-                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30 24 30 3))))\n"
                       ":CONTEXT: %a\n"
                       ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
@@ -2503,7 +2527,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("thu" "TODO with high priority."
              entry (file+olp+datetree ,(concat org-base-directory "home/home.org") "Tasks")
              ,(concat "* TODO [#A] %? %^g\n"
-                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "SCHEDULED: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30))))\n"
                       ":PROPERTIES:\n"
                       ":CONTEXT: %a\n"
@@ -2515,10 +2539,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("thl" "TODO that can be done later."
              entry (file+olp+datetree ,(concat org-base-directory "home/home.org") "Tasks")
              ,(concat "* TODO [#%^{Priority: |C|B}] %? %^g\n"
-                      "DEADLINE: %(format \"<%s>\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      "DEADLINE: %(format \"<%s>\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30 24 30))))\n"
                       ":PROPERTIES:\n"
-                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"%Y-%m-%d %a %H:%M\"
+                      ":EXPIRATION: %(format \"[%s]\" (format-time-string \"\\%Y-\\%m-\\%d \\%a \\%H:\\%M\"
                                      (time-add (current-time) (* 60 30 24 30 3))))\n"
                       ":CONTEXT: %a\n"
                       ":Effort: %^{Effort:|00:02|00:10|00:30|01:00}\n"
@@ -2556,88 +2580,6 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
             ("c" "Quick capture."
              entry (file "~/org/capture.org")
              "* %?\n%U\n%f\n%a\n"))))
-#+END_SRC
-
-*** Elisp
-:PROPERTIES:
-:HASH:     d59959f842b6bcdc54945224c5ee8526
-:MODIFIED: 2019-03-11 14:39:11
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  ;; https://stackoverflow.com/a/24787118
-  (defun tm/org-ask-location ()
-    "Prompt for refile location."
-    (let* ((org-refile-targets '((nil :maxlevel . 3)))
-           (hd (condition-case nil
-                   (car (org-refile-get-location "Headline" nil t))
-                 (error (car org-refile-history)))))
-      (setq org-refile-use-outline-path nil)
-      (goto-char (point-min))
-      (outline-next-heading)
-      (if (re-search-forward
-           (format org-complex-heading-regexp-format (regexp-quote hd))
-           nil t)
-          (goto-char (point-at-bol))
-        (goto-char (point-max))
-        (or (bolp) (insert "\n"))
-        (insert "* " hd "\n")))
-    (end-of-line)
-    (setq org-refile-use-outline-path 'file) )
-
-  (defun tm/org-capture-clocked-note ()
-      "Add list item to TODO's :NOTE: heading."
-      (let (region-begin
-            region-end
-            eol
-            heading-text)
-        (if (and (markerp org-clock-hd-marker)
-                 (marker-buffer org-clock-hd-marker))
-            (progn (set-buffer (marker-buffer org-clock-hd-marker))
-                   (org-capture-put-target-region-and-position)
-                   (widen)
-                   (goto-char org-clock-hd-marker)
-                   (setq heading-text (nth 4 (org-heading-components)))
-                   ;; Try to find the first subheading; if it exists,
-                   ;; check that it's one with a :NOTE: tag. If it doesn't
-                   ;; have a :NOTE: tag or if the heading doesn't have a
-                   ;; subheading, make sure that its first subheading is
-                   ;; created and has a :NOTE: tag.
-                   (if (org-goto-first-child)
-                       ;; Make sure first subheading has a :NOTE: tag.
-                       ;; Return point to beginning of parent if it does.
-                       ;; Insert new subheading directly under the parent
-                       ;; with :NOTE: tag if the first subheading isn't
-                       ;; the one we expect (and also return point to
-                       ;; beginning of parent).
-                       (progn
-                         (org-goto-first-child)
-                         (org-end-of-line)
-                         (setq eol (point))
-                         (org-beginning-of-line)
-                         (if (re-search-forward ":NOTE:$" eol t)
-                             (org-backward-element)
-                           (progn
-                             (org-backward-element)
-                             (org-set-tags-to ":NOTE:")
-                             (org-backward-element))))
-                     ;; Else: if `org-goto-first-child' returns nil,
-                     ;; create a new subheading with :NOTE: tag.
-                     (progn
-                       (org-end-of-line)
-                       (org-insert-subheading 1)
-                       (insert (format "Notes to remember about %s" heading-text))
-                       (org-set-tags-to ":NOTE:")
-                       (org-backward-element)))
-                   (org-goto-first-child)
-                   (if (re-search-forward "^-.*$" nil t)
-                       (progn
-                         ;; (goto-char (re-search-forward "^-.*$" nil))
-                         (newline 1))
-                     (progn
-                       (goto-char (re-search-forward "^$" nil))
-                       (newline 1))))
-          (error "No running clock that could be used as capture target"))))
 #+END_SRC
 
 ** TODO Blog Publishing
