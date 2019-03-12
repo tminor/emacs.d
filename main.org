@@ -1124,8 +1124,8 @@ script! Fish syntax highlighting:
 
 **** Robe
 :PROPERTIES:
-:HASH:     44b0a703bb4f4bda2bf564f8a8d8fa0c
-:MODIFIED: 2019-03-12 10:16:51
+:HASH:     77041baf3ec830ace0d425a85699542c
+:MODIFIED: 2019-03-12 10:21:21
 :END:
 
 I've had some trouble with this package; mostly because I don't
@@ -1147,7 +1147,6 @@ loaded classes and modules, and where each method is defined.
     '(push 'company-robe company-backends)))
 #+END_SRC
 
-****
 *** TODO Lisp
 :PROPERTIES:
 :HASH:     9cecee71e81dfd807eeb8e853fde7a64
