@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                        :TOC:
+** Table of Contents                                                                                         :TOC:
 :PROPERTIES:
 :HASH:     d9b1c751b4923bcf16cad2de5a217df8
 :MODIFIED: 2019-03-08 17:18:17
@@ -376,6 +376,23 @@ Install =highlight-indent-guides= for indentation indicators in
     :init
     (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
     (setq highlight-indent-guides-method 'column))
+#+END_SRC
+
+**** Avy
+:PROPERTIES:
+:HASH:     7dfdcdd366b80970950a29ea29aa073b
+:MODIFIED: 2019-03-12 10:09:59
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :general
+    (tm/leader-def
+      :infix "a"
+      :prefix-command 'tm/avy-prefix-command
+      :prefix-map 'tm/avy-prefix-map
+      "" '(:which-key "avy prefix" :ignore t)
+      "a" 'avy-goto-char))
 #+END_SRC
 
 *** Window management
@@ -1081,8 +1098,8 @@ script! Fish syntax highlighting:
 
 *** TODO Ruby
 :PROPERTIES:
-:HASH:     bfcf9d454fbe973e86a132b62a43b84b
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     fcf0293298dc85e6ff83980260933352
+:MODIFIED: 2019-03-12 10:20:32
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1091,9 +1108,25 @@ script! Fish syntax highlighting:
 #+BEGIN_SRC emacs-lisp
   (use-package ruby-mode
     :ensure t
+    :init
+    (use-package ruby-hash-syntax
+      :ensure t)
+    :general
+    (tm/leader-def
+      :infix "R"
+      :prefix-command 'tm/ruby-prefix-command
+      :prefix-map 'tm/ruby-prefix-map
+      "" '(:which-key "ruby prefix" :ignore t)
+      "H" 'ruby-hash-syntax-toggle)
     :config
     (setq ruby-indent-level 4))
 #+END_SRC
+
+**** Robe
+:PROPERTIES:
+:HASH:     44b0a703bb4f4bda2bf564f8a8d8fa0c
+:MODIFIED: 2019-03-12 10:16:51
+:END:
 
 I've had some trouble with this package; mostly because I don't
 understand Gemfiles and such. It would probably be worth figuring out
@@ -1114,6 +1147,7 @@ loaded classes and modules, and where each method is defined.
     '(push 'company-robe company-backends)))
 #+END_SRC
 
+****
 *** TODO Lisp
 :PROPERTIES:
 :HASH:     9cecee71e81dfd807eeb8e853fde7a64
@@ -1878,8 +1912,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     431750acad80c51ed1ef2fb93dbfba68
-:MODIFIED: 2019-03-11 15:46:37
+:HASH:     8103eb05911342b09fd3d4eed93e182f
+:MODIFIED: 2019-03-12 09:00:56
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1909,7 +1943,13 @@ Reminders a la Gmail about sent mail that hasn't received a response.
       (add-hook 'org-mode-hook 'evil-org-mode)
       (add-hook 'evil-org-mode-hook
                 (lambda ()
-                  (evil-org-set-key-theme))))
+                  (evil-org-set-key-theme '(textobjects
+                                            insert
+                                            navigation
+                                            additional
+                                            shift
+                                            todo
+                                            heading)))))
     :config
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
