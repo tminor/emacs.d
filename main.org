@@ -1098,8 +1098,8 @@ script! Fish syntax highlighting:
 
 *** TODO Ruby
 :PROPERTIES:
-:HASH:     fcf0293298dc85e6ff83980260933352
-:MODIFIED: 2019-03-12 10:20:32
+:HASH:     322dce7162d7644e00a25c41f669a65d
+:MODIFIED: 2019-03-13 16:01:49
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1110,6 +1110,10 @@ script! Fish syntax highlighting:
     :ensure t
     :init
     (use-package ruby-hash-syntax
+      :ensure t)
+    (use-package inf-ruby
+      :ensure t)
+    (use-package yari
       :ensure t)
     :general
     (tm/leader-def
@@ -1774,8 +1778,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     c88a64c5984144fe77fe543268b4364e
-:MODIFIED: 2019-03-08 18:01:33
+:HASH:     01d5b80b8944a8f1dbc2f8ab76102442
+:MODIFIED: 2019-03-14 11:54:02
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1833,7 +1837,9 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     (setq mm-text-html-renderer 'w3m)
 
     ;; Activate line highlighting only for feed buffer
-    (add-hook 'notmuch-search-mode-hook 'tm/set-feed-faces)
+    ;;
+    ;; This is very slow, so disabling for now
+    ;; (add-hook 'notmuch-search-mode-hook 'tm/set-feed-faces)
 
     ;; Saved searches for notmuch-hello
     (setq notmuch-saved-searches
@@ -1897,6 +1903,14 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 - State "TODO"       from "STUFF"      [2019-02-18 Mon 10:42]
 :END:
 [2019-02-12 Tue 08:36]
+*** TODO Toggle for saved-searches
+:PROPERTIES:
+:HASH:     6c5c63555472355d4da785ad9ced4c2f
+:MODIFIED: 2019-03-14 11:00:50
+:END:
+
+- Add toggle for =notmuch-hello=
+- Toggle between thorough/important list of saved searches
 * Org-mode
 :PROPERTIES:
 :HASH:     1ec6d96ffcc20597ffd547966ecf91ee
