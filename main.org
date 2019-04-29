@@ -1782,16 +1782,6 @@ Returns whatever the action returns."
 
 Reminders a la Gmail about sent mail that hasn't received a response.
 
-*** Refresh notmuch buffer
-:PROPERTIES:
-:HASH:     5dc7781b86a1fd9d3a322ff1dd355507
-:MODIFIED: 2019-04-29 10:15:40
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (run-at-time "60 seconds" nil #'tm/notmuch-refresh-feed-buffer)
-#+END_SRC
-
 ** TODO Notmuch
 :PROPERTIES:
 :HASH:     01d5b80b8944a8f1dbc2f8ab76102442
