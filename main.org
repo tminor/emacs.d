@@ -22,8 +22,8 @@ Some conventions:
 
 ** Table of Contents                                                                                         :TOC:
 :PROPERTIES:
-:HASH:     d9b1c751b4923bcf16cad2de5a217df8
-:MODIFIED: 2019-03-08 17:18:17
+:HASH:     dae2f2fa48391ef740f9f29c9a5bdd1a
+:MODIFIED: 2019-04-29 13:57:46
 :END:
 
 - [[#intro][Intro]]
@@ -242,8 +242,8 @@ Install [[https://github.com/noctuid/general.el#about][general.el]] for key bind
 
 *** Evil mode
 :PROPERTIES:
-:HASH:     bf5b8f82af947215d62b1c5988aead70
-:MODIFIED: 2019-03-08 15:49:53
+:HASH:     e3a468e32f760cabcadc5a61c9cbac8c
+:MODIFIED: 2019-04-29 14:10:05
 :END:
 
 Install =evil= for =vi= style editing:
@@ -253,6 +253,10 @@ Install =evil= for =vi= style editing:
     :demand t
     :init
     (setq evil-want-keybinding nil)
+    :general
+    (general-define-key :states '(normal motion)
+                        :keymaps '(local override)
+                        "/" 'swiper)
     :config
     (evil-mode 1))
 #+END_SRC
