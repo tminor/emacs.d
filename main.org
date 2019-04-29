@@ -866,6 +866,9 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
     :config
     (all-the-icons-ivy-setup))
 #+END_SRC
+**** TODO Add to =ivy-all-the-icons=
+
+Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
 ** Themes
 :PROPERTIES:
 :HASH:     b4330a2e436a94dcb44cba42c997b3d9
@@ -1615,8 +1618,8 @@ and GPG keys.
 
 *** Refresh specified buffer
 :PROPERTIES:
-:HASH:     0f33aff1779939ce54c8f32861df91eb
-:MODIFIED: 2019-03-08 18:19:02
+:HASH:     9aad2e87e1ec90fcd24e3958cdff6a3f
+:MODIFIED: 2019-04-29 13:44:03
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1625,15 +1628,14 @@ and GPG keys.
 
   The buffer is silently refreshed, i.e. they are not forced to
   be displayed."
-    (interactive)
     (dolist (buffer (buffer-list))
       (let ((buffer-mode (buffer-local-value 'major-mode buffer)))
-        (when (and (memq buffer-mode '(notmuch-show-mode
-                                       notmuch-tree-mode
-                                       notmuch-search-mode
-                                       notmuch-hello-mode))
-                   (string= (buffer-name) "*notmuch-saved-search-feed*"))
-          (with-current-buffer buffer
+        (with-current-buffer buffer
+          (when (and (memq buffer-mode '(notmuch-show-mode
+                                         notmuch-tree-mode
+                                         notmuch-search-mode
+                                         notmuch-hello-mode))
+                     (string= (buffer-name) "*notmuch-saved-search-feed*"))
             (notmuch-refresh-this-buffer))))))
 #+END_SRC
 
@@ -1775,6 +1777,16 @@ Returns whatever the action returns."
 :END:
 
 Reminders a la Gmail about sent mail that hasn't received a response.
+
+*** Refresh notmuch buffer
+:PROPERTIES:
+:HASH:     5dc7781b86a1fd9d3a322ff1dd355507
+:MODIFIED: 2019-04-29 10:15:40
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (run-at-time "60 seconds" nil #'tm/notmuch-refresh-feed-buffer)
+#+END_SRC
 
 ** TODO Notmuch
 :PROPERTIES:
@@ -3362,6 +3374,13 @@ _vr_ reset      ^^                       ^^                 ^^
 https://github.com/larkery/emacs/blob/d89d5194f04caa2fc00454a7e6b94bcfd359fb64/site-lisp/notmuch-agenda.el
 
 [2019-02-14 Thu 09:38]
+*** TODO org-super-agenda: new deadline group
+:PROPERTIES:
+:HASH:     43d947803572217d813b5a072bc0d8d8
+:MODIFIED: 2019-03-21 10:30:36
+:END:
+
+- Separate deadlines from scheduled TODOs
 ** Multiple-cursors
 :PROPERTIES:
 :HASH:     4a5645a305de8acec62e69c94c7b1da0
