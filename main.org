@@ -1078,14 +1078,21 @@ Syntax highlighting for Puppet:
 
 *** MarkDown
 :PROPERTIES:
-:HASH:     c59479b2eb922391a0bc1e36bcdd17ed
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     43045fa9653fc5b31e4f0d211c23dc06
+:MODIFIED: 2019-05-01 13:22:38
 :END:
 
 MarkDown syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
+    :ensure t)
+#+END_SRC
+
+Mainly for editing MarkDown in org-mode:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package pandoc-mode
     :ensure t)
 #+END_SRC
 
