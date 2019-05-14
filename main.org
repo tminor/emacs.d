@@ -1168,8 +1168,8 @@ loaded classes and modules, and where each method is defined.
 
 *** TODO Lisp
 :PROPERTIES:
-:HASH:     9cecee71e81dfd807eeb8e853fde7a64
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     1b99bd7da8158cb05193f5612e2ab423
+:MODIFIED: 2019-05-14 14:33:16
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:45]
@@ -1217,7 +1217,9 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
   (use-package highlight-parentheses
     :ensure t
     :init
-    (highlight-parentheses-mode 1))
+    (highlight-parentheses-mode 1)
+    :hook
+    (prog-mode . highlight-parentheses-mode))
 #+END_SRC
 
 *** Elisp
