@@ -2678,6 +2678,19 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     )
 #+END_SRC
 
+*** Org-web-tools
+:PROPERTIES:
+:HASH:     c6c79cc68b7880cfb5c02e8d8347c5c5
+:MODIFIED: 2019-05-14 14:40:11
+:END:
+
+[[https://github.com/alphapapa/org-web-tools][org-web-tools]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-web-tools
+    :ensure t)
+#+END_SRC
+
 ** TODO Blog Publishing
 :PROPERTIES:
 :HASH:     65384ef23ee9196fe497f830cd82ef29
