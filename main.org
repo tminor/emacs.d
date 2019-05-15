@@ -1941,8 +1941,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     64bdf3bc4adc52fc2f2fa4d60eb2a143
-:MODIFIED: 2019-05-13 16:09:33
+:HASH:     80113da9de402c833a4bc8885f8756ba
+:MODIFIED: 2019-05-15 17:05:10
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1957,6 +1957,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
       "a" 'org-agenda
       "c" 'org-capture
       "b" 'org-switchb
+      "h" 'org-recent-headings-ivy
       "j" 'tm/org-journal-prefix-command
       "'" 'org-edit-special)
     :init
@@ -2147,6 +2148,19 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
         (lambda (tag)
           (when (member tag target-tags-inherited)
             (org-toggle-tag tag 'off))))))
+#+END_SRC
+
+*** Org-recent-headers
+:PROPERTIES:
+:HASH:     cb06f65c1785190c0ed6cd2688f539b8
+:MODIFIED: 2019-05-15 17:03:35
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-recent-headings
+    :ensure t
+    :config
+    (org-recent-headings-mode))
 #+END_SRC
 
 ** Org-journal
