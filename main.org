@@ -33,6 +33,7 @@ Some conventions:
   - [[#use-package-bootstrap][Use-package bootstrap]]
   - [[#no-littering][No-littering]]
   - [[#load-path][Load path]]
+  - [[#elisp][Elisp]]
 - [[#make-emacs-friendlier][Make Emacs Friendlier]]
   - [[#key-bindings][Key bindings]]
   - [[#emacs-navigation][Emacs navigation]]
@@ -53,7 +54,7 @@ Some conventions:
   - [[#eshell][Eshell]]
   - [[#sshgpg-keys][SSH/GPG keys]]
 - [[#mail][Mail]]
-  - [[#elisp][Elisp]]
+  - [[#elisp-1][Elisp]]
   - [[#notmuch][Notmuch]]
 - [[#org-mode][Org-mode]]
   - [[#org-mode-1][Org-mode]]
@@ -203,6 +204,27 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'exec-path "/home/tminor/.gem/ruby/bin/")
+#+END_SRC
+
+** Elisp
+:PROPERTIES:
+:HASH:     67db27d8239405b624bafb53a730c1d3
+:MODIFIED: 2019-05-28 11:00:03
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/pgrep (string)
+    "Search process list for any process name matching STRING."
+
+    (interactive "sSearch string: ")
+    (let (pid-list)
+      (dolist (pid (list-system-processes) pid-list)
+        (setq pid-list (cons (process-attributes pid) pid-list)))
+      (dolist (proc pid-list)
+        (if (string-match-p (regexp-quote string)
+                            (cdr (assoc-string 'args proc)))
+            (message (cdr (assoc 'args proc)))
+          nil))))
 #+END_SRC
 
 * Make Emacs Friendlier
