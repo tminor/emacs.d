@@ -1113,8 +1113,8 @@ script! Fish syntax highlighting:
 
 *** TODO Ruby
 :PROPERTIES:
-:HASH:     322dce7162d7644e00a25c41f669a65d
-:MODIFIED: 2019-03-13 16:01:49
+:HASH:     c2201a91456c4580fb8098060b205ec3
+:MODIFIED: 2019-05-23 13:35:19
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1139,6 +1139,14 @@ script! Fish syntax highlighting:
       "H" 'ruby-hash-syntax-toggle)
     :config
     (setq ruby-indent-level 4))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rubocopfmt
+    :ensure t
+    :config
+    (setq rubocopfmt-rubocop-command
+          "rubocop"))
 #+END_SRC
 
 **** Robe
@@ -1794,8 +1802,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     cf3dd8c97272b2313174ffba0fd8b8ad
-:MODIFIED: 2019-05-15 15:22:37
+:HASH:     d0fa09e82166a0589837d0561658850e
+:MODIFIED: 2019-05-28 09:59:15
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1845,6 +1853,9 @@ Reminders a la Gmail about sent mail that hasn't received a response.
           notmuch-show-indent-messages-width 4
           notmuch-multipart/alternative-discouraged '("text/html" "text/plain")
           notmuch-archive-tags '("-inbox" "+archive"))
+
+    ;; Refresh feed buffer at specified intervals if it's open
+    (run-at-time "5 sec" nil #'tm/notmuch-refresh-feed-buffer)
 
     ;; Turn on org-struct mode in message-mode
     (add-hook 'message-mode-hook 'turn-on-orgstruct++)
@@ -2480,8 +2491,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     2cd467d79270db55d32439bf42d30f38
-:MODIFIED: 2019-05-15 15:21:23
+:HASH:     a96a49eba1341861e57bc347180c8aac
+:MODIFIED: 2019-05-16 10:33:18
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2523,7 +2534,6 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                                    "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?")
                                   ("jwl" "URL" entry (function org-journal-work-find-location)
                                    ,(concat "* %(format-time-string org-journal-time-format) %(org-web-tools--org-link-for-url)\n\n"
-                                            "%(org-web-tools-insert-web-page-as-entry)\n\n"
                                             "%?"))
                                   ("jh" "... for home")
                                   ("jht" "TODO" entry (function org-journal-home-find-location)
