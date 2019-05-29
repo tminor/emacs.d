@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                                          :TOC:
+** Table of Contents                                                                                         :TOC:
 :PROPERTIES:
 :HASH:     dae2f2fa48391ef740f9f29c9a5bdd1a
 :MODIFIED: 2019-04-29 13:57:46
@@ -1824,8 +1824,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     70c7f6e01267a7420fe923569e0b6623
-:MODIFIED: 2019-05-29 09:22:13
+:HASH:     60567ef2c84730915805e7bf3112c314
+:MODIFIED: 2019-05-29 09:48:34
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1877,7 +1877,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
           notmuch-archive-tags '("-inbox" "+archive"))
 
     ;; Refresh feed buffer at specified intervals if it's open
-    (run-at-time "5 sec" nil #'tm/notmuch-refresh-feed-buffer)
+    (run-with-timer 0 30 'tm/notmuch-refresh-feed-buffer)
 
     ;; Turn on org-struct mode in message-mode
     (add-hook 'message-mode-hook 'turn-on-orgstruct++)
@@ -1897,8 +1897,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
              :key "i"
              :count-query "tag:inbox and tag:unread")
             (:name "git issues"
-             :query "tag:lists/854 and date:1week..now"
-             :count-query "tag:lists/854 and date:1week..now and tag:unread")
+             :query "tag:lists/854 and not tag:archive and date:1week..now"
+             :count-query "tag:lists/854 and not tag:archive and date:1week..now and tag:unread")
             (:name "feed"
              :query "date:\"2hours..now\" and not subject:\"/[a-z]+-(dev|prod)[/][a-z]+-(dev|prod)/\"")
             (:name "nagios-gluu"
