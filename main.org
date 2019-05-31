@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                         :TOC:
+** Table of Contents                                                                                          :TOC:
 :PROPERTIES:
 :HASH:     dae2f2fa48391ef740f9f29c9a5bdd1a
 :MODIFIED: 2019-04-29 13:57:46
@@ -208,9 +208,11 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 ** Elisp
 :PROPERTIES:
-:HASH:     67db27d8239405b624bafb53a730c1d3
-:MODIFIED: 2019-05-28 11:00:03
+:HASH:     c841d57c9a0e24dc1e2865eec71127a2
+:MODIFIED: 2019-05-31 16:17:45
 :END:
+
+Simple pgrep using only Emacs Lisp functions:
 
 #+BEGIN_SRC emacs-lisp
   (defun tm/pgrep (string)
@@ -225,6 +227,26 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
                             (cdr (assoc-string 'args proc)))
             (message (cdr (assoc 'args proc)))
           nil))))
+#+END_SRC
+
+Function for finding and printing color and its complement:
+
+#+BEGIN_SRC emacs-lisp
+  (defun tm/complement-for-color-at-point ()
+    "Return color name for complement of color name at point."
+    (interactive)
+    (with-current-buffer (buffer-name)
+      (let* ((complement-rgb-value
+              (color-complement (thing-at-point 'word t)))
+             (red (car complement-rgb-value))
+             (blue (car (cdr complement-rgb-value)))
+             (green (car (cdr (cdr complement-rgb-value))))
+             (complement (color-rgb-to-hex red blue green))
+             (color (thing-at-point 'word t)))
+        (message "%s" (propertize complement
+                                  'face
+                                  `(:foreground ,(color-darken-name color 40)
+                                    :background ,complement))))))
 #+END_SRC
 
 * Make Emacs Friendlier
@@ -1824,8 +1846,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     60567ef2c84730915805e7bf3112c314
-:MODIFIED: 2019-05-29 09:48:34
+:HASH:     323d6959d72e6ed9630938de8910c722
+:MODIFIED: 2019-05-31 10:43:16
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -1900,7 +1922,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
              :query "tag:lists/854 and not tag:archive and date:1week..now"
              :count-query "tag:lists/854 and not tag:archive and date:1week..now and tag:unread")
             (:name "feed"
-             :query "date:\"2hours..now\" and not subject:\"/[a-z]+-(dev|prod)[/][a-z]+-(dev|prod)/\"")
+             :query "date:\"2hours..now\" and not subject:\"/gluu, [a-z]+-(prod|dev)\//\"")
             (:name "nagios-gluu"
              :query "subject:\"/idp-demo-prod/\" and tag:nagios-gluu and date:30days..today"
              :count-query "subject:\"/idp-demo-prod/\" and tag:nagios-gluu and date:30days..today and tag:unread")
