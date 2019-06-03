@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                          :TOC:
+** Table of Contents                                                     :TOC:
 :PROPERTIES:
 :HASH:     dae2f2fa48391ef740f9f29c9a5bdd1a
 :MODIFIED: 2019-04-29 13:57:46
@@ -1684,8 +1684,8 @@ and GPG keys.
 
 *** Refresh specified buffer
 :PROPERTIES:
-:HASH:     9aad2e87e1ec90fcd24e3958cdff6a3f
-:MODIFIED: 2019-04-29 13:44:03
+:HASH:     7beaff3b7a491fca4f707bf2e6727933
+:MODIFIED: 2019-06-02 20:28:49
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1694,6 +1694,7 @@ and GPG keys.
 
   The buffer is silently refreshed, i.e. they are not forced to
   be displayed."
+    (interactive)
     (dolist (buffer (buffer-list))
       (let ((buffer-mode (buffer-local-value 'major-mode buffer)))
         (with-current-buffer buffer
@@ -1702,7 +1703,13 @@ and GPG keys.
                                          notmuch-search-mode
                                          notmuch-hello-mode))
                      (string= (buffer-name) "*notmuch-saved-search-feed*"))
-            (notmuch-refresh-this-buffer))))))
+            (sleep-for 1)
+            (let ((phrase-alist '(("idp-demo-prod" . notmuch-feed-gluu)
+                                  ("PROBLEM" . notmuch-feed-nagios-problem)
+                                  ("RECOVERY" . notmuch-feed-nagios-recovery)
+                                  ("inbox" . notmuch-feed-inbox))))
+              (cl-loop for (key . value) in phrase-alist do
+                       (hi-lock-face-phrase-buffer key value))))))))
 #+END_SRC
 
 *** Setting faces
@@ -1843,6 +1850,42 @@ Returns whatever the action returns."
 :END:
 
 Reminders a la Gmail about sent mail that hasn't received a response.
+
+*** Feed highlighting
+:PROPERTIES:
+:HASH:     e22600cd026c70acc1a6635a56b6e560
+:MODIFIED: 2019-05-31 17:14:45
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defface notmuch-feed-gluu
+    '((t :foreground "purple2"
+         :background "#6e6ed3d31110"
+         :weight bold))
+    "Highlight gluu messages.")
+  (defface notmuch-feed-nagios-problem
+    '((t :foreground "#ffff00008080"
+         :weight bold))
+    "Highlight gluu messages.")
+  (defface notmuch-feed-nagios-recovery
+    '((t :foreground "SpringGreen"
+         :weight bold))
+    "Highlight gluu messages.")
+  (defface notmuch-feed-inbox
+    '((t :foreground "cyan"
+         :weight bold))
+    "Highlight gluu messages.")
+
+  (defun tm/highlight-notmuch-feed ()
+    "Highlight interesting words in saved search."
+    (with-current-buffer (buffer-name)
+      (let ((phrase-alist '(("idp-demo-prod" . notmuch-feed-gluu)
+                            ("PROBLEM" . notmuch-feed-nagios-problem)
+                            ("RECOVERY" . notmuch-feed-nagios-recovery)
+                            ("inbox" . notmuch-feed-inbox))))
+        (cl-loop for (key . value) in phrase-alist do
+                 (highlight-phrase key value)))))
+#+END_SRC
 
 ** TODO Notmuch
 :PROPERTIES:
