@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                     :TOC:
+** Table of Contents                                                                                        :TOC:
 :PROPERTIES:
 :HASH:     dae2f2fa48391ef740f9f29c9a5bdd1a
 :MODIFIED: 2019-04-29 13:57:46
@@ -1608,14 +1608,12 @@ something I should work towards.
 
 ** TODO Eshell
 :PROPERTIES:
-:HASH:     d891da95546fa80c946a723fa80142af
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     391ad5bb7d466002d2086d24bbb784fe
+:MODIFIED: 2019-06-02 21:24:11
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
 :END:
-
-Eshell should also probably become part of my workflow.
 
 #+BEGIN_SRC emacs-lisp
   (use-package egp
@@ -1626,6 +1624,15 @@ Eshell should also probably become part of my workflow.
   (use-package eshell
     :custom
     (eshell-prompt-function #'egp-theme))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+    (use-package esh-autosuggest
+      :hook (eshell-mode . esh-autosuggest-mode)
+      :ensure t
+      :config
+      (custom-theme-set-faces
+       ))
 #+END_SRC
 
 *** Elisp
@@ -2480,8 +2487,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     80adb83ad5fd7088f827de94a94c8efd
-:MODIFIED: 2019-05-13 16:31:26
+:HASH:     add0ba94cb4de61520a65db3863d3a34
+:MODIFIED: 2019-06-03 10:08:17
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2498,6 +2505,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
       :config
       (evil-org-agenda-set-keys))
     :config
+    ;; calendar.org has gotten very large and I received an error
+    ;; indicating this variable should be increased
+    (setq undo-outer-limit 25170000)
+
     ;; Hooks
     ;;
     ;; Place tags flush with right side of window
