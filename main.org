@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                        :TOC:
+** Table of Contents                                                                                         :TOC:
 :PROPERTIES:
 :HASH:     dae2f2fa48391ef740f9f29c9a5bdd1a
 :MODIFIED: 2019-04-29 13:57:46
@@ -382,14 +382,19 @@ buffers, etc.
 
 **** Cursor
 :PROPERTIES:
-:HASH:     4b690e00ed1d98a148161f5ac0768662
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     70f4bddccb7900ad976152ae7848e767
+:MODIFIED: 2019-06-05 11:50:48
 :END:
 
 Highlight line containing cursor:
 
 #+BEGIN_SRC emacs-lisp
-  (global-hl-line-mode +1)
+  (use-package beacon
+    :ensure t
+    :init
+    (global-hl-line-mode nil)
+    (beacon-mode 1)
+    (setq beacon-color "#503450"))
 #+END_SRC
 
 Multiple cursors for editing more than one line at the same time:
@@ -1691,8 +1696,8 @@ and GPG keys.
 
 *** Refresh specified buffer
 :PROPERTIES:
-:HASH:     7beaff3b7a491fca4f707bf2e6727933
-:MODIFIED: 2019-06-02 20:28:49
+:HASH:     126d4867987bee8fb6a59afa59a66f85
+:MODIFIED: 2019-06-03 17:06:34
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1710,13 +1715,7 @@ and GPG keys.
                                          notmuch-search-mode
                                          notmuch-hello-mode))
                      (string= (buffer-name) "*notmuch-saved-search-feed*"))
-            (sleep-for 1)
-            (let ((phrase-alist '(("idp-demo-prod" . notmuch-feed-gluu)
-                                  ("PROBLEM" . notmuch-feed-nagios-problem)
-                                  ("RECOVERY" . notmuch-feed-nagios-recovery)
-                                  ("inbox" . notmuch-feed-inbox))))
-              (cl-loop for (key . value) in phrase-alist do
-                       (hi-lock-face-phrase-buffer key value))))))))
+            (notmuch-refresh-this-buffer))))))
 #+END_SRC
 
 *** Setting faces
@@ -1860,8 +1859,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Feed highlighting
 :PROPERTIES:
-:HASH:     e22600cd026c70acc1a6635a56b6e560
-:MODIFIED: 2019-05-31 17:14:45
+:HASH:     a10fbdc7b002315029169a2a1baa82d3
+:MODIFIED: 2019-06-03 17:06:34
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1885,13 +1884,12 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
   (defun tm/highlight-notmuch-feed ()
     "Highlight interesting words in saved search."
-    (with-current-buffer (buffer-name)
-      (let ((phrase-alist '(("idp-demo-prod" . notmuch-feed-gluu)
-                            ("PROBLEM" . notmuch-feed-nagios-problem)
-                            ("RECOVERY" . notmuch-feed-nagios-recovery)
-                            ("inbox" . notmuch-feed-inbox))))
-        (cl-loop for (key . value) in phrase-alist do
-                 (highlight-phrase key value)))))
+    (let ((phrase-alist '(("idp-demo-prod" . notmuch-feed-gluu)
+                          ("PROBLEM" . notmuch-feed-nagios-problem)
+                          ("RECOVERY" . notmuch-feed-nagios-recovery)
+                          ("inbox" . notmuch-feed-inbox))))
+      (cl-loop for (key . value) in phrase-alist do
+               (highlight-phrase key value))))
 #+END_SRC
 
 ** TODO Notmuch
@@ -2487,8 +2485,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     add0ba94cb4de61520a65db3863d3a34
-:MODIFIED: 2019-06-03 10:08:17
+:HASH:     e39efde99f2e32212449bd582be6c1a7
+:MODIFIED: 2019-06-03 10:09:09
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2504,6 +2502,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (use-package evil-org-agenda
       :config
       (evil-org-agenda-set-keys))
+
     :config
     ;; calendar.org has gotten very large and I received an error
     ;; indicating this variable should be increased
