@@ -1689,11 +1689,17 @@ something I should work towards.
 
 ** TODO Eshell
 :PROPERTIES:
-:HASH:     46f5089a58a4340247e16c212c157445
-:MODIFIED: 2019-06-14 08:36:22
+:HASH:     12139a63b2b5e2993161a48e22953491
+:MODIFIED: 2019-06-14 10:31:29
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
+:END:
+
+*** =egp= (=eshell-prompt-extras=)
+:PROPERTIES:
+:HASH:     39ce74b59cd328a5e966c27d3527f915
+:MODIFIED: 2019-06-14 10:31:29
 :END:
 
 =eshell= prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
@@ -1702,6 +1708,12 @@ something I should work towards.
   (use-package egp
     :commands egp-theme)
 #+END_SRC
+
+*** =eshell-mode=
+:PROPERTIES:
+:HASH:     cbb33043e893090ac5dd6f3a528fe6cd
+:MODIFIED: 2019-06-14 10:31:29
+:END:
 
 Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell]] and =egp=.
 
