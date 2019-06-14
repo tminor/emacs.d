@@ -592,8 +592,8 @@ https://www.reddit.com/r/emacs/comments/aja311/first_trial_of_a_weekly_emacs_tip
 
 **** Projectile
 :PROPERTIES:
-:HASH:     6111de74c02a64e03158086ac43e6415
-:MODIFIED: 2019-06-11 16:08:54
+:HASH:     45eafece3bd19742346a222a99fbda12
+:MODIFIED: 2019-06-11 16:38:56
 :END:
 
 [[https://github.com/bbatsov/projectile][Project interaction via projectile]]:
@@ -610,11 +610,7 @@ https://www.reddit.com/r/emacs/comments/aja311/first_trial_of_a_weekly_emacs_tip
     (projectile-mode +1)
     (setq projectile-completion-system 'ivy)
     ;; https://github.com/bbatsov/projectile/issues/1323
-    (setq projectile-git-submodule-command
-          (concat "git submodule --quiet foreach "
-                  "'echo $(git rev-parse --show-toplevel)' "
-                  "| xargs realpath --relative-to=$PWD "
-                  "2> /dev/null"))
+    (setq projectile-git-submodule-command nil)
     :general
     (tm/leader-def
       "p" '(:keymap projectile-command-map
@@ -1187,8 +1183,8 @@ script! Fish syntax highlighting:
 
 *** TODO Ruby
 :PROPERTIES:
-:HASH:     c2201a91456c4580fb8098060b205ec3
-:MODIFIED: 2019-05-23 13:35:19
+:HASH:     6acbff879e5205283d96a09192eba27e
+:MODIFIED: 2019-06-12 18:15:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1204,6 +1200,8 @@ script! Fish syntax highlighting:
       :ensure t)
     (use-package yari
       :ensure t)
+    (use-package yard-mode
+      :ensure t)
     :general
     (tm/leader-def
       :infix "R"
@@ -1212,7 +1210,10 @@ script! Fish syntax highlighting:
       "" '(:which-key "ruby prefix" :ignore t)
       "H" 'ruby-hash-syntax-toggle)
     :config
-    (setq ruby-indent-level 4))
+    (setq ruby-indent-level 4)
+    :hook
+    (ruby-mode-hook . yard-mode)
+    (ruby-mode-hook . eldoc-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1638,31 +1639,39 @@ something I should work towards.
 
 ** TODO Eshell
 :PROPERTIES:
-:HASH:     391ad5bb7d466002d2086d24bbb784fe
-:MODIFIED: 2019-06-02 21:24:11
+:HASH:     f59a3bf9144ac1e0a5134f1b97584a27
+:MODIFIED: 2019-06-14 08:35:17
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
 :END:
+
+Eshell prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
 
 #+BEGIN_SRC emacs-lisp
   (use-package egp
     :commands egp-theme)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (use-package eshell
-    :custom
-    (eshell-prompt-function #'egp-theme))
-#+END_SRC
+Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell]] and =egp=.
 
 #+BEGIN_SRC emacs-lisp
-    (use-package esh-autosuggest
-      :hook (eshell-mode . esh-autosuggest-mode)
-      :ensure t
-      :config
-      (custom-theme-set-faces
-       ))
+  (use-package eshell
+    :init
+    (add-to-list 'load-path "~/.emacs.d/lisp/eshell/aweshell")
+    :custom
+    (eshell-prompt-function #'egp-theme)
+    :hook
+    (eshell-mode . esh-autosuggest-mode)
+    :config
+    (setq aweshell-valid-command-color "#3EDAD4"))
+#+END_SRC
+
+
+
+#+BEGIN_SRC emacs-lisp
+  (use-package esh-autosuggest
+    :ensure t)
 #+END_SRC
 
 *** Elisp
