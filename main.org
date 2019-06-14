@@ -1639,14 +1639,14 @@ something I should work towards.
 
 ** TODO Eshell
 :PROPERTIES:
-:HASH:     f59a3bf9144ac1e0a5134f1b97584a27
-:MODIFIED: 2019-06-14 08:35:17
+:HASH:     46f5089a58a4340247e16c212c157445
+:MODIFIED: 2019-06-14 08:36:22
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
 :END:
 
-Eshell prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
+=eshell= prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
 
 #+BEGIN_SRC emacs-lisp
   (use-package egp
@@ -1666,8 +1666,6 @@ Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell
     :config
     (setq aweshell-valid-command-color "#3EDAD4"))
 #+END_SRC
-
-
 
 #+BEGIN_SRC emacs-lisp
   (use-package esh-autosuggest
