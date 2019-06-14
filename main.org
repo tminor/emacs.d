@@ -1581,6 +1581,19 @@ This makes hunting down paren pairs easier in Elisp:
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
 
+*** =fill-column-indicator=
+:PROPERTIES:
+:HASH:     13640adda16e63cb4a9ef2f07d44b2e2
+:MODIFIED: 2019-06-14 10:14:09
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package fill-column-indicator
+    :ensure t
+    :hook
+    (prog-mode . fci-mode))
+#+END_SRC
+
 ** Version control
 :PROPERTIES:
 :HASH:     8d9a5fb1f24539513aa7494f92caaf48
