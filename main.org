@@ -1305,6 +1305,19 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
     (prog-mode . highlight-parentheses-mode))
 #+END_SRC
 
+*** Bash/Shell
+:PROPERTIES:
+:HASH:     71f2067c64138362d93e5c8cd16cc1fb
+:MODIFIED: 2019-06-14 09:56:40
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package sh-script
+    :ensure nil
+    :config
+    (setq sh-basic-offset 2))
+#+END_SRC
+
 *** Elisp
 :PROPERTIES:
 :HASH:     55e5ffb39c78851888a18871af9febf8
