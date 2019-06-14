@@ -1487,11 +1487,17 @@ Find more documentation [[https://github.com/Alexander-Miller/company-shell][her
 #+END_SRC
 ** TODO Miscellany
 :PROPERTIES:
-:HASH:     b91d66f85e6f44e0897fc16b653ef22c
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     ff64cb95db3da79ea4e5135a29624ee4
+:MODIFIED: 2019-06-14 10:02:11
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 11:15]
+:END:
+
+*** =hl-todo=
+:PROPERTIES:
+:HASH:     832118355d6456bbc4ce534f7a1d01ab
+:MODIFIED: 2019-06-14 09:59:56
 :END:
 
 Highlight TODO and other keywords in comments:
@@ -1503,6 +1509,12 @@ Highlight TODO and other keywords in comments:
     (global-hl-todo-mode t))
 #+END_SRC
 
+*** =yasnippet=
+:PROPERTIES:
+:HASH:     35cf8a69295f3a1a90fa92ae065ea0e6
+:MODIFIED: 2019-06-14 09:59:56
+:END:
+
 Use yasnippet. Configure it.
 
 #+BEGIN_SRC emacs-lisp
@@ -1512,6 +1524,12 @@ Use yasnippet. Configure it.
     ;; TODO: More configuration, more research
     (yas-global-mode 1))
 #+END_SRC
+
+*** Code folding
+:PROPERTIES:
+:HASH:     08d2763ac2140ab5e7487200675c42d0
+:MODIFIED: 2019-06-14 09:59:56
+:END:
 
 Code folding (based stupidly on indentation):
 
@@ -1526,6 +1544,12 @@ Code folding (based stupidly on indentation):
                    :toggle yafolding-toggle-element))
     (add-hook 'prog-mode-hook (lambda () (yafolding-mode))))
 #+END_SRC
+
+*** Linting an syntax checking
+:PROPERTIES:
+:HASH:     7244648c4ebf8bc4c55f33711bfe5e79
+:MODIFIED: 2019-06-14 09:59:56
+:END:
 
 Syntax checking:
 
