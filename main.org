@@ -1729,9 +1729,44 @@ Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell
     (setq aweshell-valid-command-color "#3EDAD4"))
 #+END_SRC
 
+*** =esh-autosuggest=
+:PROPERTIES:
+:HASH:     d366bd783da05a7a4726ce27961608f5
+:MODIFIED: 2019-06-14 11:20:06
+:END:
+
+Suggest command completions like fish.
+
 #+BEGIN_SRC emacs-lisp
   (use-package esh-autosuggest
     :ensure t)
+#+END_SRC
+
+*** =exec-path-from-shell=
+:PROPERTIES:
+:HASH:     8bdbd8a772d1e5eb93806dff7323db94
+:MODIFIED: 2019-06-14 11:18:15
+:END:
+
+Get environment variables from =$SHELL=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
+    (setq tm/environment-variables '("REPODIR"
+                                     "RUBYLIB"
+                                     "RUBYBINDIR"
+                                     "PUPPETDIR"))
+    (dolist (env-var tm/environment-variables)
+      (add-to-list 'exec-path-from-shell-variables env-var))
+    ;; https://github.com/purcell/exec-path-from-shell/issues/87
+    (setq exec-path-from-shell-arguments '("-l"))
+    ;; https://github.com/syl20bnr/spacemacs/issues/4755
+    (setq explicit-shell-file-name "/bin/bash")
+    (setq shell-file-name "bash")
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
 #+END_SRC
 
 *** Elisp
