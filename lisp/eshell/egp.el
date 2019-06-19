@@ -173,11 +173,20 @@ length of PATH (sans directory slashes) down to MAX-LEN."
 
 ;;;###autoload
 (defun egp-theme ()
-  "A eshell-prompt lambda theme with directory shrinking."
+  "An eshell-prompt lambda theme with directory shrinking."
   (setq eshell-prompt-regexp "^[^#\nλ]* λ[#]* ")
   (propertize
    (concat
-    (let* ((host (file-remote-p default-directory 'host)))
+    (let* ((host
+	    (let ((host (file-remote-p default-directory 'host)))
+	      (cond ((not host) host)
+		    (host
+		     (if (string-match-p (regexp-quote "localhost")
+					 host)
+			 (replace-regexp-in-string
+			  "\n\\'" ""
+			  (shell-command-to-string "hostname"))
+		       host))))))
       (when host
         (propertize
          (cond ((and default-directory (string= host (system-name)))
