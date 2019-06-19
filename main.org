@@ -574,8 +574,8 @@ Add normal Emacs window commands to leader key:
 
 **** TODO [#C] Customize buffer placement
 :PROPERTIES:
-:HASH:     0f562609d82ab2b0a3f96fcb95bae5be
-:MODIFIED: 2019-03-11 16:03:20
+:HASH:     bde13bf90580aabe1d0b75035f3a8724
+:MODIFIED: 2019-06-19 12:31:50
 :Effort:   00:30
 :END:
 :LOGBOOK:
@@ -1551,8 +1551,8 @@ Code folding (based stupidly on indentation):
 
 *** Linting an syntax checking
 :PROPERTIES:
-:HASH:     7244648c4ebf8bc4c55f33711bfe5e79
-:MODIFIED: 2019-06-14 09:59:56
+:HASH:     e3dc501eb6bd784e5192e79acd1a84ef
+:MODIFIED: 2019-06-19 12:31:50
 :END:
 
 Syntax checking:
@@ -1567,7 +1567,9 @@ Syntax checking:
     (setq flycheck-rubocoprc "/home/tminor/.config/rubocop/.rubocop.yml")
 
     ;; Config for Puppet lint
-    (setq flycheck-puppet-lint-rc "/home/tminor/.puppet-lint.rc"))
+    (setq flycheck-puppet-lint-rc "/home/tminor/.puppet-lint.rc")
+    ;; Sets path to most recent puppet executable.
+    (setq flycheck-puppet-parser-executable "/home/tminor/.gem/ruby/gems/puppet-6.5.0/bin/puppet"))
 #+END_SRC
 
 *** =rainbow-delimiters=
