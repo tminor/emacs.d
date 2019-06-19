@@ -194,7 +194,10 @@ length of PATH (sans directory slashes) down to MAX-LEN."
     (propertize (egp-fish-path (eshell/pwd) 0) 'face 'egp-dir-face)
     " "
     (propertize egp-prompt-symbol 'face 'egp-symbol-face)
-    (propertize (if (= (user-uid) 0) "#" "") 'face 'egp-root-face)
+    (propertize (if (string=
+		     (file-remote-p default-directory 'user) "root")
+		    "#" "")
+		'face 'egp-root-face)
     " ")
    'read-only t
    'front-sticky '(:font-lock-face read-only)
