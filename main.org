@@ -219,10 +219,13 @@ Simple pgrep using only Emacs Lisp functions:
   (defun tm/pgrep (string)
     "Search process list for any process name matching STRING."
 
-    (interactive "sSearch string: ")
+    (interactive "sProcess name: ")
     (let (pid-list)
+      ;; Gets a list of PIDs and constructs a list of lists containing
+      ;; attribute alists for each process.
       (dolist (pid (list-system-processes) pid-list)
         (setq pid-list (cons (process-attributes pid) pid-list)))
+      ;; Looks for STRING in PID-LIST and returns PID.
       (dolist (proc pid-list)
         (if (string-match-p (regexp-quote string)
                             (cdr (assoc-string 'args proc)))
