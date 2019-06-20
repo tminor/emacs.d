@@ -1,3 +1,0 @@
-[submodule "lisp/eshell/aweshell"]
-	path = lisp/eshell/aweshell
-	url = https://github.com/manateelazycat/aweshell.git
