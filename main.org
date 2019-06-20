@@ -500,7 +500,7 @@ Install =eyebrowse= for i3 style workspace management:
     :preface
     (defun tm/eyebrowse-dash ()
       (switch-to-buffer
-       (get-buffer "*dashboard*")))
+       (get-buffer "*scratch*")))
     :general
     (tm/leader-def
       :infix "e"
@@ -723,14 +723,14 @@ Don't show the startup message:
 And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]]:
 
 #+BEGIN_SRC emacs-lisp
-  (use-package dashboard
-    :config
-    (dashboard-setup-startup-hook)
-    (setq initial-buffer-choice
-          (lambda ()
-            (get-buffer "*dashboard*")))
-    (setq dashboard-startup-banner 'logo)
-    (setq dashboard-center-content t))
+  ;(use-package dashboard
+  ;  :config
+  ;  (dashboard-setup-startup-hook)
+  ;  (setq initial-buffer-choice
+  ;        (lambda ()
+  ;          (get-buffer "*dashboard*")))
+  ;  (setq dashboard-startup-banner 'logo)
+  ;  (setq dashboard-center-content t))
 #+END_SRC
 
 *** Mode-line
