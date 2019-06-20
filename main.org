@@ -1651,14 +1651,17 @@ something I should work towards.
 
 *** =egp= (=eshell-prompt-extras=)
 :PROPERTIES:
-:HASH:     39ce74b59cd328a5e966c27d3527f915
-:MODIFIED: 2019-06-14 10:31:29
+:HASH:     fe01a84b64ed5b7c44bf2bb42f437f0b
+:MODIFIED: 2019-06-20 16:41:23
 :END:
 
 =eshell= prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
 
 #+BEGIN_SRC emacs-lisp
   (use-package egp
+    :straight
+    (egp :type git :host github :repo "dieggsy/dotfiles"
+         :files ("*egp.el"))
     :commands egp-theme)
 #+END_SRC
 
@@ -1684,8 +1687,8 @@ Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell
 
 *** =esh-autosuggest=
 :PROPERTIES:
-:HASH:     d366bd783da05a7a4726ce27961608f5
-:MODIFIED: 2019-06-14 11:20:06
+:HASH:     09ae0c19b839de40700b0c259b151717
+:MODIFIED: 2019-06-20 16:41:23
 :END:
 
 Suggest command completions like fish.
@@ -1697,8 +1700,8 @@ Suggest command completions like fish.
 
 *** =exec-path-from-shell=
 :PROPERTIES:
-:HASH:     8bdbd8a772d1e5eb93806dff7323db94
-:MODIFIED: 2019-06-14 11:18:15
+:HASH:     cbeab8cdddf69fea1a3767966becf2eb
+:MODIFIED: 2019-06-20 16:41:23
 :END:
 
 Get environment variables from =$SHELL=.
