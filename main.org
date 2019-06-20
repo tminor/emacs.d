@@ -73,6 +73,7 @@ Some conventions:
   - [[#notmuch-1][Notmuch]]
   - [[#org-agenda-1][Org agenda]]
   - [[#multiple-cursors][Multiple-cursors]]
+  - [[#straightel][Straight.el]]
   - [[#menu-for-all-hydras][Menu for all hydras]]
 - [[#other][Other]]
   - [[#kill-whitespace-when-saving][Kill whitespace when saving]]
@@ -119,11 +120,11 @@ org ELPA to get all of the nice =org-contrib= packages that I may
 someday want.
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t)
-
-  (add-to-list 'package-archives
-               '("org" . "http://orgmode.org/elpa/") t)
+;  (add-to-list 'package-archives
+;               '("melpa" . "https://melpa.org/packages/") t)
+;
+;  (add-to-list 'package-archives
+;               '("org" . "http://orgmode.org/elpa/") t)
 #+END_SRC
 
 ** Use-package bootstrap
@@ -136,12 +137,13 @@ someday want.
 configuration.
 
 #+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-
-  (eval-when-compile
-    (require 'use-package))
+;  (unless (package-installed-p 'use-package)
+;    (package-refresh-contents)
+;    (package-install 'use-package))
+;
+;  (eval-when-compile
+;    (require 'use-package))
+(straight-use-package 'use-package)
 #+END_SRC
 
 ** No-littering
@@ -157,7 +159,6 @@ Keep files we don't manage from accumulating in =~/.emacs.d/=:
   (use-package recentf)
 
   (use-package no-littering
-    :ensure t
     :config
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)
@@ -267,15 +268,14 @@ Function for finding and printing color and its complement:
 
 *** General.el
 :PROPERTIES:
-:HASH:     b6d5afa1789a85bfd13a014e18b3f170
-:MODIFIED: 2019-03-08 15:49:53
+:HASH:     693d5ed998a28f3356936d6c3ea7594a
+:MODIFIED: 2019-03-10 19:02:08
 :END:
 
 Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
 
 #+BEGIN_SRC emacs-lisp
   (use-package general
-    :demand t
     :config
     (general-evil-setup t)
     (general-override-mode)
@@ -299,7 +299,6 @@ Install =evil= for =vi= style editing:
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-    :demand t
     :init
     (setq evil-want-keybinding nil)
     :general
@@ -312,8 +311,8 @@ Install =evil= for =vi= style editing:
 
 **** =evil-collection=
 :PROPERTIES:
-:HASH:     2daa3a0ba1685c1c3498c9986cb0b715
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     50b488caed4b9c98c7e65aad9f1f9de7
+:MODIFIED: 2019-03-10 19:04:45
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -337,7 +336,7 @@ provides a pop-up for possible completion candidates.
 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
-    :ensure t
+    ;; TODO: Find a way to make this work
     ;; :general
     ;; (tm/leader-def
     ;;   :infix "k"
@@ -370,7 +369,6 @@ buffers, etc.
 
 #+BEGIN_SRC emacs-lisp
   (use-package ibuffer
-    :ensure t
     :general
     (tm/leader-def
       "B" 'ibuffer)
@@ -394,7 +392,7 @@ Highlight line containing cursor:
 
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
-    :ensure t
+    :straight t
     :init
     (global-hl-line-mode -1)
     (beacon-mode 1)
@@ -406,7 +404,6 @@ Multiple cursors for editing more than one line at the same time:
 
 #+BEGIN_SRC emacs-lisp
   (use-package multiple-cursors
-    :ensure t
     :general
     (tm/leader-def
       :infix "M"
@@ -431,7 +428,6 @@ Install =highlight-indent-guides= for indentation indicators in
 
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-indent-guides
-    :ensure t
     :init
     (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
     (setq highlight-indent-guides-method 'column))
@@ -479,7 +475,6 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 
 #+BEGIN_SRC emacs-lisp
   (use-package winner
-    :ensure t
     :general
     (tm/leader-def
       :infix "w"
@@ -502,7 +497,6 @@ Install =eyebrowse= for i3 style workspace management:
 
 #+BEGIN_SRC emacs-lisp
   (use-package eyebrowse
-    :ensure t
     :preface
     (defun tm/eyebrowse-dash ()
       (switch-to-buffer
@@ -549,7 +543,6 @@ Install =ace-window= for more sane window management:
 
 #+BEGIN_SRC emacs-lisp
   (use-package ace-window
-    :ensure t
     :init
     (custom-set-faces '(aw-leading-char-face
                         ((t (:foreground "red" :height 3.0)))))
@@ -603,12 +596,9 @@ https://www.reddit.com/r/emacs/comments/aja311/first_trial_of_a_weekly_emacs_tip
 
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
-    :ensure t
     :init
-    (use-package ripgrep
-      :ensure t)
-    (use-package projectile-ripgrep
-      :ensure t)
+    (use-package ripgrep)
+    (use-package projectile-ripgrep)
     :config
     (projectile-mode +1)
     (setq projectile-completion-system 'ivy)
@@ -734,7 +724,6 @@ And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboar
 
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
-    :ensure t
     :config
     (dashboard-setup-startup-hook)
     (setq initial-buffer-choice
@@ -754,10 +743,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
-    :ensure t
     :init
     (use-package all-the-icons
-      :demand t
       :init
       ;; (unless (file-exists-p (cl-case window-system
       ;;                          (x (concat (or (getenv "XDG_DATA_HOME")
@@ -786,7 +773,6 @@ Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
 
 #+BEGIN_SRC emacs-lisp
   (use-package helpful
-    :ensure t
     :general
     (tm/leader-def
       :infix "h"
@@ -815,7 +801,6 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
-    :ensure t
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
@@ -911,8 +896,7 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (use-package swiper
-    :ensure t)
+  (use-package swiper)
 #+END_SRC
 
 *** All-the-icons for Ivy/Counsel
@@ -923,7 +907,6 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-ivy
-    :ensure t
     :config
     (all-the-icons-ivy-setup))
 #+END_SRC
@@ -950,8 +933,7 @@ Load themes in =lisp= directory.
 [[https://github.com/hlissner/emacs-doom-themes][emacs-doom-themes]] to increase its coverage of different modes.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package cherry-blossom-theme
-    :ensure t)
+  (use-package cherry-blossom-theme)
 #+END_SRC
 
 ** Config management
@@ -970,8 +952,7 @@ Enables temporarily downloading and installing packages for the
 purpose of test driving. I discovered it [[http://cestlaz.github.io/posts/using-emacs-1-setup/#.Wb03a44pCfU][here]].
 
 #+BEGIN_SRC emacs-lisp
-(use-package try
-  :ensure t)
+(use-package try)
 #+END_SRC
 
 *** Testing/reloading init.el
@@ -1051,7 +1032,6 @@ Sync contents of X clipboard to kill ring:
 
 #+BEGIN_SRC emacs-lisp
   (use-package clipmon
-    :ensure t
     :config
     (add-to-list 'after-init-hook 'clipmon-mode-start)
     (add-to-list 'after-init-hook 'clipmon-persist)
@@ -1135,8 +1115,7 @@ Syntax highlighting, etc.
 Powershell syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
-  (use-package powershell
-    :ensure t)
+  (use-package powershell)
 #+END_SRC
 
 *** =puppet-mode=
@@ -1149,7 +1128,6 @@ Syntax highlighting for Puppet:
 
 #+BEGIN_SRC emacs-lisp
   (use-package puppet-mode
-    :ensure t
     :config
     (setq puppet-indent-level 4))
 #+END_SRC
@@ -1163,15 +1141,14 @@ Syntax highlighting for Puppet:
 MarkDown syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :ensure t)
+  (use-package markdown-mode)
 #+END_SRC
 
 Mainly for editing MarkDown in org-mode:
 
 #+BEGIN_SRC emacs-lisp
   (use-package pandoc-mode
-    :ensure t)
+    :straight t)
 #+END_SRC
 
 *** Fish Mode
@@ -1184,8 +1161,7 @@ Sometimes fish one liners become long enough to deserve writing a
 script! Fish syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
-  (use-package fish-mode
-    :ensure t)
+  (use-package fish-mode)
 #+END_SRC
 
 *** TODO Ruby
@@ -1199,23 +1175,6 @@ script! Fish syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
   (use-package ruby-mode
-    :ensure t
-    :init
-    (use-package ruby-hash-syntax
-      :ensure t)
-    (use-package inf-ruby
-      :ensure t)
-    (use-package yari
-      :ensure t)
-    (use-package yard-mode
-      :ensure t)
-    :general
-    (tm/leader-def
-      :infix "R"
-      :prefix-command 'tm/ruby-prefix-command
-      :prefix-map 'tm/ruby-prefix-map
-      "" '(:which-key "ruby prefix" :ignore t)
-      "H" 'ruby-hash-syntax-toggle)
     :config
     (setq ruby-indent-level 4)
     :hook
@@ -1225,7 +1184,7 @@ script! Fish syntax highlighting:
 
 #+BEGIN_SRC emacs-lisp
   (use-package rubocopfmt
-    :ensure t
+    :straight t
     :config
     (setq rubocopfmt-rubocop-command
           "rubocop"))
@@ -1249,7 +1208,6 @@ loaded classes and modules, and where each method is defined.
 
 #+BEGIN_SRC emacs-lisp
   (use-package robe
-    :ensure t
     :config
     (add-hook 'ruby-mode-hook 'robe-mode)
     (eval-after-load 'company
@@ -1271,16 +1229,13 @@ loaded classes and modules, and where each method is defined.
 
 #+BEGIN_SRC emacs-lisp
   (use-package lispy
-      :ensure t
       :init
       (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
       (add-hook 'lisp-mode-hook #'lispy-mode))
-
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   (use-package lispyville
-    :ensure t
     :init
     (with-eval-after-load 'lispyville
       (lispyville-set-key-theme
@@ -1305,7 +1260,6 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
 
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-parentheses
-    :ensure t
     :init
     (highlight-parentheses-mode 1)
     :hook
@@ -1320,7 +1274,7 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
 
 #+BEGIN_SRC emacs-lisp
   (use-package sh-script
-    :ensure nil
+    :straight nil
     :config
     (setq sh-basic-offset 2))
 #+END_SRC
@@ -1448,7 +1402,6 @@ General completion mechanism:
 
 #+BEGIN_SRC emacs-lisp
   (use-package company
-    :ensure t
     :config
     (add-hook 'prog-mode-hook 'company-mode)
     (setq company-idle-delay 0.02))
@@ -1466,9 +1419,8 @@ NOTE: Don't forget to install =virtualenv= (=$ pip install
 virtualenv=) and run =M-x jedi:install-server=.
 
 #+BEGIN_SRC emacs-lisp
-(use-package company-jedi
-  :ensure t
-  :config
+  (use-package company-jedi
+    :config
     (defun tm/python-mode-hook ()
       (add-to-list 'company-backends 'company-jedi))
     (add-hook 'python-mode-hook 'tm/python-mode-hook))
@@ -1485,9 +1437,8 @@ virtualenv=) and run =M-x jedi:install-server=.
 Find more documentation [[https://github.com/Alexander-Miller/company-shell][here]].
 
 #+BEGIN_SRC emacs-lisp
-(use-package company-shell
-  :ensure t
-  :config
+  (use-package company-shell
+    :config
     (add-to-list 'company-backends
                  '(company-shell company-shell-env company-fish-shell))
     (setq company-shell-clean-manpage t))
@@ -1511,7 +1462,6 @@ Highlight TODO and other keywords in comments:
 
 #+BEGIN_SRC emacs-lisp
   (use-package hl-todo
-    :ensure t
     :config
     (global-hl-todo-mode t))
 #+END_SRC
@@ -1526,7 +1476,6 @@ Use yasnippet. Configure it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
-    :ensure t
     :config
     ;; TODO: More configuration, more research
     (yas-global-mode 1))
@@ -1542,7 +1491,6 @@ Code folding (based stupidly on indentation):
 
 #+BEGIN_SRC emacs-lisp
   (use-package yafolding
-    :ensure t
     :config
     (add-to-list 'evil-fold-list
                  '((yafolding-mode)
@@ -1562,7 +1510,6 @@ Syntax checking:
 
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
-    :ensure t
     :config
     (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -1585,7 +1532,6 @@ This makes hunting down paren pairs easier in Elisp:
 
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters
-    :ensure t
     :config
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
@@ -1598,7 +1544,7 @@ This makes hunting down paren pairs easier in Elisp:
 
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
-    :ensure t
+    :straight t
     :hook
     (prog-mode . fci-mode))
 #+END_SRC
@@ -1617,7 +1563,6 @@ This makes hunting down paren pairs easier in Elisp:
 
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    :ensure t
     :general
     (tm/leader-def
       :infix "m"
@@ -1679,7 +1624,6 @@ something I should work towards.
 
 #+BEGIN_SRC emacs-lisp
   (use-package multi-term
-    :ensure t
     :config
     ;; I'm not quite sure what this does; it was in my init.el (it was
     ;; added by `custom.el')
@@ -1748,7 +1692,7 @@ Suggest command completions like fish.
 
 #+BEGIN_SRC emacs-lisp
   (use-package esh-autosuggest
-    :ensure t)
+    :straight t)
 #+END_SRC
 
 *** =exec-path-from-shell=
@@ -1761,7 +1705,7 @@ Get environment variables from =$SHELL=.
 
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
-    :ensure t
+    :straight t
     :config
     (setq tm/environment-variables '("REPODIR"
                                      "RUBYLIB"
@@ -1815,7 +1759,6 @@ and GPG keys.
 
 #+BEGIN_SRC emacs-lisp
   (use-package keychain-environment
-    :ensure t
     :init
     (keychain-refresh-environment))
 #+END_SRC
@@ -2032,8 +1975,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     b0e9ff6a1427786dc13ff6d149253568
-:MODIFIED: 2019-06-19 09:01:43
+:HASH:     8846c03a95613648842163f86d9add04
+:MODIFIED: 2019-06-20 16:01:49
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2041,18 +1984,14 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 #+BEGIN_SRC emacs-lisp
   (use-package notmuch
+    :if (executable-find "notmuch")
     :init
     ;; Org/HTML deps
-    (use-package htmlize
-      :ensure t)
-    (use-package org-mime
-      :ensure t)
+    (use-package htmlize)
+    (use-package org-mime)
     (require 'org-mime)
     (use-package w3m
-      :ensure t
-      :config
-      (require 'mime-w3m))
-    :ensure t
+      :if (executable-find "w3m"))
     :general
     (tm/leader-def
       "/" 'notmuch)
@@ -2184,13 +2123,12 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     adf2adbffa0bcbec3ef133688979678d
-:MODIFIED: 2019-06-20 11:14:42
+:HASH:     77d410afb9f57e07ab208083fa1b75d3
+:MODIFIED: 2019-06-20 16:13:28
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :ensure t
     :general
     (tm/leader-def
       :infix "o"
@@ -2203,16 +2141,16 @@ Reminders a la Gmail about sent mail that hasn't received a response.
       "h" 'org-recent-headings-ivy
       "j" 'tm/org-journal-prefix-command)
 
-    :init
+    :config
+    (if (try-completion "main.org" (mapcar #'buffer-name (buffer-list)))
+        (kill-buffer "main.org"))
     ;; Use UTF8 bullets instead of asterisks for Org headings
     (use-package org-bullets
-      :ensure t
       :config
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
     ;; Evil key bindings in Org mode
     (use-package evil-org
-      :ensure t
       :after org
       :config
       (add-hook 'org-mode-hook 'evil-org-mode)
@@ -2226,11 +2164,9 @@ Reminders a la Gmail about sent mail that hasn't received a response.
                                             todo
                                             heading)))))
 
-    :config
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
     (use-package toc-org
-      :ensure t
       :config
       (add-hook 'org-mode-hook 'toc-org-mode))
 
@@ -2393,13 +2329,13 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 *** Org-recent-headers
 :PROPERTIES:
-:HASH:     cb06f65c1785190c0ed6cd2688f539b8
-:MODIFIED: 2019-05-15 17:03:35
+:HASH:     5f041778d2981f07613bb5ae93393083
+:MODIFIED: 2019-06-20 16:01:49
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-recent-headings
-    :ensure t
+    :straight t
     :config
     (org-recent-headings-mode))
 #+END_SRC
@@ -2412,7 +2348,7 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-journal
-    :ensure t
+    :straight t
     :preface
     (defun org-journal-work-find-location ()
       (setq org-journal-dir "~/org/work/journal/")
@@ -2629,6 +2565,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-agenda
+    :straight nil
     :general
     (org-agenda-mode-map
      :keymaps 'override
@@ -2638,6 +2575,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
      "K" 'tm/org-agenda-previous-header)
     :init
     (use-package evil-org-agenda
+      :straight nil
       :config
       (evil-org-agenda-set-keys))
 
@@ -2705,7 +2643,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-super-agenda
-    :ensure t
+    :straight t
     :config
     (org-super-agenda-mode)
     (setq org-super-agenda-groups
@@ -2726,12 +2664,13 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     a96a49eba1341861e57bc347180c8aac
-:MODIFIED: 2019-05-16 10:33:18
+:HASH:     3b314533fd9f0bbad5c04f1ee9225e3e
+:MODIFIED: 2019-06-20 15:01:00
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-capture
+    :straight nil
     :init
     ;; https://fuco1.github.io/2019-02-10-Refiling-hydra-with-pre-defined-targets.html
     (defmacro tm/org-make-refile-command (fn-suffix refile-targets)
@@ -2945,15 +2884,15 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Org-web-tools
 :PROPERTIES:
-:HASH:     c6c79cc68b7880cfb5c02e8d8347c5c5
-:MODIFIED: 2019-05-14 14:40:11
+:HASH:     2cc90080db3d85c1e6490a89b6be2030
+:MODIFIED: 2019-06-20 15:01:00
 :END:
 
 [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-web-tools
-    :ensure t)
+    :straight t)
 #+END_SRC
 
 ** TODO Blog Publishing
@@ -2983,7 +2922,6 @@ Define the following variables:
 
 #+BEGIN_SRC emacs-lisp
 (use-package org2jekyll
-  :ensure t
   :defer 3
   :config
   (setq org2jekyll-blog-author       "tminor"
@@ -3077,15 +3015,14 @@ projects.org
 
 ** Hydra bootstrap
 :PROPERTIES:
-:HASH:     2a0c5c1c1b196a0ac720a3297df17545
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     05cb03ac5afa0a2919e6faba418c1a86
+:MODIFIED: 2019-03-11 06:42:11
 :END:
 
 Make sure hydra is installed.
 
 #+BEGIN_SRC emacs-lisp
-(use-package hydra
-  :ensure t)
+(use-package hydra)
 #+END_SRC
 
 ** Window management
@@ -3787,6 +3724,45 @@ https://github.com/larkery/emacs/blob/d89d5194f04caa2fc00454a7e6b94bcfd359fb64/s
   ("q" nil))
 #+END_SRC
 
+** Straight.el
+:PROPERTIES:
+:HASH:     a729bc93162f640534c88d342f37a8b7
+:MODIFIED: 2019-03-11 06:42:11
+:END:
+
+Straight [[https://github.com/abo-abo/hydra/wiki/straight.el][hydra helper menu]]:
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-straight-helper (:hint nil)
+    "
+  _c_heck all       |_f_etch all     |_m_erge all      |_n_ormalize all   |p_u_sh all
+  _C_heck package   |_F_etch package |_M_erge package  |_N_ormlize package|p_U_sh package
+  ----------------^^+--------------^^+---------------^^+----------------^^+------------||_q_uit||
+  _r_ebuild all     |_p_ull all      |_v_ersions freeze|_w_atcher start   |_g_et recipe
+  _R_ebuild package |_P_ull package  |_V_ersions thaw  |_W_atcher quit    |prun_e_ build"
+    ("c" straight-check-all)
+    ("C" straight-check-package)
+    ("r" straight-rebuild-all)
+    ("R" straight-rebuild-package)
+    ("f" straight-fetch-all)
+    ("F" straight-fetch-package)
+    ("p" straight-pull-all)
+    ("P" straight-pull-package)
+    ("m" straight-merge-all)
+    ("M" straight-merge-package)
+    ("n" straight-normalize-all)
+    ("N" straight-normalize-package)
+    ("u" straight-push-all)
+    ("U" straight-push-package)
+    ("v" straight-freeze-versions)
+    ("V" straight-thaw-versions)
+    ("w" straight-watcher-start)
+    ("W" straight-watcher-quit)
+    ("g" straight-get-recipe)
+    ("e" straight-prune-build)
+    ("q" nil))
+#+END_SRC
+
 ** Menu for all hydras
 :PROPERTIES:
 :HASH:     7dbfffa34939a9c4320ff4a0cfcc291b
@@ -3797,71 +3773,71 @@ Remembering keys is hard, so here's a hydra that should add a menu for
 other hydras:
 
 #+BEGIN_SRC emacs-lisp
-(defvar hydra-stack nil)
+  (defvar hydra-stack nil)
 
-(defun hydra-push (expr)
-  (push `(lambda () ,expr) hydra-stack))
+  (defun hydra-push (expr)
+    (push `(lambda () ,expr) hydra-stack))
 
-(defun hydra-pop ()
-  (interactive)
-  (let ((x (pop hydra-stack)))
-    (when x
-      (funcall x))))
+  (defun hydra-pop ()
+    (interactive)
+    (let ((x (pop hydra-stack)))
+      (when x
+        (funcall x))))
 
-(defhydra hydra-hydras-menu (:color teal)
+  (defhydra hydra-hydras-menu (:color teal)
+    "
+       Hydras List
+  ---------------------
+  _d_:  hydra-dired
+  _c_:  hydra-multiple-cursors
+  _pp_: hydra-projectile
+  _pw_: hydra-projectile-other-window
+  _w_:  hydra-window
+  _ml_: hydra-magit-log
+  _mm_: hydra-magit
+  _n_:  hydra-notmuch-show-mode
+  _o_:  hydra-org-agenda
+
   "
-     Hydras List
----------------------
-_d_:  hydra-dired
-_c_:  hydra-multiple-cursors
-_pp_: hydra-projectile
-_pw_: hydra-projectile-other-window
-_w_:  hydra-window
-_ml_: hydra-magit-log
-_mm_: hydra-magit
-_n_:  hydra-notmuch-show-mode
-_o_:  hydra-org-agenda
+    ("d" (progn
+           (hydra-dired/body)
+           (hydra-push '(hydra-dired/body)))
+         "visit hydra-dired")
+    ("c" (progn
+           (hydra-multiple-cursors/body)
+           (hydra-push '(hydra-multiple-cursors/body)))
+         "visit hydra-multiple-cursors")
+    ("ml" (progn
+           (hydra-magit-log/body)
+           (hydra-push '(hydra-magit-log/body)))
+         "visit hydra-magit-log")
+    ("mm" (progn
+           (hydra-magit/body)
+           (hydra-push '(hydra-magit/body)))
+         "visit hydra-magit")
+    ("n" (progn
+           (hydra-notmuch-show-mode/body)
+           (hydra-push '(hydra-notmuch-show-mode/body)))
+         "visit hydra-notmuch-show-mode")
+    ("o" (progn
+           (hydra-org-agenda/body)
+           (hydra-push '(hydra-org-agenda/body)))
+         "visit hydra-org-agenda")
+    ("pp" (progn
+           (hydra-projectile/body)
+           (hydra-push '(hydra-projectile/body)))
+         "visit hydra-projectile")
+    ("pw" (progn
+           (hydra-projectile-other-window/body)
+           (hydra-push '(hydra-projectile-other-window/body)))
+         "visit hydra-projectile-other-window")
+    ("w" (progn
+           (hydra-window/body)
+           (hydra-push '(hydra-window/body)))
+         "visit hydra-window")
+    ("q" hydra-pop "exit" :exit t))
 
-"
-  ("d" (progn
-         (hydra-dired/body)
-         (hydra-push '(hydra-dired/body)))
-       "visit hydra-dired")
-  ("c" (progn
-         (hydra-multiple-cursors/body)
-         (hydra-push '(hydra-multiple-cursors/body)))
-       "visit hydra-multiple-cursors")
-  ("ml" (progn
-         (hydra-magit-log/body)
-         (hydra-push '(hydra-magit-log/body)))
-       "visit hydra-magit-log")
-  ("mm" (progn
-         (hydra-magit/body)
-         (hydra-push '(hydra-magit/body)))
-       "visit hydra-magit")
-  ("n" (progn
-         (hydra-notmuch-show-mode/body)
-         (hydra-push '(hydra-notmuch-show-mode/body)))
-       "visit hydra-notmuch-show-mode")
-  ("o" (progn
-         (hydra-org-agenda/body)
-         (hydra-push '(hydra-org-agenda/body)))
-       "visit hydra-org-agenda")
-  ("pp" (progn
-         (hydra-projectile/body)
-         (hydra-push '(hydra-projectile/body)))
-       "visit hydra-projectile")
-  ("pw" (progn
-         (hydra-projectile-other-window/body)
-         (hydra-push '(hydra-projectile-other-window/body)))
-       "visit hydra-projectile-other-window")
-  ("w" (progn
-         (hydra-window/body)
-         (hydra-push '(hydra-window/body)))
-       "visit hydra-window")
-  ("q" hydra-pop "exit" :exit t))
-
-(global-set-key (kbd "C-c h") 'hydra-hydras-menu/body)
+  (global-set-key (kbd "C-c h") 'hydra-hydras-menu/body)
 #+END_SRC
 
 * Other
@@ -3877,7 +3853,7 @@ _o_:  hydra-org-agenda
 :END:
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 ** Rainbow Mode
@@ -3890,8 +3866,7 @@ Rainbow mode changes the background of any color name. This includes
 hexidecimal representation of colors.
 
 #+BEGIN_SRC emacs-lisp
-(use-package rainbow-mode
-  :ensure t)
+  (use-package rainbow-mode)
 #+END_SRC
 
 ** Spell check
@@ -3903,10 +3878,9 @@ hexidecimal representation of colors.
 Spell checking with flyspell:
 
 #+BEGIN_SRC emacs-lisp
-(use-package flyspell
-  :ensure t
-  :config
-  (add-hook 'text-mode-hook 'flyspell-mode))
+  (use-package flyspell
+    :config
+    (add-hook 'text-mode-hook 'flyspell-mode))
 #+END_SRC
 
 ** File type modes (not =prog-mode= files)
@@ -3918,8 +3892,7 @@ Spell checking with flyspell:
 File types like csv, yaml, etc.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package csv-mode
-    :ensure t)
+  (use-package csv-mode)
 #+END_SRC
 ** TODO [#C] Try emacs ledger
 :PROPERTIES:
