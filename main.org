@@ -2184,8 +2184,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     80113da9de402c833a4bc8885f8756ba
-:MODIFIED: 2019-05-15 17:05:10
+:HASH:     adf2adbffa0bcbec3ef133688979678d
+:MODIFIED: 2019-06-20 11:14:42
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2201,14 +2201,15 @@ Reminders a la Gmail about sent mail that hasn't received a response.
       "c" 'org-capture
       "b" 'org-switchb
       "h" 'org-recent-headings-ivy
-      "j" 'tm/org-journal-prefix-command
-      "'" 'org-edit-special)
+      "j" 'tm/org-journal-prefix-command)
+
     :init
     ;; Use UTF8 bullets instead of asterisks for Org headings
     (use-package org-bullets
       :ensure t
       :config
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
     ;; Evil key bindings in Org mode
     (use-package evil-org
       :ensure t
@@ -2224,6 +2225,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
                                             shift
                                             todo
                                             heading)))))
+
     :config
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
@@ -2290,12 +2292,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     ;; Task state faces
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "red" :weight bold)
-            ("NEXT" :foreground "blue" :weight bold)
             ("DONE" :foreground "forest green" :weight bold)
-            ("WAITING" :foreground "orange" :weight bold)
             ("MAYBE" :foreground "yellow" :weight bold)
-            ("PROJECT" :foreground "purple" :weight bold)
-            ("STUFF" :foreground "cyan" :weight bold)
             ("HOLD" :foreground "magenta" :weight bold)
             ("CANCELLED" :foreground "forest green" :weight bold)
             ("MEETING" :foreground "forest green" :weight bold)))
