@@ -209,8 +209,8 @@ Inform Emacs of executabels not otherwise found in =$PATH=:
 
 ** Elisp
 :PROPERTIES:
-:HASH:     c841d57c9a0e24dc1e2865eec71127a2
-:MODIFIED: 2019-05-31 16:17:45
+:HASH:     3ad9dc346355d4076623d1fabda317b4
+:MODIFIED: 2019-06-20 10:14:25
 :END:
 
 Simple pgrep using only Emacs Lisp functions:
@@ -2108,7 +2108,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
              :query "tag:lists/854 and not tag:archive and date:1week..now"
              :count-query "tag:lists/854 and not tag:archive and date:1week..now and tag:unread")
             (:name "feed"
-             :query "date:\"2hours..now\" and not subject:\"/gluu, [a-z]+-(prod|dev)\//\"")
+             :query "date:\"1hours..now\"")
             (:name "nagios-gluu"
              :query "subject:\"/idp-demo-prod/\" and tag:nagios-gluu and date:30days..today"
              :count-query "subject:\"/idp-demo-prod/\" and tag:nagios-gluu and date:30days..today and tag:unread")
@@ -2116,7 +2116,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
              :query "tag:nagios not 'subject:\"/Project: gluu/\"' and date:3days..today"
              :count-query "tag:nagios not 'subject:\"/Project: gluu/\"' and date:3days..today and tag:unread")
             (:name "flappy vs capy"
-             :query "subject:\"/gluu/\" and tag:nagios and and date:3days..now")
+             :query "subject:\"/gluu/\" and tag:nagios and date:3days..now")
             (:name "git messages"
              :query "tag:git and date:4days..today"
              :count-query "tag:git and date:4days..today and tag:unread")
