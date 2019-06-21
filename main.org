@@ -1978,8 +1978,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     8846c03a95613648842163f86d9add04
-:MODIFIED: 2019-06-20 16:01:49
+:HASH:     86905d54e5a0e60e6331821aa7da9988
+:MODIFIED: 2019-06-21 09:54:35
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2039,6 +2039,9 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     ;;
     ;; This is very slow, so disabling for now
     ;; (add-hook 'notmuch-search-mode-hook 'tm/set-feed-faces)
+
+    ;; Shows saved searches in `notmuch-hello' even if they're empty.
+    (setq notmuch-show-empty-saved-searches t)
 
     ;; Saved searches for notmuch-hello
     (setq notmuch-saved-searches
