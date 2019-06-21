@@ -20,10 +20,10 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                          :TOC:
+** Table of Contents                                                                                                                                                                                                         :TOC:
 :PROPERTIES:
-:HASH:     43bc9000d37966329c2e8ef2d19eea2a
-:MODIFIED: 2019-06-11 16:08:57
+:HASH:     bb7b0e5ec18d0ae81b0cc2fd4f876693
+:MODIFIED: 2019-06-21 12:24:17
 :END:
 
 - [[#intro][Intro]]
@@ -108,8 +108,8 @@ In this section, we:
 
 ** Package repositories
 :PROPERTIES:
-:HASH:     5f1c05eee66b46ec95b319e1032edc81
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     3a3a19e9c1e49f2ce2dfc12f2dfa28bd
+:MODIFIED: 2019-06-21 12:24:17
 :END:
 
 NOTE: For Windows, I needed GnuTLS DLLs. (Emacs for Windows isn't
@@ -129,8 +129,8 @@ someday want.
 
 ** Use-package bootstrap
 :PROPERTIES:
-:HASH:     2283195e68aaec1226ce96d9982b8c3a
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     c97f834c22cd5750570c40b08addd99e
+:MODIFIED: 2019-06-21 12:24:17
 :END:
 
 =use-package= provides consistent and sane package management and
@@ -143,13 +143,12 @@ configuration.
 ;
 ;  (eval-when-compile
 ;    (require 'use-package))
-(straight-use-package 'use-package)
 #+END_SRC
 
 ** No-littering
 :PROPERTIES:
-:HASH:     c20149043a5c4b15e9866a1b9181053a
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     c4c0fa8013873f91e5134fc9257ff3a7
+:MODIFIED: 2019-06-21 12:24:17
 :END:
 
 Keep files we don't manage from accumulating in =~/.emacs.d/=:
@@ -489,8 +488,8 @@ you can press ‘C-c <right>’ (calling ‘winner-redo’).
 
 **** Workspace management
 :PROPERTIES:
-:HASH:     12394dde2206b523cb60c2f1279f4ad5
-:MODIFIED: 2019-03-08 17:09:16
+:HASH:     456b5176ecad1485123fc5f66ef042d9
+:MODIFIED: 2019-06-21 12:29:11
 :END:
 
 Install =eyebrowse= for i3 style workspace management:
@@ -500,7 +499,7 @@ Install =eyebrowse= for i3 style workspace management:
     :preface
     (defun tm/eyebrowse-dash ()
       (switch-to-buffer
-       (get-buffer "*scratch*")))
+       (get-buffer "*dashboard*")))
     :general
     (tm/leader-def
       :infix "e"
@@ -710,8 +709,8 @@ Hide tool bar and menu bar:
 
 *** Startup
 :PROPERTIES:
-:HASH:     418def40bcd437c05587e38677bed1a1
-:MODIFIED: 2019-03-08 17:00:41
+:HASH:     e2beb6ab7d22d3f68cef195cd7e59ef3
+:MODIFIED: 2019-06-21 12:28:17
 :END:
 
 Don't show the startup message:
@@ -723,20 +722,21 @@ Don't show the startup message:
 And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]]:
 
 #+BEGIN_SRC emacs-lisp
-  ;(use-package dashboard
-  ;  :config
-  ;  (dashboard-setup-startup-hook)
-  ;  (setq initial-buffer-choice
-  ;        (lambda ()
-  ;          (get-buffer "*dashboard*")))
-  ;  (setq dashboard-startup-banner 'logo)
-  ;  (setq dashboard-center-content t))
+  (use-package dashboard
+    :after (org)
+    :config
+    (setq initial-buffer-choice
+            (lambda ()
+              (get-buffer "*dashboard*")))
+    (setq dashboard-startup-banner 'logo)
+    (setq dashboard-center-content t)
+    (dashboard-setup-startup-hook))
 #+END_SRC
 
 *** Mode-line
 :PROPERTIES:
-:HASH:     2296c1f31c706ca7c349a185114eea3d
-:MODIFIED: 2019-03-11 16:38:34
+:HASH:     7cf33a157d57ab2ba5e864f6fd7e6ed0
+:MODIFIED: 2019-06-21 10:06:25
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
@@ -1268,13 +1268,12 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
 
 *** Bash/Shell
 :PROPERTIES:
-:HASH:     71f2067c64138362d93e5c8cd16cc1fb
-:MODIFIED: 2019-06-14 09:56:40
+:HASH:     0f716d06eaa31eebe7fb20d76880a08d
+:MODIFIED: 2019-06-21 11:43:16
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package sh-script
-    :straight nil
     :config
     (setq sh-basic-offset 2))
 #+END_SRC
@@ -2129,12 +2128,14 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 *** Config
 :PROPERTIES:
-:HASH:     77d410afb9f57e07ab208083fa1b75d3
-:MODIFIED: 2019-06-20 16:13:28
+:HASH:     d87fb84e1890804567147bbfbba92a5d
+:MODIFIED: 2019-06-21 12:08:03
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
+    :straight org-plus-contrib
+    :demand t
     :general
     (tm/leader-def
       :infix "o"
@@ -2148,6 +2149,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
       "j" 'tm/org-journal-prefix-command)
 
     :config
+    ;; (use-package org-plus-contrib)
+
     (if (try-completion "main.org" (mapcar #'buffer-name (buffer-list)))
         (kill-buffer "main.org"))
     ;; Use UTF8 bullets instead of asterisks for Org headings
@@ -2565,12 +2568,13 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     e39efde99f2e32212449bd582be6c1a7
-:MODIFIED: 2019-06-03 10:09:09
+:HASH:     3c4d81fdea190781f791c263ebf1b472
+:MODIFIED: 2019-06-21 11:54:18
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-agenda
+    :after (org)
     :straight nil
     :general
     (org-agenda-mode-map
@@ -2580,10 +2584,9 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
      "J" 'tm/org-agenda-next-header
      "K" 'tm/org-agenda-previous-header)
     :init
-    (use-package evil-org-agenda
-      :straight nil
-      :config
-      (evil-org-agenda-set-keys))
+    ;; (use-package evil-org
+    ;;   :config
+    ;;   (evil-org-agenda-set-keys))
 
     :config
     ;; calendar.org has gotten very large and I received an error
@@ -2643,8 +2646,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Org-super-agenda
 :PROPERTIES:
-:HASH:     28606ae3e9abcbc14d0de365b8eb0b77
-:MODIFIED: 2019-05-13 15:40:54
+:HASH:     e4267e5347c2a1f81767258d03a6edf9
+:MODIFIED: 2019-06-21 10:48:25
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2670,13 +2673,14 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     3b314533fd9f0bbad5c04f1ee9225e3e
-:MODIFIED: 2019-06-20 15:01:00
+:HASH:     96165ddbb576311179aa31063c1c008b
+:MODIFIED: 2019-06-21 11:55:23
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-capture
     :straight nil
+    :after (org)
     :init
     ;; https://fuco1.github.io/2019-02-10-Refiling-hydra-with-pre-defined-targets.html
     (defmacro tm/org-make-refile-command (fn-suffix refile-targets)
