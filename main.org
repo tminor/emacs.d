@@ -936,6 +936,10 @@ Load themes in =lisp= directory.
   (use-package cherry-blossom-theme)
 #+END_SRC
 
+#+begin_src emacs-lisp
+  (use-package xresources-theme)
+#+end_src
+
 ** Config management
 :PROPERTIES:
 :HASH:     32b63b2323fd8b58c94b305cbc3a398a
