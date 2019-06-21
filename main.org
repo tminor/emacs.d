@@ -1977,8 +1977,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     86905d54e5a0e60e6331821aa7da9988
-:MODIFIED: 2019-06-21 09:54:35
+:HASH:     fc2aaf04430f4abe7470aebdbf95724c
+:MODIFIED: 2019-06-21 13:27:41
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2027,9 +2027,6 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
     ;; Refresh feed buffer at specified intervals if it's open
     (run-with-timer 0 30 'tm/notmuch-refresh-feed-buffer)
-
-    ;; Turn on org-struct mode in message-mode
-    (add-hook 'message-mode-hook 'turn-on-orgstruct++)
 
     ;; Render HTML with w3m
     (setq mm-text-html-renderer 'w3m)
