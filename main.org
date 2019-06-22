@@ -2121,24 +2121,78 @@ Reminders a la Gmail about sent mail that hasn't received a response.
              :key "d"))))
 #+END_SRC
 
-*** TODO [#C] Evil mode in notmuch-tree
+** Gnus
 :PROPERTIES:
-:HASH:     483640e7da22e7753b6ce90f88bd701d
-:MODIFIED: 2019-03-11 16:03:20
-:Effort:   01:00
-:END:
-:LOGBOOK:
-- State "TODO"       from "STUFF"      [2019-02-18 Mon 10:42]
-:END:
-[2019-02-12 Tue 08:36]
-*** TODO Toggle for saved-searches
-:PROPERTIES:
-:HASH:     6c5c63555472355d4da785ad9ced4c2f
-:MODIFIED: 2019-03-14 11:00:50
+:HASH:     0be8f4167c557c4dcaba298a64242231
+:MODIFIED: 2019-06-21 16:35:51
 :END:
 
-- Add toggle for =notmuch-hello=
-- Toggle between thorough/important list of saved searches
+#+begin_src emacs-lisp
+  (use-package gnus
+    :straight nil
+    :demand t
+    :config
+    (setq gnus-select-method '(nnnotmuch ""))
+    (setq nnnotmuch-groups
+          '((""
+             ("nnnotmuch+lists.inc-ops-notifications" "tag:lists/inc-ops-notifications")
+             ("nnnotmuch+lists.notmuch-commits" "tag:lists/notmuch-commits"))))
+    ;; http://groups.google.com/group/gnu.emacs.gnus/browse_thread/thread/a673a74356e7141f
+    (when window-system
+      (setq gnus-sum-thread-tree-indent "  ")
+      (setq gnus-sum-thread-tree-root "")
+      (setq gnus-sum-thread-tree-false-root "")
+      (setq gnus-sum-thread-tree-single-indent "")
+      (setq gnus-sum-thread-tree-vertical "\u2502")
+      (setq gnus-sum-thread-tree-leaf-with-other "\u251c\u2500\u25ba ")
+      (setq gnus-sum-thread-tree-single-leaf "\u2570\u2500\u25ba "))
+    (setq gnus-summary-line-format
+          (concat
+           "%0{%U%R%z%}"
+           "%3{\u2502%}" "%1{%d%}" "%3{\u2502%}" ;; date
+           "  "
+           "%4{%-20,20f%}" ;; name
+           "  "
+           "%3{\u2502%}"
+           " "
+           "%1{%B%}"
+           "%s\n"))
+    (setq gnus-summary-display-arrow t)
+    (setq gnus-use-adaptive-scoring t)
+    (setq gnus-default-adaptive-score-alist
+          '((gnus-unread-mark)
+            (gnus-ticked-mark (from 4))
+            (gnus-dormant-mark (from 5))
+            (gnus-del-mark (from -4) (subject -1))
+            (gnus-read-mark (from 4) (subject 2))
+            (gnus-expirable-mark (from -1) (subject -1))
+            (gnus-killed-mark (from -1) (subject -3))
+            (gnus-kill-file-mark)
+            (gnus-ancient-mark)
+            (gnus-low-score-mark)
+            (gnus-catchup-mark (from -1) (subject -1))))
+    (setq gnus-use-cache t)
+    (setq gnus-cacheable-groups "^nnnotmuch")
+    (setq gnus-cache-directory (concat no-littering-var-directory
+                                       "News/cache")))
+#+end_src
+
+*** [[https://github.com/tlikonen/nnnotmuch][=nnnotmuch=]]
+:PROPERTIES:
+:HASH:     2c3a20426c7bb676ac5045835d641997
+:MODIFIED: 2019-06-21 13:56:27
+:END:
+
+#+begin_quote
+Notmuch search engine back-end for Gnus (Emacs's mail and news client)
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package nnnotmuch
+    :straight (nnnotmuch :type git :host github
+                         :repo "tlikonen/nnnotmuch"))
+#+end_src
+
 * Org-mode
 :PROPERTIES:
 :HASH:     1ec6d96ffcc20597ffd547966ecf91ee
