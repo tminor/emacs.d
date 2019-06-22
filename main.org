@@ -2230,10 +2230,9 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       "j" 'tm/org-journal-prefix-command)
 
     :config
-    ;; (use-package org-plus-contrib)
-
     (if (try-completion "main.org" (mapcar #'buffer-name (buffer-list)))
         (kill-buffer "main.org"))
+
     ;; Use UTF8 bullets instead of asterisks for Org headings
     (use-package org-bullets
       :config
@@ -2307,10 +2306,17 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-fontify-quote-and-verse-blocks t)
     (setq org-fontify-whole-heading-line t)
 
-    ;; Org modules
+    ;; Org modules notes:
+    ;;
+    ;; - The values set below were probably copied from elsewhere, so I'm
+    ;;   not sure what most of them do.
+    ;; - Org Easy templates uses a different system in org 9.2.
+    ;;   `org-tempo' provides the old functionality by loading it with
+    ;;   `org-modules'.
+    ;;
     (setq org-modules
-          '(org-bbdb org-bibtex org-docview org-gnus org-habit
-                     org-info org-irc org-mhe org-rmail org-w3m))
+          '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
+                     org-irc org-mhe org-rmail org-w3m))
 
     ;; Faces
     ;;
