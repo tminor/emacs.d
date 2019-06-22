@@ -20,10 +20,10 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                                                                                                                                         :TOC:
+** Table of Contents                                          :TOC:
 :PROPERTIES:
-:HASH:     bb7b0e5ec18d0ae81b0cc2fd4f876693
-:MODIFIED: 2019-06-21 12:24:17
+:HASH:     7cf4d320de43fff6334372ada5fb18f7
+:MODIFIED: 2019-06-22 10:28:02
 :END:
 
 - [[#intro][Intro]]
@@ -45,6 +45,7 @@ Some conventions:
   - [[#clipboard-management][Clipboard management]]
   - [[#cleaningtidying][Cleaning/tidying]]
   - [[#font][Font]]
+  - [[#search-modes][Search modes]]
 - [[#prog-mode][Prog-mode]]
   - [[#language-modes][Language modes]]
   - [[#complete-any-mode][Complete any mode]]
@@ -57,6 +58,7 @@ Some conventions:
 - [[#mail][Mail]]
   - [[#elisp-1][Elisp]]
   - [[#notmuch][Notmuch]]
+  - [[#gnus][Gnus]]
 - [[#org-mode][Org-mode]]
   - [[#org-mode-1][Org-mode]]
   - [[#org-journal][Org-journal]]
@@ -74,6 +76,7 @@ Some conventions:
   - [[#org-agenda-1][Org agenda]]
   - [[#multiple-cursors][Multiple-cursors]]
   - [[#straightel][Straight.el]]
+  - [[#gnus-1][Gnus]]
   - [[#menu-for-all-hydras][Menu for all hydras]]
 - [[#other][Other]]
   - [[#kill-whitespace-when-saving][Kill whitespace when saving]]
@@ -850,7 +853,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
       :prefix-command 'tm/search-prefix-command
       "" '(:which-key "search prefix" :ignore t)
       "r" 'counsel-rg
-      "s" 'counsel-grep-or-swiper)
+      "s" 'counsel-grep-or-swiper
+      "d" 'deadgrep)
     :custom
     (counsel-find-file-ignore-regexp "\\`\\.")
     (counsel-yank-pop-preselect-last t)
@@ -1095,6 +1099,26 @@ Clean up matching buffers at midnight:
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono 13"))
   (set-face-attribute 'default t :font "DejaVu Sans")
 #+END_SRC
+
+** Search modes
+:PROPERTIES:
+:HASH:     b8a8c9120519a48038c56bd72fbf0ad5
+:MODIFIED: 2019-06-22 19:16:04
+:END:
+
+*** [[https://github.com/Wilfred/deadgrep][=deadgrep=]]
+:PROPERTIES:
+:HASH:     94a360fe3db94b7543d386ee1272422e
+:MODIFIED: 2019-06-22 19:24:57
+:END:
+
+#+begin_quote
+Deadgrep is the fast, beautiful text search that your Emacs deserves.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package deadgrep)
+#+end_src
 
 * Prog-mode
 :PROPERTIES:
