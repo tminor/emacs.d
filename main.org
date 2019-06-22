@@ -2216,6 +2216,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     :straight org-plus-contrib
     :demand t
     :general
+    (:keymaps 'org-mode-map
+     "<S-iso-lefttab>" 'org-global-cycle)
     (tm/leader-def
       :infix "o"
       :prefix-command 'tm/org-prefix-command
