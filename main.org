@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                           :TOC:
+** Table of Contents                                          :TOC:
 :PROPERTIES:
 :HASH:     7cf4d320de43fff6334372ada5fb18f7
 :MODIFIED: 2019-06-22 10:28:02
@@ -2247,8 +2247,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     d87fb84e1890804567147bbfbba92a5d
-:MODIFIED: 2019-06-21 12:08:03
+:HASH:     8d846914a17e43690bc70fefece5a076
+:MODIFIED: 2019-06-23 11:05:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2465,21 +2465,25 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 *** Org-recent-headers
 :PROPERTIES:
-:HASH:     5f041778d2981f07613bb5ae93393083
-:MODIFIED: 2019-06-20 16:01:49
+:HASH:     5dadc079c21fb8abb5409e2ec21bf24d
+:MODIFIED: 2019-06-23 11:05:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-recent-headings
     :straight t
+    :init
+    (setq org-recent-headings-save-file
+          (concat no-littering-var-directory
+                  "org-recent-headings"))
     :config
     (org-recent-headings-mode))
 #+END_SRC
 
 ** Org-journal
 :PROPERTIES:
-:HASH:     675a1788b45b7ee7e705dc0cfc8f912d
-:MODIFIED: 2019-05-14 14:29:22
+:HASH:     dea753dc4a3fa7d62d1dd2b651b3be53
+:MODIFIED: 2019-06-23 11:05:39
 :END:
 
 #+BEGIN_SRC emacs-lisp
