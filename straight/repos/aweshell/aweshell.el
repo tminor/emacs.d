@@ -356,7 +356,7 @@ Create new one if no eshell buffer exists."
       )))
 
 (defun aweshell-prev ()
-  "Select previous eshell buffer.dirname
+  "Select previous eshell buffer.
 Create new one if no eshell buffer exists."
   (interactive)
   (if (or (not aweshell-buffer-list) (equal (length aweshell-buffer-list) 0))
@@ -444,8 +444,7 @@ Create new one if no eshell buffer exists."
           (lambda ()
             (define-key eshell-mode-map (kbd aweshell-clear-buffer-key) 'aweshell-clear-buffer)
             (define-key eshell-mode-map (kbd aweshell-sudo-toggle-key) 'aweshell-sudo-toggle)
-            (define-key eshell-mode-map (kbd aweshell-search-history-key) 'aweshell-search-h
-            istory)))
+            (define-key eshell-mode-map (kbd aweshell-search-history-key) 'aweshell-search-history)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EShell extensions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -593,16 +592,6 @@ Create new one if no eshell buffer exists."
       (while (pcomplete-here (pcomplete-entries))))))
   )
 
-;; eshell-did-you-mean
-;; command not found (“did you mean…” feature) in Eshell.
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (run-with-idle-timer
-             1 nil
-             #'(lambda ()
-                 (require 'eshell-did-you-mean)
-                 (eshell-did-you-mean-setup)
-                 ))))
 
 ;; Make cat with syntax highlight.
 (defun aweshell-cat-with-syntax-highlight (filename)
