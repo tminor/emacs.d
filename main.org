@@ -1501,10 +1501,11 @@ virtualenv=) and run =M-x jedi:install-server=.
 
 #+BEGIN_SRC emacs-lisp
   (use-package company-jedi
+    :hook
+    (python-mode-hook . tm/python-mode-hook)
     :config
     (defun tm/python-mode-hook ()
-      (add-to-list 'company-backends 'company-jedi))
-    (add-hook 'python-mode-hook 'tm/python-mode-hook))
+      (add-to-list 'company-backends 'company-jedi)))
 #+END_SRC
 
 *** Shell
