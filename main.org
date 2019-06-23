@@ -2173,6 +2173,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
       (setq gnus-sum-thread-tree-vertical "\u2502")
       (setq gnus-sum-thread-tree-leaf-with-other "\u251c\u2500\u25ba ")
       (setq gnus-sum-thread-tree-single-leaf "\u2570\u2500\u25ba "))
+
     (setq gnus-summary-line-format
           (concat
            "%0{%U%R%z%}"
@@ -2184,8 +2185,10 @@ Reminders a la Gmail about sent mail that hasn't received a response.
            " "
            "%1{%B%}"
            "%s\n"))
+
     (setq gnus-summary-display-arrow t)
     (setq gnus-use-adaptive-scoring t)
+
     (setq gnus-default-adaptive-score-alist
           '((gnus-unread-mark)
             (gnus-ticked-mark (from 4))
