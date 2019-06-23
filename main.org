@@ -2005,8 +2005,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** TODO Notmuch
 :PROPERTIES:
-:HASH:     fc2aaf04430f4abe7470aebdbf95724c
-:MODIFIED: 2019-06-21 13:27:41
+:HASH:     1c857d15361a777bbbbb701032cab816
+:MODIFIED: 2019-06-23 09:49:20
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2201,10 +2201,20 @@ Reminders a la Gmail about sent mail that hasn't received a response.
             (gnus-ancient-mark)
             (gnus-low-score-mark)
             (gnus-catchup-mark (from -1) (subject -1))))
+
     (setq gnus-use-cache t)
     (setq gnus-cacheable-groups "^nnnotmuch")
     (setq gnus-cache-directory (concat no-littering-var-directory
-                                       "News/cache")))
+                                       "News/cache"))
+
+    :config
+    (setq gnus-select-method '(nnnotmuch ""))
+    (setq nnnotmuch-groups
+          '((""
+             ("nnnotmuch+lists.inc-ops-notifications"
+              "tag:lists/inc-ops-notifications")
+             ("nnnotmuch+lists.notmuch-commits"
+              "tag:lists/notmuch-commits")))))
 #+end_src
 
 *** [[https://github.com/tlikonen/nnnotmuch][=nnnotmuch=]]
