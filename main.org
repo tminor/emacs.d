@@ -1085,7 +1085,7 @@ Clean up matching buffers at midnight:
           clean-buffer-list-kill-regexps '("\\`\\*Man "
                                            "\\`\\*helpful "
                                            "\\`\\*notmuch-"
-                                           "\\`\\magit"))
+                                           "\\magit"))
     (midnight-mode))
 #+END_SRC
 
