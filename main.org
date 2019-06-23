@@ -46,6 +46,7 @@ Some conventions:
   - [[#cleaningtidying][Cleaning/tidying]]
   - [[#font][Font]]
   - [[#search-modes][Search modes]]
+  - [[#emacswiki][EmacsWiki]]
 - [[#prog-mode][Prog-mode]]
   - [[#language-modes][Language modes]]
   - [[#complete-any-mode][Complete any mode]]
@@ -1118,6 +1119,29 @@ Deadgrep is the fast, beautiful text search that your Emacs deserves.
 
 #+begin_src emacs-lisp
   (use-package deadgrep)
+#+end_src
+
+** EmacsWiki
+:PROPERTIES:
+:HASH:     32214d17fe71e954dbec58bfe061ed4c
+:MODIFIED: 2019-06-23 11:23:17
+:END:
+
+*** [[https://www.emacswiki.org/emacs/DiredPlus][Dired+]]
+:PROPERTIES:
+:HASH:     b4a94af3caf43a6948d5c1cd3b8c4c0a
+:MODIFIED: 2019-06-23 11:24:59
+:END:
+
+#+begin_quote
+[Dired+] extends functionalities provided by standard GNU Emacs libraries
+dired.el, dired-aux.el, and dired-x.el.-plus
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package dired+
+    :after dired
+    :straight (:type git :host github :repo "emacsmirror/dired-plus"))
 #+end_src
 
 * Prog-mode
