@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                          :TOC:
+** Table of Contents                                           :TOC:
 :PROPERTIES:
 :HASH:     7cf4d320de43fff6334372ada5fb18f7
 :MODIFIED: 2019-06-22 10:28:02
