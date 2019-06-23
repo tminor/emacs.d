@@ -769,8 +769,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 
 ** Help/Info
 :PROPERTIES:
-:HASH:     25f4193dfc2e9a1053260983bc06149c
-:MODIFIED: 2019-03-08 15:49:53
+:HASH:     75a7710ab06afdfc79a12143c22390b7
+:MODIFIED: 2019-06-23 11:51:31
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
@@ -924,8 +924,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
 ** Themes
 :PROPERTIES:
-:HASH:     60c8e6d748cb0207641cab15f4e49fa5
-:MODIFIED: 2019-06-09 21:07:18
+:HASH:     f38439c07e86322806e08df07323b714
+:MODIFIED: 2019-06-23 11:51:31
 :END:
 
 Load themes in =lisp= directory.
@@ -1129,8 +1129,8 @@ Deadgrep is the fast, beautiful text search that your Emacs deserves.
 
 *** [[https://www.emacswiki.org/emacs/DiredPlus][Dired+]]
 :PROPERTIES:
-:HASH:     b4a94af3caf43a6948d5c1cd3b8c4c0a
-:MODIFIED: 2019-06-23 11:24:59
+:HASH:     4b505babad7f10ebe0a067d4c9ad09a2
+:MODIFIED: 2019-06-23 11:51:31
 :END:
 
 #+begin_quote
@@ -1663,8 +1663,8 @@ From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#function
 
 ** TODO Term-mode
 :PROPERTIES:
-:HASH:     1615fd61a0b9a0cfddf6763475f231e9
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     5e1dadaf4c46ae5de0ddd916a813ff79
+:MODIFIED: 2019-06-23 11:58:21
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:50]
@@ -1702,8 +1702,8 @@ something I should work towards.
 
 *** =egp= (=eshell-prompt-extras=)
 :PROPERTIES:
-:HASH:     fe01a84b64ed5b7c44bf2bb42f437f0b
-:MODIFIED: 2019-06-20 16:41:23
+:HASH:     1a4fbcf0ec0b81413b2d3bad2f01f828
+:MODIFIED: 2019-06-23 11:58:21
 :END:
 
 =eshell= prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
@@ -1718,8 +1718,8 @@ something I should work towards.
 
 *** =eshell-mode=
 :PROPERTIES:
-:HASH:     cbb33043e893090ac5dd6f3a528fe6cd
-:MODIFIED: 2019-06-14 10:31:29
+:HASH:     82165360699dd61c277496d3f34f95e3
+:MODIFIED: 2019-06-23 12:21:28
 :END:
 
 Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell]] and =egp=.
