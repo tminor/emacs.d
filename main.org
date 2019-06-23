@@ -1472,8 +1472,8 @@ To fix this, define a new function to use for =lisp-indent-function=
 
 ** TODO Complete any mode
 :PROPERTIES:
-:HASH:     c24b113b9999e1550d05c628abbbaa9b
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     5b506785e3e766600f084727671d3ef3
+:MODIFIED: 2019-06-23 13:03:02
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1483,15 +1483,55 @@ General completion mechanism:
 
 #+BEGIN_SRC emacs-lisp
   (use-package company
-    :config
-    (add-hook 'prog-mode-hook 'company-mode)
+    :demand t
+    :hook
+    (after-init . global-company-mode)
+
+    :general
+    ;; Sets keys that avoid interfering with Eshell/evil key bindings.
+    ;; https://github.com/dieggsy/esh-autosuggest/issues/1
+    (:keymaps 'company-active-map
+     ;; No interference with return key
+     [return] '()
+     "RET" '()
+     ;; Abort company instead of insert mode
+     [escape] 'company-abort
+     ;; Complete the common part before cycling
+     [tab] 'company-complete-common-or-cycle
+     "TAB" 'company-complete-common-or-cycle
+     [backtab] 'company-select-previous
+     "S-TAB" 'company-select-previous
+     ;; Complete the current selection
+     "C-e" 'company-complete-selection
+     "C-f" 'company-complete-selection)
+
+    :preface
+    ;; https://github.com/dieggsy/esh-autosuggest/issues/1
+    (defun company-preview-if-not-tng-frontend (command)
+      "`company-preview-frontend', but not when tng is active."
+      (unless (and (eq command 'post-command)
+                   company-selection-changed
+                   (memq 'company-tng-frontend company-frontends))
+        (company-preview-frontend command)))
+
+    :init
+    (autoload 'company-tng-frontend "company-tng" nil t)
+
+    (setq
+     company-require-match nil
+     company-frontends '(company-tng-frontend
+                         company-pseudo-tooltip-unless-just-one-frontend
+                         company-preview-if-not-tng-frontend
+                         company-echo-metadata-frontend)
+     company-transformers '(company-sort-by-occurrence))
+
     (setq company-idle-delay 0.02))
 #+END_SRC
 
 *** Python
 :PROPERTIES:
-:HASH:     30488635960a7a57d5bad4e41eedb046
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     e062a760948d7d79f42b6444ad3c2d07
+:MODIFIED: 2019-06-23 13:05:24
 :END:
 
 Python JEDI backend for =company-mode=.
@@ -1508,23 +1548,19 @@ virtualenv=) and run =M-x jedi:install-server=.
       (add-to-list 'company-backends 'company-jedi)))
 #+END_SRC
 
-*** Shell
-:PROPERTIES:
-:HASH:     85998ea6cc948c609864558ba5ae43e8
-:MODIFIED: 2019-03-08 15:50:43
-:END:
+*** [[https://github.com/company-mode/company-statistics][=company-statistics=]]
 
-=company-shell= provides completion for fish and binaries found on =$PATH=.
+#+begin_quote
+[Keeps] a log of a certain number of completions you choose, along
+with some context information, and use that to rank candidates the
+next time you have to choose.
+#+end_quote
 
-Find more documentation [[https://github.com/Alexander-Miller/company-shell][here]].
+#+begin_src emacs-lisp
+  (use-package company-statistics
+    :hook (company-mode . company-statistics-mode))
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (use-package company-shell
-    :config
-    (add-to-list 'company-backends
-                 '(company-shell company-shell-env company-fish-shell))
-    (setq company-shell-clean-manpage t))
-#+END_SRC
 ** TODO Miscellany
 :PROPERTIES:
 :HASH:     ff64cb95db3da79ea4e5135a29624ee4
@@ -1758,26 +1794,30 @@ Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell
 #+BEGIN_SRC emacs-lisp
   (use-package eshell
     :init
-    (add-to-list 'load-path "~/.emacs.d/lisp/eshell/aweshell")
     :custom
     (eshell-prompt-function #'egp-theme)
     :hook
-    (eshell-mode . esh-autosuggest-mode)
-    :config
-    (setq aweshell-valid-command-color "#3EDAD4"))
+    (eshell-mode . esh-autosuggest-mode))
 #+END_SRC
 
-*** =esh-autosuggest=
+*** [[https://github.com/dieggsy/esh-autosuggest][=esh-autosuggest=]]
 :PROPERTIES:
-:HASH:     09ae0c19b839de40700b0c259b151717
-:MODIFIED: 2019-06-20 16:41:23
+:HASH:     4c6ec6d228f24189bb5c74d6e1392477
+:MODIFIED: 2019-06-23 13:13:29
 :END:
 
-Suggest command completions like fish.
+#+begin_quote
+Fish-like history autosuggestions in eshell
+#+end_quote
 
 #+BEGIN_SRC emacs-lisp
   (use-package esh-autosuggest
-    :straight t)
+    :init
+    (add-hook 'eshell-mode-hook
+              (lambda ()
+                (setq-local
+                 'company-backends (push '(company-capf esh-autosuggest)
+                                         company-backends)))))
 #+END_SRC
 
 *** =exec-path-from-shell=
@@ -1807,10 +1847,43 @@ Get environment variables from =$SHELL=.
       (exec-path-from-shell-initialize)))
 #+END_SRC
 
+*** [[https://github.com/manateelazycat/aweshell][=aweshell=]]
+:PROPERTIES:
+:HASH:     0e0372d5febb5444e5106a16acd00331
+:MODIFIED: 2019-06-23 12:21:28
+:END:
+
+#+begin_quote
+Various extensions to Eshell.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package aweshell
+    :after (eshell-up)
+    :straight (:type git :host github :repo "manateelazycat/aweshell"
+               :files ("*aweshell.el")))
+#+end_src
+
+*** [[https://github.com/peterwvj/eshell-up][=eshell-up=]]
+:PROPERTIES:
+:HASH:     b81770dccb9cf044f03f1259287031e4
+:MODIFIED: 2019-06-23 12:21:28
+:END:
+
+#+begin_quote
+Emacs package for quickly navigating to a specific parent directory in
+eshell without having to repeatedly typing =cd ..=.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package eshell-up
+    :straight (:type git :host github :repo "peterwvj/eshell-up"))
+#+end_src
+
 *** Elisp
 :PROPERTIES:
-:HASH:     194cf187ed28b78abaad8580f7264cd1
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     764d4de2cf3b4da403ab77e77561556a
+:MODIFIED: 2019-06-23 11:58:21
 :END:
 
 A quick internet search said that Eshell doesn't have anything like
