@@ -1,3 +1,6 @@
 [submodule "xresources-theme"]
 	path = xresources-theme
 	url = /home/tminor/src/dot-emacs.d.2.0/straight/repos/xresources-theme/
+[submodule "straight/repos/xresources-theme"]
+	path = straight/repos/xresources-theme
+	url = https://github.com/cqql/xresources-theme.git
