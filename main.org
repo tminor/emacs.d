@@ -924,15 +924,9 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
 ** Themes
 :PROPERTIES:
-:HASH:     f38439c07e86322806e08df07323b714
-:MODIFIED: 2019-06-23 11:51:31
+:HASH:     7a747af9081ed3f4c1e0497af332b897
+:MODIFIED: 2019-06-23 19:39:58
 :END:
-
-Load themes in =lisp= directory.
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/xresources-theme/")
-#+END_SRC
 
 =cherry-blossom-theme= is my preferred theme. I hope to adapt
 [[https://github.com/hlissner/emacs-doom-themes][emacs-doom-themes]] to increase its coverage of different modes.
@@ -1139,9 +1133,10 @@ dired.el, dired-aux.el, and dired-x.el.-plus
 #+end_quote
 
 #+begin_src emacs-lisp
-  (use-package dired+
-    :after dired
-    :straight (:type git :host github :repo "emacsmirror/dired-plus"))
+  ;; (use-package dired+
+  ;;   :init
+  ;;   (require 'dired)
+  ;;   :straight (:type git :host github :repo "emacsmirror/dired-plus"))
 #+end_src
 
 *** [[https://www.emacswiki.org/emacs/HideOrIgnoreComments][=hide-comnt=]]
