@@ -936,7 +936,12 @@ Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
 #+END_SRC
 
 #+begin_src emacs-lisp
-  (use-package xresources-theme)
+  (use-package xresources-theme
+    :defer 5)
+#+end_src
+
+#+begin_src emacs-lisp
+
 #+end_src
 
 ** Config management
@@ -1185,8 +1190,8 @@ Syntax highlighting, etc.
 
 *** PowerShell
 :PROPERTIES:
-:HASH:     06e799d1b44528cf268722d08a462f98
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     6d0b1b51582f98fd4b587a53a0ddefbf
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 Powershell syntax highlighting:
@@ -1197,8 +1202,8 @@ Powershell syntax highlighting:
 
 *** =puppet-mode=
 :PROPERTIES:
-:HASH:     c318f2482acecb006135dd825c33d843
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     5e5877762f892cb810ae5ad946f42cc3
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 Syntax highlighting for Puppet:
@@ -1211,8 +1216,8 @@ Syntax highlighting for Puppet:
 
 *** MarkDown
 :PROPERTIES:
-:HASH:     43045fa9653fc5b31e4f0d211c23dc06
-:MODIFIED: 2019-05-01 13:22:38
+:HASH:     6f459b590b191c0a15871bcab723e20c
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 MarkDown syntax highlighting:
@@ -1230,8 +1235,8 @@ Mainly for editing MarkDown in org-mode:
 
 *** Fish Mode
 :PROPERTIES:
-:HASH:     7e5da05ff0ed4e3a84b85619de447a02
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     64bbc23574dcc0657a3242aebecb7e6f
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 Sometimes fish one liners become long enough to deserve writing a
@@ -1243,8 +1248,8 @@ script! Fish syntax highlighting:
 
 *** TODO Ruby
 :PROPERTIES:
-:HASH:     6acbff879e5205283d96a09192eba27e
-:MODIFIED: 2019-06-12 18:15:43
+:HASH:     28ab88da755bfa92609d31977eb62ea4
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1269,8 +1274,8 @@ script! Fish syntax highlighting:
 
 **** Robe
 :PROPERTIES:
-:HASH:     77041baf3ec830ace0d425a85699542c
-:MODIFIED: 2019-03-12 10:21:21
+:HASH:     4d490bc51a299cc9329b02799c682b10
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 I've had some trouble with this package; mostly because I don't
@@ -1293,8 +1298,8 @@ loaded classes and modules, and where each method is defined.
 
 *** TODO Lisp
 :PROPERTIES:
-:HASH:     1b99bd7da8158cb05193f5612e2ab423
-:MODIFIED: 2019-05-14 14:33:16
+:HASH:     b9a103ed044d7ac70ab38f90e5a965da
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:45]
@@ -1467,8 +1472,8 @@ To fix this, define a new function to use for =lisp-indent-function=
 
 ** TODO Complete any mode
 :PROPERTIES:
-:HASH:     5b506785e3e766600f084727671d3ef3
-:MODIFIED: 2019-06-23 13:03:02
+:HASH:     5d91fa25652f0201c941059c83d25de3
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1480,46 +1485,8 @@ General completion mechanism:
   (use-package company
     :demand t
     :hook
-    (after-init . global-company-mode)
-
-    :general
-    ;; Sets keys that avoid interfering with Eshell/evil key bindings.
-    ;; https://github.com/dieggsy/esh-autosuggest/issues/1
-    (:keymaps 'company-active-map
-     ;; No interference with return key
-     [return] '()
-     "RET" '()
-     ;; Abort company instead of insert mode
-     [escape] 'company-abort
-     ;; Complete the common part before cycling
-     [tab] 'company-complete-common-or-cycle
-     "TAB" 'company-complete-common-or-cycle
-     [backtab] 'company-select-previous
-     "S-TAB" 'company-select-previous
-     ;; Complete the current selection
-     "C-e" 'company-complete-selection
-     "C-f" 'company-complete-selection)
-
+    (prog-mode . company-mode)
     :preface
-    ;; https://github.com/dieggsy/esh-autosuggest/issues/1
-    (defun company-preview-if-not-tng-frontend (command)
-      "`company-preview-frontend', but not when tng is active."
-      (unless (and (eq command 'post-command)
-                   company-selection-changed
-                   (memq 'company-tng-frontend company-frontends))
-        (company-preview-frontend command)))
-
-    :init
-    (autoload 'company-tng-frontend "company-tng" nil t)
-
-    (setq
-     company-require-match nil
-     company-frontends '(company-tng-frontend
-                         company-pseudo-tooltip-unless-just-one-frontend
-                         company-preview-if-not-tng-frontend
-                         company-echo-metadata-frontend)
-     company-transformers '(company-sort-by-occurrence))
-
     (setq company-idle-delay 0.02))
 #+END_SRC
 
@@ -1543,19 +1510,6 @@ virtualenv=) and run =M-x jedi:install-server=.
       (add-to-list 'company-backends 'company-jedi)))
 #+END_SRC
 
-*** [[https://github.com/company-mode/company-statistics][=company-statistics=]]
-
-#+begin_quote
-[Keeps] a log of a certain number of completions you choose, along
-with some context information, and use that to rank candidates the
-next time you have to choose.
-#+end_quote
-
-#+begin_src emacs-lisp
-  (use-package company-statistics
-    :hook (company-mode . company-statistics-mode))
-#+end_src
-
 ** TODO Miscellany
 :PROPERTIES:
 :HASH:     ff64cb95db3da79ea4e5135a29624ee4
@@ -1567,8 +1521,8 @@ next time you have to choose.
 
 *** =hl-todo=
 :PROPERTIES:
-:HASH:     832118355d6456bbc4ce534f7a1d01ab
-:MODIFIED: 2019-06-14 09:59:56
+:HASH:     f36a1bfc1afe2df6b2ebfca7a208284e
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 Highlight TODO and other keywords in comments:
@@ -1581,8 +1535,8 @@ Highlight TODO and other keywords in comments:
 
 *** =yasnippet=
 :PROPERTIES:
-:HASH:     35cf8a69295f3a1a90fa92ae065ea0e6
-:MODIFIED: 2019-06-14 09:59:56
+:HASH:     2869e01f9abc80506e0b61a874bd7e75
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 Use yasnippet. Configure it.
@@ -1596,8 +1550,8 @@ Use yasnippet. Configure it.
 
 *** Code folding
 :PROPERTIES:
-:HASH:     08d2763ac2140ab5e7487200675c42d0
-:MODIFIED: 2019-06-14 09:59:56
+:HASH:     7e1ea92688a7708a3274061be548c9d7
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 Code folding (based stupidly on indentation):
@@ -1615,8 +1569,8 @@ Code folding (based stupidly on indentation):
 
 *** Linting an syntax checking
 :PROPERTIES:
-:HASH:     e3dc501eb6bd784e5192e79acd1a84ef
-:MODIFIED: 2019-06-19 12:31:50
+:HASH:     96753080bed1051fdec6e131bb9bdd2d
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 Syntax checking:
@@ -1637,8 +1591,8 @@ Syntax checking:
 
 *** =rainbow-delimiters=
 :PROPERTIES:
-:HASH:     eb8f9b5f30b1c51fcc581a776140e87f
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     0ffde1297e521a78dbe4d7ba17c8bf26
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 This makes hunting down paren pairs easier in Elisp:
@@ -1651,8 +1605,8 @@ This makes hunting down paren pairs easier in Elisp:
 
 *** =fill-column-indicator=
 :PROPERTIES:
-:HASH:     13640adda16e63cb4a9ef2f07d44b2e2
-:MODIFIED: 2019-06-14 10:14:09
+:HASH:     b7b3465dde051b354aad60dc2bef2c2c
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1670,8 +1624,8 @@ This makes hunting down paren pairs easier in Elisp:
 
 *** Magit
 :PROPERTIES:
-:HASH:     bb7f8d9ff9ddadf238c8a21c4ddebc4b
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     f1f7d04aba25dab05cea78b048cbdf5a
+:MODIFIED: 2019-06-23 19:35:21
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1717,205 +1671,6 @@ From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#function
         (magit-blame-quit)
       (call-interactively 'magit-blame)))
 #+END_SRC
-* Shell and Term Modes
-:PROPERTIES:
-:HASH:     7c791981d7972ac86100ae2ec527dbae
-:MODIFIED: 2019-03-08 15:48:05
-:END:
-
-** TODO Term-mode
-:PROPERTIES:
-:HASH:     5e1dadaf4c46ae5de0ddd916a813ff79
-:MODIFIED: 2019-06-23 11:58:21
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-03-04 Mon 16:50]
-:END:
-
-Moving to using Emacs as a primary terminal emulator is probably
-something I should work towards.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package multi-term
-    :config
-    ;; I'm not quite sure what this does; it was in my init.el (it was
-    ;; added by `custom.el')
-    (setq ansi-color-faces-vector
-          [default bold shadow italic underline bold bold-italic bold])
-    (setq ansi-color-names-vector
-          (vector "#ffffff"
-                  "#f36c60"
-                  "#8bc34a"
-                  "#fff59d"
-                  "#4dd0e1"
-                  "#b39ddb"
-                  "#81d4fa"
-                  "#263238")))
-#+END_SRC
-
-** TODO Eshell
-:PROPERTIES:
-:HASH:     12139a63b2b5e2993161a48e22953491
-:MODIFIED: 2019-06-14 10:31:29
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-03-04 Mon 16:51]
-:END:
-
-*** =egp= (=eshell-prompt-extras=)
-:PROPERTIES:
-:HASH:     1a4fbcf0ec0b81413b2d3bad2f01f828
-:MODIFIED: 2019-06-23 11:58:21
-:END:
-
-=eshell= prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
-
-#+BEGIN_SRC emacs-lisp
-  (use-package egp
-    :straight
-    (egp :type git :host github :repo "dieggsy/dotfiles"
-         :files ("*egp.el"))
-    :commands egp-theme)
-#+END_SRC
-
-*** =eshell-mode=
-:PROPERTIES:
-:HASH:     82165360699dd61c277496d3f34f95e3
-:MODIFIED: 2019-06-23 12:21:28
-:END:
-
-Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell]] and =egp=.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package eshell
-    :init
-    :custom
-    (eshell-prompt-function #'egp-theme)
-    :hook
-    (eshell-mode . esh-autosuggest-mode))
-#+END_SRC
-
-*** [[https://github.com/dieggsy/esh-autosuggest][=esh-autosuggest=]]
-:PROPERTIES:
-:HASH:     4c6ec6d228f24189bb5c74d6e1392477
-:MODIFIED: 2019-06-23 13:13:29
-:END:
-
-#+begin_quote
-Fish-like history autosuggestions in eshell
-#+end_quote
-
-#+BEGIN_SRC emacs-lisp
-  (use-package esh-autosuggest
-    :init
-    (add-hook 'eshell-mode-hook
-              (lambda ()
-                (setq-local
-                 'company-backends (push '(company-capf esh-autosuggest)
-                                         company-backends)))))
-#+END_SRC
-
-*** =exec-path-from-shell=
-:PROPERTIES:
-:HASH:     cbeab8cdddf69fea1a3767966becf2eb
-:MODIFIED: 2019-06-20 16:41:23
-:END:
-
-Get environment variables from =$SHELL=.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell
-    :straight t
-    :config
-    (setq tm/environment-variables '("REPODIR"
-                                     "RUBYLIB"
-                                     "RUBYBINDIR"
-                                     "PUPPETDIR"))
-    (dolist (env-var tm/environment-variables)
-      (add-to-list 'exec-path-from-shell-variables env-var))
-    ;; https://github.com/purcell/exec-path-from-shell/issues/87
-    (setq exec-path-from-shell-arguments '("-l"))
-    ;; https://github.com/syl20bnr/spacemacs/issues/4755
-    (setq explicit-shell-file-name "/bin/bash")
-    (setq shell-file-name "bash")
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
-#+END_SRC
-
-*** [[https://github.com/manateelazycat/aweshell][=aweshell=]]
-:PROPERTIES:
-:HASH:     0e0372d5febb5444e5106a16acd00331
-:MODIFIED: 2019-06-23 12:21:28
-:END:
-
-#+begin_quote
-Various extensions to Eshell.
-#+end_quote
-
-#+begin_src emacs-lisp
-  (use-package aweshell
-    :after (eshell-up)
-    :straight (:type git :host github :repo "manateelazycat/aweshell"
-               :files ("*aweshell.el")))
-#+end_src
-
-*** [[https://github.com/peterwvj/eshell-up][=eshell-up=]]
-:PROPERTIES:
-:HASH:     b81770dccb9cf044f03f1259287031e4
-:MODIFIED: 2019-06-23 12:21:28
-:END:
-
-#+begin_quote
-Emacs package for quickly navigating to a specific parent directory in
-eshell without having to repeatedly typing =cd ..=.
-#+end_quote
-
-#+begin_src emacs-lisp
-  (use-package eshell-up
-    :straight (:type git :host github :repo "peterwvj/eshell-up"))
-#+end_src
-
-*** Elisp
-:PROPERTIES:
-:HASH:     764d4de2cf3b4da403ab77e77561556a
-:MODIFIED: 2019-06-23 11:58:21
-:END:
-
-A quick internet search said that Eshell doesn't have anything like
-brace expansion built in. [[https://emacs.stackexchange.com/a/9521][This]] Stack Exchange post provides a
-solution:
-
-#+BEGIN_SRC emacs-lisp
-(defun eshell-brace-expansion (str)
-  (let* ((parts (split-string str "[{}]"))
-         (prefix (car parts))
-         (body   (nth 1 parts))
-         (suffix (nth 2 parts)))
-    (mapcar (lambda (x) (concat prefix x suffix))
-            (split-string body ","))))
-#+END_SRC
-
-Used like this:
-
-#+begin_example
-ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
-#+end_example
-
-** SSH/GPG keys
-:PROPERTIES:
-:HASH:     dbb0127da65e33d98ffe2017f496efa3
-:MODIFIED: 2019-06-23 11:58:21
-:END:
-
-Install =keychain-environment= so Emacs can use [[https://github.com/funtoo/keychain][keychain]] to access SSH
-and GPG keys.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package keychain-environment
-    :init
-    (keychain-refresh-environment))
-#+END_SRC
-
 * Mail
 :PROPERTIES:
 :HASH:     77e2ccb28c4429b559d2716250583790
@@ -3270,6 +3025,258 @@ Define the following variables:
 [2019-01-16 Wed 08:30]
 projects.org
 [[file:~/org/projects.org::*Increase%20NotBefore%20threshold][Increase NotBefore threshold]]
+* Shell and Term Modes
+:PROPERTIES:
+:HASH:     7c791981d7972ac86100ae2ec527dbae
+:MODIFIED: 2019-03-08 15:48:05
+:END:
+
+** TODO Term-mode
+:PROPERTIES:
+:HASH:     5e1dadaf4c46ae5de0ddd916a813ff79
+:MODIFIED: 2019-06-23 11:58:21
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-04 Mon 16:50]
+:END:
+
+Moving to using Emacs as a primary terminal emulator is probably
+something I should work towards.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package multi-term
+    :config
+    ;; I'm not quite sure what this does; it was in my init.el (it was
+    ;; added by `custom.el')
+    (setq ansi-color-faces-vector
+          [default bold shadow italic underline bold bold-italic bold])
+    (setq ansi-color-names-vector
+          (vector "#ffffff"
+                  "#f36c60"
+                  "#8bc34a"
+                  "#fff59d"
+                  "#4dd0e1"
+                  "#b39ddb"
+                  "#81d4fa"
+                  "#263238")))
+#+END_SRC
+
+** TODO Eshell
+:PROPERTIES:
+:HASH:     12139a63b2b5e2993161a48e22953491
+:MODIFIED: 2019-06-14 10:31:29
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-03-04 Mon 16:51]
+:END:
+
+*** =egp= (=eshell-prompt-extras=)
+:PROPERTIES:
+:HASH:     f3736f30a89218c7c73318bbf611993a
+:MODIFIED: 2019-06-23 17:24:41
+:END:
+
+=eshell= prompt theme from [[https://github.com/dieggsy/dotfiles/blob/master/emacs/.emacs.d/lisp/egp.el][here]].
+
+#+BEGIN_SRC emacs-lisp
+  (use-package egp
+    :straight
+    (dotfiles :host github :repo "dieggsy/dotfiles"
+	 :files (("emacs/.emacs.d/lisp/egp.el" . "egp.el")))
+    :commands egp-theme)
+#+END_SRC
+
+*** =eshell-mode=
+:PROPERTIES:
+:HASH:     17601a8877a5a595f02e0dac831d029a
+:MODIFIED: 2019-06-23 19:49:19
+:END:
+
+Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell]] and =egp=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eshell
+    :init
+    (require 'egp)
+    :custom
+    (eshell-prompt-function #'egp-theme)
+    :config
+    (when (and (executable-find "fish")
+               (require 'fish-completion nil t))
+      (global-fish-completion-mode)))
+#+END_SRC
+
+*** [[https://github.com/dieggsy/esh-autosuggest][=esh-autosuggest=]]
+:PROPERTIES:
+:HASH:     fd84d3e3e16373c5455a11524589e3a1
+:MODIFIED: 2019-06-23 18:59:53
+:END:
+
+#+begin_quote
+Fish-like history autosuggestions in eshell
+#+end_quote
+
+#+BEGIN_SRC emacs-lisp
+  (use-package esh-autosuggest
+    :preface
+    (defun tm/setup-eshell-ivy-completion ()
+      (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
+      ;; only if you want to use the minibuffer for completions instead of
+      ;; the in-buffer interface
+      (setq-local ivy-display-functions-alist
+                  (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
+                        ivy-display-functions-alist)))
+    :hook
+    (eshell-mode . esh-autosuggest-mode)
+    (eshell-mode . tm/setup-eshell-ivy-completion))
+#+END_SRC
+
+*** [[https://gitlab.com/ambrevar/emacs-fish-completion][=fish-completion=]]
+:PROPERTIES:
+:HASH:     299e4e28879f06d9c8da79c59b877654
+:MODIFIED: 2019-06-23 18:56:24
+:END:
+
+#+begin_quote
+This package extends the pcomplete completion framework with
+completion from the fish shell.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package fish-completion
+    :straight (:host gitlab :repo "ambrevar/emacs-fish-completion"))
+#+end_src
+
+*** =exec-path-from-shell=
+:PROPERTIES:
+:HASH:     cbeab8cdddf69fea1a3767966becf2eb
+:MODIFIED: 2019-06-20 16:41:23
+:END:
+
+Get environment variables from =$SHELL=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :straight t
+    :config
+    (setq tm/environment-variables '("REPODIR"
+                                     "RUBYLIB"
+                                     "RUBYBINDIR"
+                                     "PUPPETDIR"))
+    (dolist (env-var tm/environment-variables)
+      (add-to-list 'exec-path-from-shell-variables env-var))
+    ;; https://github.com/purcell/exec-path-from-shell/issues/87
+    (setq exec-path-from-shell-arguments '("-l"))
+    ;; https://github.com/syl20bnr/spacemacs/issues/4755
+    (setq explicit-shell-file-name "/bin/bash")
+    (setq shell-file-name "bash")
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
+#+END_SRC
+
+*** [[https://github.com/manateelazycat/aweshell][=aweshell=]]
+:PROPERTIES:
+:HASH:     52fd7ad41a98912c89c3839a2b484ce1
+:MODIFIED: 2019-06-23 19:17:06
+:END:
+
+#+begin_quote
+Various extensions to Eshell.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package aweshell
+    :after (eshell-up)
+    :general
+    (tm/leader-def
+      :infix "E"
+      :prefix-command 'tm/eshell-prefix-command
+      :prefix-map 'tm/eshell-prefix-map
+      "" '(:which-key "eshell prefix" :ignore t)
+      "n" 'aweshell-new
+      "l" 'aweshell-next
+      "h" 'aweshell-prev
+      "b" 'aweshell-switch-buffer
+      "u" 'eshell-up)
+    :straight (:type git :host github :repo "manateelazycat/aweshell"
+               :files ("*aweshell.el"))
+    :init
+    (setq aweshell-valid-command-color "#3EDAD4"))
+#+end_src
+
+*** [[https://github.com/peterwvj/eshell-up][=eshell-up=]]
+:PROPERTIES:
+:HASH:     b81770dccb9cf044f03f1259287031e4
+:MODIFIED: 2019-06-23 12:21:28
+:END:
+
+#+begin_quote
+Emacs package for quickly navigating to a specific parent directory in
+eshell without having to repeatedly typing =cd ..=.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package eshell-up
+    :straight (:type git :host github :repo "peterwvj/eshell-up"))
+#+end_src
+
+*** [[https://github.com/ryuslash/eshell-fringe-status][=eshell-fringe-status=]]
+:PROPERTIES:
+:HASH:     dcd151f7c7e45dd46ae615179deb9c1c
+:MODIFIED: 2019-06-23 17:47:16
+:END:
+
+#+begin_quote
+Show an indicator of the status of the last command run in Eshell.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package eshell-fringe-status
+    :hook
+    (eshell-mode . eshell-fringe-status-mode))
+#+end_src
+
+*** Elisp
+:PROPERTIES:
+:HASH:     764d4de2cf3b4da403ab77e77561556a
+:MODIFIED: 2019-06-23 11:58:21
+:END:
+
+A quick internet search said that Eshell doesn't have anything like
+brace expansion built in. [[https://emacs.stackexchange.com/a/9521][This]] Stack Exchange post provides a
+solution:
+
+#+BEGIN_SRC emacs-lisp
+(defun eshell-brace-expansion (str)
+  (let* ((parts (split-string str "[{}]"))
+         (prefix (car parts))
+         (body   (nth 1 parts))
+         (suffix (nth 2 parts)))
+    (mapcar (lambda (x) (concat prefix x suffix))
+            (split-string body ","))))
+#+END_SRC
+
+Used like this:
+
+#+begin_example
+ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
+#+end_example
+
+** SSH/GPG keys
+:PROPERTIES:
+:HASH:     dbb0127da65e33d98ffe2017f496efa3
+:MODIFIED: 2019-06-23 11:58:21
+:END:
+
+Install =keychain-environment= so Emacs can use [[https://github.com/funtoo/keychain][keychain]] to access SSH
+and GPG keys.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package keychain-environment
+    :init
+    (keychain-refresh-environment))
+#+END_SRC
+
 * Hydra
 :PROPERTIES:
 :HASH:     5e6e39921e99257f5dec24edd71c7ccd
