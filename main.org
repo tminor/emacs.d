@@ -1144,6 +1144,36 @@ dired.el, dired-aux.el, and dired-x.el.-plus
     :straight (:type git :host github :repo "emacsmirror/dired-plus"))
 #+end_src
 
+*** [[https://www.emacswiki.org/emacs/HideOrIgnoreComments][=hide-comnt=]]
+:PROPERTIES:
+:HASH:     59865b5a7c12bf6bb4835059d4c2d3ad
+:MODIFIED: 2019-06-23 11:51:31
+:END:
+
+#+begin_quote
+Hide/show comments in code.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package hide-comnt
+    :straight (:type git :host github :repo "emacsmirror/hide-comnt"))
+#+end_src
+
+*** [[https://github.com/emacsmirror/hexrgb/blob/master/hexrgb.el][=hexrgb=]]
+:PROPERTIES:
+:HASH:     d4b0a714bd832241e7ebd7cf3a7995d9
+:MODIFIED: 2019-06-23 11:55:04
+:END:
+
+#+begin_quote
+Functions to manipulate colors, including RGB hex strings.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package hexrgb
+    :straight (:type git :host github :repo "emacsmirror/hexrgb"))
+#+end_src
+
 * Prog-mode
 :PROPERTIES:
 :HASH:     90d4d36e3c0c9c492cefe319acf21374
