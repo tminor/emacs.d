@@ -1828,14 +1828,14 @@ solution:
 
 Used like this:
 
-#+BEGIN_QUOTE
+#+begin_example
 ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
-#+END_QUOTE
+#+end_example
 
 ** SSH/GPG keys
 :PROPERTIES:
-:HASH:     ac21a7acedacaf233af250e8bcf5ba75
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     dbb0127da65e33d98ffe2017f496efa3
+:MODIFIED: 2019-06-23 11:58:21
 :END:
 
 Install =keychain-environment= so Emacs can use [[https://github.com/funtoo/keychain][keychain]] to access SSH
