@@ -2087,10 +2087,28 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     (setq gnus-select-method '(nnnotmuch ""))
     (setq nnnotmuch-groups
           '((""
+             ;; InCommon Operators list
              ("nnnotmuch+lists.inc-ops-notifications"
               "tag:lists/inc-ops-notifications")
+             ;; Notmuch Commits list
              ("nnnotmuch+lists.notmuch-commits"
-              "tag:lists/notmuch-commits")))))
+              "tag:lists/notmuch-commits")
+             ;; All Tenshi messages
+             ("nnnotmuch+tenshi" "tag:tenshi-db300 or tag:tenshi-uga")
+             ;; Git commits
+             ("nnnotmuch+git-commits" "tag:git")
+             ;; Git issue messages
+             ("nnnotmuch+git-issues" "tag:lists/854")
+             ;; Nagios alerts
+             ("nnnotmuch+nagios-alerts"
+              "tag:nagios and not 'subject:\"/Project: gluu/\"'")
+             ;; ServiceNow messages
+             ("nnnotmuch+service-now"
+              "tag:servicenow and not subject:\"/(Resolved|Closed)/\"")
+             ;; SSL messages
+             ("nnnotmuch+ssl-admin" "tag:ssladmin")
+             ;; Cron daemon output messages
+             ("nnnotmuch+cron-daemon" "from:\"(Cron Daemon)\"")))))
 #+end_src
 
 *** [[https://github.com/tlikonen/nnnotmuch][=nnnotmuch=]]
@@ -2123,8 +2141,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     6a97082744afb1b13f8f7275a3c1c82f
-:MODIFIED: 2019-06-23 20:04:47
+:HASH:     63902d9db74f6bfa190289e29567e6f7
+:MODIFIED: 2019-06-23 20:10:24
 :END:
 
 #+BEGIN_SRC emacs-lisp
