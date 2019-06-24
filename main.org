@@ -2576,8 +2576,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     3c4d81fdea190781f791c263ebf1b472
-:MODIFIED: 2019-06-21 11:54:18
+:HASH:     0219a38521b244922fd5219b4caad929
+:MODIFIED: 2019-06-23 20:13:20
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2591,10 +2591,6 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
      "k" 'org-agenda-previous-item
      "J" 'tm/org-agenda-next-header
      "K" 'tm/org-agenda-previous-header)
-    :init
-    ;; (use-package evil-org
-    ;;   :config
-    ;;   (evil-org-agenda-set-keys))
 
     :config
     ;; calendar.org has gotten very large and I received an error
@@ -2621,34 +2617,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     ;; precious window layouts
     (setq org-agenda-window-setup 'current-window)
 
-    ;; Define `org-stuck-projects'
-    ;; TODO: Do I have any need for stuck projects?
-    ;; (setq org-stuck-projects '("/PROJECT" ("NEXT" "TODO") nil ""))
-
-    ;; Customize `org-agenda-column-view' layout
-    ;; TODO: Estimating time is too much detail for now.
-    ;; (setq org-columns-default-format "%3PRIORITY %Effort(Estim){:} %60ITEM %TODO")
-
     ;; Set up `org-habit'
     (require 'org-habit)
     (setq org-habit-graph-column 80
-          org-habit-show-habits-only-for-today t)
-
-    ;; Create `org-agenda' custom commands
-    (setq org-agenda-custom-commands
-          '(("d" "Daily Agenda"
-             ((agenda ""
-                      ((org-agenda-todo-ignore-scheduled 'past)
-                       (org-agenda-time-grid (quote
-                                              ((daily today remove-match)
-                                               (900 1100 1300 1500 1700)
-                                               "......" "----------------")))
-                       (org-agenda-span 'day)))
-              (todo "TODO"
-                    ((org-agenda-prefix-format "  %-6.6e  %-20.20c: %5(org-entry-get nil \"MODIFIED\") ")
-                     (org-agenda-todo-ignore-scheduled t)
-                     (org-agenda-sorting-strategy
-                      '(effort-down)))))))))
+          org-habit-show-habits-only-for-today t))
 #+END_SRC
 
 *** Org-super-agenda
