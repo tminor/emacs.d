@@ -20,10 +20,10 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                          :TOC:
+** Table of Contents                                                                          :TOC:
 :PROPERTIES:
-:HASH:     4804dc1dcc737080fae079c672779102
-:MODIFIED: 2019-06-23 20:09:15
+:HASH:     ac87d1d50cfd3bd684d93746365186c8
+:MODIFIED: 2019-06-23 20:10:24
 :END:
 
 - [[#intro][Intro]]
@@ -1984,8 +1984,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** Gnus
 :PROPERTIES:
-:HASH:     8a0fdb4e5abb5e1a2eacae975fdb3245
-:MODIFIED: 2019-06-23 09:33:49
+:HASH:     c50d61885987caa46beaf6d40f77cd54
+:MODIFIED: 2019-06-23 20:21:20
 :END:
 
 #+begin_src emacs-lisp
