@@ -2143,8 +2143,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     63902d9db74f6bfa190289e29567e6f7
-:MODIFIED: 2019-06-23 20:10:24
+:HASH:     d668c9c3207bc3fd246e854654861c2d
+:MODIFIED: 2019-06-24 10:44:03
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2194,15 +2194,15 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       :config
       (add-hook 'org-mode-hook 'toc-org-mode))
 
-    ;; Set org file base directory
+    ;; Sets org file base directory.
     (setq org-base-directory "~/org/")
     (setq org-work-directory (concat org-base-directory "work/"))
     (setq org-home-directory (concat org-base-directory "home/"))
 
-    ;; Add indentation based on heading level
+    ;; Adds indentation based on heading level.
     (setq org-startup-indented t)
 
-    ;; Enable syntax highlighting for code blocks
+    ;; Enables syntax highlighting for code blocks.
     (setq org-src-fontify-natively t)
 
     ;; Tweak tag placement when window sizes change
@@ -2275,24 +2275,17 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;;
     ;;  ;;;;;;;;;;;;;;;;;;;
 
-    ;; Define refile targets and specify max level so we aren't bombarded
-    ;; with too many choices
+    ;; `org-refile-targets' controls completion candidates for
+    ;; `org-refile'.  The following enables refiling to any file in
+    ;; `org-agenda-files' and any heading 5 levels or less therein.
     (setq org-refile-targets
-          '((nil :maxlevel . 1)
-            (org-agenda-files :maxlevel . 1)))
+          '((org-agenda-files (:maxlevel . 5))))
 
-    ;; Using `ivy' or similar negates the need for Org's native complete
-    ;; in steps for refiling
+    ;; Setting the following to nil enables ivy read completions.
     (setq org-outline-path-complete-in-steps nil)
 
-    ;; Include file name in refile targets
-    (setq org-refile-use-outline-path 'file)
-
-    ;; Hooks
-    ;;
-    ;; Remove inherited tags when refiling
-    (add-hook 'org-after-refile-insert-hook
-              'tm/org-remove-inherited-local-tags))
+    ;; Includes file names in refile targets.
+    (setq org-refile-use-outline-path 'file))
 #+END_SRC
 
 *** Elisp
