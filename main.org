@@ -1984,8 +1984,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** Gnus
 :PROPERTIES:
-:HASH:     c50d61885987caa46beaf6d40f77cd54
-:MODIFIED: 2019-06-23 20:21:20
+:HASH:     3208698b3565e832a0a8eb6f55766786
+:MODIFIED: 2019-06-24 10:01:44
 :END:
 
 #+begin_src emacs-lisp
@@ -2004,6 +2004,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
      "K" 'gnus-group-next-group
      "u" 'gnus-group-unsubscribe-current-group
      "gr" 'gnus-group-get-new-news
+     "gy" 'hydra-gnus-group/body
      "c" 'gnus-group-catchup-current
      "C" 'gnus-group-catchup-all
      "m" 'gnus-group-mark-group)
@@ -2028,6 +2029,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
      "gsD" 'gnus-summary-sort-by-most-recent-date
      "gss" 'gnus-summary-sort-by-score
      "gsa" 'gnus-summary-sort-by-author
+     "gy" 'hydra-gnus-summary/body
      "!" 'gnus-summary-tick-article-forward
      "?" 'gnus-summary-mark-as-dormant
      "MVk" 'gnus-summary-kill-below
