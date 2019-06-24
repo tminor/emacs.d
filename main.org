@@ -2586,8 +2586,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     0219a38521b244922fd5219b4caad929
-:MODIFIED: 2019-06-23 20:13:20
+:HASH:     56efe4299faf0fc783b4528123f928be
+:MODIFIED: 2019-06-24 15:20:20
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2617,8 +2617,12 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (add-to-list 'tm/auto-minor-mode-alist '("\\calendar.org\\'" . auto-revert-mode))
 
     ;; Files that `org-agenda' uses to populate its commands/views
-    (setq org-agenda-files `(,(concat org-base-directory "capture.org")
-                             ,(concat org-work-directory "calendar/calendar.org")))
+    (setq org-agenda-files
+          `(,(concat org-base-directory "mobile-capture.org")
+            ,(concat org-base-directory "capture.org")
+            ,(concat org-work-directory "calendar/calendar.org")
+            ,(concat org-base-directory "notes.org")
+            ,(concat org-base-directory "todo.org")))
 
     ;; Don't show scheduled TODOs in `org-agenda'
     (setq org-agenda-todo-ignore-scheduled t)
@@ -2699,7 +2703,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
      org-capture-templates
      `(
        ("j" "Journal entry" entry
-        (function org-journal-work-find-location)
+        ;; Target
+        (function (lambda ()
+                    (org-journal-new-entry t)
+                    (goto-char (point-min))))
         ,(concat "* %(format-time-string org-journal-time-format)"
                  "%^{Title}\n"
                  ":LOGBOOK:\n"
@@ -2708,16 +2715,20 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                  "%i%?"))
 
        ("n" "Note" entry
+        ;; Target
         (id (org-id-get-with-outline-path-completion
              '(("/home/tminor/org/notes.org" . (:maxlevel . 10)))))
+        ;; Template
         ,(concat "* %? :note:\n"
                  ":LOGBOOK:\n"
                  "- State \"\"        from \"\"        %U\n"
                  ":END:\n\n"))
 
        ("l" "Link" entry
+        ;; Target
         (id (org-id-get-with-outline-path-completion
              '(("/home/tminor/org/notes.org" . (:maxlevel . 10)))))
+        ;; Template
         ,(concat "* %(format-time-string org-journal-time-format) "
                  "%(org-web-tools--org-link-for-url) :link:\n\n"
                  ":LOGBOOK:\n"
