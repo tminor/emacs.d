@@ -2237,21 +2237,24 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
                      org-irc org-mhe org-rmail org-w3m))
 
     ;; Faces
-    ;;
-    ;; TODO: Find a better way to move this into a theme
+
     ;; Task state faces
     (setq org-todo-keyword-faces
-          '(("TODO" :foreground "red" :weight bold)
-            ("DONE" :foreground "forest green" :weight bold)
-            ("MAYBE" :foreground "yellow" :weight bold)
-            ("HOLD" :foreground "magenta" :weight bold)
-            ("CANCELLED" :foreground "forest green" :weight bold)
-            ("MEETING" :foreground "forest green" :weight bold)))
+          '(("TODO" :background "#DD0B53" :foreground "#EAEAEA"
+             :weight bold :box (:line-width -1 :style released-button))
+            ("DONE" :background "#0F0" :foreground "#000" :weight bold
+             :box (:line-width -1 :style released-button))
+            ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
+             :box (:line-width -1 :style released-button))
+            ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
+             :weight bold :box (:line-width -1 :style released-button))
+            ("MEETING" :background "#3EDAD4" :foreground "#000"
+             :weight bold :box (:line-width -1 :style released-button))))
 
     ;; Priority faces
-    (setq org-priority-faces '((?A . (:foreground "red" :weight 'bold))
-                               (?B . (:foreground "yellow"))
-                               (?C . (:foreground "green"))))
+    (setq org-priority-faces '((?A . (:foreground "#DD0B53" :weight bold))
+                               (?B . (:foreground "#FEDA98"))
+                               (?C . (:foreground "#0F0"))))
 
     ;;  ;;;;;;;;;;;;;;;;;;;
     ;;
