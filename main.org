@@ -22,8 +22,8 @@ Some conventions:
 
 ** Table of Contents                                          :TOC:
 :PROPERTIES:
-:HASH:     7cf4d320de43fff6334372ada5fb18f7
-:MODIFIED: 2019-06-22 10:28:02
+:HASH:     4804dc1dcc737080fae079c672779102
+:MODIFIED: 2019-06-23 20:09:15
 :END:
 
 - [[#intro][Intro]]
@@ -2125,8 +2125,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     8d846914a17e43690bc70fefece5a076
-:MODIFIED: 2019-06-23 11:05:39
+:HASH:     6a97082744afb1b13f8f7275a3c1c82f
+:MODIFIED: 2019-06-23 20:04:47
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2186,8 +2186,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-startup-indented t)
 
     ;; Enable syntax highlighting for code blocks
-    ;;
-    ;; TODO: Tweak org source block faces
     (setq org-src-fontify-natively t)
 
     ;; Tweak tag placement when window sizes change
@@ -2206,8 +2204,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-todo-keywords
           '((sequence "TODO(t!)"	       ; TODO for projects or one offs
                       "WAIT(w@)"	       ; Waiting on someone/something
-                      "FUTURE(f@)"       ; Future log
-                      "PROJECT(p!)"      ; Project for related TASKs
                       "|"
                       "DONE(d@)"
                       "CANCELLED(c@)"
