@@ -2143,8 +2143,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     d668c9c3207bc3fd246e854654861c2d
-:MODIFIED: 2019-06-24 10:44:03
+:HASH:     6314f2cfa5c58d5f7638e3b28d68beb0
+:MODIFIED: 2019-06-24 15:45:06
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2277,9 +2277,9 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; `org-refile-targets' controls completion candidates for
     ;; `org-refile'.  The following enables refiling to any file in
-    ;; `org-agenda-files' and any heading 5 levels or less therein.
+    ;; `org-agenda-files' and any heading 10 levels or less therein.
     (setq org-refile-targets
-          '((org-agenda-files (:maxlevel . 5))))
+          '((org-agenda-files . (:maxlevel . 10))))
 
     ;; Setting the following to nil enables ivy read completions.
     (setq org-outline-path-complete-in-steps nil)
@@ -2586,8 +2586,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     56efe4299faf0fc783b4528123f928be
-:MODIFIED: 2019-06-24 15:20:20
+:HASH:     0162d5a39b3898e1a13fb9c10cf1fe4c
+:MODIFIED: 2019-06-24 15:30:37
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2601,6 +2601,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
      "k" 'org-agenda-previous-item
      "J" 'tm/org-agenda-next-header
      "K" 'tm/org-agenda-previous-header)
+
+    :init
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys)
 
     :config
     ;; calendar.org has gotten very large and I received an error
@@ -2637,25 +2641,25 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
           org-habit-show-habits-only-for-today t)
 
     ;; Create `org-agenda' custom commands
-      (setq org-agenda-custom-commands
-            `(("w" . "Work agenda views")
-              ("ww" "Weekly work agenda"
-               ((agenda
-                 ""
-                 ((org-agenda-todo-ignore-scheduled 'past)
-                  (org-agenda-time-grid (quote
-                                         ((daily today remove-match)
-                                          (900 1100 1300 1500 1700)
-                                          "......" "----------------")))
-                  (org-agenda-span 'week)
-                  (org-journal-dir "~/org/work/journal/")))
-                (todo
-                 "TODO"
-                 ((org-agenda-prefix-format
-                   ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
-                  (org-agenda-todo-ignore-scheduled t)
-                  (org-agenda-sorting-strategy '(effort-down))
-                  (org-journal-dir "~/org/work/journal/"))))))))
+    (setq org-agenda-custom-commands
+          `(("w" . "Work agenda views")
+            ("ww" "Weekly work agenda"
+             ((agenda
+               ""
+               ((org-agenda-todo-ignore-scheduled 'past)
+                (org-agenda-time-grid (quote
+                                       ((daily today remove-match)
+                                        (900 1100 1300 1500 1700)
+                                        "......" "----------------")))
+                (org-agenda-span 'week)
+                (org-journal-dir "~/org/work/journal/")))
+              (todo
+               "TODO"
+               ((org-agenda-prefix-format
+                 ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
+                (org-agenda-todo-ignore-scheduled t)
+                (org-agenda-sorting-strategy '(effort-down))
+                (org-journal-dir "~/org/work/journal/"))))))))
 #+END_SRC
 
 *** Org-super-agenda
