@@ -2177,17 +2177,16 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; Evil key bindings in Org mode
     (use-package evil-org
       :after org
-      :config
-      (add-hook 'org-mode-hook 'evil-org-mode)
-      (add-hook 'evil-org-mode-hook
-                (lambda ()
-                  (evil-org-set-key-theme '(textobjects
-                                            insert
-                                            navigation
-                                            additional
-                                            shift
-                                            todo
-                                            heading)))))
+      :hook
+      (org-mode . evil-org-mode)
+      (evil-org-mode . (lambda ()
+                         (evil-org-set-key-theme '(textobjects
+                                                   insert
+                                                   navigation
+                                                   additional
+                                                   shift
+                                                   todo
+                                                   heading)))))
 
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
