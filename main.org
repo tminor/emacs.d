@@ -20,7 +20,7 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                          :TOC:
+** Table of Contents                                          :TOC:
 :PROPERTIES:
 :HASH:     ac87d1d50cfd3bd684d93746365186c8
 :MODIFIED: 2019-06-23 20:10:24
@@ -2586,8 +2586,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     0162d5a39b3898e1a13fb9c10cf1fe4c
-:MODIFIED: 2019-06-24 15:30:37
+:HASH:     f428f4003a215081e38f663be2681fbd
+:MODIFIED: 2019-06-24 21:12:22
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2640,6 +2640,14 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (setq org-habit-graph-column 80
           org-habit-show-habits-only-for-today t)
 
+    ;; ﹌
+    (setq org-agenda-block-separator  65100)
+
+    ;; ✔
+    (setq org-habit-completed-glyph 10004)
+    ;; 🙪
+    (setq org-habit-today-glyph 128618)
+
     ;; Create `org-agenda' custom commands
     (setq org-agenda-custom-commands
           `(("w" . "Work agenda views")
@@ -2649,7 +2657,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                ((org-agenda-todo-ignore-scheduled 'past)
                 (org-agenda-time-grid (quote
                                        ((daily today remove-match)
-                                        (900 1100 1300 1500 1700)
+                                        (300 600 900 1200 1500 1800 2100)
                                         "......" "----------------")))
                 (org-agenda-span 'week)
                 (org-journal-dir "~/org/work/journal/")))
