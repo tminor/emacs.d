@@ -364,8 +364,8 @@ buffers, etc.
 
 *** Buffer management
 :PROPERTIES:
-:HASH:     794c355ab7eb70de527342edfcb76025
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     03fdec9f79386f840a45fca23a55cdfc
+:MODIFIED: 2019-06-25 09:12:41
 :END:
 
 =ibuffer= provides a menu for manipulating buffers.
@@ -461,8 +461,8 @@ Install =highlight-indent-guides= for indentation indicators in
 
 **** Undo/redo window layout changes
 :PROPERTIES:
-:HASH:     72c3a6fbd4e5d95ab71ef0ae754f386c
-:MODIFIED: 2019-03-08 15:52:29
+:HASH:     cc9b91036ddf2eb307c3b760a25e78a0
+:MODIFIED: 2019-06-25 09:12:41
 :END:
 
 From =winner-mode= docstring:
@@ -538,8 +538,8 @@ Install =eyebrowse= for i3 style workspace management:
 
 **** Switching/deleting/etc. windows
 :PROPERTIES:
-:HASH:     c3e882b6b052391572f757338d9b389c
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     e8f7f1ebc020a8b58abb3b7851087a99
+:MODIFIED: 2019-06-25 09:12:41
 :END:
 
 Install =ace-window= for more sane window management:
@@ -570,6 +570,38 @@ Add normal Emacs window commands to leader key:
     "3" 'split-window-right
     "0" 'delete-window)
 #+END_SRC
+
+**** [[https://emacs.stackexchange.com/a/32671][=display-buffer= customization]]
+:PROPERTIES:
+:HASH:     c23427734f8fbe74188ab541ecbb3dee
+:MODIFIED: 2019-06-25 13:08:48
+:END:
+
+Quoting a comment on the original question (linked above):
+
+#+begin_quote
+Most people aren't interested in opening up the source code -- e.g.,
+the cider-stuff -- to customize it to suit their needs. Instead, they
+look for simple fixes like customizing the
+=display-buffer-alist=. Others just programmatically fix it after the
+fact -- e.g., =delete-window= and =switch-to-buffer=,
+split-vertically/horizontally, and so forth. And, there are some
+additional libraries to help manage the windows and/or revert back to
+the prior layout. I prefer the first option -- i.e., modify the source
+and make it absolutely perfect, but I am in the rare minority of
+people.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (let ((rule `(,(rx bos "*" (one-or-more anything) "*"
+                     (optional "<" (one-or-more anything) ">") eos)
+                (display-buffer-reuse-window
+                 display-buffer-in-side-window)
+                (reusable-frames . visible)
+                (side . bottom)
+                (window-height . 0.4))))
+    (cl-pushnew rule display-buffer-alist :test #'equal))
+#+end_src
 
 **** TODO [#C] Customize buffer placement
 :PROPERTIES:
