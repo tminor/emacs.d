@@ -1071,8 +1071,8 @@ Ensure =kill-ring= is saved between sessions:
 
 *** Buffer cleanup
 :PROPERTIES:
-:HASH:     2aeb1a3735fef65d10031f8e98363e2b
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     1938eb44136aca231b398b34f388d5ef
+:MODIFIED: 2019-06-25 09:01:49
 :END:
 
 Clean up matching buffers at midnight:
@@ -1085,7 +1085,8 @@ Clean up matching buffers at midnight:
           clean-buffer-list-kill-regexps '("\\`\\*Man "
                                            "\\`\\*helpful "
                                            "\\`\\*notmuch-"
-                                           "\\magit"))
+                                           "\\magit"
+                                           "\\`\\*CPU-Profiler-"))
     (midnight-mode))
 #+END_SRC
 
