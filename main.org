@@ -2586,8 +2586,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     f428f4003a215081e38f663be2681fbd
-:MODIFIED: 2019-06-24 21:12:22
+:HASH:     06f3ad0f2e2854ee85164c0244e12a78
+:MODIFIED: 2019-06-25 08:28:10
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2647,6 +2647,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (setq org-habit-completed-glyph 10004)
     ;; 🙪
     (setq org-habit-today-glyph 128618)
+
+    (setq org-agenda-current-time-string
+          (format "⁕⁕⁕⁕  %s  ⁕⁕⁕⁕"
+                  (propertize "🕖" :foreground "#F94FA0" :weight 'bold)))
 
     ;; Create `org-agenda' custom commands
     (setq org-agenda-custom-commands
