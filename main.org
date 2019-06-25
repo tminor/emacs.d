@@ -1471,6 +1471,25 @@ To fix this, define a new function to use for =lisp-indent-function=
 - State "TODO"       from              [2019-03-06 Wed 08:46]
 :END:
 
+**** [[https://github.com/joddie/macrostep][=macrostep=]]
+:PROPERTIES:
+:HASH:     b4a7b83f046c01b655d75b434fb1335b
+:MODIFIED: 2019-06-25 09:24:49
+:END:
+
+#+begin_quote
+An Emacs minor mode for interactively stepping through the expansion
+of macros in Emacs Lisp source code.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package macrostep
+    :general
+    (:keymaps 'emacs-lisp-mode-map
+     :states '(normal)
+     "ze" 'macrostep-expand))
+#+end_src
+
 ** TODO Complete any mode
 :PROPERTIES:
 :HASH:     5d91fa25652f0201c941059c83d25de3
