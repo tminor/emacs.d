@@ -574,8 +574,8 @@ Add normal Emacs window commands to leader key:
 
 **** [[https://emacs.stackexchange.com/a/32671][=display-buffer= customization]]
 :PROPERTIES:
-:HASH:     c23427734f8fbe74188ab541ecbb3dee
-:MODIFIED: 2019-06-25 13:08:48
+:HASH:     03d3575e7612c817e64796d9834ca038
+:MODIFIED: 2019-06-26 13:32:05
 :END:
 
 Quoting a comment on the original question (linked above):
@@ -599,11 +599,16 @@ people.
                 (display-buffer-reuse-window
                  display-buffer-in-side-window)
                 (reusable-frames . visible)
-                (side . bottom)
-                (window-height . 0.4))))
+                (side . left)
+                (window-width . 0.3))))
     (cl-pushnew rule display-buffer-alist :test #'equal))
 #+end_src
+***** TODO Tweak =display-buffer= for Eshell
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-27 Thu 11:27]
+:END:
 
+- Prefer =(side . bottom)= for Eshell
 **** TODO [#C] Customize buffer placement
 :PROPERTIES:
 :HASH:     bde13bf90580aabe1d0b75035f3a8724
