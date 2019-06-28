@@ -20,10 +20,10 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                          :TOC:
+** Table of Contents                                                                                                                                         :TOC:
 :PROPERTIES:
-:HASH:     ac87d1d50cfd3bd684d93746365186c8
-:MODIFIED: 2019-06-23 20:10:24
+:HASH:     b4c3e55adf28981a43810a43022f7685
+:MODIFIED: 2019-06-25 13:19:06
 :END:
 
 - [[#intro][Intro]]
@@ -78,6 +78,7 @@ Some conventions:
   - [[#multiple-cursors][Multiple-cursors]]
   - [[#straightel][Straight.el]]
   - [[#gnus-1][Gnus]]
+  - [[#hideshow][Hideshow]]
   - [[#menu-for-all-hydras][Menu for all hydras]]
 - [[#other][Other]]
   - [[#kill-whitespace-when-saving][Kill whitespace when saving]]
