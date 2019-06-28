@@ -2269,11 +2269,52 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       "c" 'org-capture
       "b" 'org-switchb
       "h" 'org-recent-headings-ivy
-      "j" 'tm/org-journal-prefix-command)
+      "j" 'tm/org-journal-prefix-command
+      "1" 'tm/org-agenda-work-today
+      "2" 'tm/org-agenda-work-week)
 
     :config
-    (if (try-completion "main.org" (mapcar #'buffer-name (buffer-list)))
-        (kill-buffer "main.org"))
+    (defun tm/org-agenda-work-week (&optional arg)
+      "Opens agenda for this week."
+      (interactive)
+      (org-agenda arg "ww"))
+    (defun tm/org-agenda-work-today (&optional arg)
+      "Opens agenda for today."
+      (interactive)
+      (org-agenda arg "wt"))
+
+    (defmacro tm/org-make-level-faces (level)
+      "Generate commands and set vars for creating new `org-level-face's."
+      (let ((num 0))
+        (while (< num (+ (string-to-number level) 1))
+          (progn
+            `(defface ,(intern (concat "org-level-"
+                                       level))
+               (org-compatible-face nil
+                 '((((class color) (min-colors 16) (background light))
+                    (:foreground "RosyBrown"))
+                   (((class color) (min-colors 16) (background dark))
+                    (:foreground "LightSalmon"))
+                   (((class color) (min-colors 8)) (:foreground "green"))))
+               ,(format "Face used for level %s headlines." level)
+               :group 'org-faces)
+            (let ((face (intern (concat "org-level-" level))))
+              (unless (member face
+                              org-level-faces)
+                (setq org-level-faces (append org-level-faces
+                                              (list face))))))
+          (setq num (+ num 1))))
+      (setq org-n-level-faces
+            (string-to-number level)))
+
+    (tm/org-make-level-faces "16")
+
+    ;; Makes more outline path faces available.
+    (setq org-n-level-faces 15)
+    ;; (setq org-level-faces
+    ;;       '(org-level-1 org-level-2 org-level-3 org-level-4 org-level-5
+    ;;                     org-level-6 org-level-7 org-level-8 org-level-9
+    ;;                     org-level-10 org-level-11 org-level-12))
 
     ;; Use UTF8 bullets instead of asterisks for Org headings
     (use-package org-bullets
