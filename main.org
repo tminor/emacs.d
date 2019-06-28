@@ -78,7 +78,6 @@ Some conventions:
   - [[#multiple-cursors][Multiple-cursors]]
   - [[#straightel][Straight.el]]
   - [[#gnus-1][Gnus]]
-  - [[#hideshow][Hideshow]]
   - [[#menu-for-all-hydras][Menu for all hydras]]
 - [[#other][Other]]
   - [[#kill-whitespace-when-saving][Kill whitespace when saving]]
