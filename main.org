@@ -1287,8 +1287,8 @@ script! Fish syntax highlighting:
 
 *** TODO Ruby
 :PROPERTIES:
-:HASH:     28ab88da755bfa92609d31977eb62ea4
-:MODIFIED: 2019-06-23 19:35:21
+:HASH:     4231fc55b560905c2bdfca7f13528bbe
+:MODIFIED: 2019-06-26 14:04:34
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1298,9 +1298,16 @@ script! Fish syntax highlighting:
   (use-package ruby-mode
     :config
     (setq ruby-indent-level 4)
+    (eval-after-load "hideshow"
+      '(add-to-list
+        'hs-special-modes-alist
+        `(ruby-mode
+          ,(rx (or "def" "class" "module" "do" "{" "[")) ; Block start
+          ,(rx (or "}" "]" "end"))		       ; Block end
+          ,(rx (or "#" "=begin"))			       ; Comment start
+          ruby-forward-sexp nil)))
     :hook
-    (ruby-mode-hook . yard-mode)
-    (ruby-mode-hook . eldoc-mode))
+    (ruby-mode . eldoc-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
