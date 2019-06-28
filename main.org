@@ -1615,8 +1615,14 @@ Use yasnippet. Configure it.
 
 *** Code folding
 :PROPERTIES:
-:HASH:     7e1ea92688a7708a3274061be548c9d7
-:MODIFIED: 2019-06-23 19:35:21
+:HASH:     a2c73c4d2db192f738abc62618f7ea1d
+:MODIFIED: 2019-06-26 13:54:04
+:END:
+
+**** =yafolding=
+:PROPERTIES:
+:HASH:     0103d0ee10d1560b3bf95ba6527e432c
+:MODIFIED: 2019-06-26 13:54:04
 :END:
 
 Code folding (based stupidly on indentation):
@@ -1631,6 +1637,36 @@ Code folding (based stupidly on indentation):
                    :toggle yafolding-toggle-element))
     (add-hook 'prog-mode-hook (lambda () (yafolding-mode))))
 #+END_SRC
+
+**** =hs-minor-mode=
+:PROPERTIES:
+:HASH:     41bdc46d0a5a8badd9708938d066117c
+:MODIFIED: 2019-06-26 13:54:04
+:END:
+
+Sources:
+
+[[https://gist.github.com/jgomo3/2046f7f1da8110b163dd7690531d454f][hs-special-modes-alist]]
+[[https://github.com/abo-abo/hydra/wiki/Emacs#hideshow-mode-for-code-folding][hydra-hs]]
+
+#+begin_src emacs-lisp
+  (use-package hs-minor-mode
+    :straight nil
+    :general
+    (tm/leader-def
+      :infix "TAB"
+      :prefix-command 'tm/hideshow-prefix-command
+      :prefix-map 'tm/hideshow-prefix-map
+      "" '(:which-key "hideshow prefix" :ignore t)
+      "s" 'hs-show-all
+      "h" 'hs-hide-all
+      "B" 'hs-show-block
+      "b" 'hs-hide-block
+      "t" 'hs-toggle-hiding
+      "l" 'hs-hide-level)
+    :hook
+    (prog-mode . hs-minor-mode))
+#+end_src
 
 *** Linting an syntax checking
 :PROPERTIES:
