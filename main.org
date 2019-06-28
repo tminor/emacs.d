@@ -2725,7 +2725,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (add-hook 'find-file-hook #'tm/enable-minor-mode-based-on-extension)
 
     ;; Activate `auto-revert-mode' for calendar.org
-    (add-to-list 'tm/auto-minor-mode-alist '("\\calendar.org\\'" . auto-revert-mode))
+    (add-to-list 'tm/auto-minor-mode-alist '("calendar.org" . auto-revert-mode))
 
     ;; Files that `org-agenda' uses to populate its commands/views
     (setq org-agenda-files
