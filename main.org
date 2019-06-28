@@ -2733,8 +2733,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     06f3ad0f2e2854ee85164c0244e12a78
-:MODIFIED: 2019-06-25 08:28:10
+:HASH:     3afcb2d967257525c82f99c8348efc4f
+:MODIFIED: 2019-06-27 21:19:18
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2869,8 +2869,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     abb1be111bb4459a840de56b5b0b5f54
-:MODIFIED: 2019-06-27 21:03:51
+:HASH:     9b0a1a89fc980abbb2f4acbaae5b5040
+:MODIFIED: 2019-06-27 21:31:43
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2883,7 +2883,11 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
       `(defun ,(intern (concat "tm/org-get-headings-"
                                (symbol-name fn-suffix))) ()
          ,(format "Return `point' for heading in %S" target)
-         (let* ((file (concat org-base-directory ,target))
+         (let* ((file (concat (if (string= ,target
+                                           "main.org")
+                                  user-emacs-directory
+                                org-base-directory)
+                              ,target))
                 (buf (find-buffer-visiting file)))
            (unless buf
              (find-file file))
