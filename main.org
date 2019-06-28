@@ -2768,8 +2768,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     10f54001d8602952481a937c53858d40
-:MODIFIED: 2019-06-24 15:06:43
+:HASH:     abb1be111bb4459a840de56b5b0b5f54
+:MODIFIED: 2019-06-27 21:03:51
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2777,6 +2777,42 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     :straight nil
     :after (org)
     :config
+    (defmacro tm/org-get-headings-command (fn-suffix target)
+      "Generate a command for capturing to TARGET."
+      `(defun ,(intern (concat "tm/org-get-headings-"
+                               (symbol-name fn-suffix))) ()
+         ,(format "Return `point' for heading in %S" target)
+         (let* ((file (concat org-base-directory ,target))
+                (buf (find-buffer-visiting file)))
+           (unless buf
+             (find-file file))
+           (with-current-buffer
+               buf
+             ;; Gets headings from TARGET and fontifies them before
+             ;; collecting them in `heading-point-alist', each cons cell
+             ;; of which reprents a heading (with text properties) pointing
+             ;; at the value for that heading's point.
+             ;; `heading-point-alist' is passed to `completing-read' read,
+             ;; ultimately calling `goto-char' against the point from the
+             ;; chosen cons cell.
+             (let* ((heading-point-alist '())
+                    (headings
+                     (org-map-entries
+                      (lambda ()
+                        (cl-pushnew `(,(save-excursion
+                                         (org-format-outline-path
+                                          (org-get-outline-path t)))
+                                      . ,(goto-char (point)))
+                                    heading-point-alist
+                                    :test #'equal)))))
+               (goto-char (cdr (assoc
+                                (completing-read "File under: "
+                                                 heading-point-alist)
+                                heading-point-alist))))))))
+    (tm/org-get-headings-command todo "todo.org")
+    (tm/org-get-headings-command notes "notes.org")
+    (tm/org-get-headings-command config "main.org")
+
     ;; Set default capture file
     (setq org-default-notes-file "~/org/capture.org")
 
@@ -2795,20 +2831,36 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                  ":END:\n\n"
                  "%i%?"))
 
+       ("c" "Emacs configuration change" entry
+        ;; Target
+        (file+function "~/.emacs.d/main.org" tm/org-get-headings-config)
+        ;; Template
+        ,(concat "* TODO %?\n"
+                 ":LOGBOOK:\n"
+                 "- State \"TODO\"    from \"\"        %U\n"
+                 ":END:\n\n"))
+
+       ("t" "Task" entry
+        ;; Target
+        (file+function "~/org/todo.org" tm/org-get-headings-todo)
+        ;; Template
+        ,(concat "* TODO %?\n"
+                 ":LOGBOOK:\n"
+                 "- State \"TODO\"    from \"\"        %U\n"
+                 ":END:\n\n"))
+
        ("n" "Note" entry
         ;; Target
-        (id (org-id-get-with-outline-path-completion
-             '(("/home/tminor/org/notes.org" . (:maxlevel . 10)))))
+        (file+function "~/org/notes.org" tm/org-get-headings-notes)
         ;; Template
-        ,(concat "* %? :note:\n"
+        ,(concat "* %?\n"
                  ":LOGBOOK:\n"
                  "- State \"\"        from \"\"        %U\n"
                  ":END:\n\n"))
 
        ("l" "Link" entry
         ;; Target
-        (id (org-id-get-with-outline-path-completion
-             '(("/home/tminor/org/notes.org" . (:maxlevel . 10)))))
+        (function (tm/org-get-headings notes))
         ;; Template
         ,(concat "* %(format-time-string org-journal-time-format) "
                  "%(org-web-tools--org-link-for-url) :link:\n\n"
