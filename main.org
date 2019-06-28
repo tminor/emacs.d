@@ -2244,14 +2244,20 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     6314f2cfa5c58d5f7638e3b28d68beb0
-:MODIFIED: 2019-06-24 15:45:06
+:HASH:     98275010536a80d20704f1c58b49050b
+:MODIFIED: 2019-06-26 16:57:01
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :straight org-plus-contrib
     :demand t
+    :hook
+    (after-init . (lambda ()
+                    (if (try-completion "main.org"
+                                        (mapcar #'buffer-name
+                                                (buffer-list)))
+                        (kill-buffer "main.org"))))
     :general
     (:keymaps 'org-mode-map
      "<S-iso-lefttab>" 'org-global-cycle)
