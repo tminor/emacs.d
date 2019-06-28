@@ -1753,6 +1753,26 @@ This makes hunting down paren pairs easier in Elisp:
           git-commit-major-mode 'org-mode))
 #+END_SRC
 
+**** [[https://github.com/alphapapa/magit-todos][=magit-todos=]]
+:PROPERTIES:
+:HASH:     8282e1e45bcba018e0d3076e157d4f1f
+:MODIFIED: 2019-06-27 21:41:58
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-26 Wed 14:25]
+:END:
+
+#+begin_quote
+This package displays keyword entries from source code comments and
+Org files in the Magit status buffer.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package magit-todos
+    :hook
+    (prog-mode . magit-todos-mode)
+    (org-mode . magit-todos-mode))
+#+end_src
 *** Elisp
 :PROPERTIES:
 :HASH:     e93f4e70a579e1e0cc61e2310499a079
