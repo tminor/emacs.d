@@ -2772,9 +2772,28 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                  ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
                 (org-agenda-sorting-strategy '(effort-down))
-                (org-journal-dir "~/org/work/journal/"))))))))
+                (org-journal-dir "~/org/work/journal/")
+                (org-agenda-tag-filter-preset '("-FUTURE"))))))
+            ("wt" "Today's work agenda"
+             ((agenda
+               ""
+               ((org-agenda-todo-ignore-scheduled 'past)
+                (org-agenda-time-grid (quote
+                                       ((daily today remove-match)
+                                        (300 600 900 1200 1500 1800 2100)
+                                        "......" "----------------")))
+                (org-agenda-span 'day)
+                (org-journal-dir "~/org/work/journal/")))
+              (todo
+               "TODO"
+               ((org-agenda-prefix-format
+                 ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
+                (org-agenda-todo-ignore-scheduled t)
+                (org-agenda-sorting-strategy '(effort-down))
+                (org-journal-dir "~/org/work/journal/")
+                (org-agenda-tag-filter-preset '("-FUTURE")))))))))
 #+END_SRC
-
+]
 *** Org-super-agenda
 :PROPERTIES:
 :HASH:     e4267e5347c2a1f81767258d03a6edf9
