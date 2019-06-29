@@ -3064,6 +3064,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
       `(defun ,(intern (concat "tm/org-get-headings-"
                                (symbol-name fn-suffix))) ()
          ,(format "Return `point' for heading in %S" target)
+         (interactive)
          (let* ((file (concat (if (string= ,target
                                            "main.org")
                                   user-emacs-directory
