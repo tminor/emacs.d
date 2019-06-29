@@ -2427,6 +2427,13 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       (interactive)
       (org-agenda arg "wt"))
 
+    (setq org-tags-column -76)
+
+    (use-package org-ql
+      :after (org-mode)
+      :straight
+      (:type git :host github :repo "alphapapa/org-ql"))
+
     (defmacro tm/org-make-level-faces (level)
       "Generate commands and set vars for creating new `org-level-face's."
       (let ((num 0))
