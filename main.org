@@ -2503,8 +2503,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; Enables syntax highlighting for code blocks.
     (setq org-src-fontify-natively t)
 
-    ;; Tweak tag placement when window sizes change
-    (add-hook 'window-configuration-change-hook 'tm/place-org-tags)
+    ;; (add-hook 'window-configuration-change-hook 'tm/place-org-tags)
 
     ;; Add modified time property when Org mode files are saved
     (add-hook 'before-save-hook
