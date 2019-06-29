@@ -1670,8 +1670,8 @@ Highlight TODO and other keywords in comments:
 
 *** =yasnippet=
 :PROPERTIES:
-:HASH:     2869e01f9abc80506e0b61a874bd7e75
-:MODIFIED: 2019-06-23 19:35:21
+:HASH:     495aae264006cd9fab2bf870890dcf89
+:MODIFIED: 2019-06-28 16:50:29
 :END:
 
 Use yasnippet. Configure it.
@@ -3005,8 +3005,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     9b0a1a89fc980abbb2f4acbaae5b5040
-:MODIFIED: 2019-06-27 21:31:43
+:HASH:     f21821c525bf8fa450b5158d8b9e2586
+:MODIFIED: 2019-06-28 11:32:15
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -4433,8 +4433,8 @@ other hydras:
 
 ** Rainbow Mode
 :PROPERTIES:
-:HASH:     29d81b2d98955795e11327fcc95aac1b
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     cc38369f16226c187e8b23e7ddd6c76f
+:MODIFIED: 2019-06-27 21:52:53
 :END:
 
 Rainbow mode changes the background of any color name. This includes
