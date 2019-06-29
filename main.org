@@ -1,16 +1,12 @@
 
 * Intro
 :PROPERTIES:
-:HASH:     b8ba4fcb8585e5f7ff230d41f1695cb2
-:MODIFIED: 2019-03-08 14:50:47
+:HASH:     04bdac1d31552fe999997dbdc9f1e313
+:MODIFIED: 2019-06-27 21:51:00
 :END:
 
-I've used [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org][this config]] as an inspiration for a lot of what follows.
-
 Some conventions:
-- Headlines with TODOs /should/ have some accompanying =;; TODO:=
-  comments in code blocks that follow
-- General is used for consistent and (somewhat) friendly key binding
+- General is used for consistent key binding
 - Some headings have subheadings titled "Elisp"; these sections
   contain Emacs Lisp code written by me or taken from someone on the
   internet
@@ -20,17 +16,25 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** Table of Contents                                                                                                                                         :TOC:
+** TODO Links to interesting configs                                 :easy:
 :PROPERTIES:
-:HASH:     b4c3e55adf28981a43810a43022f7685
-:MODIFIED: 2019-06-25 13:19:06
+:HASH:     7c7b2cb602ad250d7f814bd1675fff36
+:MODIFIED: 2019-06-28 16:37:22
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-27 Thu 21:50]
+:END:
+
+** Table of Contents                                                                                                                                                                                                          :TOC:
+:PROPERTIES:
+:HASH:     546d3b7f136d55798a810b5525e61bef
+:MODIFIED: 2019-06-28 16:28:10
 :END:
 
 - [[#intro][Intro]]
-  - [[#large-config-changes][Large config changes]]
+  - [[#links-to-interesting-configs][Links to interesting configs]]
 - [[#bootstrap][Bootstrap]]
-  - [[#package-repositories][Package repositories]]
-  - [[#use-package-bootstrap][Use-package bootstrap]]
+  - [[#reorganize-bootstrap-section][Reorganize 'bootstrap' section]]
   - [[#no-littering][No-littering]]
   - [[#load-path][Load path]]
   - [[#elisp][Elisp]]
@@ -47,6 +51,8 @@ Some conventions:
   - [[#font][Font]]
   - [[#search-modes][Search modes]]
   - [[#emacswiki][EmacsWiki]]
+  - [[#defun-for-repeat-last-interactive-command][=defun= for repeat last interactive command]]
+  - [[#undo-propose][undo-propose]]
 - [[#prog-mode][Prog-mode]]
   - [[#language-modes][Language modes]]
   - [[#complete-any-mode][Complete any mode]]
@@ -62,7 +68,6 @@ Some conventions:
   - [[#org-agenda][Org-agenda]]
   - [[#org-capture][Org-capture]]
   - [[#blog-publishing][Blog Publishing]]
-  - [[#find-way-to-order-sub-headings-in-org-agenda-files][Find way to order sub headings in org agenda files]]
 - [[#shell-and-term-modes][Shell and Term Modes]]
   - [[#term-mode][Term-mode]]
   - [[#eshell][Eshell]]
@@ -197,20 +202,6 @@ Add non-package provided Elisp to Emacs's =load-path=:
     (normal-top-level-add-subdirs-to-load-path))
 #+END_SRC
 
-*** Emacs's =$PATH=
-:PROPERTIES:
-:HASH:     8ff34d280287eac613e76429c2b7f79d
-:MODIFIED: 2019-03-08 15:50:42
-:END:
-
-TODO: Find a better way for this.
-
-Inform Emacs of executabels not otherwise found in =$PATH=:
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'exec-path "/home/tminor/.gem/ruby/bin/")
-#+END_SRC
-
 ** Elisp
 :PROPERTIES:
 :HASH:     3ad9dc346355d4076623d1fabda317b4
@@ -271,8 +262,8 @@ Function for finding and printing color and its complement:
 
 *** General.el
 :PROPERTIES:
-:HASH:     693d5ed998a28f3356936d6c3ea7594a
-:MODIFIED: 2019-03-10 19:02:08
+:HASH:     de8caab6e5ed1bad7d2d5572bce47956
+:MODIFIED: 2019-06-28 16:36:54
 :END:
 
 Install [[https://github.com/noctuid/general.el#about][general.el]] for key bindings:
@@ -294,8 +285,8 @@ Install [[https://github.com/noctuid/general.el#about][general.el]] for key bind
 
 *** Evil mode
 :PROPERTIES:
-:HASH:     e3a468e32f760cabcadc5a61c9cbac8c
-:MODIFIED: 2019-04-29 14:10:05
+:HASH:     c8b8fee532d4ce52428f1d66d23d23d6
+:MODIFIED: 2019-06-28 16:36:54
 :END:
 
 Install =evil= for =vi= style editing:
@@ -330,8 +321,8 @@ Install =evil= for =vi= style editing:
 
 *** Which-key
 :PROPERTIES:
-:HASH:     0d356961187545f6692afc99e55b044a
-:MODIFIED: 2019-03-08 15:49:53
+:HASH:     d2f64c42a8c8c8df1dc2b22eff1476ff
+:MODIFIED: 2019-06-28 13:16:14
 :END:
 
 After pressing a prefix key and waiting a short time, [[https://github.com/justbur/emacs-which-key][which-key]]
@@ -339,7 +330,6 @@ provides a pop-up for possible completion candidates.
 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
-    ;; TODO: Find a way to make this work
     ;; :general
     ;; (tm/leader-def
     ;;   :infix "k"
@@ -387,8 +377,8 @@ buffers, etc.
 
 **** Cursor
 :PROPERTIES:
-:HASH:     266caa0ead93519c29e5b0b92e78b885
-:MODIFIED: 2019-06-09 21:01:43
+:HASH:     f956c3255606265e0871ead39be8308a
+:MODIFIED: 2019-06-27 21:57:58
 :END:
 
 Highlight line containing cursor:
@@ -422,17 +412,23 @@ Multiple cursors for editing more than one line at the same time:
 
 **** Indentation
 :PROPERTIES:
-:HASH:     a8b6f369e3c6b1e7065420a0c278841d
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     aad2b05c9d58333e1305072dcb986555
+:MODIFIED: 2019-06-28 13:20:23
 :END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-27 Thu 21:53]
+:END:
+
+Update =hook= configuration.
 
 Install =highlight-indent-guides= for indentation indicators in
 =prog-mode=:
 
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-indent-guides
+    :hook
+    (prog-mode . highlight-indent-guides-mode)
     :init
-    (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
     (setq highlight-indent-guides-method 'column))
 #+END_SRC
 
@@ -602,23 +598,18 @@ people.
                 (window-width . 0.3))))
     (cl-pushnew rule display-buffer-alist :test #'equal))
 #+end_src
-***** TODO Tweak =display-buffer= for Eshell
+
+***** TODO Tweak =display-buffer=                                 :hard:
+:PROPERTIES:
+:HASH:     80fe6795985b5016f8a6b9dc42caa97d
+:MODIFIED: 2019-06-28 16:39:35
+:END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-27 Thu 11:27]
 :END:
 
 - Prefer =(side . bottom)= for Eshell
-**** TODO [#C] Customize buffer placement
-:PROPERTIES:
-:HASH:     bde13bf90580aabe1d0b75035f3a8724
-:MODIFIED: 2019-06-19 12:31:50
-:Effort:   00:30
-:END:
-:LOGBOOK:
-- State "TODO"       from "STUFF"      [2019-02-18 Mon 10:42]
-:END:
-
-https://www.reddit.com/r/emacs/comments/aja311/first_trial_of_a_weekly_emacs_tipstricksetc_thread/eeum2yj?context=3
+- [[https://gitlab.com/jabranham/emacs/blob/master/init.el#L2542-2673][Extensive customization example]]
 
 *** File and project browsing
 :PROPERTIES:
@@ -776,8 +767,8 @@ And change startup buffer to [[https://github.com/emacs-dashboard/emacs-dashboar
 
 *** Mode-line
 :PROPERTIES:
-:HASH:     7cf33a157d57ab2ba5e864f6fd7e6ed0
-:MODIFIED: 2019-06-21 10:06:25
+:HASH:     f0eb85d170ae643242c8433f35cdef9f
+:MODIFIED: 2019-06-29 11:36:49
 :END:
 
 Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun things like nyancat in our modeline:
@@ -785,16 +776,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
     :init
-    (use-package all-the-icons
-      :init
-      ;; (unless (file-exists-p (cl-case window-system
-      ;;                          (x (concat (or (getenv "XDG_DATA_HOME")
-      ;;                                         (concat (getenv "HOME") "/.local/share"))
-      ;;                                     "/fonts/"))
-      ;;                          (mac (concat (getenv "HOME") "/Library/Fonts/"))
-      ;;                          (ns (concat (getenv "HOME") "/Library/Fonts/"))))
-      ;;   (all-the-icons-install-fonts t))
-      )
+    (use-package all-the-icons)
+    (require 'all-the-icons)
     :config
     (setq doom-modeline-buffer-file-name-style 'truncate-all)
     (setq doom-modeline-enable-word-count t)
@@ -806,8 +789,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 
 ** Help/Info
 :PROPERTIES:
-:HASH:     75a7710ab06afdfc79a12143c22390b7
-:MODIFIED: 2019-06-23 11:51:31
+:HASH:     733a7f943cb8158e59147d198c993f1f
+:MODIFIED: 2019-06-28 16:04:15
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
@@ -916,25 +899,21 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
                                                   (group ".import.scm" string-end)
                                                   (group ".so" string-end))))
     (counsel-mode 1)
-    (defalias 'locate #'counsel-locate)
-
-    ;; TODO: Copy this from dieggsy repo
-    ;; (ivy-add-actions
-    ;;  'counsel-find-file
-    ;;  '(("e"
-    ;;     (lambda (f)
-    ;;       (let ((default-directory (if (file-directory-p f)
-    ;;                                    f
-    ;;                                  (file-name-directory f))))
-    ;;         (d/eshell-here)))
-    ;;     "eshell")))
-    )
+    (defalias 'locate #'counsel-locate))
 #+END_SRC
 
+**** TODO Add [[https://github.com/dieggsy/dotfiles/tree/master/emacs/.emacs.d#counsel][=ivy-add-actions=]]                                    :easy:
+:PROPERTIES:
+:HASH:     1bb509fd7d2eccc1d31c87d91f7cc87a
+:MODIFIED: 2019-06-28 16:41:47
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 13:21]
+:END:
 *** Swiper
 :PROPERTIES:
-:HASH:     d6ec3ce4b8a91c015cd53d5a595dbb51
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     70b59d39f8c22636d245b8442324178a
+:MODIFIED: 2019-06-28 13:23:54
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1069,8 +1048,8 @@ Bind them to some keys:
 
 *** Clipboard monitoring
 :PROPERTIES:
-:HASH:     9e744d419cbd8c5bf8e6386d9ba4eacf
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     3a92b4516a30006b39d7feda91c82d6f
+:MODIFIED: 2019-06-28 16:43:45
 :END:
 
 Sync contents of X clipboard to kill ring:
@@ -1081,9 +1060,6 @@ Sync contents of X clipboard to kill ring:
     (add-to-list 'after-init-hook 'clipmon-mode-start)
     (add-to-list 'after-init-hook 'clipmon-persist)
     (setq kill-ring-max 500)
-    ;; Remove sensitive info from kill-ring
-    ;;
-    ;; TODO: Read from file instead of hard coding
     (setq clipmon-transform-remove
           (with-temp-buffer
             (insert-file-contents "~/.emacs.d/etc/clipmon-ignore")
@@ -1117,7 +1093,6 @@ Clean up matching buffers at midnight:
 #+BEGIN_SRC emacs-lisp
   (use-package midnight
     :config
-    ;; TODO: Decide what needs cleaning and define here
     (setq clean-buffer-list-delay-general 2
           clean-buffer-list-kill-regexps '("\\`\\*Man "
                                            "\\`\\*helpful "
@@ -1166,8 +1141,8 @@ Deadgrep is the fast, beautiful text search that your Emacs deserves.
 
 *** [[https://www.emacswiki.org/emacs/DiredPlus][Dired+]]
 :PROPERTIES:
-:HASH:     4b505babad7f10ebe0a067d4c9ad09a2
-:MODIFIED: 2019-06-23 11:51:31
+:HASH:     01674a5f97edd250f32553898be29d70
+:MODIFIED: 2019-06-29 11:34:46
 :END:
 
 #+begin_quote
@@ -1199,8 +1174,8 @@ Hide/show comments in code.
 
 *** [[https://github.com/emacsmirror/hexrgb/blob/master/hexrgb.el][=hexrgb=]]
 :PROPERTIES:
-:HASH:     d4b0a714bd832241e7ebd7cf3a7995d9
-:MODIFIED: 2019-06-23 11:55:04
+:HASH:     61a707505fcd77fdd6a19c544ceb7bd6
+:MODIFIED: 2019-06-29 11:34:46
 :END:
 
 #+begin_quote
@@ -1284,10 +1259,10 @@ script! Fish syntax highlighting:
   (use-package fish-mode)
 #+END_SRC
 
-*** TODO Ruby
+*** Ruby
 :PROPERTIES:
-:HASH:     4231fc55b560905c2bdfca7f13528bbe
-:MODIFIED: 2019-06-26 14:04:34
+:HASH:     ad8e590959a37d5ae52b449c6ffa930b
+:MODIFIED: 2019-06-28 16:46:33
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1608,7 +1583,6 @@ Use yasnippet. Configure it.
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :config
-    ;; TODO: More configuration, more research
     (yas-global-mode 1))
 #+END_SRC
 
@@ -1892,7 +1866,6 @@ Returns whatever the action returns."
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  ;; TODO: Start xfce4-notifyd if it's not started already
   (defun tm/notmuch-notify ()
     "Generate desktop notifcations for new mail.
 
@@ -2023,13 +1996,6 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     :general
     (tm/leader-def
       "/" 'notmuch)
-    ;; TODO: Revisit notmuch bindings
-    ;;
-    ;; (tm/leader-def
-    ;;   :keymaps 'message-mode-map
-    ;;   :infix "P"
-    ;;   "" '(:which-key "notmuch-prettify prefix" :ignore t)
-    ;;   "h" 'org-mime-htmlize)
     :config
     ;; Help Emacs find notmuch and load it
     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
@@ -3108,28 +3074,16 @@ Define the following variables:
 2. Write your post.
 3. Publish it with =org2jekyll-publish=.
 
-** TODO [#C] Find way to order sub headings in org agenda files
-:PROPERTIES:
-:HASH:     812fcc6eec0c9baa9452b109bcb6df96
-:MODIFIED: 2019-03-11 16:22:23
-:Effort:   01:00
-:END:
-:LOGBOOK:
-- State "TODO"       from "STUFF"      [2019-01-16 Wed 08:44]
-:END:
-[2019-01-16 Wed 08:30]
-projects.org
-[[file:~/org/projects.org::*Increase%20NotBefore%20threshold][Increase NotBefore threshold]]
 * Shell and Term Modes
 :PROPERTIES:
 :HASH:     7c791981d7972ac86100ae2ec527dbae
 :MODIFIED: 2019-03-08 15:48:05
 :END:
 
-** TODO Term-mode
+** Term-mode
 :PROPERTIES:
-:HASH:     5e1dadaf4c46ae5de0ddd916a813ff79
-:MODIFIED: 2019-06-23 11:58:21
+:HASH:     00b998b9a2db835c11e0c2d26777e401
+:MODIFIED: 2019-06-28 16:56:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:50]
@@ -3156,10 +3110,10 @@ something I should work towards.
                   "#263238")))
 #+END_SRC
 
-** TODO Eshell
+** Eshell
 :PROPERTIES:
-:HASH:     12139a63b2b5e2993161a48e22953491
-:MODIFIED: 2019-06-14 10:31:29
+:HASH:     8076a1dc2497b7682ed6f5caea168a65
+:MODIFIED: 2019-06-28 16:56:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -4036,7 +3990,6 @@ _vr_ reset      ^^                       ^^                 ^^
   ("gr" org-agenda-redo))
 #+END_SRC
 
-*** TODO [#C] notmuch calendar/org-agenda things worth looking at
 :PROPERTIES:
 :HASH:     b484f6daf05e149c960265ca5d522440
 :MODIFIED: 2019-03-11 16:03:20
@@ -4049,13 +4002,7 @@ _vr_ reset      ^^                       ^^                 ^^
 https://github.com/larkery/emacs/blob/d89d5194f04caa2fc00454a7e6b94bcfd359fb64/site-lisp/notmuch-agenda.el
 
 [2019-02-14 Thu 09:38]
-*** TODO org-super-agenda: new deadline group
-:PROPERTIES:
-:HASH:     43d947803572217d813b5a072bc0d8d8
-:MODIFIED: 2019-03-21 10:30:36
-:END:
 
-- Separate deadlines from scheduled TODOs
 ** Multiple-cursors
 :PROPERTIES:
 :HASH:     4a5645a305de8acec62e69c94c7b1da0
@@ -4348,12 +4295,3 @@ File types like csv, yaml, etc.
 #+BEGIN_SRC emacs-lisp
   (use-package csv-mode)
 #+END_SRC
-** TODO [#C] Try emacs ledger
-:PROPERTIES:
-:HASH:     75dd6a32314294eada78cfd75fba9d5a
-:MODIFIED: 2019-03-11 16:03:20
-:Effort:   01:00
-:END:
-:LOGBOOK:
-- State "TODO"       from "STUFF"      [2019-01-17 Thu 08:45]
-:END:
