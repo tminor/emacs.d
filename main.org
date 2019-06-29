@@ -819,14 +819,15 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Ivy
 :PROPERTIES:
-:HASH:     d276b0a0254781f2bdad5f0783f438e2
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     e18724770624550e89eb76b51b646e2d
+:MODIFIED: 2019-06-29 11:34:46
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :config
     (ivy-mode 1)
+    (ivy-rich-mode 1)
     (setq ivy-use-virtual-buffers t
           ivy-count-format "%d/%d ")
     :general
@@ -839,8 +840,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Counsel
 :PROPERTIES:
-:HASH:     1b972c614fca6957347c7266a56aeccf
-:MODIFIED: 2019-03-11 08:35:57
+:HASH:     8e746349b78456bd7c8d8bcc65f581dc
+:MODIFIED: 2019-06-28 13:23:54
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -922,8 +923,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** All-the-icons for Ivy/Counsel
 :PROPERTIES:
-:HASH:     e33487f664134465d68b0d0413ed790c
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     1e27c9a4b54f8656da44a9fd710d855e
+:MODIFIED: 2019-06-29 12:09:15
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -931,13 +932,59 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
     :config
     (all-the-icons-ivy-setup))
 #+END_SRC
-**** TODO Add to =ivy-all-the-icons=
+
+**** TODO Add to =ivy-all-the-icons=                               :hard:
 :PROPERTIES:
-:HASH:     4bc661806584fc392bb7c5c0feffe9a2
-:MODIFIED: 2019-06-17 15:25:46
+:HASH:     56e09904e6c6dd2e964b4d7d25310e55
+:MODIFIED: 2019-06-29 12:09:15
 :END:
 
 Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
+
+*** [[https://github.com/Yevgnen/ivy-rich/blob/master/README.org][=ivy-rich=]]
+:PROPERTIES:
+:HASH:     789c2cdebdf321c8e23b2cd14fcde827
+:MODIFIED: 2019-06-29 11:34:46
+:END:
+
+Adds configurable output to =ivy= and =counsel= commands.
+
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    :after (ivy)
+    :init
+    (defun ivy-rich-switch-buffer-icon (candidate)
+      (with-current-buffer
+          (get-buffer candidate)
+        (let ((icon (all-the-icons-icon-for-mode major-mode)))
+          (if (symbolp icon)
+              (all-the-icons-icon-for-mode 'fundamental-mode)
+            icon))))
+    :config
+    (setcdr (assq t ivy-format-functions-alist)
+            #'ivy-format-function-line)
+    (setq ivy-rich--display-transformers-list
+          '(ivy-switch-buffer
+            (:columns
+             ((ivy-rich-switch-buffer-icon :width 2)
+              (ivy-rich-candidate
+               (:width 30))
+              (ivy-rich-switch-buffer-size
+               (:width 7))
+              (ivy-rich-switch-buffer-indicators
+               (:width 4 :face error :align right))
+              (ivy-rich-switch-buffer-major-mode
+               (:width 12 :face warning))
+              (ivy-rich-switch-buffer-project
+               (:width 15 :face success))
+              (ivy-rich-switch-buffer-path
+               (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path
+                                    x (ivy-rich-minibuffer-width
+                                       0.3))))))
+             :predicate
+             (lambda (cand) (get-buffer cand))))))
+#+end_src
+
 ** Themes
 :PROPERTIES:
 :HASH:     7a747af9081ed3f4c1e0497af332b897
