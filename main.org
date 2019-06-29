@@ -1852,6 +1852,23 @@ Org files in the Magit status buffer.
     (prog-mode . magit-todos-mode)
     (org-mode . magit-todos-mode))
 #+end_src
+
+**** [[https://github.com/emacs-evil/evil-magit][=evil-magit=]]
+:PROPERTIES:
+:HASH:     47f88cbb28f2e462c16a164006af3196
+:MODIFIED: 2019-06-29 11:46:29
+:END:
+
+#+begin_quote
+This library configures Magit and Evil to play well with each other.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package evil-magit
+    :init
+    (setq evil-magit-use-y-for-yank nil))
+#+end_src
+
 *** Elisp
 :PROPERTIES:
 :HASH:     e93f4e70a579e1e0cc61e2310499a079
