@@ -1233,6 +1233,20 @@ Functions to manipulate colors, including RGB hex strings.
 - State "TODO"    from ""        [2019-06-28 Fri 13:57]
 :END:
 
+** TODO [[https://github.com/jackkamm/undo-propose-el][undo-propose]]                                                 :easy:
+:PROPERTIES:
+:HASH:     563d5e14e8c63e67d785aa33379811dc
+:MODIFIED: 2019-06-29 11:57:58
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:08]
+:END:
+
+#+begin_quote
+=undo-propose.el= is a package for navigating through your undo
+history in a temporary buffer.
+#+end_quote
+
 * Prog-mode
 :PROPERTIES:
 :HASH:     90d4d36e3c0c9c492cefe319acf21374
@@ -1362,10 +1376,28 @@ loaded classes and modules, and where each method is defined.
     '(push 'company-robe company-backends)))
 #+END_SRC
 
-*** TODO Lisp
+**** TODO Pry in Emacs                                         :moderate:
 :PROPERTIES:
-:HASH:     b9a103ed044d7ac70ab38f90e5a965da
-:MODIFIED: 2019-06-23 19:35:21
+:HASH:     e59d32035b7e1e755f252639332c5832
+:MODIFIED: 2019-06-28 16:47:43
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-28 Fri 16:00]
+:END:
+
+[[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-33bk][Ruby and Emacs Tip: Advanced Pry Integration]]
+**** TODO [[https://github.com/purcell/emacs.d/blob/master/lisp/init-ruby.el][Steve Purcell's Ruby config]]                          :moderate:
+:PROPERTIES:
+:HASH:     864dad56bae6553bc5161acc55ed8a50
+:MODIFIED: 2019-06-28 16:47:20
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-28 Fri 16:01]
+:END:
+*** Lisp
+:PROPERTIES:
+:HASH:     3dc42bf01d149bffe6719d0015247e06
+:MODIFIED: 2019-06-28 16:47:20
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:45]
@@ -3092,10 +3124,33 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     :straight t)
 #+END_SRC
 
-** TODO Blog Publishing
+*** TODO [[https://addons.mozilla.org/en-US/firefox/addon/org-capture/][=org-capture= Extension]]                                :moderate:
 :PROPERTIES:
-:HASH:     65384ef23ee9196fe497f830cd82ef29
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     bd7b1abdc80b2cda6113b233b217ed84
+:MODIFIED: 2019-06-29 12:19:19
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-26 Wed 14:20]
+:END:
+
+[[https://github.com/sprig/org-capture-extension][On GitHub.]]
+
+#+begin_quote
+This is an extension for Google Chrome (tm) and Firefox (tm) which
+adds a "Capture" button.
+#+end_quote
+*** TODO Refine capture templates/ensure new lines for new captures :easy:
+:PROPERTIES:
+:HASH:     a3e3e18af6079cf7f7b07a276f3ecf47
+:MODIFIED: 2019-06-29 12:19:19
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-29 Sat 12:18]
+:END:
+** Blog Publishing
+:PROPERTIES:
+:HASH:     8b354a10182b63dd89078424ec136ce0
+:MODIFIED: 2019-06-28 16:55:42
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:47]
