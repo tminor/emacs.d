@@ -2469,8 +2469,12 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; Use UTF8 bullets instead of asterisks for Org headings
     (use-package org-bullets
+      :hook
+      (org-mode . (lambda () (org-bullets-mode 1)))
       :config
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+      (setq org-bullets-bullet-list
+            '("⑴" "⑵" "⑶" "⑷" "⑸" "⑹" "⑺" "⑻" "⑼" "⑽"
+              "⑾" "⑿" "⒀" "⒁" "⒂" "⒃")))
 
     ;; Evil key bindings in Org mode
     (use-package evil-org
