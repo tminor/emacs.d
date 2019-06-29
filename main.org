@@ -299,6 +299,15 @@ provides a pop-up for possible completion candidates.
     (which-key-mode))
 #+END_SRC
 
+**** TODO Bind =which-key-show-top-level= and =which-key-show-major-mode= :easy:
+:PROPERTIES:
+:HASH:     f302a44988f71a2b9482ff3808b51e0d
+:MODIFIED: 2019-06-28 16:39:09
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 13:13]
+:END:
+
 ** Emacs navigation
 :PROPERTIES:
 :HASH:     4779231949f3e304a921508cb6807dfa
@@ -765,7 +774,14 @@ Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
 #+END_SRC
 
 Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+]] later.
-
+*** TODO Add keybinding for =general-describe-keybindings=          :easy:
+:PROPERTIES:
+:HASH:     3683c059669d2be6ffbb883549eda0f1
+:MODIFIED: 2019-06-28 16:40:49
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-28 Fri 16:03]
+:END:
 ** Completion (Ivy/Counsel/Swiper)
 :PROPERTIES:
 :HASH:     462d979fad322d8e15bbea7128e48134
@@ -1080,6 +1096,14 @@ Ensure =kill-ring= is saved between sessions:
     (add-to-list 'savehist-additional-variables 'kill-ring))
 #+END_SRC
 
+**** TODO Ensure clipmon ignores password                      :moderate:
+:PROPERTIES:
+:HASH:     017d0f0fef8b8e14d9b5071311cc0d49
+:MODIFIED: 2019-06-28 16:43:45
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:43]
+:END:
 ** Cleaning/tidying
 :PROPERTIES:
 :HASH:     8ab3300d36591b24686a3e77931385cc
@@ -1105,6 +1129,15 @@ Clean up matching buffers at midnight:
                                            "\\`\\*CPU-Profiler-"))
     (midnight-mode))
 #+END_SRC
+
+**** TODO Add more modes/buffers to kill regexps                   :easy:
+:PROPERTIES:
+:HASH:     694c0f828f4145cd1ff47e8c30a5a790
+:MODIFIED: 2019-06-28 16:44:35
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:44]
+:END:
 
 ** Font
 :PROPERTIES:
@@ -1190,6 +1223,15 @@ Functions to manipulate colors, including RGB hex strings.
   (use-package hexrgb
     :straight (:type git :host github :repo "emacsmirror/hexrgb"))
 #+end_src
+
+** TODO =defun= for repeat last interactive command              :moderate:
+:PROPERTIES:
+:HASH:     75385b88b38f2e464f7542ba88f495e7
+:MODIFIED: 2019-06-29 11:57:58
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-28 Fri 13:57]
+:END:
 
 * Prog-mode
 :PROPERTIES:
@@ -1485,10 +1527,10 @@ To fix this, define a new function to use for =lisp-indent-function=
                     (funcall method indent-point state)))))))))
 #+END_SRC
 
-***** TODO Auto align :keywords "value" pairs
+***** TODO Auto align :keywords "value" pairs                     :hard:
 :PROPERTIES:
-:HASH:     b245ac9701103d46a16aa5c675550ec0
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     1bc9a1642b235e1e91650cb32456c98f
+:MODIFIED: 2019-06-28 16:47:43
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 08:46]
@@ -1513,10 +1555,10 @@ of macros in Emacs Lisp source code.
      "ze" 'macrostep-expand))
 #+end_src
 
-** TODO Complete any mode
+** Complete any mode
 :PROPERTIES:
-:HASH:     5d91fa25652f0201c941059c83d25de3
-:MODIFIED: 2019-06-23 19:35:21
+:HASH:     14e4d6fdfb4ea0e5aed932291e100121
+:MODIFIED: 2019-06-28 16:47:52
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1552,14 +1594,32 @@ virtualenv=) and run =M-x jedi:install-server=.
     (defun tm/python-mode-hook ()
       (add-to-list 'company-backends 'company-jedi)))
 #+END_SRC
-
-** TODO Miscellany
+*** TODO [[https://github.com/company-mode/company-mode/issues/180][=company=/=fci-mode= fix]]                                   :easy:
 :PROPERTIES:
-:HASH:     ff64cb95db3da79ea4e5135a29624ee4
-:MODIFIED: 2019-06-14 10:02:11
+:HASH:     1a12de9473f4c2ac7ed2de8fbde5dbe1
+:MODIFIED: 2019-06-28 16:48:11
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-27 Thu 21:30]
+:END:
+
+- Fix for fci-mode causing company popup distortion
+** Miscellany
+:PROPERTIES:
+:HASH:     7f6e06b93f036f5a5456201d1476c5bf
+:MODIFIED: 2019-06-28 16:49:17
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 11:15]
+:END:
+
+*** TODO Rename section or possibly break apart                     :easy:
+:PROPERTIES:
+:HASH:     489ffb334abc5104f0fd06d6ff75a241
+:MODIFIED: 2019-06-28 16:49:26
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:48]
 :END:
 
 *** =hl-todo=
@@ -1589,6 +1649,15 @@ Use yasnippet. Configure it.
     :config
     (yas-global-mode 1))
 #+END_SRC
+
+**** TODO Research and take notes on =yasnippet='s usefulness  :moderate:
+:PROPERTIES:
+:HASH:     a0ce21445ba2b0cd532c0b033be25bb5
+:MODIFIED: 2019-06-28 16:50:44
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:49]
+:END:
 
 *** Code folding
 :PROPERTIES:
@@ -1860,10 +1929,19 @@ Returns whatever the action returns."
           (lambda () (local-set-key (kbd "C-c C-w") #'tm/signature-choose)))
 #+END_SRC
 
-*** TODO Alerts
+*** TODO Refine notmuch alerts/include X11 aware function           :hard:
 :PROPERTIES:
-:HASH:     1c99c9debe58fe1aaba6a1b926555f86
-:MODIFIED: 2019-03-11 16:43:36
+:HASH:     39b732fcba095641190ef76879f63568
+:MODIFIED: 2019-06-28 16:52:18
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:51]
+:END:
+
+*** Alerts
+:PROPERTIES:
+:HASH:     15987ec94feb521ed21dd33ac25e266b
+:MODIFIED: 2019-06-28 16:52:18
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-11 Mon 16:42]
@@ -1978,10 +2056,10 @@ Reminders a la Gmail about sent mail that hasn't received a response.
                (highlight-phrase key value))))
 #+END_SRC
 
-** TODO Notmuch
+** Notmuch
 :PROPERTIES:
-:HASH:     1c857d15361a777bbbbb701032cab816
-:MODIFIED: 2019-06-23 09:49:20
+:HASH:     38a40d083af8d6a167c7d26351cd763c
+:MODIFIED: 2019-06-28 16:53:23
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2071,6 +2149,15 @@ Reminders a la Gmail about sent mail that hasn't received a response.
              :query "tag:sent"
              :key "t"))))
 #+END_SRC
+
+*** TODO Add keybindings for notmuch forward (and others)           :easy:
+:PROPERTIES:
+:HASH:     bcc46b363caa0c639b0862290130e7be
+:MODIFIED: 2019-06-28 16:53:23
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:52]
+:END:
 
 ** Gnus
 :PROPERTIES:
@@ -2503,7 +2590,16 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
     :config
     (org-recent-headings-mode))
 #+END_SRC
+*** TODO Add custom org link for emails                         :moderate:
+:PROPERTIES:
+:HASH:     3da6259d0e62ec86d27ccba9a13c2fe6
+:MODIFIED: 2019-06-28 16:53:48
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-27 Thu 10:34]
+:END:
 
+[[https://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html][Use Org-Mode Links for Absolutely Anything]]
 ** Org-journal
 :PROPERTIES:
 :HASH:     dea753dc4a3fa7d62d1dd2b651b3be53
@@ -2720,11 +2816,18 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
   (setq auto-revert-verbose nil)
 #+END_SRC
-
+**** TODO Function to change clock char in =org-agenda-current-time-string= :hard:
+:PROPERTIES:
+:HASH:     5031ff57327d1d7058e4ad56ac742eb6
+:MODIFIED: 2019-06-28 16:53:59
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-28 Fri 10:58]
+:END:
 *** Config
 :PROPERTIES:
-:HASH:     3afcb2d967257525c82f99c8348efc4f
-:MODIFIED: 2019-06-27 21:19:18
+:HASH:     77b3f2816c3b4a46be6241bda01eb129
+:MODIFIED: 2019-06-28 16:54:37
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2829,7 +2932,15 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                 (org-journal-dir "~/org/work/journal/")
                 (org-agenda-tag-filter-preset '("-FUTURE")))))))))
 #+END_SRC
-]
+
+**** TODO Remap =org-promote= and =org-demote= in insert mode      :easy:
+:PROPERTIES:
+:HASH:     1572bc7daeab79feb261980d30633ce3
+:MODIFIED: 2019-06-28 16:54:37
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-28 Fri 11:09]
+:END:
 *** Org-super-agenda
 :PROPERTIES:
 :HASH:     e4267e5347c2a1f81767258d03a6edf9
@@ -2850,7 +2961,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
            ;;   :priority "C"))
           nil))
 #+END_SRC
-
+*** TODO Facility for easily adding a property with a timestamp
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-28 Fri 17:26]
+:END:
 ** Org-capture
 :PROPERTIES:
 :HASH:     601b1d12b653c8928bc99dc44281c235
@@ -3994,9 +4108,10 @@ _vr_ reset      ^^                       ^^                 ^^
   ("gr" org-agenda-redo))
 #+END_SRC
 
+*** TODO notmuch calendar/org-agenda things worth looking at
 :PROPERTIES:
-:HASH:     b484f6daf05e149c960265ca5d522440
-:MODIFIED: 2019-03-11 16:03:20
+:HASH:     863e467aa0bfee03c0d790199b04ffd4
+:MODIFIED: 2019-06-28 16:57:35
 :Effort:   00:10
 :END:
 :LOGBOOK:
@@ -4274,11 +4389,16 @@ hexidecimal representation of colors.
   (use-package rainbow-mode)
 #+END_SRC
 
-** Spell check
+** TODO Spell check                                                  :easy:
 :PROPERTIES:
-:HASH:     52f35f299fa2e93aebf493b09bc496af
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     60797ef1b8dc4f07509f8356fe0a627c
+:MODIFIED: 2019-06-28 16:58:34
 :END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-27 Thu 21:52]
+:END:
+
+Move this section and update =hook= section.
 
 Spell checking with flyspell:
 
