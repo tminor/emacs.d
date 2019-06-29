@@ -1904,7 +1904,8 @@ From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#function
     (if (bound-and-true-p magit-blame-mode)
         (magit-blame-quit)
       (call-interactively 'magit-blame)))
-#+END_SRC
+#+end_src
+
 * Mail
 :PROPERTIES:
 :HASH:     77e2ccb28c4429b559d2716250583790
