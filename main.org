@@ -2580,7 +2580,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; `org-refile'.  The following enables refiling to any file in
     ;; `org-agenda-files' and any heading 10 levels or less therein.
     (setq org-refile-targets
-          '((org-agenda-files . (:maxlevel . 10))))
+          `((org-agenda-files . (:maxlevel . 10))
+            (,(concat user-emacs-directory "main.org") . (:maxlevel . 16))))
 
     ;; Setting the following to nil enables ivy read completions.
     (setq org-outline-path-complete-in-steps nil)
