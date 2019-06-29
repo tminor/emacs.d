@@ -988,8 +988,8 @@ Adds configurable output to =ivy= and =counsel= commands.
 
 *** Try packages temporarily
 :PROPERTIES:
-:HASH:     b0b442a2592a27d734b3f2a5a09f3db3
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     78ffef03dbe26fc97bdb4dd9e9e32862
+:MODIFIED: 2019-06-29 11:34:46
 :END:
 
 Enables temporarily downloading and installing packages for the
@@ -1112,8 +1112,8 @@ Ensure =kill-ring= is saved between sessions:
 
 *** Buffer cleanup
 :PROPERTIES:
-:HASH:     1938eb44136aca231b398b34f388d5ef
-:MODIFIED: 2019-06-25 09:01:49
+:HASH:     c21841de5697cf64d22cb2290a059015
+:MODIFIED: 2019-06-28 16:44:46
 :END:
 
 Clean up matching buffers at midnight:
@@ -1211,8 +1211,8 @@ Hide/show comments in code.
 
 *** [[https://github.com/emacsmirror/hexrgb/blob/master/hexrgb.el][=hexrgb=]]
 :PROPERTIES:
-:HASH:     61a707505fcd77fdd6a19c544ceb7bd6
-:MODIFIED: 2019-06-29 11:34:46
+:HASH:     c7240bddaad77700869fca950135b1ee
+:MODIFIED: 2019-06-29 12:15:21
 :END:
 
 #+begin_quote
@@ -1577,8 +1577,8 @@ General completion mechanism:
 
 *** Python
 :PROPERTIES:
-:HASH:     e062a760948d7d79f42b6444ad3c2d07
-:MODIFIED: 2019-06-23 13:05:24
+:HASH:     830ae4db84460e98ae5e80b8a31aa48e
+:MODIFIED: 2019-06-28 16:48:11
 :END:
 
 Python JEDI backend for =company-mode=.
@@ -2320,8 +2320,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     98275010536a80d20704f1c58b49050b
-:MODIFIED: 2019-06-26 16:57:01
+:HASH:     ffe7565e48db25e6fdd4a56a2cac84ed
+:MODIFIED: 2019-06-29 11:17:27
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2576,8 +2576,8 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 *** Org-recent-headers
 :PROPERTIES:
-:HASH:     5dadc079c21fb8abb5409e2ec21bf24d
-:MODIFIED: 2019-06-23 11:05:39
+:HASH:     bebf11be533555f421531a220b94c8bd
+:MODIFIED: 2019-06-28 13:28:13
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3082,7 +3082,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 *** Org-web-tools
 :PROPERTIES:
 :HASH:     2cc90080db3d85c1e6490a89b6be2030
-:MODIFIED: 2019-06-20 15:01:00
+:MODIFIED: 2019-06-29 12:03:34
 :END:
 
 [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
@@ -4368,8 +4368,8 @@ other hydras:
 
 ** Kill whitespace when saving
 :PROPERTIES:
-:HASH:     66c11594d1ca3d8c66d26bc666450a2c
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     631782a0d5b9beb39260ddc329b3188f
+:MODIFIED: 2019-06-27 21:52:53
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -4410,8 +4410,8 @@ Spell checking with flyspell:
 
 ** File type modes (not =prog-mode= files)
 :PROPERTIES:
-:HASH:     df94c7c8bff8eae153f792d18ce69f64
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     0da15673b84dbf69ae2cf8d8caf3d66f
+:MODIFIED: 2019-06-27 21:52:53
 :END:
 
 File types like csv, yaml, etc.
