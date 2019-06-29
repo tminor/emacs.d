@@ -89,70 +89,27 @@ Some conventions:
   - [[#rainbow-mode][Rainbow Mode]]
   - [[#spell-check][Spell check]]
   - [[#file-type-modes-not-prog-mode-files][File type modes (not =prog-mode= files)]]
-  - [[#try-emacs-ledger][Try emacs ledger]]
-
-** TODO Large config changes
-:PROPERTIES:
-:HASH:     a809178df0a73cfec59f739a040c6354
-:MODIFIED: 2019-03-08 15:48:05
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-03-06 Wed 10:55]
-:END:
-
-- I'd like to some day switch to =straight.el= for package management
-  instead of =package.el=
 
 * Bootstrap
 :PROPERTIES:
-:HASH:     8c2a0caf8fbd97dc266b5553bec99564
-:MODIFIED: 2019-03-08 14:47:24
+:HASH:     81c35aa54b506d25c88189f9ccdcf49e
+:MODIFIED: 2019-06-28 13:21:15
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-27 Thu 21:48]
 :END:
 
-In this section, we:
-
-- Make sure Emacs knows about repositories such as MELPA
-- Bootstrap =use-package=
-- And set up our =load-path=
-
-** Package repositories
+** TODO Reorganize 'bootstrap' section                               :easy:
 :PROPERTIES:
-:HASH:     3a3a19e9c1e49f2ce2dfc12f2dfa28bd
-:MODIFIED: 2019-06-21 12:24:17
+:HASH:     c58e73ec2378bc247ab7ba67fd0c515b
+:MODIFIED: 2019-06-28 16:38:43
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 13:20]
 :END:
 
-NOTE: For Windows, I needed GnuTLS DLLs. (Emacs for Windows isn't
-built with TLS support.)  Instructions found [[http://חנוך.se/diary/how_to_enable_GnuTLS_for_Emacs_24_on_Windows/index.en.html][here]].
-
-This snippet enables all necessary repositories on start up. Added
-org ELPA to get all of the nice =org-contrib= packages that I may
-someday want.
-
-#+BEGIN_SRC emacs-lisp
-;  (add-to-list 'package-archives
-;               '("melpa" . "https://melpa.org/packages/") t)
-;
-;  (add-to-list 'package-archives
-;               '("org" . "http://orgmode.org/elpa/") t)
-#+END_SRC
-
-** Use-package bootstrap
-:PROPERTIES:
-:HASH:     c97f834c22cd5750570c40b08addd99e
-:MODIFIED: 2019-06-21 12:24:17
-:END:
-
-=use-package= provides consistent and sane package management and
-configuration.
-
-#+BEGIN_SRC emacs-lisp
-;  (unless (package-installed-p 'use-package)
-;    (package-refresh-contents)
-;    (package-install 'use-package))
-;
-;  (eval-when-compile
-;    (require 'use-package))
-#+END_SRC
+Break this section apart and get rid of it. Boot strap code has been
+moved to =init.el=.
 
 ** No-littering
 :PROPERTIES:
