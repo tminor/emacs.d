@@ -1869,6 +1869,24 @@ This library configures Magit and Evil to play well with each other.
     (setq evil-magit-use-y-for-yank nil))
 #+end_src
 
+**** TODO Tweak magit =display-buffer=                             :hard:
+:PROPERTIES:
+:HASH:     5e647e092f3a059f6865b1268b638456
+:MODIFIED: 2019-06-28 16:50:44
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-26 Wed 14:26]
+:END:
+
+=magit-display-*=
+**** TODO Change face for hunks
+:PROPERTIES:
+:HASH:     360de633bc7e82d40aef6ae7d1927f51
+:MODIFIED: 2019-06-29 12:18:15
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-29 Sat 12:17]
+:END:
 *** Elisp
 :PROPERTIES:
 :HASH:     e93f4e70a579e1e0cc61e2310499a079
