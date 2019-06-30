@@ -2388,8 +2388,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     a4ddeb5f8912886fc832b78f9b765007
-:MODIFIED: 2019-06-29 15:12:10
+:HASH:     218b4137f0db48efad818eb4776c2664
+:MODIFIED: [2019-06-30 Sun 11:30]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2404,7 +2404,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
                         (kill-buffer "main.org"))))
     :general
     (:keymaps 'org-mode-map
-     "<S-iso-lefttab>" 'org-global-cycle)
+     "<S-iso-lefttab>" 'org-global-cycle
+     "zf" 'tm/org-set-focus-time)
     (tm/leader-def
       :infix "o"
       :prefix-command 'tm/org-prefix-command
@@ -2690,8 +2691,9 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 #+END_SRC
 *** TODO Add custom org link for emails                         :moderate:
 :PROPERTIES:
-:HASH:     3da6259d0e62ec86d27ccba9a13c2fe6
-:MODIFIED: 2019-06-28 16:53:48
+:HASH:     4fc5a070bcbc73244a67032c73a4c062
+:MODIFIED: [2019-06-30 Sun 11:30]
+:FOCUS:    <2019-07-01 Mon>
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-27 Thu 10:34]
@@ -2883,7 +2885,7 @@ Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber
 **** Auto-refresh specified files when they change on disk
 :PROPERTIES:
 :HASH:     3cdaee95aa51037958c93867636832fb
-:MODIFIED: 2019-03-08 15:50:43
+:MODIFIED: [2019-06-30 Sun 11:07]
 :END:
 
 Activate minor modes based on file names (from [[https://stackoverflow.com/a/13946304][here)]]:
@@ -2914,14 +2916,16 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
   (setq auto-revert-verbose nil)
 #+END_SRC
+
 **** TODO Function to change clock char in =org-agenda-current-time-string= :hard:
 :PROPERTIES:
-:HASH:     5031ff57327d1d7058e4ad56ac742eb6
-:MODIFIED: 2019-06-28 16:53:59
+:HASH:     6cb4a60164567f79d324babc4cb11d96
+:MODIFIED: [2019-06-30 Sun 11:07]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-28 Fri 10:58]
 :END:
+
 *** Config
 :PROPERTIES:
 :HASH:     77b3f2816c3b4a46be6241bda01eb129
@@ -3041,8 +3045,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 :END:
 *** Org-super-agenda
 :PROPERTIES:
-:HASH:     e4267e5347c2a1f81767258d03a6edf9
-:MODIFIED: 2019-06-21 10:48:25
+:HASH:     3193aeb0755e285ee7651aaa528044ab
+:MODIFIED: [2019-06-30 Sun 11:07]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3060,6 +3064,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
           nil))
 #+END_SRC
 *** TODO Facility for easily adding a property with a timestamp
+:PROPERTIES:
+:HASH:     961096f4f295a636890be5d580880e81
+:MODIFIED: [2019-06-30 Sun 11:07]
+:END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-28 Fri 17:26]
 :END:
