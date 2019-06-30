@@ -2388,8 +2388,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     ffe7565e48db25e6fdd4a56a2cac84ed
-:MODIFIED: 2019-06-29 11:17:27
+:HASH:     a4ddeb5f8912886fc832b78f9b765007
+:MODIFIED: 2019-06-29 15:12:10
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2429,6 +2429,9 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       (org-agenda arg "wt"))
 
     (setq org-tags-column -76)
+
+    (require 'org-tempo)
+    (require 'org-protocol)
 
     (use-package org-ql
       :after (org-mode)
@@ -2549,7 +2552,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;;
     (setq org-modules
           '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
-                     org-irc org-mhe org-rmail org-w3m org-tempo))
+                     org-irc org-mhe org-rmail org-w3m))
 
     ;; Faces
 
@@ -3052,8 +3055,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     f21821c525bf8fa450b5158d8b9e2586
-:MODIFIED: 2019-06-28 11:32:15
+:HASH:     40f271ea032e92a8ab48dc6d4f482d85
+:MODIFIED: 2019-06-29 13:40:31
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3101,6 +3104,27 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (tm/org-get-headings-command todo "todo.org")
     (tm/org-get-headings-command notes "notes.org")
     (tm/org-get-headings-command config "main.org")
+
+    ;; Adds functions, advice, etc. for killing a new frame if one has
+    ;; been created by org-capture browser extension.
+    ;;
+    ;; https://github.com/sprig/org-capture-extension#example-closins-the-frame-after-a-capture
+    (defvar tm/delete-frame-after-capture 0
+      "Whether to delete the last frame after the current capture.")
+    (defun tm/delete-frame-if-neccessary (&rest r)
+      (cond
+       ((= tm/delete-frame-after-capture 0) nil)
+       ((> tm/delete-frame-after-capture 1)
+        (setq tm/delete-frame-after-capture (- tm/delete-frame-after-capture 1)))
+       (t
+        (setq tm/delete-frame-after-capture 0)
+        (delete-frame))))
+    (advice-add 'org-capture-finalize
+                :after 'tm/delete-frame-if-neccessary)
+    (advice-add 'org-capture-kill
+                :after 'tm/delete-frame-if-neccessary)
+    (advice-add 'org-capture-refile
+                :after 'tm/delete-frame-if-neccessary)
 
     ;; Set default capture file
     (setq org-default-notes-file "~/org/capture.org")
