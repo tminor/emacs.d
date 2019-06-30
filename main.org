@@ -2656,6 +2656,22 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
             (org-toggle-tag tag 'off))))))
 #+END_SRC
 
+**** Set =FOCUS= property
+:PROPERTIES:
+:HASH:     ef961ceede3b5e954a6b01f89f537ae5
+:MODIFIED: [2019-06-30 Sun 11:24]
+:END:
+
+#+begin_src emacs-lisp
+  (defun tm/org-set-focus-time ()
+    "Set an active timestamp for FOCUS property."
+    (interactive)
+    (let ((time (with-temp-buffer
+                  (call-interactively #'org-time-stamp)
+                  (buffer-string))))
+      (org-set-property "FOCUS" time)))
+#+end_src
+
 *** Org-recent-headers
 :PROPERTIES:
 :HASH:     bebf11be533555f421531a220b94c8bd
