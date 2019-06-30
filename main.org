@@ -3055,8 +3055,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     40f271ea032e92a8ab48dc6d4f482d85
-:MODIFIED: 2019-06-29 13:40:31
+:HASH:     46f83cc5f2b7ee889a5213e9f70322ae
+:MODIFIED: 2019-06-30 10:25:16
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3064,6 +3064,13 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     :straight nil
     :after (org)
     :config
+    (defun transform-square-brackets-to-round-ones (string-to-transform)
+      "Transforms [ into ( and ] into ), other chars left unchanged."
+      (concat
+       (mapcar #'(lambda (c)
+                   (if (equal c ?[) ?\( (if (equal c ?]) ?\) c)))
+               string-to-transform)))
+
     (defmacro tm/org-get-headings-command (fn-suffix target)
       "Generate a command for capturing to TARGET."
       `(defun ,(intern (concat "tm/org-get-headings-"
@@ -3080,13 +3087,12 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
              (find-file file))
            (with-current-buffer
                buf
-             ;; Gets headings from TARGET and fontifies them before
-             ;; collecting them in `heading-point-alist', each cons cell
-             ;; of which reprents a heading (with text properties) pointing
-             ;; at the value for that heading's point.
-             ;; `heading-point-alist' is passed to `completing-read' read,
-             ;; ultimately calling `goto-char' against the point from the
-             ;; chosen cons cell.
+             ;; Gets headings from TARGET and fontifies them before collecting
+             ;; them in `heading-point-alist', each cons cell of which reprents a
+             ;; heading (with text properties) pointing at the value for that
+             ;; heading's point.  `heading-point-alist' is passed to
+             ;; `completing-read' read, ultimately calling `goto-char' against the
+             ;; point from the chosen cons cell.
              (let* ((heading-point-alist '())
                     (headings
                      (org-map-entries
@@ -3151,7 +3157,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
         ,(concat "* TODO %?\n"
                  ":LOGBOOK:\n"
                  "- State \"TODO\"    from \"\"        %U\n"
-                 ":END:\n\n"))
+                 ":END:\n")
+        :empty-lines 1)
 
        ("t" "Task" entry
         ;; Target
@@ -3160,7 +3167,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
         ,(concat "* TODO %?\n"
                  ":LOGBOOK:\n"
                  "- State \"TODO\"    from \"\"        %U\n"
-                 ":END:\n\n"))
+                 ":END:\n")
+        :empty-lines 1)
 
        ("n" "Note" entry
         ;; Target
@@ -3169,18 +3177,43 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
         ,(concat "* %?\n"
                  ":LOGBOOK:\n"
                  "- State \"\"        from \"\"        %U\n"
-                 ":END:\n\n"))
+                 ":END:\n")
+        :empty-lines 1)
 
        ("l" "Link" entry
         ;; Target
-        (function (tm/org-get-headings notes))
+        (file+function "~/org/notes.org" tm/org-get-headings-notes)
         ;; Template
         ,(concat "* %(format-time-string org-journal-time-format) "
                  "%(org-web-tools--org-link-for-url) :link:\n\n"
                  ":LOGBOOK:\n"
                  "- State \"\"        from \"\"        %U\n"
                  ":END:\n\n"
-                 "%?")))))
+                 "%?")
+        :empty-lines 1)
+
+       ;; `org-capture' browser extension templates
+       ("p" "Link with quote for org-protocol" entry
+        ;; Target
+        (file+function "~/org/notes.org" tm/org-get-headings-notes)
+        ;; Template
+        ,(concat
+          "* %^{Title}\n"
+          ":LOGBOOK:\n"
+          "- State \"\"        from \"\"        %U\n"
+          ":END:\n\n"
+          "Source: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+          "%(progn (setq tm/delete-frame-after-capture 2)")
+        :empty-lines 1)
+
+       ("L" "Link for org-protocol" entry
+        ;; Target
+        (file+function "~/org/notes.org" tm/org-get-headings-notes)
+        ;; Template
+        ,(concat
+          "%(org-web-tools--url-as-readable-org \"%:link\")"
+          "%?")
+        :empty-lines 1))))
 #+END_SRC
 
 *** Org-web-tools
