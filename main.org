@@ -2748,8 +2748,8 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 **** Add modified date property to headings in Org mode file
 :PROPERTIES:
-:HASH:     b0c066de89a69d8a159b5c0f39dc8535
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     7d50d3dfc7fb325ab976bef44d97bd04
+:MODIFIED: [2019-06-30 Sun 11:05]
 :END:
 
 Functions for calculating last update time per Org heading (from
@@ -2798,7 +2798,7 @@ Functions for calculating last update time per Org heading (from
           (org-set-property "HASH"
                             (format "%s" (tm/getentryhash)))
           (org-set-property "MODIFIED"
-                            (format-time-string "%Y-%m-%d %H:%M:%S"))))))
+                            (format-time-string "[%Y-%m-%d %a %H:%M]"))))))
 
   (defun tm/skip-nonmodified ()
     "Skip headings whose :MODIFIED: properties are unchanged."
