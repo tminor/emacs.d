@@ -3033,6 +3033,11 @@ Used like this:
 ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
 #+end_example
 
+*** TODO defun for projectile cd
+:LOGBOOK:
+- State "TODO"    from ""        [2019-07-01 Mon 09:24]
+:END:
+
 ** SSH/GPG keys
 :PROPERTIES:
 :HASH:     dbb0127da65e33d98ffe2017f496efa3
