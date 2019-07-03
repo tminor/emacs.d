@@ -75,6 +75,7 @@ them for fear of them disappearing!
   - [[#font][Font]]
   - [[#search-modes][Search modes]]
   - [[#emacswiki][EmacsWiki]]
+  - [[#alerts][Alerts]]
   - [[#defun-for-repeat-last-interactive-command][=defun= for repeat last interactive command]]
   - [[#undo-propose][undo-propose]]
 - [[#prog-mode][Prog-mode]]
@@ -1301,6 +1302,27 @@ Functions to manipulate colors, including RGB hex strings.
 #+begin_src emacs-lisp
   (use-package hexrgb
     :straight (:type git :host github :repo "emacsmirror/hexrgb"))
+#+end_src
+
+** Alerts
+:PROPERTIES:
+:HASH:     46b518ecc6d75d4df45c6032de4a7840
+:MODIFIED: [2019-07-03 Wed 02:42]
+:END:
+
+#+begin_src emacs-lisp
+  (add-hook 'before-make-frame-hook
+            (lambda () (unless (or (tm/pgrep "dunst")
+                                   (member "*dunst*"
+                                           (mapcar #'buffer-name (buffer-list))))
+                         (when window-system
+                           (start-process "dunst" "*dunst*" "dunst")))))
+  (add-hook 'delete-frame-hook
+            (lambda () (unless (or (tm/pgrep "dunst")
+                                   (member "*dunst*"
+                                           (mapcar #'buffer-name (buffer-list))))
+                         (when window-system
+                           (start-process "dunst" "*dunst*" "dunst")))))
 #+end_src
 
 ** TODO =defun= for repeat last interactive command              :moderate:
