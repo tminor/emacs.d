@@ -959,8 +959,8 @@ of macros in Emacs Lisp source code.
 
 ** Complete any mode
 :PROPERTIES:
-:HASH:     14e4d6fdfb4ea0e5aed932291e100121
-:MODIFIED: 2019-06-28 16:47:52
+:HASH:     b4700351353a55ee4d33115f836b7a4b
+:MODIFIED: [2019-07-03 Wed 01:02]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -971,10 +971,20 @@ General completion mechanism:
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :demand t
+    :preface
+    (setq company-idle-delay 0.02)
+    (defvar-local company-fci-mode-on-p nil)
+    (defun company-turn-off-fci (&rest ignore)
+      (when (boundp 'fci-mode)
+        (setq company-fci-mode-on-p fci-mode)
+        (when fci-mode (fci-mode -1))))
+    (defun company-maybe-turn-on-fci (&rest ignore)
+      (when company-fci-mode-on-p (fci-mode 1)))
     :hook
     (prog-mode . company-mode)
-    :preface
-    (setq company-idle-delay 0.02))
+    (company-completion-started-hook . compay-turn-off-fci)
+    (company-completion-finished-hook . company-maybe-turn-on-fci)
+    (company-completion-cancelled-hook . company-maybe-turn-on-fci))
 #+END_SRC
 
 *** Python
