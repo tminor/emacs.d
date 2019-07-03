@@ -2460,12 +2460,44 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 #+END_SRC
 *** TODO Facility for easily adding a property with a timestamp
 :PROPERTIES:
-:HASH:     961096f4f295a636890be5d580880e81
-:MODIFIED: [2019-06-30 Sun 11:07]
+:HASH:     db8f4d9d769a995523edd6577d0f0556
+:MODIFIED: [2019-06-30 Sun 21:12]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-28 Fri 17:26]
 :END:
+
+*** TODO [[https://github.com/spegoraro/org-alert][org-alert]]
+:PROPERTIES:
+:HASH:     e242d036ef6e54f2b8d4d77b32cdb6db
+:MODIFIED: [2019-07-01 Mon 09:25]
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-06-30 Sun 20:31]
+:END:
+
+#+begin_quote
+Provides notifications for scheduled or deadlined agenda entries.
+#+end_quote
+
+*** TODO Ignore FOCUS property in agenda                        :moderate:
+:PROPERTIES:
+:HASH:     d17c71668f4cbd362cad2ebe2c8310d5
+:MODIFIED: [2019-07-03 Wed 00:05]
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-07-01 Mon 10:49]
+:END:
+
+*** TODO Add mixed (home/work) agenda view                      :moderate:
+:PROPERTIES:
+:HASH:     16c0de67c671a7e899feab1a927fd2fc
+:MODIFIED: [2019-07-03 Wed 00:05]
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-07-01 Mon 10:52]
+:END:
+
 ** Org-capture
 :PROPERTIES:
 :HASH:     601b1d12b653c8928bc99dc44281c235
