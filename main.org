@@ -185,8 +185,8 @@ Add non-package provided Elisp to Emacs's =load-path=:
 
 ** Elisp
 :PROPERTIES:
-:HASH:     3ad9dc346355d4076623d1fabda317b4
-:MODIFIED: 2019-06-20 10:14:25
+:HASH:     df9560ab77ed86128b91fa1025602cb6
+:MODIFIED: [2019-07-03 Wed 02:36]
 :END:
 
 Simple pgrep using only Emacs Lisp functions:
@@ -194,9 +194,9 @@ Simple pgrep using only Emacs Lisp functions:
 #+BEGIN_SRC emacs-lisp
   (defun tm/pgrep (string)
     "Search process list for any process name matching STRING."
-
     (interactive "sProcess name: ")
-    (let (pid-list)
+    (let ((pid-list)
+          (proc-match))
       ;; Gets a list of PIDs and constructs a list of lists containing
       ;; attribute alists for each process.
       (dolist (pid (list-system-processes) pid-list)
@@ -205,7 +205,7 @@ Simple pgrep using only Emacs Lisp functions:
       (dolist (proc pid-list)
         (if (string-match-p (regexp-quote string)
                             (cdr (assoc-string 'args proc)))
-            (message (cdr (assoc 'args proc)))
+            (return (cdr (assoc 'args proc)))
           nil))))
 #+END_SRC
 
