@@ -2303,8 +2303,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     77b3f2816c3b4a46be6241bda01eb129
-:MODIFIED: 2019-06-28 16:54:37
+:HASH:     fe4a764b15ad7022b1e1daeec832fab3
+:MODIFIED: [2019-06-30 Sun 21:12]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2324,6 +2324,23 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (evil-org-agenda-set-keys)
 
     :config
+    ;; https://emacs.stackexchange.com/a/26369
+    (defun tm/org-cmp-date-property (prop)
+      "Compare two `org-mode' agenda entries, `A' and `B', by some date property.
+
+  If a is before b, return -1. If a is after b, return 1. If they
+  are equal return t."
+      (lexical-let ((prop prop))
+        #'(lambda (a b)
+            (let* ((a-pos (get-text-property 0 'org-marker a))
+                   (b-pos (get-text-property 0 'org-marker b))
+                   (a-date (or (org-entry-get a-pos prop)
+                               (format "<%s>" (org-read-date t nil "now"))))
+                   (b-date (or (org-entry-get b-pos prop)
+                               (format "<%s>" (org-read-date t nil "now"))))
+                   (cmp (compare-strings a-date nil nil b-date nil nil)))
+              (if (eq cmp t) nil (signum cmp))))))
+
     ;; calendar.org has gotten very large and I received an error
     ;; indicating this variable should be increased
     (setq undo-outer-limit 25170000)
@@ -2408,6 +2425,9 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                 (org-agenda-sorting-strategy '(effort-down))
                 (org-journal-dir "~/org/work/journal/")
                 (org-agenda-tag-filter-preset '("-FUTURE")))))))))
+                (org-agenda-cmp-user-defined (tm/org-cmp-date-property
+                                              "MODIFIED"))
+                (org-agenda-sorting-strategy '(user-defined-down)))))))))
 #+END_SRC
 
 **** TODO Remap =org-promote= and =org-demote= in insert mode      :easy:
