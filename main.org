@@ -16,10 +16,10 @@ Some conventions:
     =describe-fuction= and the like to find
     functions/variables/etc. I've added over time
 
-** TODO Links to interesting configs                                 :easy:
+** Links to interesting configs
 :PROPERTIES:
-:HASH:     809b8a3450f700f709fa55941f03bbed
-:MODIFIED: [2019-07-01 Mon 09:54]
+:HASH:     a7c158fe4f1a5dafdd51c1a14f4f9a48
+:MODIFIED: [2019-07-03 Wed 00:55]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-06-27 Thu 21:50]
