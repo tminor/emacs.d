@@ -995,8 +995,8 @@ Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
 
 *** [[https://github.com/Yevgnen/ivy-rich/blob/master/README.org][=ivy-rich=]]
 :PROPERTIES:
-:HASH:     789c2cdebdf321c8e23b2cd14fcde827
-:MODIFIED: 2019-06-29 11:34:46
+:HASH:     6afa841c8556133add34e948c3d7ff80
+:MODIFIED: [2019-07-03 Wed 01:19]
 :END:
 
 Adds configurable output to =ivy= and =counsel= commands.
@@ -1015,7 +1015,7 @@ Adds configurable output to =ivy= and =counsel= commands.
     :config
     (setcdr (assq t ivy-format-functions-alist)
             #'ivy-format-function-line)
-    (setq ivy-rich--display-transformers-list
+    (setq ivy-rich-display-transformers-list
           '(ivy-switch-buffer
             (:columns
              ((ivy-rich-switch-buffer-icon :width 2)
