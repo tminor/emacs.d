@@ -1006,16 +1006,6 @@ virtualenv=) and run =M-x jedi:install-server=.
     (defun tm/python-mode-hook ()
       (add-to-list 'company-backends 'company-jedi)))
 #+END_SRC
-*** TODO [[https://github.com/company-mode/company-mode/issues/180][=company=/=fci-mode= fix]]                                   :easy:
-:PROPERTIES:
-:HASH:     1a12de9473f4c2ac7ed2de8fbde5dbe1
-:MODIFIED: 2019-06-28 16:48:11
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-06-27 Thu 21:30]
-:END:
-
-- Fix for fci-mode causing company popup distortion
 ** Miscellany
 :PROPERTIES:
 :HASH:     7f6e06b93f036f5a5456201d1476c5bf
