@@ -18,17 +18,41 @@ Some conventions:
 
 ** TODO Links to interesting configs                                 :easy:
 :PROPERTIES:
-:HASH:     7c7b2cb602ad250d7f814bd1675fff36
-:MODIFIED: 2019-06-28 16:37:22
+:HASH:     809b8a3450f700f709fa55941f03bbed
+:MODIFIED: [2019-07-01 Mon 09:54]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-06-27 Thu 21:50]
 :END:
 
+This section contains links to Emacs configurations that I find
+interesting (and that I've probably borrowed from). I've also cloned
+them for fear of them disappearing!
+
+*** [[https://github.com/terlar/emacs.d][terlar/emacs.d]]
+:PROPERTIES:
+:HASH:     699823767c8fb5636efbbf23be897256
+:MODIFIED: [2019-07-01 Mon 10:04]
+:END:
+
+*** [[https://github.com/sk8ingdom/.emacs.d][sk8ingdom/.emacs.d]]
+:PROPERTIES:
+:HASH:     010c7e3c9a227ed644b9dcf863455301
+:MODIFIED: [2019-07-01 Mon 10:06]
+:END:
+
+*** [[https://github.com/purcell/emacs.d][purcell/emacs.d]]
+:PROPERTIES:
+:HASH:     1441d3ef6f539dc0ade0f61c5da34c80
+:MODIFIED: [2019-07-01 Mon 10:06]
+:END:
+
+
+
 ** Table of Contents                                                                                                                                                                                                          :TOC:
 :PROPERTIES:
-:HASH:     546d3b7f136d55798a810b5525e61bef
-:MODIFIED: 2019-06-28 16:28:10
+:HASH:     ff42c7a3e59e3f87c9977a731690b225
+:MODIFIED: [2019-06-30 Sun 20:51]
 :END:
 
 - [[#intro][Intro]]
