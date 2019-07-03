@@ -1758,8 +1758,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     218b4137f0db48efad818eb4776c2664
-:MODIFIED: [2019-06-30 Sun 11:30]
+:HASH:     71690f18806d3e7e4c6b86a3d2c19209
+:MODIFIED: [2019-06-30 Sun 20:51]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1772,6 +1772,11 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
                                         (mapcar #'buffer-name
                                                 (buffer-list)))
                         (kill-buffer "main.org"))))
+
+    (evil-insert-state-exit . (lambda ()
+                                (if (string= major-mode
+                                             "org-mode")
+                                    (save-buffer))))
     :general
     (:keymaps 'org-mode-map
      "<S-iso-lefttab>" 'org-global-cycle
