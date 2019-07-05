@@ -1262,8 +1262,8 @@ Deadgrep is the fast, beautiful text search that your Emacs deserves.
 
 *** [[https://www.emacswiki.org/emacs/DiredPlus][Dired+]]
 :PROPERTIES:
-:HASH:     01674a5f97edd250f32553898be29d70
-:MODIFIED: 2019-06-29 11:34:46
+:HASH:     fb04f20c5f2c0a0ea12cde599dcacada
+:MODIFIED: [2019-07-03 Wed 14:24]
 :END:
 
 #+begin_quote
@@ -1272,10 +1272,10 @@ dired.el, dired-aux.el, and dired-x.el.-plus
 #+end_quote
 
 #+begin_src emacs-lisp
-  ;; (use-package dired+
-  ;;   :init
-  ;;   (require 'dired)
-  ;;   :straight (:type git :host github :repo "emacsmirror/dired-plus"))
+  (use-package dired+
+    :init
+    (require 'dired)
+    :straight (:type git :host github :repo "emacsmirror/dired-plus"))
 #+end_src
 
 *** [[https://www.emacswiki.org/emacs/HideOrIgnoreComments][=hide-comnt=]]
@@ -3201,6 +3201,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
            ;;   :priority "C"))
           nil))
 #+END_SRC
+
 *** TODO Facility for easily adding a property with a timestamp
 :PROPERTIES:
 :HASH:     db8f4d9d769a995523edd6577d0f0556
@@ -3210,12 +3211,14 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 - State "TODO"    from ""        [2019-06-28 Fri 17:26]
 :END:
 
-*** TODO [[https://github.com/spegoraro/org-alert][org-alert]]
+*** WAIT [[https://github.com/spegoraro/org-alert][org-alert]]                                                  :easy:
 :PROPERTIES:
-:HASH:     e242d036ef6e54f2b8d4d77b32cdb6db
-:MODIFIED: [2019-07-01 Mon 09:25]
+:HASH:     861f919c0092950bef5e452b3852c0cd
+:MODIFIED: [2019-07-05 Fri 15:31]
 :END:
 :LOGBOOK:
+- State "WAIT"       from "TODO"       [2019-07-05 Fri 15:30] \\
+  Waiting on function for dunst auto start/stop
 - State "TODO"    from ""        [2019-06-30 Sun 20:31]
 :END:
 
@@ -3225,8 +3228,8 @@ Provides notifications for scheduled or deadlined agenda entries.
 
 *** TODO Ignore FOCUS property in agenda                        :moderate:
 :PROPERTIES:
-:HASH:     d17c71668f4cbd362cad2ebe2c8310d5
-:MODIFIED: [2019-07-03 Wed 00:05]
+:HASH:     26abe3ef9d8361c60e7c5965166fceb5
+:MODIFIED: [2019-07-05 Fri 15:31]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-07-01 Mon 10:49]
@@ -3234,11 +3237,20 @@ Provides notifications for scheduled or deadlined agenda entries.
 
 *** TODO Add mixed (home/work) agenda view                      :moderate:
 :PROPERTIES:
-:HASH:     16c0de67c671a7e899feab1a927fd2fc
-:MODIFIED: [2019-07-03 Wed 00:05]
+:HASH:     429b5804ed9b629330fb7e3c4dfa50ca
+:MODIFIED: [2019-07-05 Fri 15:31]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-07-01 Mon 10:52]
+:END:
+
+*** TODO Add [[https://emacs.stackexchange.com/a/17357][org-agenda-hide-tags-regexp]]                            :easy:
+:PROPERTIES:
+:HASH:     221f7c55c34a227712a6eb0cf3fc1227
+:MODIFIED: [2019-07-05 Fri 15:31]
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-07-03 Wed 15:22]
 :END:
 
 ** Org-capture
@@ -3438,6 +3450,11 @@ Provides notifications for scheduled or deadlined agenda entries.
 This is an extension for Google Chrome (tm) and Firefox (tm) which
 adds a "Capture" button.
 #+end_quote
+
+*** TODO Prompt for tag with config org-capture template
+:LOGBOOK:
+- State "TODO"    from ""        [2019-07-03 Wed 15:23]
+:END:
 
 ** Blog Publishing
 :PROPERTIES:
