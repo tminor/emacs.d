@@ -3038,8 +3038,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     fe4a764b15ad7022b1e1daeec832fab3
-:MODIFIED: [2019-06-30 Sun 21:12]
+:HASH:     3b780ebb12524b3f99e5f1d4b70498a5
+:MODIFIED: [2019-07-05 Fri 16:16]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3150,19 +3150,27 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                                        ((daily today remove-match)
                                         (300 600 900 1200 1500 1800 2100)
                                         "......" "----------------")))
-                (org-agenda-span 'day)
-                (org-journal-dir "~/org/work/journal/")))
-              (tags-todo
-               "+WORK"
+                (org-agenda-span 'day)))
+              (todo
+               "TODO"
                ((org-agenda-prefix-format
                  ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
                 (org-agenda-sorting-strategy '(effort-down))
-                (org-journal-dir "~/org/work/journal/")
-                (org-agenda-tag-filter-preset '("-FUTURE"))
                 (org-agenda-cmp-user-defined (tm/org-cmp-date-property
                                               "MODIFIED"))
-                (org-agenda-sorting-strategy '(user-defined-down)))))))))
+                (org-agenda-sorting-strategy '(user-defined-down))
+                (org-super-agenda-groups
+                 '((:name "Refileable items."
+                    :tag "REFILE"
+                    :order 2)
+                   (:name "Attic: Tasks for the Future."
+                    :tag "FUTURE"
+                    :order 1)
+                   (:name "Unscheduled Tasks."
+                    :todo "TODO"
+                    :discard (:scheduled today :tag "HOME")
+                    :order 0))))))))))
 #+END_SRC
 
 **** TODO Remap =org-promote= and =org-demote= in insert mode      :easy:
@@ -3175,8 +3183,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 :END:
 *** Org-super-agenda
 :PROPERTIES:
-:HASH:     3193aeb0755e285ee7651aaa528044ab
-:MODIFIED: [2019-06-30 Sun 11:07]
+:HASH:     e4267e5347c2a1f81767258d03a6edf9
+:MODIFIED: [2019-07-05 Fri 15:31]
 :END:
 
 #+BEGIN_SRC emacs-lisp
