@@ -3162,13 +3162,14 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                 (org-super-agenda-groups
                  '((:name "Refileable items."
                     :tag "REFILE"
+                    :discard (:scheduled t :tag "HOME")
                     :order 2)
                    (:name "Attic: Tasks for the Future."
                     :tag "FUTURE"
                     :order 1)
                    (:name "Unscheduled Tasks."
                     :todo "TODO"
-                    :discard (:scheduled today :tag "HOME")
+                    :discard (:tag "HOME")
                     :order 0))))))))))
 #+END_SRC
 
