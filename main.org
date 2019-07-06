@@ -1272,10 +1272,10 @@ dired.el, dired-aux.el, and dired-x.el.-plus
 #+end_quote
 
 #+begin_src emacs-lisp
-  (use-package dired+
-    :init
-    (require 'dired)
-    :straight (:type git :host github :repo "emacsmirror/dired-plus"))
+  ;(use-package dired+
+  ;  :init
+  ;  (require 'dired)
+  ;  :straight (:type git :host github :repo "emacsmirror/dired-plus"))
 #+end_src
 
 *** [[https://www.emacswiki.org/emacs/HideOrIgnoreComments][=hide-comnt=]]
