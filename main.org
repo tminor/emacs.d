@@ -3038,8 +3038,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     3b780ebb12524b3f99e5f1d4b70498a5
-:MODIFIED: [2019-07-05 Fri 16:16]
+:HASH:     347b2977d0620120c76d2b7321c7e7a6
+:MODIFIED: [2019-07-06 Sat 09:02]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3047,12 +3047,11 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     :after (org)
     :straight nil
     :general
-    (org-agenda-mode-map
-     :keymaps 'override
-     "j" 'org-agenda-next-item
-     "k" 'org-agenda-previous-item
+    (:keymaps '(org-agenda-mode-map)
+     :states '(normal motion)
      "J" 'tm/org-agenda-next-header
-     "K" 'tm/org-agenda-previous-header)
+     "K" 'tm/org-agenda-previous-header
+     "<backtab>" 'origami-toggle-node)
 
     :init
     (require 'evil-org-agenda)
@@ -3154,7 +3153,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
               (todo
                "TODO"
                ((org-agenda-prefix-format
-                 ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
+                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
                 (org-agenda-sorting-strategy '(effort-down))
                 (org-agenda-cmp-user-defined (tm/org-cmp-date-property
