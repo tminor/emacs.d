@@ -2493,8 +2493,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     71690f18806d3e7e4c6b86a3d2c19209
-:MODIFIED: [2019-06-30 Sun 20:51]
+:HASH:     cfee2637dd3c1500e4967f53dd601aa9
+:MODIFIED: [2019-07-06 Sat 09:08]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2663,7 +2663,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;;
     (setq org-modules
           '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
-                     org-irc org-mhe org-rmail org-w3m))
+                     org-irc org-mhe org-rmail org-w3m org-habit-plus))
 
     ;; Faces
 
@@ -3038,8 +3038,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     347b2977d0620120c76d2b7321c7e7a6
-:MODIFIED: [2019-07-06 Sat 09:02]
+:HASH:     e31daac67eb4a618a50c6ea4a126e884
+:MODIFIED: [2019-07-06 Sat 18:10]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3105,16 +3105,16 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
     ;; Set up `org-habit'
     (require 'org-habit)
-    (setq org-habit-graph-column 80
-          org-habit-show-habits-only-for-today t)
+    (setq org-habit-graph-column 45
+          org-habit-show-habits-only-for-today nil)
 
     ;; ﹌
     (setq org-agenda-block-separator 65100)
 
     ;; ✔
     (setq org-habit-completed-glyph 10004)
-    ;; 🙪
-    (setq org-habit-today-glyph 128618)
+    ;; × 𝚇
+    (setq org-habit-today-glyph 120455)
 
     (setq org-agenda-current-time-string
           (format "⁕⁕⁕⁕  %s  ⁕⁕⁕⁕"
@@ -3170,36 +3170,97 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                    (:name "Unscheduled Tasks."
                     :todo "TODO"
                     :discard (:tag "HOME")
+                    :order 0)))))))
+            ("h" . "Home agenda views")
+            ("hw" "Weekly home agenda"
+             ((agenda
+               ""
+               ((org-agenda-todo-ignore-scheduled 'past)
+                (org-agenda-time-grid (quote
+                                       ((daily today remove-match)
+                                        (300 600 900 1200 1500 1800 2100)
+                                        "......" "----------------")))
+                (org-agenda-span 'week)
+                (org-journal-dir "~/org/work/journal/")))
+              (todo
+               "TODO"
+               ((org-agenda-prefix-format
+                 ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
+                (org-agenda-todo-ignore-scheduled t)
+                (org-agenda-sorting-strategy '(effort-down))
+                (org-agenda-tag-filter-preset '("-FUTURE"))))))
+            ("ht" "Today's home agenda"
+             ((agenda
+               ""
+               ((org-agenda-todo-ignore-scheduled 'past)
+                (org-agenda-time-grid (quote
+                                       ((daily today remove-match)
+                                        (300 600 900 1200 1500 1800 2100)
+                                        "......" "----------------")))
+                (org-agenda-span 'day)
+                (org-agenda-hide-tags-regexp (rx (or "HOME" "HABIT")))))
+              (todo
+               "TODO"
+               ((org-agenda-prefix-format
+                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
+                (org-agenda-sorting-strategy '(effort-down))
+                (org-agenda-cmp-user-defined (tm/org-cmp-date-property
+                                              "MODIFIED"))
+                (org-agenda-sorting-strategy '(user-defined-down))
+                (org-agenda-hide-tags-regexp (rx
+                                              (zero-or-more anything)))
+                (org-super-agenda-groups
+                 '((:name "Refileable items."
+                    :tag "REFILE"
+                    :discard (:scheduled t :tag "WORK")
+                    :order 2)
+                   (:name "Attic: Tasks for the Future."
+                    :tag "FUTURE"
+                    :order 1)
+                   (:name "Unscheduled Tasks."
+                    :todo "TODO"
                     :order 0))))))))))
 #+END_SRC
 
 **** TODO Remap =org-promote= and =org-demote= in insert mode      :easy:
 :PROPERTIES:
-:HASH:     1572bc7daeab79feb261980d30633ce3
-:MODIFIED: 2019-06-28 16:54:37
+:HASH:     9eacc618226a551a40309b276dd33f9a
+:MODIFIED: [2019-07-05 Fri 16:32]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-28 Fri 11:09]
 :END:
+
+*** [[https://github.com/oddious/org-habit-plus][=org-habit-plus=]]
+:PROPERTIES:
+:HASH:     ad83a57910bcfefd8655c7c3f4d2ad31
+:MODIFIED: [2019-07-06 Sat 09:05]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package org-habit-plus
+    :straight
+    (:type git :host github :repo "oddious/org-habit-plus"))
+#+end_src
+
 *** Org-super-agenda
 :PROPERTIES:
-:HASH:     e4267e5347c2a1f81767258d03a6edf9
-:MODIFIED: [2019-07-05 Fri 15:31]
+:HASH:     5331ccd811c69036ae02ae4f725fefe8
+:MODIFIED: [2019-07-05 Fri 21:11]
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-super-agenda
-    :straight t
     :config
+    (evil-set-initial-state 'org-super-agenda-mode 'motion)
     (org-super-agenda-mode)
-    (setq org-super-agenda-groups
-           ;; '((:name "High Priority"
-           ;;   :priority "A")
-           ;;  (:name "Medium Priority"
-           ;;   :priority "B")
-           ;;  (:name "Low priority"
-           ;;   :priority "C"))
-          nil))
+    (setq org-super-agenda-header-map
+          (progn (copy-keymap org-agenda-mode-map)
+                 (evil-org-agenda-set-keys)))
+    (use-package origami
+      :hook
+      (org-agenda-mode . origami-mode))
+    (require 'origami))
 #+END_SRC
 
 *** TODO Facility for easily adding a property with a timestamp
