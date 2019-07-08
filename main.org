@@ -3040,8 +3040,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     b91bee8ffdce8a6cb8ff9c853b632288
-:MODIFIED: [2019-07-08 Mon 11:08]
+:HASH:     5e510da31558daba843e5f0524c7f30a
+:MODIFIED: [2019-07-08 Mon 11:40]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3140,14 +3140,18 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                                        ((daily today remove-match)
                                         (300 600 900 1200 1500 1800 2100)
                                         "......" "----------------")))
-                (org-agenda-span 'week)))
+                (org-agenda-span 'week)
+                (org-agenda-hide-tags-regexp
+                 (rx (zero-or-more anything)))))
               (todo
                "TODO"
                ((org-agenda-prefix-format
                  ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
                 (org-agenda-sorting-strategy '(effort-down))
-                (org-agenda-tag-filter-preset '("-FUTURE"))))))
+                (org-agenda-tag-filter-preset '("-FUTURE"))
+                (org-agenda-hide-tags-regexp
+                 (rx (zero-or-more anything)))))))
             ("wt" "Today's work agenda"
              ((agenda
                ""
@@ -3159,7 +3163,9 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                 (org-agenda-span 'day)
                 (org-super-agenda-groups
                  '((:name "Trash"
-                    :discard (:tag "HOME"))))))
+                    :discard (:tag "HOME"))))
+                (org-agenda-hide-tags-regexp
+                 (rx (zero-or-more anything)))))
               (todo
                "TODO"
                ((org-agenda-prefix-format
@@ -3169,6 +3175,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                 (org-agenda-cmp-user-defined (tm/org-cmp-date-property
                                               "MODIFIED"))
                 (org-agenda-sorting-strategy '(user-defined-down))
+                (org-agenda-hide-tags-regexp
+                 (rx (zero-or-more anything)))
                 (org-super-agenda-groups
                  '((:name "Refileable items."
                     :tag "REFILE"
@@ -3196,6 +3204,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                  ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
                 (org-agenda-sorting-strategy '(effort-down))
+                (org-agenda-hide-tags-regexp
+                 (rx (zero-or-more anything)))
                 (org-agenda-tag-filter-preset '("-FUTURE"))))))
             ("ht" "Today's home agenda"
              ((agenda
