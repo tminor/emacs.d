@@ -2493,8 +2493,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     cfee2637dd3c1500e4967f53dd601aa9
-:MODIFIED: [2019-07-06 Sat 09:08]
+:HASH:     7cb4541c18f9ba42ce642407d151552f
+:MODIFIED: [2019-07-07 Sun 12:53]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2663,7 +2663,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;;
     (setq org-modules
           '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
-                     org-irc org-mhe org-rmail org-w3m org-habit-plus))
+                     org-irc org-mhe org-rmail org-w3m org-habit-plus
+                     org-id))
 
     ;; Faces
 
