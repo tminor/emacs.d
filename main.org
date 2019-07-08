@@ -3084,7 +3084,6 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     ;; Hooks
     ;;
     ;; Place tags flush with right side of window
-    (add-hook 'window-configuration-change-hook 'tm/place-agenda-tags)
     (add-hook 'find-file-hook #'tm/enable-minor-mode-based-on-extension)
 
     ;; Activate `auto-revert-mode' for calendar.org
