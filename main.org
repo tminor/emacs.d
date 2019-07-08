@@ -3155,7 +3155,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                                        ((daily today remove-match)
                                         (300 600 900 1200 1500 1800 2100)
                                         "......" "----------------")))
-                (org-agenda-span 'day)))
+                (org-agenda-span 'day)
+                (org-super-agenda-groups
+                 '((:name "Trash"
+                    :discard (:tag "HOME"))))))
               (todo
                "TODO"
                ((org-agenda-prefix-format
@@ -3175,7 +3178,6 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                     :order 1)
                    (:name "Unscheduled Tasks."
                     :todo "TODO"
-                    :discard (:tag "HOME")
                     :order 0)))))))
             ("h" . "Home agenda views")
             ("hw" "Weekly home agenda"
