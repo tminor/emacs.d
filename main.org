@@ -3039,8 +3039,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     e31daac67eb4a618a50c6ea4a126e884
-:MODIFIED: [2019-07-06 Sat 18:10]
+:HASH:     b91bee8ffdce8a6cb8ff9c853b632288
+:MODIFIED: [2019-07-08 Mon 11:08]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3052,6 +3052,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
      :states '(normal motion)
      "J" 'tm/org-agenda-next-header
      "K" 'tm/org-agenda-previous-header
+     "gH" 'org-habit-toggle-display-in-agenda
      "<backtab>" 'origami-toggle-node)
 
     :init
