@@ -3205,7 +3205,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                                         (300 600 900 1200 1500 1800 2100)
                                         "......" "----------------")))
                 (org-agenda-span 'day)
-                (org-agenda-hide-tags-regexp (rx (or "HOME" "HABIT")))))
+                (org-agenda-hide-tags-regexp
+                 (rx (zero-or-more anything)))))
               (todo
                "TODO"
                ((org-agenda-prefix-format
