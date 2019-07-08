@@ -3139,15 +3139,13 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                                        ((daily today remove-match)
                                         (300 600 900 1200 1500 1800 2100)
                                         "......" "----------------")))
-                (org-agenda-span 'week)
-                (org-journal-dir "~/org/work/journal/")))
+                (org-agenda-span 'week)))
               (todo
                "TODO"
                ((org-agenda-prefix-format
                  ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
                 (org-agenda-sorting-strategy '(effort-down))
-                (org-journal-dir "~/org/work/journal/")
                 (org-agenda-tag-filter-preset '("-FUTURE"))))))
             ("wt" "Today's work agenda"
              ((agenda
@@ -3188,8 +3186,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                                        ((daily today remove-match)
                                         (300 600 900 1200 1500 1800 2100)
                                         "......" "----------------")))
-                (org-agenda-span 'week)
-                (org-journal-dir "~/org/work/journal/")))
+                (org-agenda-span 'week)))
               (todo
                "TODO"
                ((org-agenda-prefix-format
