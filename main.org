@@ -3098,7 +3098,9 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (setq org-agenda-files
           `(,(concat org-base-directory "mobile-capture.org")
             ,(concat org-base-directory "capture.org")
-            ,(concat org-work-directory "calendar/calendar.org")
+            ,(concat org-base-directory "calendar/workcal.org")
+            ,(concat org-base-directory "calendar/homecal.org")
+            ,(concat org-base-directory "calendar/oncallcal.org")
             ,(concat org-base-directory "notes.org")
             ,(concat org-base-directory "todo.org")))
 
