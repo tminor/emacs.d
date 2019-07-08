@@ -3192,7 +3192,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
               (todo
                "TODO"
                ((org-agenda-prefix-format
-                 ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
+                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
                 (org-agenda-sorting-strategy '(effort-down))
                 (org-agenda-tag-filter-preset '("-FUTURE"))))))
