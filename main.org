@@ -3040,8 +3040,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     5e510da31558daba843e5f0524c7f30a
-:MODIFIED: [2019-07-08 Mon 11:40]
+:HASH:     c78a5c5c2e9d34d58f0d37f930b321ef
+:MODIFIED: [2019-07-09 Tue 11:13]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3094,6 +3094,9 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                  '("workcal.org" . auto-revert-mode))
     (add-to-list 'tm/auto-minor-mode-alist
                  '("oncallcal.org" . auto-revert-mode))
+    (dolist (file org-agenda-files nil)
+      (add-to-list 'tm/auto-minor-mode-alist
+                   `(,file . auto-revert-mode)))
 
     ;; Files that `org-agenda' uses to populate its commands/views
     (setq org-agenda-files
