@@ -2238,8 +2238,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** Notmuch
 :PROPERTIES:
-:HASH:     38a40d083af8d6a167c7d26351cd763c
-:MODIFIED: 2019-06-28 16:53:23
+:HASH:     83e1a0da46d6997e74f88278194fda60
+:MODIFIED: [2019-07-15 Mon 09:22]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2318,7 +2318,9 @@ Reminders a la Gmail about sent mail that hasn't received a response.
             (:name "service now"
              :query "tag:servicenow and date:3days..today and not subject:\"/(Resolved|Closed)/\""
              :count-query "tag:servicenow and date:3days..today and not subject:\"/(Resolved|Closed)/\" and tag:unread")
-            (:name "ssl" :query "tag:ssladmin and date:6days..today")
+            (:name "ssl"
+             :query "tag:ssladmin and date:6days..today"
+             :count-query "tag:ssladmin and date:6days..today and tag:unread")
             (:name "cron daemon"
              :query "date:4days..today and from:\"(Cron Daemon)\""
              :count-query "date:4days..today and from:\"(Cron Daemon)\" and tag:unread")
