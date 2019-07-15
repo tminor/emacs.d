@@ -2796,8 +2796,8 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 *** Org-recent-headers
 :PROPERTIES:
-:HASH:     bebf11be533555f421531a220b94c8bd
-:MODIFIED: 2019-06-28 13:28:13
+:HASH:     5dadc079c21fb8abb5409e2ec21bf24d
+:MODIFIED: [2019-07-09 Tue 13:21]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2810,6 +2810,21 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
     :config
     (org-recent-headings-mode))
 #+END_SRC
+
+*** [[https://github.com/marcinkoziej/org-pomodoro][=org-pomodoro=]]
+:PROPERTIES:
+:HASH:     cd94cc9be02b6561bb99f29774467e3b
+:MODIFIED: [2019-07-10 Wed 12:08]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package org-pomodoro
+    :general
+    (:keymaps 'org-agenda-mode-map
+     :states '(normal motion)
+     "gp" 'org-pomodoro))
+#+end_src
+
 *** TODO Add custom org link for emails                         :moderate:
 :PROPERTIES:
 :HASH:     4fc5a070bcbc73244a67032c73a4c062
