@@ -3360,6 +3360,15 @@ Provides notifications for scheduled or deadlined agenda entries.
 - State "TODO"    from ""        [2019-07-03 Wed 15:22]
 :END:
 
+*** TODO Add block for done-state tasks to archive              :moderate:
+:PROPERTIES:
+:HASH:     fa6d2b8edcee880b3a7a533f80a2802a
+:MODIFIED: [2019-07-10 Wed 12:08]
+:END:
+:LOGBOOK:
+- State "TODO"    from ""        [2019-07-10 Wed 12:08]
+:END:
+
 ** Org-capture
 :PROPERTIES:
 :HASH:     601b1d12b653c8928bc99dc44281c235
