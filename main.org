@@ -2113,8 +2113,8 @@ Returns whatever the action returns."
 
 *** Alerts
 :PROPERTIES:
-:HASH:     15987ec94feb521ed21dd33ac25e266b
-:MODIFIED: 2019-06-28 16:52:18
+:HASH:     b9225ea113dcdd06b45ef6fd8acaee03
+:MODIFIED: [2019-07-10 Wed 12:08]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-11 Mon 16:42]
@@ -2170,12 +2170,19 @@ Returns whatever the action returns."
                            "--output=messages"
                            "tag:inbox"
                            "and tag:unread"))))
+      (setq unread-string (propertize
+                           (format "%s %s"
+                                   (all-the-icons-material
+                                    "mail"
+                                    :face 'all-the-icons-cyan-alt)
+                                   (length unread-mail))
+                           'font-lock-face '(:foreground "#61dafb")))
       (if (> (length unread-mail) 0)
-          (setq global-mode-string
-                (propertize
-                 (format "%s %s"
-                         (all-the-icons-material "mail" :face 'all-the-icons-cyan-alt)
-                         (length unread-mail)) 'font-lock-face '(:foreground "#61dafb")))
+          (progn
+            (unless global-mode-string (setq global-mode-string '("")))
+            (unless (memq unread-string global-mode-string)
+              (setq global-mode-string (append global-mode-string
+                                               '(unread-string)))))
         (setq global-mode-string nil))))
 #+END_SRC
 
