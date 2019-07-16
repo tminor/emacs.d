@@ -3189,8 +3189,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                     :discard (:tag "HOME"))))
                 (org-agenda-hide-tags-regexp
                  (rx (zero-or-more anything)))))
-              (todo
-               "TODO"
+              (tags
+               "/DONE|TODO|WAIT"
                ((org-agenda-prefix-format
                  ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
@@ -3201,14 +3201,20 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                 (org-agenda-hide-tags-regexp
                  (rx (zero-or-more anything)))
                 (org-super-agenda-groups
-                 '((:name "Refileable items."
+                 '((:name "Archive DONE tasks"
+                    :todo "DONE"
+                    :order 4)
+                   (:name "WAITing tasks"
+                    :todo "WAIT"
+                    :order 3)
+                   (:name "Refileable items"
                     :tag "REFILE"
                     :discard (:scheduled t :tag "HOME")
                     :order 2)
-                   (:name "Attic: Tasks for the Future."
+                   (:name "Attic: Tasks for the Future"
                     :tag "FUTURE"
                     :order 1)
-                   (:name "Unscheduled Tasks."
+                   (:name "Unscheduled Tasks"
                     :todo "TODO"
                     :order 0)))))))
             ("h" . "Home agenda views")
