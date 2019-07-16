@@ -2186,10 +2186,6 @@ Returns whatever the action returns."
         (setq global-mode-string nil))))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'notmuch-after-tag-hook #'tm/notmuch-unread)
-#+END_SRC
-
 *** TODO Reminders for sent mail
 :PROPERTIES:
 :HASH:     ab24c782ddaadca26d2c549655a3ffea
