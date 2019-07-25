@@ -3371,6 +3371,14 @@ Provides notifications for scheduled or deadlined agenda entries.
 - State "TODO"    from ""        [2019-07-10 Wed 12:08]
 :END:
 
+*** TODO Autosave for org-mode
+:PROPERTIES:
+:HASH:     f8bf0ea4f08a8b07b494121177501bdb
+:MODIFIED: [2019-07-15 Mon 15:54]
+:END:
+
+https://stackoverflow.com/questions/8146313/emacs-auto-save-for-org-mode-only#8146502
+
 ** Org-capture
 :PROPERTIES:
 :HASH:     601b1d12b653c8928bc99dc44281c235
