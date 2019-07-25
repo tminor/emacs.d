@@ -3201,7 +3201,10 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                 (org-agenda-hide-tags-regexp
                  (rx (zero-or-more anything)))
                 (org-super-agenda-groups
-                 '((:name "Archive DONE tasks"
+                 '((:name "Trash"
+                    :discard (:tag "HOME"
+                              :file-path ,(rx "journal")))
+                   (:name "Archive DONE tasks"
                     :todo "DONE"
                     :order 4)
                    (:name "WAITing tasks"
@@ -3216,7 +3219,17 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                     :order 1)
                    (:name "Unscheduled Tasks"
                     :todo "TODO"
-                    :order 0)))))))
+                    :order 0)))))
+              (tags
+               "+REFILE"
+               ((org-agenda-prefix-format
+                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
+                (org-agenda-sorting-strategy '(effort-down))
+                (org-agenda-cmp-user-defined (tm/org-cmp-date-property
+                                              "MODIFIED"))
+                (org-agenda-sorting-strategy '(user-defined-down))
+                (org-agenda-hide-tags-regexp
+                 (rx (zero-or-more anything)))))))
             ("h" . "Home agenda views")
             ("hw" "Weekly home agenda"
              ((agenda
