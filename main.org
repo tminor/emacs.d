@@ -1975,14 +1975,14 @@ This library configures Magit and Evil to play well with each other.
 :END:
 *** Elisp
 :PROPERTIES:
-:HASH:     e93f4e70a579e1e0cc61e2310499a079
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     c6ae3224095f1fc9fbc8196733a8b0de
+:MODIFIED: [2019-08-23 Fri 09:19]
 :END:
 
 From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#functions-7][here]]:
 
 #+BEGIN_SRC emacs-lisp
-  (defun d/magit-blame-toggle ()
+  (defun tm/magit-blame-toggle ()
     "Toggle magit-blame-mode on and off interactively.
 
   Source: https://git.io/vQKub"
