@@ -3807,8 +3807,8 @@ completion from the fish shell.
 
 *** =exec-path-from-shell=
 :PROPERTIES:
-:HASH:     cbeab8cdddf69fea1a3767966becf2eb
-:MODIFIED: 2019-06-20 16:41:23
+:HASH:     39648dcaf4fe621422ff0fb0d927b1e7
+:MODIFIED: [2019-08-23 Fri 09:15]
 :END:
 
 Get environment variables from =$SHELL=.
@@ -3827,15 +3827,13 @@ Get environment variables from =$SHELL=.
     (setq exec-path-from-shell-arguments '("-l"))
     ;; https://github.com/syl20bnr/spacemacs/issues/4755
     (setq explicit-shell-file-name "/bin/bash")
-    (setq shell-file-name "bash")
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
+    (setq shell-file-name "bash"))
 #+END_SRC
 
 *** [[https://github.com/manateelazycat/aweshell][=aweshell=]]
 :PROPERTIES:
-:HASH:     52fd7ad41a98912c89c3839a2b484ce1
-:MODIFIED: 2019-06-23 19:17:06
+:HASH:     ba4e0f3f30cbdf898e944420596d506b
+:MODIFIED: [2019-08-23 Fri 09:15]
 :END:
 
 #+begin_quote
@@ -3859,7 +3857,9 @@ Various extensions to Eshell.
     :straight (:type git :host github :repo "manateelazycat/aweshell"
                :files ("*aweshell.el"))
     :init
-    (setq aweshell-valid-command-color "#3EDAD4"))
+    (setq aweshell-valid-command-color "#3EDAD4")
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
 #+end_src
 
 *** [[https://github.com/peterwvj/eshell-up][=eshell-up=]]
