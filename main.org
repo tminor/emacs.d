@@ -1802,29 +1802,10 @@ Use yasnippet. Configure it.
 :MODIFIED: 2019-06-26 13:54:04
 :END:
 
-**** =yafolding=
-:PROPERTIES:
-:HASH:     0103d0ee10d1560b3bf95ba6527e432c
-:MODIFIED: 2019-06-26 13:54:04
-:END:
-
-Code folding (based stupidly on indentation):
-
-#+BEGIN_SRC emacs-lisp
-  (use-package yafolding
-    :config
-    (add-to-list 'evil-fold-list
-                 '((yafolding-mode)
-                   :open-all yafolding-toggle-all
-                   :close-all yafolding-toggle-all
-                   :toggle yafolding-toggle-element))
-    (add-hook 'prog-mode-hook (lambda () (yafolding-mode))))
-#+END_SRC
-
 **** =hs-minor-mode=
 :PROPERTIES:
-:HASH:     41bdc46d0a5a8badd9708938d066117c
-:MODIFIED: 2019-06-26 13:54:04
+:HASH:     eefecf3053047d37b648e7223ba01be1
+:MODIFIED: [2019-08-23 Fri 09:19]
 :END:
 
 Sources:
