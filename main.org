@@ -3041,8 +3041,8 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
 *** Config
 :PROPERTIES:
-:HASH:     44afca0a224e2faa486ca14b5bbe74c5
-:MODIFIED: [2019-07-25 Thu 13:25]
+:HASH:     b5238490846474d83188a55a45beb631
+:MODIFIED: [2019-08-20 Tue 11:14]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3574,7 +3574,11 @@ This is an extension for Google Chrome (tm) and Firefox (tm) which
 adds a "Capture" button.
 #+end_quote
 
-*** TODO Prompt for tag with config org-capture template
+*** TODO Prompt for tag with org-capture Emacs config template
+:PROPERTIES:
+:HASH:     8fe275d1c7906934ff1778b6f2b5b19f
+:MODIFIED: [2019-08-23 Fri 09:20]
+:END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-07-03 Wed 15:23]
 :END:
