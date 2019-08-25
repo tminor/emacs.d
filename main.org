@@ -3183,41 +3183,6 @@ Show an indicator of the status of the last command run in Eshell.
     (eshell-mode . eshell-fringe-status-mode))
 #+end_src
 
-*** Elisp
-:PROPERTIES:
-:HASH:     764d4de2cf3b4da403ab77e77561556a
-:MODIFIED: 2019-06-23 11:58:21
-:END:
-
-A quick internet search said that Eshell doesn't have anything like
-brace expansion built in. [[https://emacs.stackexchange.com/a/9521][This]] Stack Exchange post provides a
-solution:
-
-#+BEGIN_SRC emacs-lisp
-(defun eshell-brace-expansion (str)
-  (let* ((parts (split-string str "[{}]"))
-         (prefix (car parts))
-         (body   (nth 1 parts))
-         (suffix (nth 2 parts)))
-    (mapcar (lambda (x) (concat prefix x suffix))
-            (split-string body ","))))
-#+END_SRC
-
-Used like this:
-
-#+begin_example
-ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
-#+end_example
-
-*** TODO defun for projectile cd
-:PROPERTIES:
-:HASH:     bf61a4fb647feea765e41f1cedc23281
-:MODIFIED: [2019-08-23 Fri 11:27]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-01 Mon 09:24]
-:END:
-
 ** SSH/GPG keys
 :PROPERTIES:
 :HASH:     dbb0127da65e33d98ffe2017f496efa3

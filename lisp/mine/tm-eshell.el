@@ -33,5 +33,18 @@
               (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
                     ivy-display-functions-alist)))
 
+;; Source: https://emacs.stackexchange.com/a/9521
+;;
+;; Example usage:
+;;   ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
+(defun eshell-brace-expansion (str)
+  "Treat STR as an expandable brace expression, à la Bash."
+  (let* ((parts (split-string str "[{}]"))
+         (prefix (car parts))
+         (body   (nth 1 parts))
+         (suffix (nth 2 parts)))
+    (mapcar (lambda (x) (concat prefix x suffix))
+            (split-string body ","))))
+
 (provide 'tm-eshell)
 ;;; tm-eshell.el ends here
