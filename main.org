@@ -2426,8 +2426,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** TODO Add custom org link for emails                         :moderate:
 :PROPERTIES:
-:HASH:     4fc5a070bcbc73244a67032c73a4c062
-:MODIFIED: [2019-06-30 Sun 11:30]
+:HASH:     cdd82bbceeb30e15afd7055d5ffe0de6
+:MODIFIED: [2019-08-25 Sun 10:54]
 :FOCUS:    <2019-07-01 Mon>
 :END:
 :LOGBOOK:
@@ -2435,42 +2435,15 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 :END:
 
 [[https://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html][Use Org-Mode Links for Absolutely Anything]]
+
 ** Org-journal
 :PROPERTIES:
-:HASH:     dea753dc4a3fa7d62d1dd2b651b3be53
-:MODIFIED: 2019-06-23 11:05:39
+:HASH:     e22db9504d24cc590bfda637b15ed2a1
+:MODIFIED: [2019-08-25 Sun 11:44]
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-journal
-    :straight t
-    :preface
-    (defun org-journal-work-find-location ()
-      (setq org-journal-dir "~/org/work/journal/")
-      ;; Open today's journal, but specify a non-nil prefix argument in
-      ;; order to inhibit inserting the heading; org-capture will insert
-      ;; the heading.
-      (org-journal-new-entry t)
-      ;; Position point on the journal's top-level heading so that
-      ;; org-capture will add the new entry as a child entry.
-      (goto-char (point-max))
-      (org-up-element)
-      (goto-char (org-find-exact-headline-in-buffer
-                  (org-find-top-headline
-                   (point-max)))))
-    (defun org-journal-home-find-location ()
-      (setq org-journal-dir "~/org/home/journal/")
-      ;; Open today's journal, but specify a non-nil prefix argument in
-      ;; order to inhibit inserting the heading; org-capture will insert
-      ;; the heading.
-      (org-journal-new-entry t)
-      ;; Position point on the journal's top-level heading so that
-      ;; org-capture will add the new entry as a child entry.
-      (goto-char (point-max))
-      (org-up-element)
-      (goto-char (org-find-exact-headline-in-buffer
-                  (org-find-top-headline
-                   (point-max)))))
     :general
     (tm/leader-def
       :infix "j"
