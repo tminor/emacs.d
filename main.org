@@ -1530,10 +1530,10 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
     (setq sh-basic-offset 2))
 #+END_SRC
 
-*** Elisp
+*** Emacs Lisp
 :PROPERTIES:
-:HASH:     55e5ffb39c78851888a18871af9febf8
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     ad5a105b220494b51875db198752a4e2
+:MODIFIED: [2019-08-25 Sun 09:59]
 :END:
 
 **** Formatting
@@ -1544,8 +1544,8 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
 
 ***** Indent keywords properly
 :PROPERTIES:
-:HASH:     57d44d33df95137bc7c45c9ca3e4119c
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     29985167ef0c41b122b4f52b267292ff
+:MODIFIED: [2019-08-25 Sun 09:59]
 :END:
 
 By default, =lisp-indent-function= indents =:keywords= improperly:
@@ -1556,7 +1556,7 @@ By default, =lisp-indent-function= indents =:keywords= improperly:
 #+END_QUOTE
 
 To fix this, define a new function to use for =lisp-indent-function=
-(solution from [[https://emacs.stackexchange.com/a/10233][here]]):
+(solution found [[https://emacs.stackexchange.com/a/10233][here]]):
 
 #+BEGIN_SRC emacs-lisp
   (eval-after-load "lisp-mode"
