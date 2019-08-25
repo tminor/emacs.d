@@ -1909,40 +1909,23 @@ This library configures Magit and Evil to play well with each other.
 
 **** TODO Tweak magit =display-buffer=                             :hard:
 :PROPERTIES:
-:HASH:     5e647e092f3a059f6865b1268b638456
-:MODIFIED: 2019-06-28 16:50:44
+:HASH:     92424a3c680de51903a4f8377510a99d
+:MODIFIED: [2019-08-25 Sun 10:11]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-26 Wed 14:26]
 :END:
 
 =magit-display-*=
-**** TODO Change face for hunks
+
+**** TODO Change face for hunks                                    :easy:
 :PROPERTIES:
-:HASH:     360de633bc7e82d40aef6ae7d1927f51
-:MODIFIED: 2019-06-29 12:18:15
+:HASH:     2a7996b05bf5e317b08df90e35f24240
+:MODIFIED: [2019-08-25 Sun 10:12]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-29 Sat 12:17]
 :END:
-*** Elisp
-:PROPERTIES:
-:HASH:     c6ae3224095f1fc9fbc8196733a8b0de
-:MODIFIED: [2019-08-23 Fri 09:19]
-:END:
-
-From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#functions-7][here]]:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/magit-blame-toggle ()
-    "Toggle magit-blame-mode on and off interactively.
-
-  Source: https://git.io/vQKub"
-    (interactive)
-    (if (bound-and-true-p magit-blame-mode)
-        (magit-blame-quit)
-      (call-interactively 'magit-blame)))
-#+end_src
 
 * Mail
 :PROPERTIES:
