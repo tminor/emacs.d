@@ -51,8 +51,8 @@ them for fear of them disappearing!
 
 ** Table of Contents                                                                                                                                                                                                          :TOC:
 :PROPERTIES:
-:HASH:     ff42c7a3e59e3f87c9977a731690b225
-:MODIFIED: [2019-06-30 Sun 20:51]
+:HASH:     572dcdae65e5cf89439dc126243d1f7c
+:MODIFIED: [2019-08-24 Sat 20:32]
 :END:
 
 - [[#intro][Intro]]
@@ -287,8 +287,8 @@ Install =evil= for =vi= style editing:
 
 **** =evil-collection=
 :PROPERTIES:
-:HASH:     50b488caed4b9c98c7e65aad9f1f9de7
-:MODIFIED: 2019-03-10 19:04:45
+:HASH:     2daa3a0ba1685c1c3498c9986cb0b715
+:MODIFIED: [2019-08-24 Sat 20:32]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -560,8 +560,8 @@ Add normal Emacs window commands to leader key:
 
 **** [[https://emacs.stackexchange.com/a/32671][=display-buffer= customization]]
 :PROPERTIES:
-:HASH:     4fec7040991dbb08224656c57dc3f953
-:MODIFIED: [2019-07-03 Wed 00:05]
+:HASH:     affda59628884bf3c11c80b49153f6f6
+:MODIFIED: [2019-08-24 Sat 20:32]
 :END:
 
 Quoting a comment on the original question (linked above):
@@ -665,8 +665,8 @@ people.
 
 **** Projectile
 :PROPERTIES:
-:HASH:     45eafece3bd19742346a222a99fbda12
-:MODIFIED: 2019-06-11 16:38:56
+:HASH:     d71b0c36e1f85295dfea405c06e51aea
+:MODIFIED: [2019-08-24 Sat 20:32]
 :END:
 
 [[https://github.com/bbatsov/projectile][Project interaction via projectile]]:
@@ -1262,8 +1262,8 @@ Deadgrep is the fast, beautiful text search that your Emacs deserves.
 
 *** [[https://www.emacswiki.org/emacs/DiredPlus][Dired+]]
 :PROPERTIES:
-:HASH:     fb04f20c5f2c0a0ea12cde599dcacada
-:MODIFIED: [2019-07-03 Wed 14:24]
+:HASH:     bc3ab925a8959d419fd4436efc6f4e5d
+:MODIFIED: [2019-08-24 Sat 20:32]
 :END:
 
 #+begin_quote
@@ -1426,8 +1426,8 @@ script! Fish syntax highlighting:
 
 *** Ruby
 :PROPERTIES:
-:HASH:     f39fd611d818a8c52191e9e02c1d1efb
-:MODIFIED: [2019-08-24 Sat 19:46]
+:HASH:     92f6a087e7551a44d9657bd32c4218e8
+:MODIFIED: [2019-08-24 Sat 21:09]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -3585,8 +3585,8 @@ I never use this (because I never blog). I should re-evaluate this
 
 *** =org2jekyll=
 :PROPERTIES:
-:HASH:     faa9575444c7e96f1b7d6fd2608933d4
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     aaf0e8c0d1003d1500a6fc4b817830e7
+:MODIFIED: [2019-08-24 Sat 20:32]
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
