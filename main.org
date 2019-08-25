@@ -3909,6 +3909,10 @@ ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
 #+end_example
 
 *** TODO defun for projectile cd
+:PROPERTIES:
+:HASH:     bf61a4fb647feea765e41f1cedc23281
+:MODIFIED: [2019-08-23 Fri 11:27]
+:END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-07-01 Mon 09:24]
 :END:
