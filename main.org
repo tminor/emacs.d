@@ -80,7 +80,8 @@ them for fear of them disappearing!
   - [[#miscellany][Miscellany]]
   - [[#version-control][Version control]]
 - [[#mail][Mail]]
-  - [[#elisp][Elisp]]
+  - [[#refine-notmuch-alertsinclude-x11-aware-function][Refine notmuch alerts/include X11 aware function]]
+  - [[#reminders-for-sent-mail][Reminders for sent mail]]
   - [[#notmuch][Notmuch]]
   - [[#gnus][Gnus]]
 - [[#org-mode][Org-mode]]
@@ -1933,25 +1934,19 @@ This library configures Magit and Evil to play well with each other.
 :MODIFIED: 2019-03-08 14:47:24
 :END:
 
-** Elisp
+** TODO Refine notmuch alerts/include X11 aware function             :hard:
 :PROPERTIES:
-:HASH:     ba12765916563b3f00515d61783c7933
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-*** TODO Refine notmuch alerts/include X11 aware function           :hard:
-:PROPERTIES:
-:HASH:     39b732fcba095641190ef76879f63568
-:MODIFIED: 2019-06-28 16:52:18
+:HASH:     b980f4d91c4d78d935ee09e08ef08ae3
+:MODIFIED: [2019-08-25 Sun 10:44]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-06-28 Fri 16:51]
 :END:
 
-*** TODO Reminders for sent mail
+** TODO Reminders for sent mail
 :PROPERTIES:
-:HASH:     ab24c782ddaadca26d2c549655a3ffea
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     afb4fe7ed0cd8b4883f7485c0fbd8cac
+:MODIFIED: [2019-08-25 Sun 10:44]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 09:32]
