@@ -2466,15 +2466,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 :MODIFIED: 2019-03-08 15:50:43
 :END:
 
-*** TODO Function to change clock char in =org-agenda-current-time-string= :hard:
-:PROPERTIES:
-:HASH:     48b68ace19b2f62e4b65d2880c62d02c
-:MODIFIED: [2019-08-25 Sun 12:02]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-06-28 Fri 10:58]
-:END:
-
 *** Config
 :PROPERTIES:
 :HASH:     cf28cd95c2c81c25438f2ff2d8b4fef7
@@ -2713,13 +2704,13 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (require 'origami))
 #+END_SRC
 
-*** TODO Facility for easily adding a property with a timestamp
+*** TODO Function to change clock char in =org-agenda-current-time-string= :hard:
 :PROPERTIES:
-:HASH:     db8f4d9d769a995523edd6577d0f0556
-:MODIFIED: [2019-06-30 Sun 21:12]
+:HASH:     48b68ace19b2f62e4b65d2880c62d02c
+:MODIFIED: [2019-08-25 Sun 12:02]
 :END:
 :LOGBOOK:
-- State "TODO"    from ""        [2019-06-28 Fri 17:26]
+- State "TODO"    from ""        [2019-06-28 Fri 10:58]
 :END:
 
 *** WAIT [[https://github.com/spegoraro/org-alert][org-alert]]                                                  :easy:
@@ -2737,15 +2728,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 Provides notifications for scheduled or deadlined agenda entries.
 #+end_quote
 
-*** TODO Ignore FOCUS property in agenda                        :moderate:
-:PROPERTIES:
-:HASH:     26abe3ef9d8361c60e7c5965166fceb5
-:MODIFIED: [2019-07-05 Fri 15:31]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-01 Mon 10:49]
-:END:
-
 *** TODO Add mixed (home/work) agenda view                      :moderate:
 :PROPERTIES:
 :HASH:     429b5804ed9b629330fb7e3c4dfa50ca
@@ -2754,32 +2736,6 @@ Provides notifications for scheduled or deadlined agenda entries.
 :LOGBOOK:
 - State "TODO"    from ""        [2019-07-01 Mon 10:52]
 :END:
-
-*** TODO Add [[https://emacs.stackexchange.com/a/17357][org-agenda-hide-tags-regexp]]                            :easy:
-:PROPERTIES:
-:HASH:     221f7c55c34a227712a6eb0cf3fc1227
-:MODIFIED: [2019-07-05 Fri 15:31]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-03 Wed 15:22]
-:END:
-
-*** TODO Add block for done-state tasks to archive              :moderate:
-:PROPERTIES:
-:HASH:     c6c354075561153cef179c76ee623992
-:MODIFIED: [2019-07-15 Mon 14:47]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-10 Wed 12:08]
-:END:
-
-*** TODO Autosave for org-mode
-:PROPERTIES:
-:HASH:     f8bf0ea4f08a8b07b494121177501bdb
-:MODIFIED: [2019-07-15 Mon 15:54]
-:END:
-
-https://stackoverflow.com/questions/8146313/emacs-auto-save-for-org-mode-only#8146502
 
 ** Org-capture
 :PROPERTIES:
