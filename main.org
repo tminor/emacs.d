@@ -1447,6 +1447,8 @@ Pry stuff: [[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-
           ,(rx (or "}" "]" ")" "end"))		           ; Block end
           ,(rx (or "#" "=begin"))			           ; Comment start
           ruby-forward-sexp nil)))
+    (setenv "VISUAL" "emacsclient")
+    (setenv "EDITOR" (getenv "VISUAL"))
     :hook
     (ruby-mode . eldoc-mode))
 #+END_SRC
