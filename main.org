@@ -809,8 +809,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 
 ** Help/Info
 :PROPERTIES:
-:HASH:     733a7f943cb8158e59147d198c993f1f
-:MODIFIED: 2019-06-28 16:04:15
+:HASH:     75a7710ab06afdfc79a12143c22390b7
+:MODIFIED: [2019-08-25 Sun 10:15]
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
