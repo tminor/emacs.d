@@ -1436,21 +1436,27 @@ script! Fish syntax highlighting:
 Pry stuff: [[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-33bk][Ruby and Emacs Tip: Advanced Pry Integration]].
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ruby-mode
+  (use-package enh-ruby-mode
     :config
     (setq ruby-indent-level 4)
     (eval-after-load "hideshow"
       '(add-to-list
         'hs-special-modes-alist
-        `(ruby-mode
+        `(enh-ruby-mode
           ,(rx (or "def" "class" "module" "do" "{" "[" "(")) ; Block start
           ,(rx (or "}" "]" ")" "end"))		           ; Block end
           ,(rx (or "#" "=begin"))			           ; Comment start
           ruby-forward-sexp nil)))
     (setenv "VISUAL" "emacsclient")
     (setenv "EDITOR" (getenv "VISUAL"))
+    :init
+    (add-to-list 'auto-mode-alist
+                 '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'"
+                   . enh-ruby-mode))
+    (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
     :hook
-    (ruby-mode . eldoc-mode))
+    (enh-ruby-mode . eldoc-mode)
+    (enh-ruby-mode . yard-mode))
 #+END_SRC
 
 **** Robe
@@ -1476,6 +1482,22 @@ loaded classes and modules, and where each method is defined.
     (eval-after-load 'company
       '(push 'company-robe company-backends)))
 #+END_SRC
+
+**** [[https://github.com/pd/yard-mode.el][=yard-mode=]]
+:PROPERTIES:
+:HASH:     8a54f519985234000a6602822626ed79
+:MODIFIED: [2019-08-24 Sat 20:36]
+:END:
+
+#+begin_quote
+Rudimentary support for fontifying YARD tags and directives in ruby
+comments.Rudimentary support for fontifying YARD tags and directives
+in ruby comments.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package yard-mode)
+#+end_src
 
 **** TODO [[https://github.com/purcell/emacs.d/blob/master/lisp/init-ruby.el][Steve Purcell's Ruby config]]                          :moderate:
 :PROPERTIES:
