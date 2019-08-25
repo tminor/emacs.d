@@ -176,10 +176,10 @@ Keeps files we don't manage from accumulating in =~/.emacs.d/=:
 :MODIFIED: 2019-03-08 15:50:42
 :END:
 
-*** Elisp
+*** Add non-package Elisp to =load-path=
 :PROPERTIES:
-:HASH:     2962e4541e9a12c921dc2471bf7ee31b
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     6748e7faf3539873d6e396426d0b1b01
+:MODIFIED: [2019-08-25 Sun 09:57]
 :END:
 
 Add non-package provided Elisp to Emacs's =load-path=:
