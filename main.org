@@ -165,6 +165,12 @@ Keep files we don't manage from accumulating in =~/.emacs.d/=:
     (setq savehist-file (no-littering-expand-var-file-name "history")))
 #+END_SRC
 
+*** TODO Add github link and quote section
+:PROPERTIES:
+:HASH:     b265197260a0826dcd7ec487494f4184
+:MODIFIED: [2019-08-25 Sun 09:35]
+:END:
+
 ** Load path
 :PROPERTIES:
 :HASH:     d8e0bd6c649de49b656336b237438d72
