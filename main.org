@@ -828,6 +828,13 @@ Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
 #+END_SRC
 
 Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+]] later.
+
+*** TODO Add =view-lossage= to help prefix
+:PROPERTIES:
+:HASH:     9057bb904ed9c703c799cc634ea87d11
+:MODIFIED: [2019-08-25 Sun 10:15]
+:END:
+
 *** TODO Add keybinding for =general-describe-keybindings=          :easy:
 :PROPERTIES:
 :HASH:     3683c059669d2be6ffbb883549eda0f1
