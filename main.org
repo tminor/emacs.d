@@ -2434,23 +2434,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-refile-use-outline-path 'file))
 #+END_SRC
 
-*** Org-recent-headers
-:PROPERTIES:
-:HASH:     5dadc079c21fb8abb5409e2ec21bf24d
-:MODIFIED: [2019-07-09 Tue 13:21]
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package org-recent-headings
-    :straight t
-    :init
-    (setq org-recent-headings-save-file
-          (concat no-littering-var-directory
-                  "org-recent-headings"))
-    :config
-    (org-recent-headings-mode))
-#+END_SRC
-
 *** [[https://github.com/marcinkoziej/org-pomodoro][=org-pomodoro=]]
 :PROPERTIES:
 :HASH:     cd94cc9be02b6561bb99f29774467e3b
