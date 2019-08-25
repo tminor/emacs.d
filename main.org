@@ -2477,8 +2477,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     b6ba28430feccafc30096fd4916d427f
-:MODIFIED: [2019-08-25 Sun 12:02]
+:HASH:     2214518daf5933bbb8e3217c6d76feef
+:MODIFIED: [2019-08-25 Sun 12:06]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2497,8 +2497,10 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys)
 
-    :config
+    :hook
+    (find-file . tm/enable-minor-mode-based-on-extension)
 
+    :config
     ;; calendar.org has gotten very large and I received an error
     ;; indicating this variable should be increased
     (setq undo-outer-limit 25170000)
@@ -2506,7 +2508,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; Hooks
     ;;
     ;; Place tags flush with right side of window
-    (add-hook 'find-file-hook #'tm/enable-minor-mode-based-on-extension)
+
 
     ;; Activate `auto-revert-mode' for calendar.org
     (add-to-list 'tm/auto-minor-mode-alist
