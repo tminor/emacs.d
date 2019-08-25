@@ -1443,9 +1443,9 @@ Pry stuff: [[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-
       '(add-to-list
         'hs-special-modes-alist
         `(ruby-mode
-          ,(rx (or "def" "class" "module" "do" "{" "[")) ; Block start
-          ,(rx (or "}" "]" "end"))		       ; Block end
-          ,(rx (or "#" "=begin"))			       ; Comment start
+          ,(rx (or "def" "class" "module" "do" "{" "[" "(")) ; Block start
+          ,(rx (or "}" "]" ")" "end"))		           ; Block end
+          ,(rx (or "#" "=begin"))			           ; Comment start
           ruby-forward-sexp nil)))
     :hook
     (ruby-mode . eldoc-mode))
