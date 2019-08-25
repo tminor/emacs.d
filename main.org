@@ -1426,12 +1426,14 @@ script! Fish syntax highlighting:
 
 *** Ruby
 :PROPERTIES:
-:HASH:     ad8e590959a37d5ae52b449c6ffa930b
-:MODIFIED: 2019-06-28 16:46:33
+:HASH:     f39fd611d818a8c52191e9e02c1d1efb
+:MODIFIED: [2019-08-24 Sat 19:46]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
 :END:
+
+Pry stuff: [[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-33bk][Ruby and Emacs Tip: Advanced Pry Integration]].
 
 #+BEGIN_SRC emacs-lisp
   (use-package ruby-mode
