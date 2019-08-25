@@ -3063,8 +3063,8 @@ Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell
 
 *** [[https://github.com/dieggsy/esh-autosuggest][=esh-autosuggest=]]
 :PROPERTIES:
-:HASH:     fd84d3e3e16373c5455a11524589e3a1
-:MODIFIED: 2019-06-23 18:59:53
+:HASH:     42b0cd36641a7487f8c7d3fb46c77b12
+:MODIFIED: [2019-08-25 Sun 12:20]
 :END:
 
 #+begin_quote
@@ -3073,14 +3073,6 @@ Fish-like history autosuggestions in eshell
 
 #+BEGIN_SRC emacs-lisp
   (use-package esh-autosuggest
-    :preface
-    (defun tm/setup-eshell-ivy-completion ()
-      (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
-      ;; only if you want to use the minibuffer for completions instead of
-      ;; the in-buffer interface
-      (setq-local ivy-display-functions-alist
-                  (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
-                        ivy-display-functions-alist)))
     :hook
     (eshell-mode . esh-autosuggest-mode)
     (eshell-mode . tm/setup-eshell-ivy-completion))
