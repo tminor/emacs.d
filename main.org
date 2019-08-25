@@ -1455,8 +1455,8 @@ Pry stuff: [[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-
 
 **** Robe
 :PROPERTIES:
-:HASH:     4d490bc51a299cc9329b02799c682b10
-:MODIFIED: 2019-06-23 19:35:21
+:HASH:     62e3fcadf480f82cd5cc2309e859ab5a
+:MODIFIED: [2019-08-24 Sat 20:19]
 :END:
 
 I've had some trouble with this package; mostly because I don't
@@ -1474,7 +1474,7 @@ loaded classes and modules, and where each method is defined.
     :config
     (add-hook 'ruby-mode-hook 'robe-mode)
     (eval-after-load 'company
-    '(push 'company-robe company-backends)))
+      '(push 'company-robe company-backends)))
 #+END_SRC
 
 **** TODO [[https://github.com/purcell/emacs.d/blob/master/lisp/init-ruby.el][Steve Purcell's Ruby config]]                          :moderate:
