@@ -192,29 +192,9 @@ Add non-package provided Elisp to Emacs's =load-path=:
 
 ** Elisp
 :PROPERTIES:
-:HASH:     df9560ab77ed86128b91fa1025602cb6
-:MODIFIED: [2019-07-03 Wed 02:36]
+:HASH:     7382c1515e30eff2446fc55f3bad6d19
+:MODIFIED: [2019-08-25 Sun 09:40]
 :END:
-
-Simple pgrep using only Emacs Lisp functions:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/pgrep (string)
-    "Search process list for any process name matching STRING."
-    (interactive "sProcess name: ")
-    (let ((pid-list)
-          (proc-match))
-      ;; Gets a list of PIDs and constructs a list of lists containing
-      ;; attribute alists for each process.
-      (dolist (pid (list-system-processes) pid-list)
-        (setq pid-list (cons (process-attributes pid) pid-list)))
-      ;; Looks for STRING in PID-LIST and returns PID.
-      (dolist (proc pid-list)
-        (if (string-match-p (regexp-quote string)
-                            (cdr (assoc-string 'args proc)))
-            (return (cdr (assoc 'args proc)))
-          nil))))
-#+END_SRC
 
 Function for finding and printing color and its complement:
 
