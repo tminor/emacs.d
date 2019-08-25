@@ -1477,16 +1477,6 @@ loaded classes and modules, and where each method is defined.
     '(push 'company-robe company-backends)))
 #+END_SRC
 
-**** TODO Pry in Emacs                                         :moderate:
-:PROPERTIES:
-:HASH:     e59d32035b7e1e755f252639332c5832
-:MODIFIED: 2019-06-28 16:47:43
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-06-28 Fri 16:00]
-:END:
-
-[[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-33bk][Ruby and Emacs Tip: Advanced Pry Integration]]
 **** TODO [[https://github.com/purcell/emacs.d/blob/master/lisp/init-ruby.el][Steve Purcell's Ruby config]]                          :moderate:
 :PROPERTIES:
 :HASH:     864dad56bae6553bc5161acc55ed8a50
