@@ -57,10 +57,9 @@ them for fear of them disappearing!
 
 - [[#intro][Intro]]
   - [[#links-to-interesting-configs][Links to interesting configs]]
-- [[#bootstrap][Bootstrap]]
-  - [[#reorganize-bootstrap-section][Reorganize 'bootstrap' section]]
-  - [[#load-path][Load path]]
 - [[#make-emacs-friendlier][Make Emacs Friendlier]]
+  - [[#load-path][Load path]]
+  - [[#cleaningtidying][Cleaning/tidying]]
   - [[#key-bindings][Key bindings]]
   - [[#emacs-navigation][Emacs navigation]]
   - [[#interface-gui][Interface (GUI)]]
@@ -69,7 +68,6 @@ them for fear of them disappearing!
   - [[#themes][Themes]]
   - [[#config-management][Config management]]
   - [[#clipboard-management][Clipboard management]]
-  - [[#cleaningtidying][Cleaning/tidying]]
   - [[#font][Font]]
   - [[#search-modes][Search modes]]
   - [[#emacswiki][EmacsWiki]]
@@ -113,26 +111,11 @@ them for fear of them disappearing!
   - [[#spell-check][Spell check]]
   - [[#file-type-modes-not-prog-mode-files][File type modes (not =prog-mode= files)]]
 
-* Bootstrap
+* Make Emacs Friendlier
 :PROPERTIES:
-:HASH:     81c35aa54b506d25c88189f9ccdcf49e
-:MODIFIED: 2019-06-28 13:21:15
+:HASH:     2e091ba324c4ad4bb9d9a18c3357c6eb
+:MODIFIED: 2019-03-08 15:48:05
 :END:
-:LOGBOOK:
-- State "TODO"       from              [2019-06-27 Thu 21:48]
-:END:
-
-** TODO Reorganize 'bootstrap' section                               :easy:
-:PROPERTIES:
-:HASH:     c58e73ec2378bc247ab7ba67fd0c515b
-:MODIFIED: 2019-06-28 16:38:43
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-06-28 Fri 13:20]
-:END:
-
-Break this section apart and get rid of it. Boot strap code has been
-moved to =init.el=.
 
 ** Load path
 :PROPERTIES:
@@ -153,10 +136,78 @@ Add non-package provided Elisp to Emacs's =load-path=:
     (normal-top-level-add-subdirs-to-load-path))
 #+END_SRC
 
-* Make Emacs Friendlier
+** Cleaning/tidying
 :PROPERTIES:
-:HASH:     2e091ba324c4ad4bb9d9a18c3357c6eb
-:MODIFIED: 2019-03-08 15:48:05
+:HASH:     8ab3300d36591b24686a3e77931385cc
+:MODIFIED: 2019-03-08 15:49:53
+:END:
+
+*** Buffer cleanup
+:PROPERTIES:
+:HASH:     420f5a0d11966bb932a541c13a1a77fe
+:MODIFIED: [2019-07-05 Fri 08:46]
+:END:
+
+Clean up matching buffers at midnight:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package midnight
+    :config
+    (setq clean-buffer-list-delay-general 2
+          clean-buffer-list-kill-regexps '("\\`\\*Man "
+                                           "\\`\\*helpful "
+                                           "\\`\\*notmuch-"
+                                           "\\magit"
+                                           "\\`\\*CPU-Profiler-"
+                                           "\\`\\*deadgrep"
+                                           "\\`\\*Calendar"
+                                           "\\`\\*Proced"
+                                           "\\`\\*WoMan"))
+    (midnight-mode))
+#+END_SRC
+
+**** TODO Add more modes/buffers to kill regexps                   :easy:
+:PROPERTIES:
+:HASH:     694c0f828f4145cd1ff47e8c30a5a790
+:MODIFIED: 2019-06-28 16:44:35
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2019-06-28 Fri 16:44]
+:END:
+
+*** No-littering
+:PROPERTIES:
+:HASH:     3ee0f8f867694dbcf1cd8e5f045fc49b
+:MODIFIED: [2019-08-25 Sun 09:35]
+:END:
+
+Keeps files we don't manage from accumulating in =~/.emacs.d/=:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Surely there's a better way...
+  (use-package recentf)
+
+  (use-package no-littering
+    :config
+    (add-to-list 'recentf-exclude no-littering-var-directory)
+    (add-to-list 'recentf-exclude no-littering-etc-directory)
+    ;; One of the most common types of files that Emacs creates
+    ;; automatically is auto-save files. By default, these appear in the
+    ;; current directory of a visited file. No-littering does not change
+    ;; this, but you can add the following code to your init.el file to
+    ;; store these files in the var directory:
+    (setq auto-save-file-name-transforms
+          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+    ;; Tell `custom' to save its state under ~/.emacs.d/etc/
+    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+    ;; Put history file in ~/.emacs.d/var/
+    (setq savehist-file (no-littering-expand-var-file-name "history")))
+#+END_SRC
+
+*** TODO Add github link and quote section
+:PROPERTIES:
+:HASH:     b265197260a0826dcd7ec487494f4184
+:MODIFIED: [2019-08-25 Sun 09:35]
 :END:
 
 ** Key bindings
@@ -1107,80 +1158,6 @@ Ensure =kill-ring= is saved between sessions:
 :LOGBOOK:
 - State "TODO"       from              [2019-06-28 Fri 16:43]
 :END:
-** Cleaning/tidying
-:PROPERTIES:
-:HASH:     8ab3300d36591b24686a3e77931385cc
-:MODIFIED: 2019-03-08 15:49:53
-:END:
-
-*** Buffer cleanup
-:PROPERTIES:
-:HASH:     420f5a0d11966bb932a541c13a1a77fe
-:MODIFIED: [2019-07-05 Fri 08:46]
-:END:
-
-Clean up matching buffers at midnight:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package midnight
-    :config
-    (setq clean-buffer-list-delay-general 2
-          clean-buffer-list-kill-regexps '("\\`\\*Man "
-                                           "\\`\\*helpful "
-                                           "\\`\\*notmuch-"
-                                           "\\magit"
-                                           "\\`\\*CPU-Profiler-"
-                                           "\\`\\*deadgrep"
-                                           "\\`\\*Calendar"
-                                           "\\`\\*Proced"
-                                           "\\`\\*WoMan"))
-    (midnight-mode))
-#+END_SRC
-
-**** TODO Add more modes/buffers to kill regexps                   :easy:
-:PROPERTIES:
-:HASH:     694c0f828f4145cd1ff47e8c30a5a790
-:MODIFIED: 2019-06-28 16:44:35
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-06-28 Fri 16:44]
-:END:
-
-*** No-littering
-:PROPERTIES:
-:HASH:     3ee0f8f867694dbcf1cd8e5f045fc49b
-:MODIFIED: [2019-08-25 Sun 09:35]
-:END:
-
-Keeps files we don't manage from accumulating in =~/.emacs.d/=:
-
-#+BEGIN_SRC emacs-lisp
-  ;; Surely there's a better way...
-  (use-package recentf)
-
-  (use-package no-littering
-    :config
-    (add-to-list 'recentf-exclude no-littering-var-directory)
-    (add-to-list 'recentf-exclude no-littering-etc-directory)
-    ;; One of the most common types of files that Emacs creates
-    ;; automatically is auto-save files. By default, these appear in the
-    ;; current directory of a visited file. No-littering does not change
-    ;; this, but you can add the following code to your init.el file to
-    ;; store these files in the var directory:
-    (setq auto-save-file-name-transforms
-          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-    ;; Tell `custom' to save its state under ~/.emacs.d/etc/
-    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-    ;; Put history file in ~/.emacs.d/var/
-    (setq savehist-file (no-littering-expand-var-file-name "history")))
-#+END_SRC
-
-*** TODO Add github link and quote section
-:PROPERTIES:
-:HASH:     b265197260a0826dcd7ec487494f4184
-:MODIFIED: [2019-08-25 Sun 09:35]
-:END:
-
 ** Font
 :PROPERTIES:
 :HASH:     6ead8f97073d58cc0e93c9cd0cc96db2
