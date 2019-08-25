@@ -1790,8 +1790,8 @@ Use yasnippet. Configure it.
 
 **** =hs-minor-mode=
 :PROPERTIES:
-:HASH:     eefecf3053047d37b648e7223ba01be1
-:MODIFIED: [2019-08-23 Fri 09:19]
+:HASH:     26949d8b98ef10176e81d91fc9ba4ef7
+:MODIFIED: [2019-08-23 Fri 11:24]
 :END:
 
 Sources:
@@ -1812,8 +1812,10 @@ Sources:
       "h" 'hs-hide-all
       "B" 'hs-show-block
       "b" 'hs-hide-block
-      "t" 'hs-toggle-hiding
       "l" 'hs-hide-level)
+    (:keymaps 'prog-mode-map
+     :states 'normal
+     "TAB" 'hs-toggle-hiding)
     :hook
     (prog-mode . hs-minor-mode))
 #+end_src
