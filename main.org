@@ -2693,18 +2693,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 - State "TODO"    from ""        [2019-06-28 Fri 11:09]
 :END:
 
-*** [[https://github.com/oddious/org-habit-plus][=org-habit-plus=]]
-:PROPERTIES:
-:HASH:     ad83a57910bcfefd8655c7c3f4d2ad31
-:MODIFIED: [2019-07-06 Sat 09:05]
-:END:
-
-#+begin_src emacs-lisp
-  (use-package org-habit-plus
-    :straight
-    (:type git :host github :repo "oddious/org-habit-plus"))
-#+end_src
-
 *** Org-super-agenda
 :PROPERTIES:
 :HASH:     5331ccd811c69036ae02ae4f725fefe8
