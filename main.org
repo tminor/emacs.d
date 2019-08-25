@@ -2894,8 +2894,8 @@ I never use this (because I never blog). I should re-evaluate this
 
 *** =org2jekyll=
 :PROPERTIES:
-:HASH:     aaf0e8c0d1003d1500a6fc4b817830e7
-:MODIFIED: [2019-08-24 Sat 20:32]
+:HASH:     6ff57b2cf1b901f0c27d8a42e95263eb
+:MODIFIED: [2019-08-25 Sun 12:17]
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
@@ -2906,66 +2906,66 @@ Define the following variables:
 - =org2jekyll-posts-dir=: The directory where Jekyll posts are stored.
 
 #+BEGIN_SRC emacs-lisp
-(use-package org2jekyll
-  :defer 3
-  :config
-  (setq org2jekyll-blog-author       "tminor"
-        org2jekyll-source-directory  (expand-file-name "~/org/blog")
-        org2jekyll-jekyll-directory  (expand-file-name "~/blog")
-        org2jekyll-jekyll-drafts-dir ""
-        org2jekyll-jekyll-posts-dir  "_posts/"
-        org-publish-project-alist
-            `(("default"
-                :base-directory ,(org2jekyll-input-directory)
-                :base-extension "org"
-                ;; :publishing-directory "/ssh:user@host:~/html/notebook/"
-                :publishing-directory ,(org2jekyll-output-directory)
-                :publishing-function org-html-publish-to-html
-                :headline-levels 4
-                :section-numbers nil
-                :with-toc nil
-                :html-head "<link rel=\"stylesheet\" href=\"./css/style.css\" type=\"text/css\"/>"
-                :html-preamble t
-                :recursive t
-                :make-index t
-                :html-extension "html"
-                :body-only t)
+  (use-package org2jekyll
+    :defer 3
+    :config
+    (setq org2jekyll-blog-author "tminor"
+          org2jekyll-source-directory (expand-file-name "~/org/blog")
+          org2jekyll-jekyll-directory (expand-file-name "~/blog")
+          org2jekyll-jekyll-drafts-dir ""
+          org2jekyll-jekyll-posts-dir "_posts/"
+          org-publish-project-alist
+          `(("default"
+             :base-directory ,(org2jekyll-input-directory)
+             :base-extension "org"
+             ;; :publishing-directory "/ssh:user@host:~/html/notebook/"
+             :publishing-directory ,(org2jekyll-output-directory)
+             :publishing-function org-html-publish-to-html
+             :headline-levels 4
+             :section-numbers nil
+             :with-toc nil
+             :html-head "<link rel=\"stylesheet\" href=\"./css/style.css\" type=\"text/css\"/>"
+             :html-preamble t
+             :recursive t
+             :make-index t
+             :html-extension "html"
+             :body-only t)
 
             ("post"
-                :base-directory ,(org2jekyll-input-directory)
-                :base-extension "org"
-                :publishing-directory ,(org2jekyll-output-directory org2jekyll-jekyll-posts-dir)
-                :publishing-function org-html-publish-to-html
-                :headline-levels 4
-                :section-numbers nil
-                :with-toc nil
-                :html-head "<link rel='stylesheet' href='https://blog.tminor.io/assets/core.css'>"
-                :html-preamble t
-                :recursive t
-                :make-index t
-                :html-extension "html"
-                :body-only t)
+             :base-directory ,(org2jekyll-input-directory)
+             :base-extension "org"
+             :publishing-directory ,(org2jekyll-output-directory org2jekyll-jekyll-posts-dir)
+             :publishing-function org-html-publish-to-html
+             :headline-levels 4
+             :section-numbers nil
+             :with-toc nil
+             :html-head "<link rel='stylesheet' href='https://blog.tminor.io/assets/core.css'>"
+             :html-preamble t
+             :recursive t
+             :make-index t
+             :html-extension "html"
+             :body-only t)
 
             ("images"
-                :base-directory ,(org2jekyll-input-directory "img")
-                :base-extension "jpg\\|gif\\|png"
-                :publishing-directory ,(org2jekyll-output-directory "img")
-                :publishing-function org-publish-attachment
-                :recursive t)
+             :base-directory ,(org2jekyll-input-directory "img")
+             :base-extension "jpg\\|gif\\|png"
+             :publishing-directory ,(org2jekyll-output-directory "img")
+             :publishing-function org-publish-attachment
+             :recursive t)
 
             ("js"
-                :base-directory ,(org2jekyll-input-directory "js")
-                :base-extension "js"
-                :publishing-directory ,(org2jekyll-output-directory "js")
-                :publishing-function org-publish-attachment
-                :recursive t)
+             :base-directory ,(org2jekyll-input-directory "js")
+             :base-extension "js"
+             :publishing-directory ,(org2jekyll-output-directory "js")
+             :publishing-function org-publish-attachment
+             :recursive t)
 
             ("css"
-                :base-directory ,(org2jekyll-input-directory "css")
-                :base-extension "css\\|el"
-                :publishing-directory ,(org2jekyll-output-directory "css")
-                :publishing-function org-publish-attachment
-                :recursive t)
+             :base-directory ,(org2jekyll-input-directory "css")
+             :base-extension "css\\|el"
+             :publishing-directory ,(org2jekyll-output-directory "css")
+             :publishing-function org-publish-attachment
+             :recursive t)
 
             ("web" :components ("images" "js" "css")))))
 #+END_SRC
