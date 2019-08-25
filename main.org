@@ -2277,30 +2277,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       :straight
       (:type git :host github :repo "alphapapa/org-ql"))
 
-    (defmacro tm/org-make-level-faces (level)
-      "Generate commands and set vars for creating new `org-level-face's."
-      (let ((num 0))
-        (while (< num (+ (string-to-number level) 1))
-          (progn
-            `(defface ,(intern (concat "org-level-"
-                                       level))
-               (org-compatible-face nil
-                 '((((class color) (min-colors 16) (background light))
-                    (:foreground "RosyBrown"))
-                   (((class color) (min-colors 16) (background dark))
-                    (:foreground "LightSalmon"))
-                   (((class color) (min-colors 8)) (:foreground "green"))))
-               ,(format "Face used for level %s headlines." level)
-               :group 'org-faces)
-            (let ((face (intern (concat "org-level-" level))))
-              (unless (member face
-                              org-level-faces)
-                (setq org-level-faces (append org-level-faces
-                                              (list face))))))
-          (setq num (+ num 1))))
-      (setq org-n-level-faces
-            (string-to-number level)))
-
     (tm/org-make-level-faces "16")
 
     ;; Makes more outline path faces available.
