@@ -138,11 +138,11 @@ moved to =init.el=.
 
 ** No-littering
 :PROPERTIES:
-:HASH:     c4c0fa8013873f91e5134fc9257ff3a7
-:MODIFIED: 2019-06-21 12:24:17
+:HASH:     3ee0f8f867694dbcf1cd8e5f045fc49b
+:MODIFIED: [2019-08-25 Sun 09:35]
 :END:
 
-Keep files we don't manage from accumulating in =~/.emacs.d/=:
+Keeps files we don't manage from accumulating in =~/.emacs.d/=:
 
 #+BEGIN_SRC emacs-lisp
   ;; Surely there's a better way...
