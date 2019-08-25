@@ -2220,8 +2220,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     8375541cc142d4d2f6d2a835a5a7bf88
-:MODIFIED: [2019-07-08 Mon 13:56]
+:HASH:     11d9cc427ec656f047b9ac950057d7ba
+:MODIFIED: [2019-08-25 Sun 10:53]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2242,8 +2242,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     :general
     (:keymaps 'org-mode-map
      :states '(normal)
-     "<S-iso-lefttab>" 'org-global-cycle
-     "zf" 'tm/org-set-focus-time)
+     "<S-iso-lefttab>" 'org-global-cycle)
+
     (tm/leader-def
       :infix "o"
       :prefix-command 'tm/org-prefix-command
