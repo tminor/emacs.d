@@ -59,7 +59,6 @@ them for fear of them disappearing!
   - [[#links-to-interesting-configs][Links to interesting configs]]
 - [[#bootstrap][Bootstrap]]
   - [[#reorganize-bootstrap-section][Reorganize 'bootstrap' section]]
-  - [[#no-littering][No-littering]]
   - [[#load-path][Load path]]
 - [[#make-emacs-friendlier][Make Emacs Friendlier]]
   - [[#key-bindings][Key bindings]]
@@ -134,41 +133,6 @@ them for fear of them disappearing!
 
 Break this section apart and get rid of it. Boot strap code has been
 moved to =init.el=.
-
-** No-littering
-:PROPERTIES:
-:HASH:     3ee0f8f867694dbcf1cd8e5f045fc49b
-:MODIFIED: [2019-08-25 Sun 09:35]
-:END:
-
-Keeps files we don't manage from accumulating in =~/.emacs.d/=:
-
-#+BEGIN_SRC emacs-lisp
-  ;; Surely there's a better way...
-  (use-package recentf)
-
-  (use-package no-littering
-    :config
-    (add-to-list 'recentf-exclude no-littering-var-directory)
-    (add-to-list 'recentf-exclude no-littering-etc-directory)
-    ;; One of the most common types of files that Emacs creates
-    ;; automatically is auto-save files. By default, these appear in the
-    ;; current directory of a visited file. No-littering does not change
-    ;; this, but you can add the following code to your init.el file to
-    ;; store these files in the var directory:
-    (setq auto-save-file-name-transforms
-          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-    ;; Tell `custom' to save its state under ~/.emacs.d/etc/
-    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-    ;; Put history file in ~/.emacs.d/var/
-    (setq savehist-file (no-littering-expand-var-file-name "history")))
-#+END_SRC
-
-*** TODO Add github link and quote section
-:PROPERTIES:
-:HASH:     b265197260a0826dcd7ec487494f4184
-:MODIFIED: [2019-08-25 Sun 09:35]
-:END:
 
 ** Load path
 :PROPERTIES:
@@ -1180,6 +1144,41 @@ Clean up matching buffers at midnight:
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-06-28 Fri 16:44]
+:END:
+
+*** No-littering
+:PROPERTIES:
+:HASH:     3ee0f8f867694dbcf1cd8e5f045fc49b
+:MODIFIED: [2019-08-25 Sun 09:35]
+:END:
+
+Keeps files we don't manage from accumulating in =~/.emacs.d/=:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Surely there's a better way...
+  (use-package recentf)
+
+  (use-package no-littering
+    :config
+    (add-to-list 'recentf-exclude no-littering-var-directory)
+    (add-to-list 'recentf-exclude no-littering-etc-directory)
+    ;; One of the most common types of files that Emacs creates
+    ;; automatically is auto-save files. By default, these appear in the
+    ;; current directory of a visited file. No-littering does not change
+    ;; this, but you can add the following code to your init.el file to
+    ;; store these files in the var directory:
+    (setq auto-save-file-name-transforms
+          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+    ;; Tell `custom' to save its state under ~/.emacs.d/etc/
+    (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+    ;; Put history file in ~/.emacs.d/var/
+    (setq savehist-file (no-littering-expand-var-file-name "history")))
+#+END_SRC
+
+*** TODO Add github link and quote section
+:PROPERTIES:
+:HASH:     b265197260a0826dcd7ec487494f4184
+:MODIFIED: [2019-08-25 Sun 09:35]
 :END:
 
 ** Font
