@@ -2745,8 +2745,8 @@ Provides notifications for scheduled or deadlined agenda entries.
 
 *** Config
 :PROPERTIES:
-:HASH:     46f83cc5f2b7ee889a5213e9f70322ae
-:MODIFIED: 2019-06-30 10:25:16
+:HASH:     424f7aed05d4ac932750a4039f3ac403
+:MODIFIED: [2019-08-25 Sun 12:15]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2754,73 +2754,9 @@ Provides notifications for scheduled or deadlined agenda entries.
     :straight nil
     :after (org)
     :config
-    (defun transform-square-brackets-to-round-ones (string-to-transform)
-      "Transforms [ into ( and ] into ), other chars left unchanged."
-      (concat
-       (mapcar #'(lambda (c)
-                   (if (equal c ?[) ?\( (if (equal c ?]) ?\) c)))
-               string-to-transform)))
-
-    (defmacro tm/org-get-headings-command (fn-suffix target)
-      "Generate a command for capturing to TARGET."
-      `(defun ,(intern (concat "tm/org-get-headings-"
-                               (symbol-name fn-suffix))) ()
-         ,(format "Return `point' for heading in %S" target)
-         (interactive)
-         (let* ((file (concat (if (string= ,target
-                                           "main.org")
-                                  user-emacs-directory
-                                org-base-directory)
-                              ,target))
-                (buf (find-buffer-visiting file)))
-           (unless buf
-             (find-file file))
-           (with-current-buffer
-               buf
-             ;; Gets headings from TARGET and fontifies them before collecting
-             ;; them in `heading-point-alist', each cons cell of which reprents a
-             ;; heading (with text properties) pointing at the value for that
-             ;; heading's point.  `heading-point-alist' is passed to
-             ;; `completing-read' read, ultimately calling `goto-char' against the
-             ;; point from the chosen cons cell.
-             (let* ((heading-point-alist '())
-                    (headings
-                     (org-map-entries
-                      (lambda ()
-                        (cl-pushnew `(,(save-excursion
-                                         (org-format-outline-path
-                                          (org-get-outline-path t)))
-                                      . ,(goto-char (point)))
-                                    heading-point-alist
-                                    :test #'equal)))))
-               (goto-char (cdr (assoc
-                                (completing-read "File under: "
-                                                 heading-point-alist)
-                                heading-point-alist))))))))
     (tm/org-get-headings-command todo "todo.org")
     (tm/org-get-headings-command notes "notes.org")
     (tm/org-get-headings-command config "main.org")
-
-    ;; Adds functions, advice, etc. for killing a new frame if one has
-    ;; been created by org-capture browser extension.
-    ;;
-    ;; https://github.com/sprig/org-capture-extension#example-closins-the-frame-after-a-capture
-    (defvar tm/delete-frame-after-capture 0
-      "Whether to delete the last frame after the current capture.")
-    (defun tm/delete-frame-if-neccessary (&rest r)
-      (cond
-       ((= tm/delete-frame-after-capture 0) nil)
-       ((> tm/delete-frame-after-capture 1)
-        (setq tm/delete-frame-after-capture (- tm/delete-frame-after-capture 1)))
-       (t
-        (setq tm/delete-frame-after-capture 0)
-        (delete-frame))))
-    (advice-add 'org-capture-finalize
-                :after 'tm/delete-frame-if-neccessary)
-    (advice-add 'org-capture-kill
-                :after 'tm/delete-frame-if-neccessary)
-    (advice-add 'org-capture-refile
-                :after 'tm/delete-frame-if-neccessary)
 
     ;; Set default capture file
     (setq org-default-notes-file "~/org/capture.org")

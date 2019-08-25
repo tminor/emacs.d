@@ -27,6 +27,8 @@
 (require 'dash)
 (require 'org-agenda)
 (require 'autorevert)
+(require 'cl-extra)
+(require 'cl)
 
 (defun tm/org-remove-inherited-local-tags ()
   "Remove local tags that can be inherited instead."
@@ -217,6 +219,75 @@ are equal return t."
 			   (format "<%s>" (org-read-date t nil "now"))))
 	       (cmp (compare-strings a-date nil nil b-date nil nil)))
 	  (if (eq cmp t) nil (signum cmp))))))
+
+;; Defs for `org-capture'
+
+(defun transform-square-brackets-to-round-ones (string-to-transform)
+      "Transforms [ into ( and ] into ), other chars left unchanged."
+      (concat
+       (mapcar #'(lambda (c)
+                   (if (equal c ?[) ?\( (if (equal c ?]) ?\) c)))
+               string-to-transform)))
+
+    (defmacro tm/org-get-headings-command (fn-suffix target)
+      "Generate a command for capturing to TARGET."
+      `(defun ,(intern (concat "tm/org-get-headings-"
+                               (symbol-name fn-suffix))) ()
+         ,(format "Return `point' for heading in %S" target)
+         (interactive)
+         (let* ((file (concat (if (string= ,target
+                                           "main.org")
+                                  user-emacs-directory
+                                org-base-directory)
+                              ,target))
+                (buf (find-buffer-visiting file)))
+           (unless buf
+             (find-file file))
+           (with-current-buffer
+               buf
+             ;; Gets headings from TARGET and fontifies them before collecting
+             ;; them in `heading-point-alist', each cons cell of which reprents a
+             ;; heading (with text properties) pointing at the value for that
+             ;; heading's point.  `heading-point-alist' is passed to
+             ;; `completing-read' read, ultimately calling `goto-char' against the
+             ;; point from the chosen cons cell.
+             (let* ((heading-point-alist '())
+                    (headings
+                     (org-map-entries
+                      (lambda ()
+                        (cl-pushnew `(,(save-excursion
+                                         (org-format-outline-path
+                                          (org-get-outline-path t)))
+                                      . ,(goto-char (point)))
+                                    heading-point-alist
+                                    :test #'equal)))))
+               (goto-char (cdr (assoc
+                                (completing-read "File under: "
+                                                 heading-point-alist)
+                                heading-point-alist))))))))
+
+;; Adds functions, advice, etc. for killing a new frame if one has
+;; been created by org-capture browser extension.
+;;
+;; https://github.com/sprig/org-capture-extension#example-closins-the-frame-after-a-capture
+(defvar tm/delete-frame-after-capture 0
+  "Whether to delete the last frame after the current capture.")
+
+;; TODO: Is this needed?
+(defun tm/delete-frame-if-neccessary (&rest r)
+  (cond
+   ((= tm/delete-frame-after-capture 0) nil)
+   ((> tm/delete-frame-after-capture 1)
+    (setq tm/delete-frame-after-capture (- tm/delete-frame-after-capture 1)))
+   (t
+    (setq tm/delete-frame-after-capture 0)
+    (delete-frame))))
+(advice-add 'org-capture-finalize
+            :after 'tm/delete-frame-if-neccessary)
+(advice-add 'org-capture-kill
+            :after 'tm/delete-frame-if-neccessary)
+(advice-add 'org-capture-refile
+            :after 'tm/delete-frame-if-neccessary)
 
 (provide 'tm-org)
 ;;; tm-org.el ends here
