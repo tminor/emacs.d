@@ -61,7 +61,6 @@ them for fear of them disappearing!
   - [[#reorganize-bootstrap-section][Reorganize 'bootstrap' section]]
   - [[#no-littering][No-littering]]
   - [[#load-path][Load path]]
-  - [[#elisp][Elisp]]
 - [[#make-emacs-friendlier][Make Emacs Friendlier]]
   - [[#key-bindings][Key bindings]]
   - [[#emacs-navigation][Emacs navigation]]
@@ -84,7 +83,7 @@ them for fear of them disappearing!
   - [[#miscellany][Miscellany]]
   - [[#version-control][Version control]]
 - [[#mail][Mail]]
-  - [[#elisp-1][Elisp]]
+  - [[#elisp][Elisp]]
   - [[#notmuch][Notmuch]]
   - [[#gnus][Gnus]]
 - [[#org-mode][Org-mode]]
@@ -188,32 +187,6 @@ Add non-package provided Elisp to Emacs's =load-path=:
 #+BEGIN_SRC emacs-lisp
   (let ((default-directory "~/.emacs.d/lisp/"))
     (normal-top-level-add-subdirs-to-load-path))
-#+END_SRC
-
-** Elisp
-:PROPERTIES:
-:HASH:     7382c1515e30eff2446fc55f3bad6d19
-:MODIFIED: [2019-08-25 Sun 09:40]
-:END:
-
-Function for finding and printing color and its complement:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/complement-for-color-at-point ()
-    "Return color name for complement of color name at point."
-    (interactive)
-    (with-current-buffer (buffer-name)
-      (let* ((complement-rgb-value
-              (color-complement (thing-at-point 'word t)))
-             (red (car complement-rgb-value))
-             (blue (car (cdr complement-rgb-value)))
-             (green (car (cdr (cdr complement-rgb-value))))
-             (complement (color-rgb-to-hex red blue green))
-             (color (thing-at-point 'word t)))
-        (message "%s" (propertize complement
-                                  'face
-                                  `(:foreground ,(color-darken-name color 40)
-                                    :background ,complement))))))
 #+END_SRC
 
 * Make Emacs Friendlier
