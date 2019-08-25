@@ -2477,8 +2477,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     b5238490846474d83188a55a45beb631
-:MODIFIED: [2019-08-20 Tue 11:14]
+:HASH:     b6ba28430feccafc30096fd4916d427f
+:MODIFIED: [2019-08-25 Sun 12:02]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2498,22 +2498,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (evil-org-agenda-set-keys)
 
     :config
-    ;; https://emacs.stackexchange.com/a/26369
-    (defun tm/org-cmp-date-property (prop)
-      "Compare two `org-mode' agenda entries, `A' and `B', by some date property.
-
-  If a is before b, return -1. If a is after b, return 1. If they
-  are equal return t."
-      (lexical-let ((prop prop))
-        #'(lambda (a b)
-            (let* ((a-pos (get-text-property 0 'org-marker a))
-                   (b-pos (get-text-property 0 'org-marker b))
-                   (a-date (or (org-entry-get a-pos prop)
-                               (format "<%s>" (org-read-date t nil "now"))))
-                   (b-date (or (org-entry-get b-pos prop)
-                               (format "<%s>" (org-read-date t nil "now"))))
-                   (cmp (compare-strings a-date nil nil b-date nil nil)))
-              (if (eq cmp t) nil (signum cmp))))))
 
     ;; calendar.org has gotten very large and I received an error
     ;; indicating this variable should be increased
