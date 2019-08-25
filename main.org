@@ -1453,14 +1453,6 @@ Pry stuff: [[https://dev.to/thiagoa/ruby-and-emacs-tip-advanced-pry-integration-
     (ruby-mode . eldoc-mode))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (use-package rubocopfmt
-    :straight t
-    :config
-    (setq rubocopfmt-rubocop-command
-          "rubocop"))
-#+END_SRC
-
 **** Robe
 :PROPERTIES:
 :HASH:     4d490bc51a299cc9329b02799c682b10
