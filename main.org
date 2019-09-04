@@ -862,9 +862,8 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
   (use-package ivy
     :config
     (ivy-mode 1)
-    (ivy-rich-mode 1)
     (setq ivy-use-virtual-buffers t
-          ivy-count-format "%d/%d ")
+	  ivy-count-format "%d/%d ")
     :general
     (ivy-minibuffer-map
      "M-j" 'ivy-next-line
