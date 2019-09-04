@@ -3148,7 +3148,28 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 
     ;; Create `org-agenda' custom commands
     (setq org-agenda-custom-commands
-          `(("w" . "Work agenda views")
+          `(("b" "Daily agenda for both work and home"
+             ((agenda
+               ""
+               ((org-agenda-todo-ignore-scheduled 'past)
+                (org-agenda-time-grid (quote
+                                       ((daily today remove-match)
+                                        (300 600 900 1200 1500 1800 2100)
+                                        "......" "----------------")))
+                (org-agenda-span 'day)
+                (org-super-agenda-groups
+                 '((:name "Trash"
+                    :discard (:tag "HABIT"))))
+                (org-agenda-hide-tags-regexp
+                 (rx (or (and (not (in "H"))
+                              (not (in "O"))
+                              (not (in "M"))
+                              (not (in "E")))
+                         (and (not (in "W"))
+                              (not (in "O"))
+                              (not (in "R"))
+                              (not (in "K"))))))))))
+            ("w" . "Work agenda views")
             ("ww" "Weekly work agenda"
              ((agenda
                ""
@@ -3196,8 +3217,7 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
                  (rx (zero-or-more anything)))
                 (org-super-agenda-groups
                  '((:name "Trash"
-                    :discard (:tag "HOME"
-                              :file-path ,(rx "journal")))
+                    :discard (:tag "HOME"))
                    (:name "Archive DONE tasks"
                     :todo "DONE"
                     :order 4)
