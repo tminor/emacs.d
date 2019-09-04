@@ -1839,8 +1839,8 @@ This makes hunting down paren pairs easier in Elisp:
 
 *** Magit
 :PROPERTIES:
-:HASH:     f1f7d04aba25dab05cea78b048cbdf5a
-:MODIFIED: 2019-06-23 19:35:21
+:HASH:     f9431fed0cc43b1c41ea4c849ce5cbe2
+:MODIFIED: [2019-09-04 Wed 14:09]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1860,7 +1860,8 @@ This makes hunting down paren pairs easier in Elisp:
       "f" 'magit-find-file
       "l" 'magit-log-all
       "s" 'magit-status
-      "p" 'magit-file-popup)
+      "p" 'magit-file-popup
+      "A" 'vc-annotate)
     :config
     (setq magit-diff-refine-hunk t
           auto-revert-check-vc-info t
