@@ -2464,8 +2464,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 ** Org-journal
 :PROPERTIES:
-:HASH:     e22db9504d24cc590bfda637b15ed2a1
-:MODIFIED: [2019-08-25 Sun 11:44]
+:HASH:     bdda6b76e7f6189c01106b384523ba93
+:MODIFIED: [2019-09-04 Wed 14:55]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2483,7 +2483,9 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (org-journal-dir "~/org/work/journal")
     (org-journal-file-type 'weekly)
     (org-journal-enable-agenda-integration t)
-    (org-journal-file-format "%Y%m%d.org"))
+    (org-journal-file-format "%Y%m%d.org")
+    (org-journal-enable-encryption t)
+    (org-journal-encrypt-journal t))
 #+END_SRC
 
 ** Org-agenda
