@@ -985,7 +985,6 @@ Adds configurable output to =ivy= and =counsel= commands.
 
 #+begin_src emacs-lisp
   (use-package ivy-rich
-    :after (ivy)
     :init
     (defun ivy-rich-switch-buffer-icon (candidate)
       (with-current-buffer
