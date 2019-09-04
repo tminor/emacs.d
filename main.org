@@ -1926,6 +1926,26 @@ This library configures Magit and Evil to play well with each other.
 - State "TODO"    from ""        [2019-06-29 Sat 12:17]
 :END:
 
+*** Smerge
+:PROPERTIES:
+:HASH:     59229b8e806ce517ee9a2b33a250513c
+:MODIFIED: [2019-09-04 Wed 14:50]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package smerge-mode
+    :straight nil
+    :general
+    (:keymaps 'smerge-mode-map
+     :states '(normal)
+     "g <up>" 'smerge-keep-upper
+     "g <down>" 'smerge-keep-lower
+     "]n" 'smerge-next
+     "[p" 'smerge-prev
+     "gc" 'smerge-keep-current
+     "gr" 'smerge-resolve))
+#+end_src
+
 * Mail
 :PROPERTIES:
 :HASH:     77e2ccb28c4429b559d2716250583790
