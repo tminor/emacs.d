@@ -51,18 +51,15 @@ them for fear of them disappearing!
 
 ** Table of Contents                                                                                                                                                                                                          :TOC:
 :PROPERTIES:
-:HASH:     572dcdae65e5cf89439dc126243d1f7c
-:MODIFIED: [2019-08-24 Sat 20:32]
+:HASH:     b49f1baf25744227b9cd7b388bea29ff
+:MODIFIED: [2019-09-04 Wed 13:02]
 :END:
 
 - [[#intro][Intro]]
   - [[#links-to-interesting-configs][Links to interesting configs]]
-- [[#bootstrap][Bootstrap]]
-  - [[#reorganize-bootstrap-section][Reorganize 'bootstrap' section]]
-  - [[#no-littering][No-littering]]
-  - [[#load-path][Load path]]
-  - [[#elisp][Elisp]]
 - [[#make-emacs-friendlier][Make Emacs Friendlier]]
+  - [[#load-path][Load path]]
+  - [[#cleaningtidying][Cleaning/tidying]]
   - [[#key-bindings][Key bindings]]
   - [[#emacs-navigation][Emacs navigation]]
   - [[#interface-gui][Interface (GUI)]]
@@ -71,7 +68,6 @@ them for fear of them disappearing!
   - [[#themes][Themes]]
   - [[#config-management][Config management]]
   - [[#clipboard-management][Clipboard management]]
-  - [[#cleaningtidying][Cleaning/tidying]]
   - [[#font][Font]]
   - [[#search-modes][Search modes]]
   - [[#emacswiki][EmacsWiki]]
@@ -84,7 +80,8 @@ them for fear of them disappearing!
   - [[#miscellany][Miscellany]]
   - [[#version-control][Version control]]
 - [[#mail][Mail]]
-  - [[#elisp-1][Elisp]]
+  - [[#refine-notmuch-alertsinclude-x11-aware-function][Refine notmuch alerts/include X11 aware function]]
+  - [[#reminders-for-sent-mail][Reminders for sent mail]]
   - [[#notmuch][Notmuch]]
   - [[#gnus][Gnus]]
 - [[#org-mode][Org-mode]]
@@ -116,34 +113,77 @@ them for fear of them disappearing!
   - [[#spell-check][Spell check]]
   - [[#file-type-modes-not-prog-mode-files][File type modes (not =prog-mode= files)]]
 
-* Bootstrap
+* Make Emacs Friendlier
 :PROPERTIES:
-:HASH:     81c35aa54b506d25c88189f9ccdcf49e
-:MODIFIED: 2019-06-28 13:21:15
+:HASH:     2e091ba324c4ad4bb9d9a18c3357c6eb
+:MODIFIED: 2019-03-08 15:48:05
+:END:
+
+** Load path
+:PROPERTIES:
+:HASH:     d8e0bd6c649de49b656336b237438d72
+:MODIFIED: 2019-03-08 15:50:42
+:END:
+
+*** Add non-package Elisp to =load-path=
+:PROPERTIES:
+:HASH:     6748e7faf3539873d6e396426d0b1b01
+:MODIFIED: [2019-08-25 Sun 09:57]
+:END:
+
+Add non-package provided Elisp to Emacs's =load-path=:
+
+#+BEGIN_SRC emacs-lisp
+  (let ((default-directory "~/.emacs.d/lisp/"))
+    (normal-top-level-add-subdirs-to-load-path))
+#+END_SRC
+
+** Cleaning/tidying
+:PROPERTIES:
+:HASH:     8ab3300d36591b24686a3e77931385cc
+:MODIFIED: 2019-03-08 15:49:53
+:END:
+
+*** Buffer cleanup
+:PROPERTIES:
+:HASH:     420f5a0d11966bb932a541c13a1a77fe
+:MODIFIED: [2019-07-05 Fri 08:46]
+:END:
+
+Clean up matching buffers at midnight:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package midnight
+    :config
+    (setq clean-buffer-list-delay-general 2
+          clean-buffer-list-kill-regexps '("\\`\\*Man "
+                                           "\\`\\*helpful "
+                                           "\\`\\*notmuch-"
+                                           "\\magit"
+                                           "\\`\\*CPU-Profiler-"
+                                           "\\`\\*deadgrep"
+                                           "\\`\\*Calendar"
+                                           "\\`\\*Proced"
+                                           "\\`\\*WoMan"))
+    (midnight-mode))
+#+END_SRC
+
+**** TODO Add more modes/buffers to kill regexps                   :easy:
+:PROPERTIES:
+:HASH:     694c0f828f4145cd1ff47e8c30a5a790
+:MODIFIED: 2019-06-28 16:44:35
 :END:
 :LOGBOOK:
-- State "TODO"       from              [2019-06-27 Thu 21:48]
+- State "TODO"       from              [2019-06-28 Fri 16:44]
 :END:
 
-** TODO Reorganize 'bootstrap' section                               :easy:
+*** No-littering
 :PROPERTIES:
-:HASH:     c58e73ec2378bc247ab7ba67fd0c515b
-:MODIFIED: 2019-06-28 16:38:43
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-06-28 Fri 13:20]
+:HASH:     7ca36f322840d386d6833dcfeb26da6b
+:MODIFIED: [2019-09-04 Wed 13:02]
 :END:
 
-Break this section apart and get rid of it. Boot strap code has been
-moved to =init.el=.
-
-** No-littering
-:PROPERTIES:
-:HASH:     c4c0fa8013873f91e5134fc9257ff3a7
-:MODIFIED: 2019-06-21 12:24:17
-:END:
-
-Keep files we don't manage from accumulating in =~/.emacs.d/=:
+Keeps files we don't manage from accumulating in =~/.emacs.d/=:
 
 #+BEGIN_SRC emacs-lisp
   ;; Surely there's a better way...
@@ -166,75 +206,10 @@ Keep files we don't manage from accumulating in =~/.emacs.d/=:
     (setq savehist-file (no-littering-expand-var-file-name "history")))
 #+END_SRC
 
-** Load path
+*** TODO Add github link and quote section
 :PROPERTIES:
-:HASH:     d8e0bd6c649de49b656336b237438d72
-:MODIFIED: 2019-03-08 15:50:42
-:END:
-
-*** Elisp
-:PROPERTIES:
-:HASH:     2962e4541e9a12c921dc2471bf7ee31b
-:MODIFIED: 2019-03-08 15:50:42
-:END:
-
-Add non-package provided Elisp to Emacs's =load-path=:
-
-#+BEGIN_SRC emacs-lisp
-  (let ((default-directory "~/.emacs.d/lisp/"))
-    (normal-top-level-add-subdirs-to-load-path))
-#+END_SRC
-
-** Elisp
-:PROPERTIES:
-:HASH:     df9560ab77ed86128b91fa1025602cb6
-:MODIFIED: [2019-07-03 Wed 02:36]
-:END:
-
-Simple pgrep using only Emacs Lisp functions:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/pgrep (string)
-    "Search process list for any process name matching STRING."
-    (interactive "sProcess name: ")
-    (let ((pid-list)
-          (proc-match))
-      ;; Gets a list of PIDs and constructs a list of lists containing
-      ;; attribute alists for each process.
-      (dolist (pid (list-system-processes) pid-list)
-        (setq pid-list (cons (process-attributes pid) pid-list)))
-      ;; Looks for STRING in PID-LIST and returns PID.
-      (dolist (proc pid-list)
-        (if (string-match-p (regexp-quote string)
-                            (cdr (assoc-string 'args proc)))
-            (return (cdr (assoc 'args proc)))
-          nil))))
-#+END_SRC
-
-Function for finding and printing color and its complement:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/complement-for-color-at-point ()
-    "Return color name for complement of color name at point."
-    (interactive)
-    (with-current-buffer (buffer-name)
-      (let* ((complement-rgb-value
-              (color-complement (thing-at-point 'word t)))
-             (red (car complement-rgb-value))
-             (blue (car (cdr complement-rgb-value)))
-             (green (car (cdr (cdr complement-rgb-value))))
-             (complement (color-rgb-to-hex red blue green))
-             (color (thing-at-point 'word t)))
-        (message "%s" (propertize complement
-                                  'face
-                                  `(:foreground ,(color-darken-name color 40)
-                                    :background ,complement))))))
-#+END_SRC
-
-* Make Emacs Friendlier
-:PROPERTIES:
-:HASH:     2e091ba324c4ad4bb9d9a18c3357c6eb
-:MODIFIED: 2019-03-08 15:48:05
+:HASH:     b265197260a0826dcd7ec487494f4184
+:MODIFIED: [2019-08-25 Sun 09:35]
 :END:
 
 ** Key bindings
@@ -836,8 +811,8 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
 
 ** Help/Info
 :PROPERTIES:
-:HASH:     733a7f943cb8158e59147d198c993f1f
-:MODIFIED: 2019-06-28 16:04:15
+:HASH:     75a7710ab06afdfc79a12143c22390b7
+:MODIFIED: [2019-08-25 Sun 10:15]
 :END:
 
 Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
@@ -855,6 +830,13 @@ Improved *help* buffers with [[https://github.com/Wilfred/helpful][helpful]]:
 #+END_SRC
 
 Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+]] later.
+
+*** TODO Add =view-lossage= to help prefix
+:PROPERTIES:
+:HASH:     9057bb904ed9c703c799cc634ea87d11
+:MODIFIED: [2019-08-25 Sun 10:15]
+:END:
+
 *** TODO Add keybinding for =general-describe-keybindings=          :easy:
 :PROPERTIES:
 :HASH:     3683c059669d2be6ffbb883549eda0f1
@@ -873,17 +855,16 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 
 *** Ivy
 :PROPERTIES:
-:HASH:     e18724770624550e89eb76b51b646e2d
-:MODIFIED: 2019-06-29 11:34:46
+:HASH:     ecbb30b96632218416df169cfa999b4e
+:MODIFIED: [2019-09-04 Wed 13:02]
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :config
     (ivy-mode 1)
-    (ivy-rich-mode 1)
     (setq ivy-use-virtual-buffers t
-          ivy-count-format "%d/%d ")
+	  ivy-count-format "%d/%d ")
     :general
     (ivy-minibuffer-map
      "M-j" 'ivy-next-line
@@ -997,15 +978,14 @@ Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
 
 *** [[https://github.com/Yevgnen/ivy-rich/blob/master/README.org][=ivy-rich=]]
 :PROPERTIES:
-:HASH:     6afa841c8556133add34e948c3d7ff80
-:MODIFIED: [2019-07-03 Wed 01:19]
+:HASH:     d1fc2d1f96107aa0d1ed66bcbcde316d
+:MODIFIED: [2019-09-04 Wed 13:02]
 :END:
 
 Adds configurable output to =ivy= and =counsel= commands.
 
 #+begin_src emacs-lisp
   (use-package ivy-rich
-    :after (ivy)
     :init
     (defun ivy-rich-switch-buffer-icon (candidate)
       (with-current-buffer
@@ -1185,45 +1165,6 @@ Ensure =kill-ring= is saved between sessions:
 :LOGBOOK:
 - State "TODO"       from              [2019-06-28 Fri 16:43]
 :END:
-** Cleaning/tidying
-:PROPERTIES:
-:HASH:     8ab3300d36591b24686a3e77931385cc
-:MODIFIED: 2019-03-08 15:49:53
-:END:
-
-*** Buffer cleanup
-:PROPERTIES:
-:HASH:     420f5a0d11966bb932a541c13a1a77fe
-:MODIFIED: [2019-07-05 Fri 08:46]
-:END:
-
-Clean up matching buffers at midnight:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package midnight
-    :config
-    (setq clean-buffer-list-delay-general 2
-          clean-buffer-list-kill-regexps '("\\`\\*Man "
-                                           "\\`\\*helpful "
-                                           "\\`\\*notmuch-"
-                                           "\\magit"
-                                           "\\`\\*CPU-Profiler-"
-                                           "\\`\\*deadgrep"
-                                           "\\`\\*Calendar"
-                                           "\\`\\*Proced"
-                                           "\\`\\*WoMan"))
-    (midnight-mode))
-#+END_SRC
-
-**** TODO Add more modes/buffers to kill regexps                   :easy:
-:PROPERTIES:
-:HASH:     694c0f828f4145cd1ff47e8c30a5a790
-:MODIFIED: 2019-06-28 16:44:35
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-06-28 Fri 16:44]
-:END:
-
 ** Font
 :PROPERTIES:
 :HASH:     6ead8f97073d58cc0e93c9cd0cc96db2
@@ -1427,8 +1368,8 @@ script! Fish syntax highlighting:
 
 *** Ruby
 :PROPERTIES:
-:HASH:     92f6a087e7551a44d9657bd32c4218e8
-:MODIFIED: [2019-08-24 Sat 21:09]
+:HASH:     e008a1d95bf193838f05888108dac611
+:MODIFIED: [2019-09-04 Wed 13:02]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-04 Mon 16:51]
@@ -1572,10 +1513,10 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
     (setq sh-basic-offset 2))
 #+END_SRC
 
-*** Elisp
+*** Emacs Lisp
 :PROPERTIES:
-:HASH:     55e5ffb39c78851888a18871af9febf8
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     ad5a105b220494b51875db198752a4e2
+:MODIFIED: [2019-08-25 Sun 09:59]
 :END:
 
 **** Formatting
@@ -1586,8 +1527,8 @@ Better paren highlighting with [[https://github.com/tsdh/highlight-parentheses.e
 
 ***** Indent keywords properly
 :PROPERTIES:
-:HASH:     57d44d33df95137bc7c45c9ca3e4119c
-:MODIFIED: 2019-03-08 15:50:42
+:HASH:     29985167ef0c41b122b4f52b267292ff
+:MODIFIED: [2019-08-25 Sun 09:59]
 :END:
 
 By default, =lisp-indent-function= indents =:keywords= improperly:
@@ -1598,7 +1539,7 @@ By default, =lisp-indent-function= indents =:keywords= improperly:
 #+END_QUOTE
 
 To fix this, define a new function to use for =lisp-indent-function=
-(solution from [[https://emacs.stackexchange.com/a/10233][here]]):
+(solution found [[https://emacs.stackexchange.com/a/10233][here]]):
 
 #+BEGIN_SRC emacs-lisp
   (eval-after-load "lisp-mode"
@@ -1968,40 +1909,23 @@ This library configures Magit and Evil to play well with each other.
 
 **** TODO Tweak magit =display-buffer=                             :hard:
 :PROPERTIES:
-:HASH:     5e647e092f3a059f6865b1268b638456
-:MODIFIED: 2019-06-28 16:50:44
+:HASH:     92424a3c680de51903a4f8377510a99d
+:MODIFIED: [2019-08-25 Sun 10:11]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-26 Wed 14:26]
 :END:
 
 =magit-display-*=
-**** TODO Change face for hunks
+
+**** TODO Change face for hunks                                    :easy:
 :PROPERTIES:
-:HASH:     360de633bc7e82d40aef6ae7d1927f51
-:MODIFIED: 2019-06-29 12:18:15
+:HASH:     2a7996b05bf5e317b08df90e35f24240
+:MODIFIED: [2019-08-25 Sun 10:12]
 :END:
 :LOGBOOK:
 - State "TODO"    from ""        [2019-06-29 Sat 12:17]
 :END:
-*** Elisp
-:PROPERTIES:
-:HASH:     c6ae3224095f1fc9fbc8196733a8b0de
-:MODIFIED: [2019-08-23 Fri 09:19]
-:END:
-
-From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#functions-7][here]]:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/magit-blame-toggle ()
-    "Toggle magit-blame-mode on and off interactively.
-
-  Source: https://git.io/vQKub"
-    (interactive)
-    (if (bound-and-true-p magit-blame-mode)
-        (magit-blame-quit)
-      (call-interactively 'magit-blame)))
-#+end_src
 
 * Mail
 :PROPERTIES:
@@ -2009,220 +1933,25 @@ From [[https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#function
 :MODIFIED: 2019-03-08 14:47:24
 :END:
 
-** Elisp
+** TODO Refine notmuch alerts/include X11 aware function             :hard:
 :PROPERTIES:
-:HASH:     ba12765916563b3f00515d61783c7933
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-*** Refresh specified buffer
-:PROPERTIES:
-:HASH:     126d4867987bee8fb6a59afa59a66f85
-:MODIFIED: 2019-06-03 17:06:34
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/notmuch-refresh-feed-buffer ()
-    "Invoke `notmuch-refresh-this-buffer' specified buffer.
-
-  The buffer is silently refreshed, i.e. they are not forced to
-  be displayed."
-    (interactive)
-    (dolist (buffer (buffer-list))
-      (let ((buffer-mode (buffer-local-value 'major-mode buffer)))
-        (with-current-buffer buffer
-          (when (and (memq buffer-mode '(notmuch-show-mode
-                                         notmuch-tree-mode
-                                         notmuch-search-mode
-                                         notmuch-hello-mode))
-                     (string= (buffer-name) "*notmuch-saved-search-feed*"))
-            (notmuch-refresh-this-buffer))))))
-#+END_SRC
-
-*** Setting faces
-:PROPERTIES:
-:HASH:     c5941e1d0eb532b3955ca2a7efb0488b
-:MODIFIED: 2019-03-08 18:04:39
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/set-feed-faces ()
-    (if (string= (buffer-name) "*notmuch-saved-search-feed*")
-        (progn
-          (setq notmuch-search-line-faces '(("git-commits" . '(:foreground "green"))
-                                            ("nagios" . '(:foreground "red"))
-                                            ("servicenow" . '(:foreground "yellow"))
-                                            ("tenshi-uga" . '(:foreground "DodgerBlue1"))
-                                            ("tenshi-db300" . '(:foreground "DodgerBlue1"))
-                                            ("ssladmin" . '(:foreground "pink"))
-                                            ("unread" . '(:background "gray15"))))
-          (make-local-variable 'notmuch-search-line-faces))
-      (setq notmuch-search-line-faces
-            '(("unread" . notmuch-search-unread-face)
-              ("flagged" . notmuch-search-flagged-face)))))
-#+END_SRC
-
-*** Sending
-:PROPERTIES:
-:HASH:     bfd4e36f7b78a41304a0ffaf94d8641e
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-**** Signatures
-:PROPERTIES:
-:HASH:     bcca16c42b05160ca1f0157b0d3c44db
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-#+BEGIN_SRC emacs-lisp
-(defvar tm/signature-alist '((?f "Formal"
-			      (lambda () (insert-file-contents
-					  "~/org/sigs/formal")))
-			  (?i "Informal"
-			      (lambda () (insert-file-contents
-					  "~/org/sigs/informal")))))
-
-(defun tm/signature-choose ()
-  "Lets the user choose the animal and takes the corresponding action.
-Returns whatever the action returns."
-  (interactive)
-  (let ((choice (read-char-choice (mapconcat (lambda (item) (format "%c: %s" (car item) (cadr item))) tm/signature-alist "; ")
-                  (mapcar #'car tm/signature-alist))))
-    (funcall (nth 2 (assoc choice tm/signature-alist)))))
-
-(add-hook 'notmuch-message-mode-hook
-          (lambda () (local-set-key (kbd "C-c C-w") #'tm/signature-choose)))
-#+END_SRC
-
-*** TODO Refine notmuch alerts/include X11 aware function           :hard:
-:PROPERTIES:
-:HASH:     39b732fcba095641190ef76879f63568
-:MODIFIED: 2019-06-28 16:52:18
+:HASH:     b980f4d91c4d78d935ee09e08ef08ae3
+:MODIFIED: [2019-08-25 Sun 10:44]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-06-28 Fri 16:51]
 :END:
 
-*** Alerts
+** TODO Reminders for sent mail
 :PROPERTIES:
-:HASH:     6a24eed91c17bfccd0e336c1f0fd046c
-:MODIFIED: [2019-07-15 Mon 15:52]
-:END:
-:LOGBOOK:
-- State "TODO"       from              [2019-03-11 Mon 16:42]
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/notmuch-notify ()
-    "Generate desktop notifcations for new mail.
-
-  Utilize `notmuch-call-notmuch-sexp' to fetch the latest messages
-  tagged inbox and send a notification to the desktop"
-    (let* ((latest-messages
-            (apply
-             #'notmuch-call-notmuch-sexp
-             '("search"
-               "--format=sexp"
-               "--format-version=4"
-               "--sort=newest-first"
-               "tag:inbox"
-               "date:45secs..")))
-           (who)
-           (when)
-           (what)
-           (mail-message)
-           (body))
-      (mapcar (lambda (mail-message)
-                (setq when (plist-get mail-message :date_relative))
-                (setq who (if (string-match-p "|"
-                                              (plist-get mail-message :authors))
-                              (progn (string-match "[[:space:],]\\{0,2\\}\\([a-zA-z[:space:]]+\\)|"
-                                                   (plist-get mail-message
-                                                              :authors))
-                                     (match-string 1 (plist-get mail-message
-                                                                :authors)))
-                            (plist-get mail-message :authors)))
-                (setq what (plist-get mail-message :subject))
-                (setq body (format "<b>%s</b>\n<b>%s</b>\n\n%s" when who what))
-                (notifications-notify :title "New message(s)!\n"
-                                      :body body
-                                      :app-name "notmuchmail"))
-              latest-messages)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/notmuch-unread ()
-    "Show unread message count in mode-line."
-    (let* ((unread-mail (apply
-                         #'notmuch-call-notmuch-sexp
-                         '("search"
-                           "--format=sexp"
-                           "--format-version=4"
-                           "--sort=newest-first"
-                           "--output=messages"
-                           "tag:inbox"
-                           "and tag:unread"))))
-      (setq unread-string (propertize
-                           (format "%s %s"
-                                   (all-the-icons-material
-                                    "mail"
-                                    :face 'all-the-icons-cyan-alt)
-                                   (length unread-mail))
-                           'font-lock-face '(:foreground "#61dafb")))
-      (if (> (length unread-mail) 0)
-          (progn
-            (unless global-mode-string (setq global-mode-string '("")))
-            (unless (memq unread-string global-mode-string)
-              (setq global-mode-string (append global-mode-string
-                                               '(unread-string)))))
-        (setq global-mode-string nil))))
-#+END_SRC
-
-*** TODO Reminders for sent mail
-:PROPERTIES:
-:HASH:     ab24c782ddaadca26d2c549655a3ffea
-:MODIFIED: 2019-03-08 15:50:43
+:HASH:     afb4fe7ed0cd8b4883f7485c0fbd8cac
+:MODIFIED: [2019-08-25 Sun 10:44]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-06 Wed 09:32]
 :END:
 
 Reminders a la Gmail about sent mail that hasn't received a response.
-
-*** Feed highlighting
-:PROPERTIES:
-:HASH:     a10fbdc7b002315029169a2a1baa82d3
-:MODIFIED: 2019-06-03 17:06:34
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (defface notmuch-feed-gluu
-    '((t :foreground "purple2"
-         :background "#6e6ed3d31110"
-         :weight bold))
-    "Highlight gluu messages.")
-  (defface notmuch-feed-nagios-problem
-    '((t :foreground "#ffff00008080"
-         :weight bold))
-    "Highlight gluu messages.")
-  (defface notmuch-feed-nagios-recovery
-    '((t :foreground "SpringGreen"
-         :weight bold))
-    "Highlight gluu messages.")
-  (defface notmuch-feed-inbox
-    '((t :foreground "cyan"
-         :weight bold))
-    "Highlight gluu messages.")
-
-  (defun tm/highlight-notmuch-feed ()
-    "Highlight interesting words in saved search."
-    (let ((phrase-alist '(("idp-demo-prod" . notmuch-feed-gluu)
-                          ("PROBLEM" . notmuch-feed-nagios-problem)
-                          ("RECOVERY" . notmuch-feed-nagios-recovery)
-                          ("inbox" . notmuch-feed-inbox))))
-      (cl-loop for (key . value) in phrase-alist do
-               (highlight-phrase key value))))
-#+END_SRC
 
 ** Notmuch
 :PROPERTIES:
@@ -2490,30 +2219,46 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     8375541cc142d4d2f6d2a835a5a7bf88
-:MODIFIED: [2019-07-08 Mon 13:56]
+:HASH:     a9aab527d782aa314a8a72ee33711d61
+:MODIFIED: [2019-09-04 Wed 13:02]
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :straight org-plus-contrib
     :demand t
+    :init
+    (require 'tm-org)
+    ;; Evil key bindings in Org mode
+    (use-package evil-org
+      :straight
+      (:type git :host github :repo "Somelauw/evil-org-mode")
+      :hook
+      (org-mode . evil-org-mode)
+      (evil-org-mode . (lambda ()
+			 (evil-org-set-key-theme '(textobjects
+						   insert
+						   navigation
+						   additional
+						   shift
+						   todo
+						   heading)))))
     :hook
     (after-init . (lambda ()
-                    (if (try-completion "main.org"
-                                        (mapcar #'buffer-name
-                                                (buffer-list)))
-                        (kill-buffer "main.org"))))
+		    (if (try-completion "main.org"
+					(mapcar #'buffer-name
+						(buffer-list)))
+			(kill-buffer "main.org"))))
 
     (evil-insert-state-exit . (lambda ()
-                                (if (string= major-mode
-                                             "org-mode")
-                                    (save-buffer))))
+				(if (string= major-mode
+					     "org-mode")
+				    (save-buffer))))
     :general
     (:keymaps 'org-mode-map
      :states '(normal)
-     "<S-iso-lefttab>" 'org-global-cycle
-     "zf" 'tm/org-set-focus-time)
+     "<S-iso-lefttab>" 'org-global-cycle)
+
     (tm/leader-def
       :infix "o"
       :prefix-command 'tm/org-prefix-command
@@ -2553,30 +2298,6 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       :straight
       (:type git :host github :repo "alphapapa/org-ql"))
 
-    (defmacro tm/org-make-level-faces (level)
-      "Generate commands and set vars for creating new `org-level-face's."
-      (let ((num 0))
-        (while (< num (+ (string-to-number level) 1))
-          (progn
-            `(defface ,(intern (concat "org-level-"
-                                       level))
-               (org-compatible-face nil
-                 '((((class color) (min-colors 16) (background light))
-                    (:foreground "RosyBrown"))
-                   (((class color) (min-colors 16) (background dark))
-                    (:foreground "LightSalmon"))
-                   (((class color) (min-colors 8)) (:foreground "green"))))
-               ,(format "Face used for level %s headlines." level)
-               :group 'org-faces)
-            (let ((face (intern (concat "org-level-" level))))
-              (unless (member face
-                              org-level-faces)
-                (setq org-level-faces (append org-level-faces
-                                              (list face))))))
-          (setq num (+ num 1))))
-      (setq org-n-level-faces
-            (string-to-number level)))
-
     (tm/org-make-level-faces "16")
 
     ;; Makes more outline path faces available.
@@ -2592,22 +2313,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       (org-mode . (lambda () (org-bullets-mode 1)))
       :config
       (setq org-bullets-bullet-list
-            '("⑴" "⑵" "⑶" "⑷" "⑸" "⑹" "⑺" "⑻" "⑼" "⑽"
-              "⑾" "⑿" "⒀" "⒁" "⒂" "⒃")))
-
-    ;; Evil key bindings in Org mode
-    (use-package evil-org
-      :after org
-      :hook
-      (org-mode . evil-org-mode)
-      (evil-org-mode . (lambda ()
-                         (evil-org-set-key-theme '(textobjects
-                                                   insert
-                                                   navigation
-                                                   additional
-                                                   shift
-                                                   todo
-                                                   heading)))))
+	    '("⑴" "⑵" "⑶" "⑷" "⑸" "⑹" "⑺" "⑻" "⑼" "⑽"
+	      "⑾" "⑿" "⒀" "⒁" "⒂" "⒃")))
 
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
@@ -2630,21 +2337,21 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; Add modified time property when Org mode files are saved
     (add-hook 'before-save-hook
-              (lambda ()
-                (when (eq major-mode 'org-mode)
-                  (org-map-entries #'tm/update-modification-time ;; FUNC
-                                   nil			   ;; MATCH
-                                   'file			   ;; SCOPE
-                                   #'tm/skip-nonmodified)))) ;; SKIP
+	      (lambda ()
+		(when (eq major-mode 'org-mode)
+		  (org-map-entries #'tm/update-modification-time ;; FUNC
+				   nil			   ;; MATCH
+				   'file			   ;; SCOPE
+				   #'tm/skip-nonmodified)))) ;; SKIP
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
-          '((sequence "TODO(t!)"	       ; TODO for projects or one offs
-                      "WAIT(w@)"	       ; Waiting on someone/something
-                      "|"
-                      "DONE(d@)"
-                      "CANCELLED(c@)"
-                      "NOTE(n!)")))
+	  '((sequence "TODO(t!)"	       ; TODO for projects or one offs
+		      "WAIT(w@)"	       ; Waiting on someone/something
+		      "|"
+		      "DONE(d@)"
+		      "CANCELLED(c@)"
+		      "NOTE(n!)")))
 
     ;; Enable state change logging in :LOGBOOK: drawer
     (setq org-log-into-drawer t)
@@ -2666,29 +2373,29 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;;   `org-modules'.
     ;;
     (setq org-modules
-          '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
-                     org-irc org-mhe org-rmail org-w3m org-habit-plus
-                     org-id))
+	  '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
+		     org-irc org-mhe org-rmail org-w3m org-habit-plus
+		     org-id))
 
     ;; Faces
 
     ;; Task state faces
     (setq org-todo-keyword-faces
-          '(("TODO" :background "#DD0B53" :foreground "#EAEAEA"
-             :weight bold :box (:line-width -1 :style released-button))
-            ("DONE" :background "#0F0" :foreground "#000" :weight bold
-             :box (:line-width -1 :style released-button))
-            ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
-             :box (:line-width -1 :style released-button))
-            ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
-             :weight bold :box (:line-width -1 :style released-button))
-            ("MEETING" :background "#3EDAD4" :foreground "#000"
-             :weight bold :box (:line-width -1 :style released-button))))
+	  '(("TODO" :background "#DD0B53" :foreground "#EAEAEA"
+	     :weight bold :box (:line-width -1 :style released-button))
+	    ("DONE" :background "#0F0" :foreground "#000" :weight bold
+	     :box (:line-width -1 :style released-button))
+	    ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
+	     :box (:line-width -1 :style released-button))
+	    ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
+	     :weight bold :box (:line-width -1 :style released-button))
+	    ("MEETING" :background "#3EDAD4" :foreground "#000"
+	     :weight bold :box (:line-width -1 :style released-button))))
 
     ;; Priority faces
     (setq org-priority-faces '((?A . (:foreground "#DD0B53" :weight bold))
-                               (?B . (:foreground "#FEDA98"))
-                               (?C . (:foreground "#0F0"))))
+			       (?B . (:foreground "#FEDA98"))
+			       (?C . (:foreground "#0F0"))))
 
     ;;  ;;;;;;;;;;;;;;;;;;;
     ;;
@@ -2700,109 +2407,14 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; `org-refile'.  The following enables refiling to any file in
     ;; `org-agenda-files' and any heading 10 levels or less therein.
     (setq org-refile-targets
-          `((org-agenda-files . (:maxlevel . 10))
-            (,(concat user-emacs-directory "main.org") . (:maxlevel . 16))))
+	  `((org-agenda-files . (:maxlevel . 10))
+	    (,(concat user-emacs-directory "main.org") . (:maxlevel . 16))))
 
     ;; Setting the following to nil enables ivy read completions.
     (setq org-outline-path-complete-in-steps nil)
 
     ;; Includes file names in refile targets.
     (setq org-refile-use-outline-path 'file))
-#+END_SRC
-
-*** Elisp
-:PROPERTIES:
-:HASH:     55e5ffb39c78851888a18871af9febf8
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-**** Tag placement
-:PROPERTIES:
-:HASH:     8ee1aa3aa218557d747fff03e57be937
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/place-agenda-tags ()
-      "Flush tags to right side of agenda window."
-      (with-current-buffer
-          (buffer-name)
-        (if (derived-mode-p 'org-agenda-mode)
-            (progn
-              (setq org-agenda-tags-column (abs (- 20 (window-width))))
-              (setq org-habit-graph-column (abs (- 65 (window-width))))
-              (org-agenda-align-tags))
-          nil)))
-
-  (defun tm/place-org-tags ()
-      "Align tags with right side of current window."
-      (with-current-buffer
-          (buffer-name)
-        (if (derived-mode-p 'org-mode)
-            (progn
-              (setq org-tags-column (abs (- 30 (window-width))))
-              (org-align-all-tags))
-          nil)))
-#+END_SRC
-
-**** Org-refile functions
-:PROPERTIES:
-:HASH:     f847514018712eb68be765b1360e070f
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Automatically-remove-inherited-tags-from-tasks-after-refiling.org][here]]:
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/org-remove-inherited-local-tags ()
-    "Remove local tags that can be inherited instead."
-    (let* ((target-tags-local (org-get-tags-at nil 'local))
-           ;; We have to remove the local tags otherwise they would not show up
-           ;; as being inherited if they are present on parents---the local tag
-           ;; would "override" the parent
-           (target-tags-inherited
-            (unwind-protect
-                (progn
-                  (org-set-tags-to nil)
-                  (org-get-tags-at))
-              (org-set-tags-to target-tags-local))))
-      (-each target-tags-local
-        (lambda (tag)
-          (when (member tag target-tags-inherited)
-            (org-toggle-tag tag 'off))))))
-#+END_SRC
-
-**** Set =FOCUS= property
-:PROPERTIES:
-:HASH:     ef961ceede3b5e954a6b01f89f537ae5
-:MODIFIED: [2019-06-30 Sun 11:24]
-:END:
-
-#+begin_src emacs-lisp
-  (defun tm/org-set-focus-time ()
-    "Set an active timestamp for FOCUS property."
-    (interactive)
-    (let ((time (with-temp-buffer
-                  (call-interactively #'org-time-stamp)
-                  (buffer-string))))
-      (org-set-property "FOCUS" time)))
-#+end_src
-
-*** Org-recent-headers
-:PROPERTIES:
-:HASH:     5dadc079c21fb8abb5409e2ec21bf24d
-:MODIFIED: [2019-07-09 Tue 13:21]
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package org-recent-headings
-    :straight t
-    :init
-    (setq org-recent-headings-save-file
-          (concat no-littering-var-directory
-                  "org-recent-headings"))
-    :config
-    (org-recent-headings-mode))
 #+END_SRC
 
 *** [[https://github.com/marcinkoziej/org-pomodoro][=org-pomodoro=]]
@@ -2821,8 +2433,8 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 
 *** TODO Add custom org link for emails                         :moderate:
 :PROPERTIES:
-:HASH:     4fc5a070bcbc73244a67032c73a4c062
-:MODIFIED: [2019-06-30 Sun 11:30]
+:HASH:     cdd82bbceeb30e15afd7055d5ffe0de6
+:MODIFIED: [2019-08-25 Sun 10:54]
 :FOCUS:    <2019-07-01 Mon>
 :END:
 :LOGBOOK:
@@ -2830,42 +2442,15 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 :END:
 
 [[https://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html][Use Org-Mode Links for Absolutely Anything]]
+
 ** Org-journal
 :PROPERTIES:
-:HASH:     dea753dc4a3fa7d62d1dd2b651b3be53
-:MODIFIED: 2019-06-23 11:05:39
+:HASH:     e22db9504d24cc590bfda637b15ed2a1
+:MODIFIED: [2019-08-25 Sun 11:44]
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-journal
-    :straight t
-    :preface
-    (defun org-journal-work-find-location ()
-      (setq org-journal-dir "~/org/work/journal/")
-      ;; Open today's journal, but specify a non-nil prefix argument in
-      ;; order to inhibit inserting the heading; org-capture will insert
-      ;; the heading.
-      (org-journal-new-entry t)
-      ;; Position point on the journal's top-level heading so that
-      ;; org-capture will add the new entry as a child entry.
-      (goto-char (point-max))
-      (org-up-element)
-      (goto-char (org-find-exact-headline-in-buffer
-                  (org-find-top-headline
-                   (point-max)))))
-    (defun org-journal-home-find-location ()
-      (setq org-journal-dir "~/org/home/journal/")
-      ;; Open today's journal, but specify a non-nil prefix argument in
-      ;; order to inhibit inserting the heading; org-capture will insert
-      ;; the heading.
-      (org-journal-new-entry t)
-      ;; Position point on the journal's top-level heading so that
-      ;; org-capture will add the new entry as a child entry.
-      (goto-char (point-max))
-      (org-up-element)
-      (goto-char (org-find-exact-headline-in-buffer
-                  (org-find-top-headline
-                   (point-max)))))
     :general
     (tm/leader-def
       :infix "j"
@@ -2888,183 +2473,15 @@ From [[https://github.com/Fuco1/Fuco1.github.io/blob/master/posts/2017-05-09-Aut
 :MODIFIED: 2019-03-08 15:50:43
 :END:
 
-*** Elisp
-:PROPERTIES:
-:HASH:     55e5ffb39c78851888a18871af9febf8
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-**** Add modified date property to headings in Org mode file
-:PROPERTIES:
-:HASH:     7d50d3dfc7fb325ab976bef44d97bd04
-:MODIFIED: [2019-06-30 Sun 11:05]
-:END:
-
-Functions for calculating last update time per Org heading (from
-[[https://emacs.stackexchange.com/a/39376][here]]):
-
-#+BEGIN_SRC emacs-lisp
-  (defun tm/getentryhash ()
-    "Get the hash sum of the text in current entry, except :HASH:
-  and :MODIFIED: property texts."
-    (save-excursion
-      (let* ((full-str
-              (buffer-substring-no-properties (point-min)
-                                              (point-max)))
-             (str-nohash
-              (if (string-match "^ *:HASH:.+\n" full-str)
-                  (replace-match "" nil nil full-str)
-                full-str))
-             (str-nohash-nomod
-              (if (string-match "^ *:MODIFIED:.+\n" str-nohash)
-                  (replace-match "" nil nil str-nohash)
-                str-nohash))
-             (str-nohash-nomod-nopropbeg
-              (if (string-match "^ *:PROPERTIES:\n" str-nohash-nomod)
-                  (replace-match "" nil nil str-nohash-nomod)
-                str-nohash-nomod))
-             (str-nohash-nomod-nopropbeg-end
-              (if (string-match "^ *:END:\n" str-nohash-nomod-nopropbeg)
-                  (replace-match "" nil nil str-nohash-nomod-nopropbeg)
-                str-nohash-nomod-nopropbeg)))
-        (secure-hash 'md5 str-nohash-nomod-nopropbeg-end))))
-
-  (defun tm/update-modification-time ()
-    "Set the :MODIFIED: property of the current entry to NOW and
-  update :HASH: property."
-    (save-excursion
-      (save-restriction
-        (let* ((beg
-                (progn
-                  (org-back-to-heading)
-                  (point)))
-               (end
-                (progn
-                  (outline-next-heading)
-                  (- (point) 1))))
-          (narrow-to-region beg end)
-          (org-set-property "HASH"
-                            (format "%s" (tm/getentryhash)))
-          (org-set-property "MODIFIED"
-                            (format-time-string "[%Y-%m-%d %a %H:%M]"))))))
-
-  (defun tm/skip-nonmodified ()
-    "Skip headings whose :MODIFIED: properties are unchanged."
-    (let ((next-headline
-           (save-excursion
-             (or (outline-next-heading)
-                 (point-max)))))
-      (save-restriction
-        (let* ((beg
-                (progn
-                  (org-back-to-heading)
-                  (point)))
-               (end
-                (progn
-                  (outline-next-heading)
-                  (- (point) 1))))
-          (narrow-to-region beg end)
-          (if (string= (org-entry-get (point) "HASH" nil)
-                       (format "%s" (tm/getentryhash)))
-              next-headline
-            nil)))))
-#+END_SRC
-
-**** More convenient movement
-:PROPERTIES:
-:HASH:     4f01861f68279253b01512c998c8c3cf
-:MODIFIED: 2019-03-08 15:50:43
-:END:
-
-Move between =org-agenda-custom-command= blocks (from [[https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html][here]]):
-
-#+BEGIN_SRC emacs-lisp
-  (require 'org-agenda)
-
-  (defun tm/org-agenda-next-header ()
-    "Jump to the next header in an agenda series."
-    (interactive)
-    (tm/org-agenda-goto-header))
-
-  (defun tm/org-agenda-previous-header ()
-    "Jump to the previous header in an agenda series."
-    (interactive)
-    (tm/org-agenda-goto-header t))
-
-  (defun tm/org-agenda-goto-header (&optional backwards)
-    "Find the next agenda series header forwards or BACKWARDS."
-    (let ((pos (save-excursion
-                 (goto-char (if backwards
-                                (line-beginning-position)
-                              (line-end-position)))
-                 (let* ((find-func (if backwards
-                                       'previous-single-property-change
-                                     'next-single-property-change))
-                        (end-func (if backwards
-                                      'max
-                                    'min))
-                        (all-pos-raw (list (funcall find-func (point) 'org-agenda-structural-header)
-                                           (funcall find-func (point) 'org-agenda-date-header)))
-                        (all-pos (cl-remove-if-not 'numberp all-pos-raw))
-                        (prop-pos (if all-pos (apply end-func all-pos) nil)))
-                   prop-pos))))
-      (if pos (goto-char pos))
-      (if backwards (goto-char (line-beginning-position)))))
-#+END_SRC
-
-**** Auto-refresh specified files when they change on disk
-:PROPERTIES:
-:HASH:     3cdaee95aa51037958c93867636832fb
-:MODIFIED: [2019-06-30 Sun 11:07]
-:END:
-
-Activate minor modes based on file names (from [[https://stackoverflow.com/a/13946304][here)]]:
-
-#+BEGIN_SRC emacs-lisp
-  (defvar tm/auto-minor-mode-alist ()
-    "Alist of filename patterns vs correpsonding minor mode
-  functions, see `auto-mode-alist' All elements of this alist are
-  checked, meaning you can enable multiple minor modes for the same
-  regexp.")
-
-  (defun tm/enable-minor-mode-based-on-extension ()
-    "Check file name against `tm/auto-minor-mode-alist' to enable minor modes
-  the checking happens for all pairs in tm/auto-minor-mode-alist"
-    (when buffer-file-name
-      (let ((name (file-name-sans-versions buffer-file-name))
-            (remote-id (file-remote-p buffer-file-name))
-            (case-fold-search auto-mode-case-fold)
-            (alist tm/auto-minor-mode-alist))
-        ;; Remove remote file name identification.
-        (when (and (stringp remote-id)
-                   (string-match-p (regexp-quote remote-id) name))
-          (setq name (substring name (match-end 0))))
-        (while (and alist (caar alist) (cdar alist))
-          (if (string-match-p (caar alist) name)
-              (funcall (cdar alist) 1))
-          (setq alist (cdr alist))))))
-
-  (setq auto-revert-verbose nil)
-#+END_SRC
-
-**** TODO Function to change clock char in =org-agenda-current-time-string= :hard:
-:PROPERTIES:
-:HASH:     6cb4a60164567f79d324babc4cb11d96
-:MODIFIED: [2019-06-30 Sun 11:07]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-06-28 Fri 10:58]
-:END:
-
 *** Config
 :PROPERTIES:
-:HASH:     b5238490846474d83188a55a45beb631
-:MODIFIED: [2019-08-20 Tue 11:14]
+:HASH:     7222818d4e2ca3a4c3e30e0838a7972e
+:MODIFIED: [2019-09-04 Wed 13:02]
 :END:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-agenda
-    :after (org)
+    :defer 2
     :straight nil
     :general
     (:keymaps '(org-agenda-mode-map)
@@ -3075,35 +2492,17 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
      "<backtab>" 'origami-toggle-node)
 
     :init
+    (require 'evil-org)
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys)
 
+    :hook
+    (find-file . tm/enable-minor-mode-based-on-extension)
+
     :config
-    ;; https://emacs.stackexchange.com/a/26369
-    (defun tm/org-cmp-date-property (prop)
-      "Compare two `org-mode' agenda entries, `A' and `B', by some date property.
-
-  If a is before b, return -1. If a is after b, return 1. If they
-  are equal return t."
-      (lexical-let ((prop prop))
-        #'(lambda (a b)
-            (let* ((a-pos (get-text-property 0 'org-marker a))
-                   (b-pos (get-text-property 0 'org-marker b))
-                   (a-date (or (org-entry-get a-pos prop)
-                               (format "<%s>" (org-read-date t nil "now"))))
-                   (b-date (or (org-entry-get b-pos prop)
-                               (format "<%s>" (org-read-date t nil "now"))))
-                   (cmp (compare-strings a-date nil nil b-date nil nil)))
-              (if (eq cmp t) nil (signum cmp))))))
-
     ;; calendar.org has gotten very large and I received an error
     ;; indicating this variable should be increased
     (setq undo-outer-limit 25170000)
-
-    ;; Hooks
-    ;;
-    ;; Place tags flush with right side of window
-    (add-hook 'find-file-hook #'tm/enable-minor-mode-based-on-extension)
 
     ;; Activate `auto-revert-mode' for calendar.org
     (add-to-list 'tm/auto-minor-mode-alist
@@ -3313,18 +2712,6 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 - State "TODO"    from ""        [2019-06-28 Fri 11:09]
 :END:
 
-*** [[https://github.com/oddious/org-habit-plus][=org-habit-plus=]]
-:PROPERTIES:
-:HASH:     ad83a57910bcfefd8655c7c3f4d2ad31
-:MODIFIED: [2019-07-06 Sat 09:05]
-:END:
-
-#+begin_src emacs-lisp
-  (use-package org-habit-plus
-    :straight
-    (:type git :host github :repo "oddious/org-habit-plus"))
-#+end_src
-
 *** Org-super-agenda
 :PROPERTIES:
 :HASH:     5331ccd811c69036ae02ae4f725fefe8
@@ -3345,13 +2732,13 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
     (require 'origami))
 #+END_SRC
 
-*** TODO Facility for easily adding a property with a timestamp
+*** TODO Function to change clock char in =org-agenda-current-time-string= :hard:
 :PROPERTIES:
-:HASH:     db8f4d9d769a995523edd6577d0f0556
-:MODIFIED: [2019-06-30 Sun 21:12]
+:HASH:     48b68ace19b2f62e4b65d2880c62d02c
+:MODIFIED: [2019-08-25 Sun 12:02]
 :END:
 :LOGBOOK:
-- State "TODO"    from ""        [2019-06-28 Fri 17:26]
+- State "TODO"    from ""        [2019-06-28 Fri 10:58]
 :END:
 
 *** WAIT [[https://github.com/spegoraro/org-alert][org-alert]]                                                  :easy:
@@ -3369,15 +2756,6 @@ Activate minor modes based on file names (from [[https://stackoverflow.com/a/139
 Provides notifications for scheduled or deadlined agenda entries.
 #+end_quote
 
-*** TODO Ignore FOCUS property in agenda                        :moderate:
-:PROPERTIES:
-:HASH:     26abe3ef9d8361c60e7c5965166fceb5
-:MODIFIED: [2019-07-05 Fri 15:31]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-01 Mon 10:49]
-:END:
-
 *** TODO Add mixed (home/work) agenda view                      :moderate:
 :PROPERTIES:
 :HASH:     429b5804ed9b629330fb7e3c4dfa50ca
@@ -3387,32 +2765,6 @@ Provides notifications for scheduled or deadlined agenda entries.
 - State "TODO"    from ""        [2019-07-01 Mon 10:52]
 :END:
 
-*** TODO Add [[https://emacs.stackexchange.com/a/17357][org-agenda-hide-tags-regexp]]                            :easy:
-:PROPERTIES:
-:HASH:     221f7c55c34a227712a6eb0cf3fc1227
-:MODIFIED: [2019-07-05 Fri 15:31]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-03 Wed 15:22]
-:END:
-
-*** TODO Add block for done-state tasks to archive              :moderate:
-:PROPERTIES:
-:HASH:     c6c354075561153cef179c76ee623992
-:MODIFIED: [2019-07-15 Mon 14:47]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-10 Wed 12:08]
-:END:
-
-*** TODO Autosave for org-mode
-:PROPERTIES:
-:HASH:     f8bf0ea4f08a8b07b494121177501bdb
-:MODIFIED: [2019-07-15 Mon 15:54]
-:END:
-
-https://stackoverflow.com/questions/8146313/emacs-auto-save-for-org-mode-only#8146502
-
 ** Org-capture
 :PROPERTIES:
 :HASH:     601b1d12b653c8928bc99dc44281c235
@@ -3421,8 +2773,8 @@ https://stackoverflow.com/questions/8146313/emacs-auto-save-for-org-mode-only#81
 
 *** Config
 :PROPERTIES:
-:HASH:     46f83cc5f2b7ee889a5213e9f70322ae
-:MODIFIED: 2019-06-30 10:25:16
+:HASH:     424f7aed05d4ac932750a4039f3ac403
+:MODIFIED: [2019-08-25 Sun 12:15]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3430,73 +2782,9 @@ https://stackoverflow.com/questions/8146313/emacs-auto-save-for-org-mode-only#81
     :straight nil
     :after (org)
     :config
-    (defun transform-square-brackets-to-round-ones (string-to-transform)
-      "Transforms [ into ( and ] into ), other chars left unchanged."
-      (concat
-       (mapcar #'(lambda (c)
-                   (if (equal c ?[) ?\( (if (equal c ?]) ?\) c)))
-               string-to-transform)))
-
-    (defmacro tm/org-get-headings-command (fn-suffix target)
-      "Generate a command for capturing to TARGET."
-      `(defun ,(intern (concat "tm/org-get-headings-"
-                               (symbol-name fn-suffix))) ()
-         ,(format "Return `point' for heading in %S" target)
-         (interactive)
-         (let* ((file (concat (if (string= ,target
-                                           "main.org")
-                                  user-emacs-directory
-                                org-base-directory)
-                              ,target))
-                (buf (find-buffer-visiting file)))
-           (unless buf
-             (find-file file))
-           (with-current-buffer
-               buf
-             ;; Gets headings from TARGET and fontifies them before collecting
-             ;; them in `heading-point-alist', each cons cell of which reprents a
-             ;; heading (with text properties) pointing at the value for that
-             ;; heading's point.  `heading-point-alist' is passed to
-             ;; `completing-read' read, ultimately calling `goto-char' against the
-             ;; point from the chosen cons cell.
-             (let* ((heading-point-alist '())
-                    (headings
-                     (org-map-entries
-                      (lambda ()
-                        (cl-pushnew `(,(save-excursion
-                                         (org-format-outline-path
-                                          (org-get-outline-path t)))
-                                      . ,(goto-char (point)))
-                                    heading-point-alist
-                                    :test #'equal)))))
-               (goto-char (cdr (assoc
-                                (completing-read "File under: "
-                                                 heading-point-alist)
-                                heading-point-alist))))))))
     (tm/org-get-headings-command todo "todo.org")
     (tm/org-get-headings-command notes "notes.org")
     (tm/org-get-headings-command config "main.org")
-
-    ;; Adds functions, advice, etc. for killing a new frame if one has
-    ;; been created by org-capture browser extension.
-    ;;
-    ;; https://github.com/sprig/org-capture-extension#example-closins-the-frame-after-a-capture
-    (defvar tm/delete-frame-after-capture 0
-      "Whether to delete the last frame after the current capture.")
-    (defun tm/delete-frame-if-neccessary (&rest r)
-      (cond
-       ((= tm/delete-frame-after-capture 0) nil)
-       ((> tm/delete-frame-after-capture 1)
-        (setq tm/delete-frame-after-capture (- tm/delete-frame-after-capture 1)))
-       (t
-        (setq tm/delete-frame-after-capture 0)
-        (delete-frame))))
-    (advice-add 'org-capture-finalize
-                :after 'tm/delete-frame-if-neccessary)
-    (advice-add 'org-capture-kill
-                :after 'tm/delete-frame-if-neccessary)
-    (advice-add 'org-capture-refile
-                :after 'tm/delete-frame-if-neccessary)
 
     ;; Set default capture file
     (setq org-default-notes-file "~/org/capture.org")
@@ -3687,8 +2975,8 @@ I never use this (because I never blog). I should re-evaluate this
 
 *** =org2jekyll=
 :PROPERTIES:
-:HASH:     aaf0e8c0d1003d1500a6fc4b817830e7
-:MODIFIED: [2019-08-24 Sat 20:32]
+:HASH:     6ff57b2cf1b901f0c27d8a42e95263eb
+:MODIFIED: [2019-08-25 Sun 12:17]
 :END:
 
 Write blog posts in =org-mode= and publish them to a Jekyll site with =org2jekyll=.
@@ -3699,66 +2987,66 @@ Define the following variables:
 - =org2jekyll-posts-dir=: The directory where Jekyll posts are stored.
 
 #+BEGIN_SRC emacs-lisp
-(use-package org2jekyll
-  :defer 3
-  :config
-  (setq org2jekyll-blog-author       "tminor"
-        org2jekyll-source-directory  (expand-file-name "~/org/blog")
-        org2jekyll-jekyll-directory  (expand-file-name "~/blog")
-        org2jekyll-jekyll-drafts-dir ""
-        org2jekyll-jekyll-posts-dir  "_posts/"
-        org-publish-project-alist
-            `(("default"
-                :base-directory ,(org2jekyll-input-directory)
-                :base-extension "org"
-                ;; :publishing-directory "/ssh:user@host:~/html/notebook/"
-                :publishing-directory ,(org2jekyll-output-directory)
-                :publishing-function org-html-publish-to-html
-                :headline-levels 4
-                :section-numbers nil
-                :with-toc nil
-                :html-head "<link rel=\"stylesheet\" href=\"./css/style.css\" type=\"text/css\"/>"
-                :html-preamble t
-                :recursive t
-                :make-index t
-                :html-extension "html"
-                :body-only t)
+  (use-package org2jekyll
+    :defer 3
+    :config
+    (setq org2jekyll-blog-author "tminor"
+          org2jekyll-source-directory (expand-file-name "~/org/blog")
+          org2jekyll-jekyll-directory (expand-file-name "~/blog")
+          org2jekyll-jekyll-drafts-dir ""
+          org2jekyll-jekyll-posts-dir "_posts/"
+          org-publish-project-alist
+          `(("default"
+             :base-directory ,(org2jekyll-input-directory)
+             :base-extension "org"
+             ;; :publishing-directory "/ssh:user@host:~/html/notebook/"
+             :publishing-directory ,(org2jekyll-output-directory)
+             :publishing-function org-html-publish-to-html
+             :headline-levels 4
+             :section-numbers nil
+             :with-toc nil
+             :html-head "<link rel=\"stylesheet\" href=\"./css/style.css\" type=\"text/css\"/>"
+             :html-preamble t
+             :recursive t
+             :make-index t
+             :html-extension "html"
+             :body-only t)
 
             ("post"
-                :base-directory ,(org2jekyll-input-directory)
-                :base-extension "org"
-                :publishing-directory ,(org2jekyll-output-directory org2jekyll-jekyll-posts-dir)
-                :publishing-function org-html-publish-to-html
-                :headline-levels 4
-                :section-numbers nil
-                :with-toc nil
-                :html-head "<link rel='stylesheet' href='https://blog.tminor.io/assets/core.css'>"
-                :html-preamble t
-                :recursive t
-                :make-index t
-                :html-extension "html"
-                :body-only t)
+             :base-directory ,(org2jekyll-input-directory)
+             :base-extension "org"
+             :publishing-directory ,(org2jekyll-output-directory org2jekyll-jekyll-posts-dir)
+             :publishing-function org-html-publish-to-html
+             :headline-levels 4
+             :section-numbers nil
+             :with-toc nil
+             :html-head "<link rel='stylesheet' href='https://blog.tminor.io/assets/core.css'>"
+             :html-preamble t
+             :recursive t
+             :make-index t
+             :html-extension "html"
+             :body-only t)
 
             ("images"
-                :base-directory ,(org2jekyll-input-directory "img")
-                :base-extension "jpg\\|gif\\|png"
-                :publishing-directory ,(org2jekyll-output-directory "img")
-                :publishing-function org-publish-attachment
-                :recursive t)
+             :base-directory ,(org2jekyll-input-directory "img")
+             :base-extension "jpg\\|gif\\|png"
+             :publishing-directory ,(org2jekyll-output-directory "img")
+             :publishing-function org-publish-attachment
+             :recursive t)
 
             ("js"
-                :base-directory ,(org2jekyll-input-directory "js")
-                :base-extension "js"
-                :publishing-directory ,(org2jekyll-output-directory "js")
-                :publishing-function org-publish-attachment
-                :recursive t)
+             :base-directory ,(org2jekyll-input-directory "js")
+             :base-extension "js"
+             :publishing-directory ,(org2jekyll-output-directory "js")
+             :publishing-function org-publish-attachment
+             :recursive t)
 
             ("css"
-                :base-directory ,(org2jekyll-input-directory "css")
-                :base-extension "css\\|el"
-                :publishing-directory ,(org2jekyll-output-directory "css")
-                :publishing-function org-publish-attachment
-                :recursive t)
+             :base-directory ,(org2jekyll-input-directory "css")
+             :base-extension "css\\|el"
+             :publishing-directory ,(org2jekyll-output-directory "css")
+             :publishing-function org-publish-attachment
+             :recursive t)
 
             ("web" :components ("images" "js" "css")))))
 #+END_SRC
@@ -3856,8 +3144,8 @@ Configure =eshell= to use [[https://github.com/manateelazycat/aweshell][aweshell
 
 *** [[https://github.com/dieggsy/esh-autosuggest][=esh-autosuggest=]]
 :PROPERTIES:
-:HASH:     fd84d3e3e16373c5455a11524589e3a1
-:MODIFIED: 2019-06-23 18:59:53
+:HASH:     42b0cd36641a7487f8c7d3fb46c77b12
+:MODIFIED: [2019-08-25 Sun 12:20]
 :END:
 
 #+begin_quote
@@ -3866,14 +3154,6 @@ Fish-like history autosuggestions in eshell
 
 #+BEGIN_SRC emacs-lisp
   (use-package esh-autosuggest
-    :preface
-    (defun tm/setup-eshell-ivy-completion ()
-      (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
-      ;; only if you want to use the minibuffer for completions instead of
-      ;; the in-buffer interface
-      (setq-local ivy-display-functions-alist
-                  (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
-                        ivy-display-functions-alist)))
     :hook
     (eshell-mode . esh-autosuggest-mode)
     (eshell-mode . tm/setup-eshell-ivy-completion))
@@ -3983,41 +3263,6 @@ Show an indicator of the status of the last command run in Eshell.
     :hook
     (eshell-mode . eshell-fringe-status-mode))
 #+end_src
-
-*** Elisp
-:PROPERTIES:
-:HASH:     764d4de2cf3b4da403ab77e77561556a
-:MODIFIED: 2019-06-23 11:58:21
-:END:
-
-A quick internet search said that Eshell doesn't have anything like
-brace expansion built in. [[https://emacs.stackexchange.com/a/9521][This]] Stack Exchange post provides a
-solution:
-
-#+BEGIN_SRC emacs-lisp
-(defun eshell-brace-expansion (str)
-  (let* ((parts (split-string str "[{}]"))
-         (prefix (car parts))
-         (body   (nth 1 parts))
-         (suffix (nth 2 parts)))
-    (mapcar (lambda (x) (concat prefix x suffix))
-            (split-string body ","))))
-#+END_SRC
-
-Used like this:
-
-#+begin_example
-ls "prefix-{A,B,C}.suffix"(|eshell-brace-expansion)
-#+end_example
-
-*** TODO defun for projectile cd
-:PROPERTIES:
-:HASH:     bf61a4fb647feea765e41f1cedc23281
-:MODIFIED: [2019-08-23 Fri 11:27]
-:END:
-:LOGBOOK:
-- State "TODO"    from ""        [2019-07-01 Mon 09:24]
-:END:
 
 ** SSH/GPG keys
 :PROPERTIES:
