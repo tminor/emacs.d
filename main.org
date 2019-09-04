@@ -92,6 +92,7 @@ them for fear of them disappearing!
   - [[#org-journal][Org-journal]]
   - [[#org-agenda][Org-agenda]]
   - [[#org-capture][Org-capture]]
+  - [[#pdfs][PDFs]]
   - [[#blog-publishing][Blog Publishing]]
 - [[#shell-and-term-modes][Shell and Term Modes]]
   - [[#term-mode][Term-mode]]
@@ -2527,6 +2528,12 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       "2" 'tm/org-agenda-work-week)
 
     :config
+    (require 'org-pdftools)
+    (require 'org-noter)
+    (add-to-list 'org-file-apps
+                 '("\\.pdf\\'" . (lambda (file link)
+                                   (org-pdftools-open link))))
+
     (defun tm/org-agenda-work-week (&optional arg)
       "Opens agenda for this week."
       (interactive)
@@ -3612,6 +3619,59 @@ adds a "Capture" button.
 :LOGBOOK:
 - State "TODO"    from ""        [2019-07-03 Wed 15:23]
 :END:
+
+** PDFs
+:PROPERTIES:
+:HASH:     81ed0414e9049c67138b55f758d3d1fe
+:MODIFIED: [2019-09-02 Mon 15:09]
+:END:
+
+*** [[https://github.com/politza/pdf-tools][=pdf-tools=]]
+:PROPERTIES:
+:HASH:     7f5c1220b5a2503f4a31c2b404222015
+:MODIFIED: [2019-09-02 Mon 15:20]
+:END:
+
+#+begin_quote
+PDF Tools is, among other things, a replacement of DocView for PDF
+files. The key difference is that pages are not pre-rendered by
+e.g. ghostscript and stored in the file-system, but rather created
+on-demand and stored in memory.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package pdf-tools)
+#+end_src
+
+*** [[https://github.com/fuxialexander/org-pdftools][=org-pdftools=]]
+:PROPERTIES:
+:HASH:     587959e7a3c1c7fee2312153e9913b99
+:MODIFIED: [2019-09-02 Mon 16:01]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package org-pdftools
+    :straight
+    (:host github :repo "fuxialexander/org-pdftools"))
+#+end_src
+
+*** [[https://github.com/fuxialexander/org-noter/tree/pdf-notes-booster][=org-noter=]]
+:PROPERTIES:
+:HASH:     60db9e8df31ec0479a78db01d31e82e9
+:MODIFIED: [2019-09-02 Mon 16:13]
+:END:
+
+#+begin_quote
+Org-noter's purpose is to let you create notes that are kept in
+sync when you scroll through the document, but that are external to
+it - the notes themselves live in an Org-mode file.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package org-noter
+    :straight
+    (:host github :repo "fuxialexander/org-noter"))
+#+end_src
 
 ** Blog Publishing
 :PROPERTIES:
