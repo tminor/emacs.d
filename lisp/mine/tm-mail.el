@@ -24,6 +24,8 @@
 (require 'notmuch)
 (require 'all-the-icons)
 
+;;;###autoload
+
 (defun tm/notmuch-refresh-feed-buffer ()
   "Invoke `notmuch-refresh-this-buffer' specified buffer.
 

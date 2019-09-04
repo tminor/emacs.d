@@ -30,6 +30,8 @@
 (require 'cl-extra)
 (require 'cl)
 
+;;;###autoload
+
 (defun tm/org-remove-inherited-local-tags ()
   "Remove local tags that can be inherited instead."
   (let* ((target-tags-local (org-get-tags-at nil 'local))

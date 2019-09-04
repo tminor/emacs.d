@@ -23,6 +23,8 @@
 
 (require 'magit)
 
+;;;###autoload
+
 ;; https://github.com/dieggsy/dotfiles/blob/master/emacs.d/init.org#functions-7
 (defun tm/magit-blame-toggle ()
   "Toggle magit-blame-mode on and off interactively.

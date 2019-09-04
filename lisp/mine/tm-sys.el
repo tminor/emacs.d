@@ -21,6 +21,8 @@
 
 ;;; Code:
 
+(require 'cl-macs)
+
 (defun tm/pgrep (string)
   "Search process list for any process name matching STRING."
   (interactive "sProcess name: ")
@@ -34,8 +36,8 @@
     (dolist (proc pid-list)
       (if (string-match-p (regexp-quote string)
                           (cdr (assoc-string 'args proc)))
-          (return (cdr (assoc 'args proc)))
+          (cl-return (cdr (assoc 'args proc)))
         nil))))
 
 (provide 'tm/sys)
-;;; sys.el ends here
+;;; tm-sys.el ends here

@@ -23,6 +23,8 @@
 
 (require 'color)
 
+;;;###autoload
+
 (defun tm/complement-for-color-at-point ()
   "Return color name for complement of color name at point."
   (interactive)

@@ -24,6 +24,8 @@
 (require 'eshell)
 (require 'ivy)
 
+;;;###autoload
+
 (defun tm/setup-eshell-ivy-completion ()
   "Init Ivy completion for Eshell."
   (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
