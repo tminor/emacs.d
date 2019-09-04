@@ -77,6 +77,7 @@ them for fear of them disappearing!
   - [[#complete-any-mode][Complete any mode]]
   - [[#miscellany][Miscellany]]
   - [[#version-control][Version control]]
+  - [[#regex][Regex]]
 - [[#mail][Mail]]
   - [[#refine-notmuch-alertsinclude-x11-aware-function][Refine notmuch alerts/include X11 aware function]]
   - [[#reminders-for-sent-mail][Reminders for sent mail]]
@@ -1944,6 +1945,55 @@ This library configures Magit and Evil to play well with each other.
      "[p" 'smerge-prev
      "gc" 'smerge-keep-current
      "gr" 'smerge-resolve))
+#+end_src
+
+** Regex
+:PROPERTIES:
+:HASH:     87d03ed42a200652252eefc5360433a5
+:MODIFIED: [2019-09-04 Wed 16:27]
+:END:
+
+*** [[https://github.com/benma/visual-regexp.el][=visual-regexp=]]
+:PROPERTIES:
+:HASH:     7218e9ef64e90ace8fa3117c4f2c1177
+:MODIFIED: [2019-09-04 Wed 17:12]
+:END:
+
+#+begin_quote
+visual-regexp for Emacs is like replace-regexp, but with live visual
+feedback directly in the buffer.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package visual-regexp
+    :demand t
+    :straight
+    (:host github :repo "benma/visual-regexp.el")
+    :general
+    (tm/leader-def
+      "r" 'vr/isearch-forward
+      "R" 'vr/isearch-backward)
+    :config
+    (require 'visual-regexp-steroids)
+    (use-package pcre2el)
+    (require 'pcre2el))
+#+end_src
+
+*** [[https://github.com/benma/visual-regexp-steroids.el/][=visual-regexp-steroids=]]
+:PROPERTIES:
+:HASH:     c4fccc6ae10e5c7c09af41252ebe2733
+:MODIFIED: [2019-09-04 Wed 17:13]
+:END:
+
+#+begin_quote
+=visual-regexp-steroids= is an extension to =visual-regexp= which enables
+the use of modern regexp engines.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package visual-regexp-steroids
+    :straight
+    (:host github :repo "benma/visual-regexp-steroids.el"))
 #+end_src
 
 * Mail
