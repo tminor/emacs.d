@@ -2226,6 +2226,12 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
   (use-package org
     :straight org-plus-contrib
     :demand t
+    :init
+    (require 'tm-org)
+    ;; Evil key bindings in Org mode
+    (use-package evil-org
+      :straight
+      (:type git :host github :repo "Somelauw/evil-org-mode")
       :hook
       (org-mode . evil-org-mode)
       (evil-org-mode . (lambda ()
@@ -2300,22 +2306,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       (org-mode . (lambda () (org-bullets-mode 1)))
       :config
       (setq org-bullets-bullet-list
-            '("⑴" "⑵" "⑶" "⑷" "⑸" "⑹" "⑺" "⑻" "⑼" "⑽"
-              "⑾" "⑿" "⒀" "⒁" "⒂" "⒃")))
-
-    ;; Evil key bindings in Org mode
-    (use-package evil-org
-      :after org
-      :hook
-      (org-mode . evil-org-mode)
-      (evil-org-mode . (lambda ()
-                         (evil-org-set-key-theme '(textobjects
-                                                   insert
-                                                   navigation
-                                                   additional
-                                                   shift
-                                                   todo
-                                                   heading)))))
+	    '("⑴" "⑵" "⑶" "⑷" "⑸" "⑹" "⑺" "⑻" "⑼" "⑽"
+	      "⑾" "⑿" "⒀" "⒁" "⒂" "⒃")))
 
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
@@ -2347,12 +2339,12 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
-          '((sequence "TODO(t!)"	       ; TODO for projects or one offs
-                      "WAIT(w@)"	       ; Waiting on someone/something
-                      "|"
-                      "DONE(d@)"
-                      "CANCELLED(c@)"
-                      "NOTE(n!)")))
+	  '((sequence "TODO(t!)"	       ; TODO for projects or one offs
+		      "WAIT(w@)"	       ; Waiting on someone/something
+		      "|"
+		      "DONE(d@)"
+		      "CANCELLED(c@)"
+		      "NOTE(n!)")))
 
     ;; Enable state change logging in :LOGBOOK: drawer
     (setq org-log-into-drawer t)
@@ -2374,29 +2366,29 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;;   `org-modules'.
     ;;
     (setq org-modules
-          '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
-                     org-irc org-mhe org-rmail org-w3m org-habit-plus
-                     org-id))
+	  '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
+		     org-irc org-mhe org-rmail org-w3m org-habit-plus
+		     org-id))
 
     ;; Faces
 
     ;; Task state faces
     (setq org-todo-keyword-faces
-          '(("TODO" :background "#DD0B53" :foreground "#EAEAEA"
-             :weight bold :box (:line-width -1 :style released-button))
-            ("DONE" :background "#0F0" :foreground "#000" :weight bold
-             :box (:line-width -1 :style released-button))
-            ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
-             :box (:line-width -1 :style released-button))
-            ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
-             :weight bold :box (:line-width -1 :style released-button))
-            ("MEETING" :background "#3EDAD4" :foreground "#000"
-             :weight bold :box (:line-width -1 :style released-button))))
+	  '(("TODO" :background "#DD0B53" :foreground "#EAEAEA"
+	     :weight bold :box (:line-width -1 :style released-button))
+	    ("DONE" :background "#0F0" :foreground "#000" :weight bold
+	     :box (:line-width -1 :style released-button))
+	    ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
+	     :box (:line-width -1 :style released-button))
+	    ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
+	     :weight bold :box (:line-width -1 :style released-button))
+	    ("MEETING" :background "#3EDAD4" :foreground "#000"
+	     :weight bold :box (:line-width -1 :style released-button))))
 
     ;; Priority faces
     (setq org-priority-faces '((?A . (:foreground "#DD0B53" :weight bold))
-                               (?B . (:foreground "#FEDA98"))
-                               (?C . (:foreground "#0F0"))))
+			       (?B . (:foreground "#FEDA98"))
+			       (?C . (:foreground "#0F0"))))
 
     ;;  ;;;;;;;;;;;;;;;;;;;
     ;;
@@ -2408,8 +2400,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; `org-refile'.  The following enables refiling to any file in
     ;; `org-agenda-files' and any heading 10 levels or less therein.
     (setq org-refile-targets
-          `((org-agenda-files . (:maxlevel . 10))
-            (,(concat user-emacs-directory "main.org") . (:maxlevel . 16))))
+	  `((org-agenda-files . (:maxlevel . 10))
+	    (,(concat user-emacs-directory "main.org") . (:maxlevel . 16))))
 
     ;; Setting the following to nil enables ivy read completions.
     (setq org-outline-path-complete-in-steps nil)
@@ -2482,7 +2474,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-agenda
-    :after (org)
+    :defer 2
     :straight nil
     :general
     (:keymaps '(org-agenda-mode-map)
@@ -2493,6 +2485,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
      "<backtab>" 'origami-toggle-node)
 
     :init
+    (require 'evil-org)
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys)
 
@@ -2506,27 +2499,27 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; Activate `auto-revert-mode' for calendar.org
     (add-to-list 'tm/auto-minor-mode-alist
-                 '("homecal.org" . auto-revert-mode))
+		 '("homecal.org" . auto-revert-mode))
     (add-to-list 'tm/auto-minor-mode-alist
-                 '("workcal.org" . auto-revert-mode))
+		 '("workcal.org" . auto-revert-mode))
     (add-to-list 'tm/auto-minor-mode-alist
-                 '("oncallcal.org" . auto-revert-mode))
+		 '("oncallcal.org" . auto-revert-mode))
     (dolist (file org-agenda-files nil)
       (add-to-list 'tm/auto-minor-mode-alist
-                   `(,file . auto-revert-mode)))
+		   `(,file . auto-revert-mode)))
 
     ;; Enables journal files in agenda views.
     (setq org-journal-enable-agenda-integration t)
 
     ;; Files that `org-agenda' uses to populate its commands/views
     (setq org-agenda-files
-          `(,(concat org-base-directory "mobile-capture.org")
-            ,(concat org-base-directory "capture.org")
-            ,(concat org-base-directory "calendar/workcal.org")
-            ,(concat org-base-directory "calendar/homecal.org")
-            ,(concat org-base-directory "calendar/oncallcal.org")
-            ,(concat org-base-directory "notes.org")
-            ,(concat org-base-directory "todo.org")))
+	  `(,(concat org-base-directory "mobile-capture.org")
+	    ,(concat org-base-directory "capture.org")
+	    ,(concat org-base-directory "calendar/workcal.org")
+	    ,(concat org-base-directory "calendar/homecal.org")
+	    ,(concat org-base-directory "calendar/oncallcal.org")
+	    ,(concat org-base-directory "notes.org")
+	    ,(concat org-base-directory "todo.org")))
 
     ;; Don't show scheduled TODOs in `org-agenda'
     (setq org-agenda-todo-ignore-scheduled t)
@@ -2538,7 +2531,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; Set up `org-habit'
     (require 'org-habit)
     (setq org-habit-graph-column 45
-          org-habit-show-habits-only-for-today nil)
+	  org-habit-show-habits-only-for-today nil)
 
     ;; ﹌
     (setq org-agenda-block-separator 65100)
@@ -2549,138 +2542,138 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-habit-today-glyph 120455)
 
     (setq org-agenda-current-time-string
-          (format "⁕⁕⁕⁕  %s  ⁕⁕⁕⁕"
-                  (propertize "🕖" :foreground "#F94FA0" :weight 'bold)))
+	  (format "⁕⁕⁕⁕  %s  ⁕⁕⁕⁕"
+		  (propertize "🕖" :foreground "#F94FA0" :weight 'bold)))
 
     ;; Create `org-agenda' custom commands
     (setq org-agenda-custom-commands
-          `(("w" . "Work agenda views")
-            ("ww" "Weekly work agenda"
-             ((agenda
-               ""
-               ((org-agenda-todo-ignore-scheduled 'past)
-                (org-agenda-time-grid (quote
-                                       ((daily today remove-match)
-                                        (300 600 900 1200 1500 1800 2100)
-                                        "......" "----------------")))
-                (org-agenda-span 'week)
-                (org-agenda-hide-tags-regexp
-                 (rx (zero-or-more anything)))))
-              (todo
-               "TODO"
-               ((org-agenda-prefix-format
-                 ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
-                (org-agenda-todo-ignore-scheduled t)
-                (org-agenda-sorting-strategy '(effort-down))
-                (org-agenda-tag-filter-preset '("-FUTURE"))
-                (org-agenda-hide-tags-regexp
-                 (rx (zero-or-more anything)))))))
-            ("wt" "Today's work agenda"
-             ((agenda
-               ""
-               ((org-agenda-todo-ignore-scheduled 'past)
-                (org-agenda-time-grid (quote
-                                       ((daily today remove-match)
-                                        (300 600 900 1200 1500 1800 2100)
-                                        "......" "----------------")))
-                (org-agenda-span 'day)
-                (org-super-agenda-groups
-                 '((:name "Trash"
-                    :discard (:tag "HOME"))))
-                (org-agenda-hide-tags-regexp
-                 (rx (zero-or-more anything)))))
-              (tags
-               "/DONE|TODO|WAIT"
-               ((org-agenda-prefix-format
-                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
-                (org-agenda-todo-ignore-scheduled t)
-                (org-agenda-sorting-strategy '(effort-down))
-                (org-agenda-cmp-user-defined (tm/org-cmp-date-property
-                                              "MODIFIED"))
-                (org-agenda-sorting-strategy '(user-defined-down))
-                (org-agenda-hide-tags-regexp
-                 (rx (zero-or-more anything)))
-                (org-super-agenda-groups
-                 '((:name "Trash"
-                    :discard (:tag "HOME"
-                              :file-path ,(rx "journal")))
-                   (:name "Archive DONE tasks"
-                    :todo "DONE"
-                    :order 4)
-                   (:name "WAITing tasks"
-                    :todo "WAIT"
-                    :order 3)
-                   (:name "Refileable items"
-                    :tag "REFILE"
-                    :discard (:scheduled t :tag "HOME")
-                    :order 2)
-                   (:name "Attic: Tasks for the Future"
-                    :tag "FUTURE"
-                    :order 1)
-                   (:name "Unscheduled Tasks"
-                    :todo "TODO"
-                    :order 0)))))
-              (tags
-               "+REFILE"
-               ((org-agenda-prefix-format
-                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
-                (org-agenda-sorting-strategy '(effort-down))
-                (org-agenda-cmp-user-defined (tm/org-cmp-date-property
-                                              "MODIFIED"))
-                (org-agenda-sorting-strategy '(user-defined-down))
-                (org-agenda-hide-tags-regexp
-                 (rx (zero-or-more anything)))))))
-            ("h" . "Home agenda views")
-            ("hw" "Weekly home agenda"
-             ((agenda
-               ""
-               ((org-agenda-todo-ignore-scheduled 'past)
-                (org-agenda-time-grid (quote
-                                       ((daily today remove-match)
-                                        (300 600 900 1200 1500 1800 2100)
-                                        "......" "----------------")))
-                (org-agenda-span 'week)))
-              (todo
-               "TODO"
-               ((org-agenda-prefix-format
-                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
-                (org-agenda-todo-ignore-scheduled t)
-                (org-agenda-sorting-strategy '(effort-down))
-                (org-agenda-hide-tags-regexp
-                 (rx (zero-or-more anything)))
-                (org-agenda-tag-filter-preset '("-FUTURE"))))))
-            ("ht" "Today's home agenda"
-             ((agenda
-               ""
-               ((org-agenda-todo-ignore-scheduled 'past)
-                (org-agenda-time-grid (quote
-                                       ((daily today remove-match)
-                                        (300 600 900 1200 1500 1800 2100)
-                                        "......" "----------------")))
-                (org-agenda-span 'day)
-                (org-agenda-hide-tags-regexp
-                 (rx (zero-or-more anything)))))
-              (todo
-               "TODO"
-               ((org-agenda-prefix-format
-                 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
-                (org-agenda-sorting-strategy '(effort-down))
-                (org-agenda-cmp-user-defined (tm/org-cmp-date-property
-                                              "MODIFIED"))
-                (org-agenda-sorting-strategy '(user-defined-down))
-                (org-agenda-hide-tags-regexp (rx
-                                              (zero-or-more anything)))
-                (org-super-agenda-groups
-                 '((:name "Refileable items."
-                    :tag "REFILE"
-                    :discard (:scheduled t :tag "WORK")
-                    :order 2)
-                   (:name "Attic: Tasks for the Future."
-                    :tag "FUTURE"
-                    :order 1)
-                   (:name "Unscheduled Tasks."
-                    :todo "TODO"
-                    :order 0))))))))))
+	  `(("w" . "Work agenda views")
+	    ("ww" "Weekly work agenda"
+	     ((agenda
+	       ""
+	       ((org-agenda-todo-ignore-scheduled 'past)
+		(org-agenda-time-grid (quote
+				       ((daily today remove-match)
+					(300 600 900 1200 1500 1800 2100)
+					"......" "----------------")))
+		(org-agenda-span 'week)
+		(org-agenda-hide-tags-regexp
+		 (rx (zero-or-more anything)))))
+	      (todo
+	       "TODO"
+	       ((org-agenda-prefix-format
+		 ,(concat "%5(org-entry-get nil \"MODIFIED\") "))
+		(org-agenda-todo-ignore-scheduled t)
+		(org-agenda-sorting-strategy '(effort-down))
+		(org-agenda-tag-filter-preset '("-FUTURE"))
+		(org-agenda-hide-tags-regexp
+		 (rx (zero-or-more anything)))))))
+	    ("wt" "Today's work agenda"
+	     ((agenda
+	       ""
+	       ((org-agenda-todo-ignore-scheduled 'past)
+		(org-agenda-time-grid (quote
+				       ((daily today remove-match)
+					(300 600 900 1200 1500 1800 2100)
+					"......" "----------------")))
+		(org-agenda-span 'day)
+		(org-super-agenda-groups
+		 '((:name "Trash"
+		    :discard (:tag "HOME"))))
+		(org-agenda-hide-tags-regexp
+		 (rx (zero-or-more anything)))))
+	      (tags
+	       "/DONE|TODO|WAIT"
+	       ((org-agenda-prefix-format
+		 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
+		(org-agenda-todo-ignore-scheduled t)
+		(org-agenda-sorting-strategy '(effort-down))
+		(org-agenda-cmp-user-defined (tm/org-cmp-date-property
+					      "MODIFIED"))
+		(org-agenda-sorting-strategy '(user-defined-down))
+		(org-agenda-hide-tags-regexp
+		 (rx (zero-or-more anything)))
+		(org-super-agenda-groups
+		 '((:name "Trash"
+		    :discard (:tag "HOME"
+			      :file-path ,(rx "journal")))
+		   (:name "Archive DONE tasks"
+		    :todo "DONE"
+		    :order 4)
+		   (:name "WAITing tasks"
+		    :todo "WAIT"
+		    :order 3)
+		   (:name "Refileable items"
+		    :tag "REFILE"
+		    :discard (:scheduled t :tag "HOME")
+		    :order 2)
+		   (:name "Attic: Tasks for the Future"
+		    :tag "FUTURE"
+		    :order 1)
+		   (:name "Unscheduled Tasks"
+		    :todo "TODO"
+		    :order 0)))))
+	      (tags
+	       "+REFILE"
+	       ((org-agenda-prefix-format
+		 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
+		(org-agenda-sorting-strategy '(effort-down))
+		(org-agenda-cmp-user-defined (tm/org-cmp-date-property
+					      "MODIFIED"))
+		(org-agenda-sorting-strategy '(user-defined-down))
+		(org-agenda-hide-tags-regexp
+		 (rx (zero-or-more anything)))))))
+	    ("h" . "Home agenda views")
+	    ("hw" "Weekly home agenda"
+	     ((agenda
+	       ""
+	       ((org-agenda-todo-ignore-scheduled 'past)
+		(org-agenda-time-grid (quote
+				       ((daily today remove-match)
+					(300 600 900 1200 1500 1800 2100)
+					"......" "----------------")))
+		(org-agenda-span 'week)))
+	      (todo
+	       "TODO"
+	       ((org-agenda-prefix-format
+		 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
+		(org-agenda-todo-ignore-scheduled t)
+		(org-agenda-sorting-strategy '(effort-down))
+		(org-agenda-hide-tags-regexp
+		 (rx (zero-or-more anything)))
+		(org-agenda-tag-filter-preset '("-FUTURE"))))))
+	    ("ht" "Today's home agenda"
+	     ((agenda
+	       ""
+	       ((org-agenda-todo-ignore-scheduled 'past)
+		(org-agenda-time-grid (quote
+				       ((daily today remove-match)
+					(300 600 900 1200 1500 1800 2100)
+					"......" "----------------")))
+		(org-agenda-span 'day)
+		(org-agenda-hide-tags-regexp
+		 (rx (zero-or-more anything)))))
+	      (todo
+	       "TODO"
+	       ((org-agenda-prefix-format
+		 ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
+		(org-agenda-sorting-strategy '(effort-down))
+		(org-agenda-cmp-user-defined (tm/org-cmp-date-property
+					      "MODIFIED"))
+		(org-agenda-sorting-strategy '(user-defined-down))
+		(org-agenda-hide-tags-regexp (rx
+					      (zero-or-more anything)))
+		(org-super-agenda-groups
+		 '((:name "Refileable items."
+		    :tag "REFILE"
+		    :discard (:scheduled t :tag "WORK")
+		    :order 2)
+		   (:name "Attic: Tasks for the Future."
+		    :tag "FUTURE"
+		    :order 1)
+		   (:name "Unscheduled Tasks."
+		    :todo "TODO"
+		    :order 0))))))))))
 #+END_SRC
 
 **** TODO Remap =org-promote= and =org-demote= in insert mode      :easy:
