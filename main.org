@@ -43,16 +43,14 @@ them for fear of them disappearing!
 
 *** [[https://github.com/purcell/emacs.d][purcell/emacs.d]]
 :PROPERTIES:
-:HASH:     1441d3ef6f539dc0ade0f61c5da34c80
-:MODIFIED: [2019-07-01 Mon 10:06]
+:HASH:     2e108c977a3413a8123da5be081ee07d
+:MODIFIED: [2019-09-04 Wed 13:06]
 :END:
 
-
-
-** Table of Contents                                                                                                                                                                                                          :TOC:
+** Table of Contents                                                  :TOC:
 :PROPERTIES:
-:HASH:     b49f1baf25744227b9cd7b388bea29ff
-:MODIFIED: [2019-09-04 Wed 13:02]
+:HASH:     d406c9aee0ad1ac9bdec0eac17286c19
+:MODIFIED: [2019-09-04 Wed 13:06]
 :END:
 
 - [[#intro][Intro]]
