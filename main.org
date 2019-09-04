@@ -2226,17 +2226,27 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
   (use-package org
     :straight org-plus-contrib
     :demand t
+      :hook
+      (org-mode . evil-org-mode)
+      (evil-org-mode . (lambda ()
+			 (evil-org-set-key-theme '(textobjects
+						   insert
+						   navigation
+						   additional
+						   shift
+						   todo
+						   heading)))))
     :hook
     (after-init . (lambda ()
-                    (if (try-completion "main.org"
-                                        (mapcar #'buffer-name
-                                                (buffer-list)))
-                        (kill-buffer "main.org"))))
+		    (if (try-completion "main.org"
+					(mapcar #'buffer-name
+						(buffer-list)))
+			(kill-buffer "main.org"))))
 
     (evil-insert-state-exit . (lambda ()
-                                (if (string= major-mode
-                                             "org-mode")
-                                    (save-buffer))))
+				(if (string= major-mode
+					     "org-mode")
+				    (save-buffer))))
     :general
     (:keymaps 'org-mode-map
      :states '(normal)
@@ -2328,12 +2338,12 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; Add modified time property when Org mode files are saved
     (add-hook 'before-save-hook
-              (lambda ()
-                (when (eq major-mode 'org-mode)
-                  (org-map-entries #'tm/update-modification-time ;; FUNC
-                                   nil			   ;; MATCH
-                                   'file			   ;; SCOPE
-                                   #'tm/skip-nonmodified)))) ;; SKIP
+	      (lambda ()
+		(when (eq major-mode 'org-mode)
+		  (org-map-entries #'tm/update-modification-time ;; FUNC
+				   nil			   ;; MATCH
+				   'file			   ;; SCOPE
+				   #'tm/skip-nonmodified)))) ;; SKIP
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
