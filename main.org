@@ -1994,8 +1994,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** Notmuch
 :PROPERTIES:
-:HASH:     83e1a0da46d6997e74f88278194fda60
-:MODIFIED: [2019-07-15 Mon 09:22]
+:HASH:     78e4531a1140ef2114438b14eb9f30ec
+:MODIFIED: [2019-09-05 Thu 09:11]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2015,6 +2015,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     (tm/leader-def
       "/" 'notmuch)
     :config
+    (require 'tm-mail)
     ;; Help Emacs find notmuch and load it
     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
     (setq exec-path (append exec-path '("/usr/local/bin")))
