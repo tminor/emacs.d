@@ -2268,6 +2268,13 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     :straight org-plus-contrib
     :demand t
     :init
+    (use-package pdf-tools)
+    (use-package org-pdftools
+      :straight
+      (:host github :repo "fuxialexander/org-pdftools"))
+    (use-package org-noter
+      :straight
+      (:host github :repo "fuxialexander/org-noter"))
     (require 'tm-org)
     ;; Evil key bindings in Org mode
     (use-package evil-org
@@ -2958,8 +2965,8 @@ adds a "Capture" button.
 
 *** [[https://github.com/politza/pdf-tools][=pdf-tools=]]
 :PROPERTIES:
-:HASH:     7f5c1220b5a2503f4a31c2b404222015
-:MODIFIED: [2019-09-02 Mon 15:20]
+:HASH:     70c2c9aba903edbd01d23cba1df0d99c
+:MODIFIED: [2019-09-05 Thu 09:06]
 :END:
 
 #+begin_quote
@@ -2969,26 +2976,10 @@ e.g. ghostscript and stored in the file-system, but rather created
 on-demand and stored in memory.
 #+end_quote
 
-#+begin_src emacs-lisp
-  (use-package pdf-tools)
-#+end_src
-
-*** [[https://github.com/fuxialexander/org-pdftools][=org-pdftools=]]
-:PROPERTIES:
-:HASH:     587959e7a3c1c7fee2312153e9913b99
-:MODIFIED: [2019-09-02 Mon 16:01]
-:END:
-
-#+begin_src emacs-lisp
-  (use-package org-pdftools
-    :straight
-    (:host github :repo "fuxialexander/org-pdftools"))
-#+end_src
-
 *** [[https://github.com/fuxialexander/org-noter/tree/pdf-notes-booster][=org-noter=]]
 :PROPERTIES:
-:HASH:     60db9e8df31ec0479a78db01d31e82e9
-:MODIFIED: [2019-09-02 Mon 16:13]
+:HASH:     559f42b31bbed4cf43af5e671cb94a48
+:MODIFIED: [2019-09-05 Thu 09:06]
 :END:
 
 #+begin_quote
@@ -2996,12 +2987,6 @@ Org-noter's purpose is to let you create notes that are kept in
 sync when you scroll through the document, but that are external to
 it - the notes themselves live in an Org-mode file.
 #+end_quote
-
-#+begin_src emacs-lisp
-  (use-package org-noter
-    :straight
-    (:host github :repo "fuxialexander/org-noter"))
-#+end_src
 
 ** Blog Publishing
 :PROPERTIES:
