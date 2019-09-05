@@ -69,7 +69,6 @@ them for fear of them disappearing!
   - [[#font][Font]]
   - [[#search-modes][Search modes]]
   - [[#emacswiki][EmacsWiki]]
-  - [[#alerts][Alerts]]
   - [[#defun-for-repeat-last-interactive-command][=defun= for repeat last interactive command]]
   - [[#undo-propose][undo-propose]]
 - [[#prog-mode][Prog-mode]]
