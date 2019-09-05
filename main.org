@@ -2959,7 +2959,7 @@ adds a "Capture" button.
 ** PDFs
 :PROPERTIES:
 :HASH:     81ed0414e9049c67138b55f758d3d1fe
-:MODIFIED: [2019-09-02 Mon 15:09]
+:MODIFIED: [2019-09-05 Thu 09:09]
 :END:
 
 *** [[https://github.com/politza/pdf-tools][=pdf-tools=]]
