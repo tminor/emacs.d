@@ -2259,8 +2259,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     a9aab527d782aa314a8a72ee33711d61
-:MODIFIED: [2019-09-04 Wed 13:02]
+:HASH:     1334d1b599c1f67b6e9c53d4fff33e99
+:MODIFIED: [2019-09-05 Thu 10:22]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2269,6 +2269,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     :demand t
     :init
     (use-package pdf-tools)
+    (require 'pdf-tools)
     (use-package org-pdftools
       :straight
       (:host github :repo "fuxialexander/org-pdftools"))
@@ -2283,24 +2284,24 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       :hook
       (org-mode . evil-org-mode)
       (evil-org-mode . (lambda ()
-			 (evil-org-set-key-theme '(textobjects
-						   insert
-						   navigation
-						   additional
-						   shift
-						   todo
-						   heading)))))
+                         (evil-org-set-key-theme '(textobjects
+                                                   insert
+                                                   navigation
+                                                   additional
+                                                   shift
+                                                   todo
+                                                   heading)))))
     :hook
     (after-init . (lambda ()
-		    (if (try-completion "main.org"
-					(mapcar #'buffer-name
-						(buffer-list)))
-			(kill-buffer "main.org"))))
+                    (if (try-completion "main.org"
+                                        (mapcar #'buffer-name
+                                                (buffer-list)))
+                        (kill-buffer "main.org"))))
 
     (evil-insert-state-exit . (lambda ()
-				(if (string= major-mode
-					     "org-mode")
-				    (save-buffer))))
+                                (if (string= major-mode
+                                             "org-mode")
+                                    (save-buffer))))
     :general
     (:keymaps 'org-mode-map
      :states '(normal)
@@ -2360,8 +2361,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       (org-mode . (lambda () (org-bullets-mode 1)))
       :config
       (setq org-bullets-bullet-list
-	    '("⑴" "⑵" "⑶" "⑷" "⑸" "⑹" "⑺" "⑻" "⑼" "⑽"
-	      "⑾" "⑿" "⒀" "⒁" "⒂" "⒃")))
+            '("⑴" "⑵" "⑶" "⑷" "⑸" "⑹" "⑺" "⑻" "⑼" "⑽"
+              "⑾" "⑿" "⒀" "⒁" "⒂" "⒃")))
 
     ;; Add TOC for any heading with :TOC: tag
     ;; https://github.com/snosov1/toc-org
@@ -2384,21 +2385,21 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; Add modified time property when Org mode files are saved
     (add-hook 'before-save-hook
-	      (lambda ()
-		(when (eq major-mode 'org-mode)
-		  (org-map-entries #'tm/update-modification-time ;; FUNC
-				   nil			   ;; MATCH
-				   'file			   ;; SCOPE
-				   #'tm/skip-nonmodified)))) ;; SKIP
+              (lambda ()
+                (when (eq major-mode 'org-mode)
+                  (org-map-entries #'tm/update-modification-time ;; FUNC
+                                   nil			   ;; MATCH
+                                   'file			   ;; SCOPE
+                                   #'tm/skip-nonmodified)))) ;; SKIP
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
-	  '((sequence "TODO(t!)"	       ; TODO for projects or one offs
-		      "WAIT(w@)"	       ; Waiting on someone/something
-		      "|"
-		      "DONE(d@)"
-		      "CANCELLED(c@)"
-		      "NOTE(n!)")))
+          '((sequence "TODO(t!)"	       ; TODO for projects or one offs
+                      "WAIT(w@)"	       ; Waiting on someone/something
+                      "|"
+                      "DONE(d@)"
+                      "CANCELLED(c@)"
+                      "NOTE(n!)")))
 
     ;; Enable state change logging in :LOGBOOK: drawer
     (setq org-log-into-drawer t)
@@ -2420,29 +2421,29 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;;   `org-modules'.
     ;;
     (setq org-modules
-	  '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
-		     org-irc org-mhe org-rmail org-w3m org-habit-plus
-		     org-id))
+          '(org-bbdb org-bibtex org-docview org-gnus org-habit org-info
+                     org-irc org-mhe org-rmail org-w3m org-habit-plus
+                     org-id))
 
     ;; Faces
 
     ;; Task state faces
     (setq org-todo-keyword-faces
-	  '(("TODO" :background "#DD0B53" :foreground "#EAEAEA"
-	     :weight bold :box (:line-width -1 :style released-button))
-	    ("DONE" :background "#0F0" :foreground "#000" :weight bold
-	     :box (:line-width -1 :style released-button))
-	    ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
-	     :box (:line-width -1 :style released-button))
-	    ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
-	     :weight bold :box (:line-width -1 :style released-button))
-	    ("MEETING" :background "#3EDAD4" :foreground "#000"
-	     :weight bold :box (:line-width -1 :style released-button))))
+          '(("TODO" :background "#DD0B53" :foreground "#EAEAEA"
+             :weight bold :box (:line-width -1 :style released-button))
+            ("DONE" :background "#0F0" :foreground "#000" :weight bold
+             :box (:line-width -1 :style released-button))
+            ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
+             :box (:line-width -1 :style released-button))
+            ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
+             :weight bold :box (:line-width -1 :style released-button))
+            ("MEETING" :background "#3EDAD4" :foreground "#000"
+             :weight bold :box (:line-width -1 :style released-button))))
 
     ;; Priority faces
     (setq org-priority-faces '((?A . (:foreground "#DD0B53" :weight bold))
-			       (?B . (:foreground "#FEDA98"))
-			       (?C . (:foreground "#0F0"))))
+                               (?B . (:foreground "#FEDA98"))
+                               (?C . (:foreground "#0F0"))))
 
     ;;  ;;;;;;;;;;;;;;;;;;;
     ;;
@@ -2454,8 +2455,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     ;; `org-refile'.  The following enables refiling to any file in
     ;; `org-agenda-files' and any heading 10 levels or less therein.
     (setq org-refile-targets
-	  `((org-agenda-files . (:maxlevel . 10))
-	    (,(concat user-emacs-directory "main.org") . (:maxlevel . 16))))
+          `((org-agenda-files . (:maxlevel . 10))
+            (,(concat user-emacs-directory "main.org") . (:maxlevel . 16))))
 
     ;; Setting the following to nil enables ivy read completions.
     (setq org-outline-path-complete-in-steps nil)
