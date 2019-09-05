@@ -2525,8 +2525,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     7222818d4e2ca3a4c3e30e0838a7972e
-:MODIFIED: [2019-09-04 Wed 13:02]
+:HASH:     d345c89f3d04b484ab41b81e3d1394ad
+:MODIFIED: [2019-09-05 Thu 10:34]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2661,7 +2661,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
                 (org-agenda-hide-tags-regexp
                  (rx (zero-or-more anything)))))
               (tags
-               "/DONE|TODO|WAIT"
+               "/DONE|TODO|WAIT|CANCELLED"
                ((org-agenda-prefix-format
                  ,(concat "    %5(org-entry-get nil \"MODIFIED\") "))
                 (org-agenda-todo-ignore-scheduled t)
@@ -2675,7 +2675,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
                  '((:name "Trash"
                     :discard (:tag "HOME"))
                    (:name "Archive DONE tasks"
-                    :todo "DONE"
+                    :todo ("DONE" "CANCELLED")
                     :order 4)
                    (:name "WAITing tasks"
                     :todo "WAIT"
