@@ -231,42 +231,42 @@ are equal return t."
                    (if (equal c ?[) ?\( (if (equal c ?]) ?\) c)))
                string-to-transform)))
 
-    (defmacro tm/org-get-headings-command (fn-suffix target)
-      "Generate a command for capturing to TARGET."
-      `(defun ,(intern (concat "tm/org-get-headings-"
-                               (symbol-name fn-suffix))) ()
-         ,(format "Return `point' for heading in %S" target)
-         (interactive)
-         (let* ((file (concat (if (string= ,target
-                                           "main.org")
-                                  user-emacs-directory
-                                org-base-directory)
-                              ,target))
-                (buf (find-buffer-visiting file)))
-           (unless buf
-             (find-file file))
-           (with-current-buffer
-               buf
-             ;; Gets headings from TARGET and fontifies them before collecting
-             ;; them in `heading-point-alist', each cons cell of which reprents a
-             ;; heading (with text properties) pointing at the value for that
-             ;; heading's point.  `heading-point-alist' is passed to
-             ;; `completing-read' read, ultimately calling `goto-char' against the
-             ;; point from the chosen cons cell.
-             (let* ((heading-point-alist '())
-                    (headings
-                     (org-map-entries
-                      (lambda ()
-                        (cl-pushnew `(,(save-excursion
-                                         (org-format-outline-path
-                                          (org-get-outline-path t)))
-                                      . ,(goto-char (point)))
-                                    heading-point-alist
-                                    :test #'equal)))))
-               (goto-char (cdr (assoc
-                                (completing-read "File under: "
-                                                 heading-point-alist)
-                                heading-point-alist))))))))
+(defmacro tm/org-get-headings-command (fn-suffix target)
+  "Generate a command for capturing to TARGET."
+  `(defun ,(intern (concat "tm/org-get-headings-"
+			   (symbol-name fn-suffix))) ()
+     ,(format "Return `point' for heading in %S" target)
+     (interactive)
+     (let* ((file (concat (if (string= ,target
+				       "main.org")
+			      user-emacs-directory
+			    org-base-directory)
+			  ,target))
+	    (buf (find-buffer-visiting file)))
+       (unless buf
+	 (find-file file))
+       (with-current-buffer
+	   buf
+	 ;; Gets headings from TARGET and fontifies them before collecting
+	 ;; them in `heading-point-alist', each cons cell of which reprents a
+	 ;; heading (with text properties) pointing at the value for that
+	 ;; heading's point.  `heading-point-alist' is passed to
+	 ;; `completing-read' read, ultimately calling `goto-char' against the
+	 ;; point from the chosen cons cell.
+	 (let* ((heading-point-alist '())
+		(headings
+		 (org-map-entries
+		  (lambda ()
+		    (cl-pushnew `(,(save-excursion
+				     (org-format-outline-path
+				      (org-get-outline-path t)))
+				  . ,(goto-char (point)))
+				heading-point-alist
+				:test #'equal)))))
+	   (goto-char (cdr (assoc
+			    (completing-read "File under: "
+					     heading-point-alist)
+			    heading-point-alist))))))))
 
 ;; Adds functions, advice, etc. for killing a new frame if one has
 ;; been created by org-capture browser extension.
