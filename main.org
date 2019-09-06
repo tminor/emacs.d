@@ -1619,6 +1619,28 @@ of macros in Emacs Lisp source code.
      "ze" 'macrostep-expand))
 #+end_src
 
+*** CoffeeScript
+:PROPERTIES:
+:HASH:     17c6c7a3c61e8c679a427ef0a20c0a8a
+:MODIFIED: [2019-09-06 Fri 08:00]
+:END:
+
+**** [[https://github.com/defunkt/coffee-mode][=coffee-mode=]]
+:PROPERTIES:
+:HASH:     8b0dd9cd4080bc1d3d4561124634e40d
+:MODIFIED: [2019-09-06 Fri 08:03]
+:END:
+
+#+begin_quote
+An Emacs major mode for CoffeeScript and IcedCoffeeScript.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package coffee-mode
+    :custom
+    (coffee-tab-width 2))
+#+end_src
+
 ** Complete any mode
 :PROPERTIES:
 :HASH:     b4700351353a55ee4d33115f836b7a4b
