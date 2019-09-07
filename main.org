@@ -2281,8 +2281,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     1334d1b599c1f67b6e9c53d4fff33e99
-:MODIFIED: [2019-09-05 Thu 10:22]
+:HASH:     ff7d354a5b14a1815243c1d1be06ab2b
+:MODIFIED: [2019-09-07 Sat 13:50]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2290,14 +2290,18 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     :straight org-plus-contrib
     :demand t
     :init
+    ;; Installs some packages for better PDF viewing.
     (use-package pdf-tools)
     (require 'pdf-tools)
+    ;; This package adds functions to use with `org-noter' for easier
+    ;; note taking based on PDF contents.
     (use-package org-pdftools
       :straight
       (:host github :repo "fuxialexander/org-pdftools"))
     (use-package org-noter
       :straight
       (:host github :repo "fuxialexander/org-noter"))
+    ;; Loads custom org functions.
     (require 'tm-org)
     ;; Evil key bindings in Org mode
     (use-package evil-org
