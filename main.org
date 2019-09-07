@@ -2355,6 +2355,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       "b" 'org-switchb
       "h" 'org-recent-headings-ivy
       "j" 'tm/org-journal-prefix-command
+      "q" 'org-set-tags-command
       "1" 'tm/org-agenda-work-today
       "2" 'tm/org-agenda-work-week)
 
