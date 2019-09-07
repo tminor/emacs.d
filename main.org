@@ -49,8 +49,8 @@ them for fear of them disappearing!
 
 ** Table of Contents                                                  :TOC:
 :PROPERTIES:
-:HASH:     d406c9aee0ad1ac9bdec0eac17286c19
-:MODIFIED: [2019-09-04 Wed 13:06]
+:HASH:     7df05da369479990b4ef882e10eba170
+:MODIFIED: [2019-09-07 Sat 15:06]
 :END:
 
 - [[#intro][Intro]]
@@ -87,6 +87,7 @@ them for fear of them disappearing!
   - [[#org-journal][Org-journal]]
   - [[#org-agenda][Org-agenda]]
   - [[#org-capture][Org-capture]]
+  - [[#org-brain][=org-brain=]]
   - [[#pdfs][PDFs]]
   - [[#blog-publishing][Blog Publishing]]
 - [[#shell-and-term-modes][Shell and Term Modes]]
@@ -851,6 +852,49 @@ Add [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+
 
 Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for completion and other fun.
 
+*** [[https://github.com/Yevgnen/ivy-rich/blob/master/README.org][=ivy-rich=]]
+:PROPERTIES:
+:HASH:     d1fc2d1f96107aa0d1ed66bcbcde316d
+:MODIFIED: [2019-09-04 Wed 13:02]
+:END:
+
+Adds configurable output to =ivy= and =counsel= commands.
+
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    :init
+    (defun ivy-rich-switch-buffer-icon (candidate)
+      (with-current-buffer
+          (get-buffer candidate)
+        (let ((icon (all-the-icons-icon-for-mode major-mode)))
+          (if (symbolp icon)
+              (all-the-icons-icon-for-mode 'fundamental-mode)
+            icon))))
+    :config
+    (setcdr (assq t ivy-format-functions-alist)
+            #'ivy-format-function-line)
+    (setq ivy-rich-display-transformers-list
+          '(ivy-switch-buffer
+            (:columns
+             ((ivy-rich-switch-buffer-icon :width 2)
+              (ivy-rich-candidate
+               (:width 30))
+              (ivy-rich-switch-buffer-size
+               (:width 7))
+              (ivy-rich-switch-buffer-indicators
+               (:width 4 :face error :align right))
+              (ivy-rich-switch-buffer-major-mode
+               (:width 12 :face warning))
+              (ivy-rich-switch-buffer-project
+               (:width 15 :face success))
+              (ivy-rich-switch-buffer-path
+               (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path
+                                    x (ivy-rich-minibuffer-width
+                                       0.3))))))
+             :predicate
+             (lambda (cand) (get-buffer cand))))))
+#+end_src
+
 *** Ivy
 :PROPERTIES:
 :HASH:     ecbb30b96632218416df169cfa999b4e
@@ -860,9 +904,11 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :config
+    (require 'ivy-rich)
     (ivy-mode 1)
+    (ivy-rich-mode 1)
     (setq ivy-use-virtual-buffers t
-	  ivy-count-format "%d/%d ")
+          ivy-count-format "%d/%d ")
     :general
     (ivy-minibuffer-map
      "M-j" 'ivy-next-line
@@ -973,49 +1019,6 @@ Install [[https://github.com/abo-abo/swiper][Ivy, Counsel, and Swiper]] for comp
 :END:
 
 Add icons for notmuch, puppet, etc. to =ivy-all-the-icons=
-
-*** [[https://github.com/Yevgnen/ivy-rich/blob/master/README.org][=ivy-rich=]]
-:PROPERTIES:
-:HASH:     d1fc2d1f96107aa0d1ed66bcbcde316d
-:MODIFIED: [2019-09-04 Wed 13:02]
-:END:
-
-Adds configurable output to =ivy= and =counsel= commands.
-
-#+begin_src emacs-lisp
-  (use-package ivy-rich
-    :init
-    (defun ivy-rich-switch-buffer-icon (candidate)
-      (with-current-buffer
-          (get-buffer candidate)
-        (let ((icon (all-the-icons-icon-for-mode major-mode)))
-          (if (symbolp icon)
-              (all-the-icons-icon-for-mode 'fundamental-mode)
-            icon))))
-    :config
-    (setcdr (assq t ivy-format-functions-alist)
-            #'ivy-format-function-line)
-    (setq ivy-rich-display-transformers-list
-          '(ivy-switch-buffer
-            (:columns
-             ((ivy-rich-switch-buffer-icon :width 2)
-              (ivy-rich-candidate
-               (:width 30))
-              (ivy-rich-switch-buffer-size
-               (:width 7))
-              (ivy-rich-switch-buffer-indicators
-               (:width 4 :face error :align right))
-              (ivy-rich-switch-buffer-major-mode
-               (:width 12 :face warning))
-              (ivy-rich-switch-buffer-project
-               (:width 15 :face success))
-              (ivy-rich-switch-buffer-path
-               (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path
-                                    x (ivy-rich-minibuffer-width
-                                       0.3))))))
-             :predicate
-             (lambda (cand) (get-buffer cand))))))
-#+end_src
 
 ** Themes
 :PROPERTIES:
@@ -1961,8 +1964,8 @@ This library configures Magit and Evil to play well with each other.
 
 *** [[https://github.com/benma/visual-regexp.el][=visual-regexp=]] and [[https://github.com/benma/visual-regexp-steroids.el/][=visual-regexp-steroids=]]
 :PROPERTIES:
-:HASH:     7218e9ef64e90ace8fa3117c4f2c1177
-:MODIFIED: [2019-09-04 Wed 17:12]
+:HASH:     bbd50ee2a1d2e707655568f4dd0eac2a
+:MODIFIED: [2019-09-07 Sat 15:06]
 :END:
 
 #+begin_quote
@@ -2287,8 +2290,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     642824317ceb25f032d4c91fdade39aa
-:MODIFIED: [2019-09-07 Sat 13:56]
+:HASH:     7c32f43dd914a8d21f3b14804b30e658
+:MODIFIED: [2019-09-07 Sat 15:06]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2996,6 +2999,38 @@ adds a "Capture" button.
 :LOGBOOK:
 - State "TODO"    from ""        [2019-07-03 Wed 15:23]
 :END:
+
+** [[https://github.com/Kungsgeten/org-brain][=org-brain=]]
+:PROPERTIES:
+:HASH:     a36d966f26649505bbae2986c517186d
+:MODIFIED: [2019-09-07 Sat 15:21]
+:END:
+
+#+begin_quote
+org-brain implements a variant of concept mapping in Emacs, using
+org-mode.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package org-brain
+    :straight
+    (:host github :repo "Kungsgeten/org-brain")
+    :init
+    (setq org-brain-path "~/org/brain/")
+    (with-eval-after-load 'evil
+      (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
+    :config
+    (setq org-id-track-globally t)
+    (setq org-id-locations-file (concat no-littering-var-directory
+                                        ".org-id-locations"))
+    (push '("b" "Brain" plain (function org-brain-goto-end)
+            "* %i%?" :empty-lines 1)
+          org-capture-templates)
+    (setq org-brain-visualize-default-choices 'all)
+    (setq org-brain-title-max-length 12)
+    (setq org-brain-include-file-entries nil
+          org-brain-file-entries-use-title nil))
+#+end_src
 
 ** PDFs
 :PROPERTIES:
