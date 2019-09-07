@@ -2296,6 +2296,11 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     :straight org-plus-contrib
     :demand t
     :init
+    ;; Load EasyPG Assistant for `org-crypt'.
+    (require 'epa-file)
+    (epa-file-enable)
+    (setq org-crypt-key nil)
+
     ;; Installs some packages for better PDF viewing.
     (use-package pdf-tools)
     (require 'pdf-tools)
@@ -2307,6 +2312,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (use-package org-noter
       :straight
       (:host github :repo "fuxialexander/org-noter"))
+
     ;; Loads custom org functions.
     (require 'tm-org)
     ;; Evil key bindings in Org mode
