@@ -1202,8 +1202,8 @@ Deadgrep is the fast, beautiful text search that your Emacs deserves.
 
 *** [[https://www.emacswiki.org/emacs/DiredPlus][Dired+]]
 :PROPERTIES:
-:HASH:     bc3ab925a8959d419fd4436efc6f4e5d
-:MODIFIED: [2019-08-24 Sat 20:32]
+:HASH:     f009a66416c1de6f907dbfe9ef69df37
+:MODIFIED: [2019-09-07 Sat 14:22]
 :END:
 
 #+begin_quote
@@ -1212,10 +1212,16 @@ dired.el, dired-aux.el, and dired-x.el.-plus
 #+end_quote
 
 #+begin_src emacs-lisp
-  ;(use-package dired+
-  ;  :init
-  ;  (require 'dired)
-  ;  :straight (:type git :host github :repo "emacsmirror/dired-plus"))
+  (use-package dired
+    :demand t
+    :straight nil
+    :init
+    (use-package dired+
+      :init
+      (require 'dired-aux)
+      (require 'dired-x)
+      :straight
+      (:type git :host github :repo "emacsmirror/dired-plus")))
 #+end_src
 
 *** [[https://www.emacswiki.org/emacs/HideOrIgnoreComments][=hide-comnt=]]
