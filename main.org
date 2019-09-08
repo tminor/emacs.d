@@ -1227,19 +1227,22 @@ dired.el, dired-aux.el, and dired-x.el.-plus
       (:type git :host github :repo "emacsmirror/dired-plus")))
 #+end_src
 
-*** [[https://www.emacswiki.org/emacs/HideOrIgnoreComments][=hide-comnt=]]
+*** [[https://github.com/emacsmirror/emacswiki.org/blob/master/info%2b.el][Info+]]
 :PROPERTIES:
-:HASH:     59865b5a7c12bf6bb4835059d4c2d3ad
-:MODIFIED: 2019-06-23 11:51:31
+:HASH:     e6e58763906669518dfac43faa42f17c
+:MODIFIED: [2019-09-08 Sun 10:05]
 :END:
 
 #+begin_quote
-Hide/show comments in code.
+Extensions to `info.el'.
 #+end_quote
 
 #+begin_src emacs-lisp
-  (use-package hide-comnt
-    :straight (:type git :host github :repo "emacsmirror/hide-comnt"))
+  (use-package info+
+    :straight
+    (:host github :repo "emacsmirror/info-plus")
+    :init
+    (with-eval-after-load "info" '(require 'info+)))
 #+end_src
 
 *** [[https://github.com/emacsmirror/hexrgb/blob/master/hexrgb.el][=hexrgb=]]
