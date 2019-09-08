@@ -2290,8 +2290,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     eafdac656bfd348c4fdeaee7e31b3505
-:MODIFIED: [2019-09-08 Sun 08:22]
+:HASH:     9849bc80e84bd9a769c11f0bc99fa03f
+:MODIFIED: [2019-09-08 Sun 08:24]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2436,8 +2436,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
     ;; Define TODO/DONE-state keywords
     (setq org-todo-keywords
-          '((sequence "TODO(t!)"	       ; TODO for projects or one offs
-                      "WAIT(w@)"	       ; Waiting on someone/something
+          '((sequence "TODO(t!)"
+                      "WAIT(w@)"
                       "PROJECT(p@)"
                       "|"
                       "DONE(d@)"
