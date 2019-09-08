@@ -2290,8 +2290,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     9849bc80e84bd9a769c11f0bc99fa03f
-:MODIFIED: [2019-09-08 Sun 08:24]
+:HASH:     a63c97915f4a6725e6b955eda75a3f30
+:MODIFIED: [2019-09-08 Sun 08:53]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2438,7 +2438,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-todo-keywords
           '((sequence "TODO(t!)"
                       "WAIT(w@)"
-                      "PROJECT(p@)"
+                      "PROJECT(p)"
                       "|"
                       "DONE(d@)"
                       "CANCELLED(c@)"
@@ -2477,6 +2477,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
             ("DONE" :background "#0F0" :foreground "#000" :weight bold
              :box (:line-width -1 :style released-button))
             ("WAIT" :background "#FEDA98" :foreground "#000" :weight bold
+             :box (:line-width -1 :style released-button))
+            ("PROJECT" :background "#742FD1" :foreground "#EAEAEA" :weight bold
              :box (:line-width -1 :style released-button))
             ("CANCELLED" :background "#F94FA0" :foreground "#EAEAEA"
              :weight bold :box (:line-width -1 :style released-button))
