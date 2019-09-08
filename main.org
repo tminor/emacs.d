@@ -55,7 +55,7 @@ them for fear of them disappearing!
 
 - [[#intro][Intro]]
   - [[#links-to-interesting-configs][Links to interesting configs]]
-- [[#make-emacs-friendlier][Make Emacs Friendlier]]
+- [[#interface][Interface]]
   - [[#load-path][Load path]]
   - [[#cleaningtidying][Cleaning/tidying]]
   - [[#key-bindings][Key bindings]]
@@ -112,10 +112,10 @@ them for fear of them disappearing!
   - [[#spell-check][Spell check]]
   - [[#file-type-modes-not-prog-mode-files][File type modes (not =prog-mode= files)]]
 
-* Make Emacs Friendlier
+* Interface
 :PROPERTIES:
-:HASH:     2e091ba324c4ad4bb9d9a18c3357c6eb
-:MODIFIED: 2019-03-08 15:48:05
+:HASH:     fe66e88f5071d7ff7edcee4553777388
+:MODIFIED: [2019-09-08 Sun 10:40]
 :END:
 
 ** Load path
