@@ -2290,8 +2290,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     7c32f43dd914a8d21f3b14804b30e658
-:MODIFIED: [2019-09-07 Sat 15:06]
+:HASH:     eafdac656bfd348c4fdeaee7e31b3505
+:MODIFIED: [2019-09-08 Sun 08:22]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2438,6 +2438,7 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-todo-keywords
           '((sequence "TODO(t!)"	       ; TODO for projects or one offs
                       "WAIT(w@)"	       ; Waiting on someone/something
+                      "PROJECT(p@)"
                       "|"
                       "DONE(d@)"
                       "CANCELLED(c@)"
