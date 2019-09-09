@@ -2324,8 +2324,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     a63c97915f4a6725e6b955eda75a3f30
-:MODIFIED: [2019-09-08 Sun 08:53]
+:HASH:     9ead3a22cab23997982917fe0bc6a7a7
+:MODIFIED: [2019-09-09 Mon 13:50]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2392,6 +2392,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
       "b" 'org-switchb
       "h" 'org-recent-headings-ivy
       "j" 'tm/org-journal-prefix-command
+      "l" 'org-store-link
+      "L" 'org-insert-link
       "q" 'org-set-tags-command
       "1" 'tm/org-agenda-work-today
       "2" 'tm/org-agenda-work-week)
