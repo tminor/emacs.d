@@ -291,5 +291,15 @@ are equal return t."
 (advice-add 'org-capture-refile
             :after 'tm/delete-frame-if-neccessary)
 
+(require 'org-id)
+
+(defun tm/org-add-ids-to-all ()
+  "Add IDs to all headings in current buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-max))
+    (while (outline-previous-heading)
+      (org-id-get-create))))
+
 (provide 'tm-org)
 ;;; tm-org.el ends here
