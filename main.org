@@ -69,6 +69,7 @@ them for fear of them disappearing!
   - [[#font][Font]]
   - [[#search-modes][Search modes]]
   - [[#emacswiki][EmacsWiki]]
+  - [[#ascii-to-unicode][Ascii to Unicode]]
   - [[#defun-for-repeat-last-interactive-command][=defun= for repeat last interactive command]]
   - [[#undo-propose][undo-propose]]
 - [[#prog-mode][Prog-mode]]
@@ -1289,6 +1290,35 @@ Functions to manipulate colors, including RGB hex strings.
 #+begin_src emacs-lisp
   (use-package hexrgb
     :straight (:type git :host github :repo "emacsmirror/hexrgb"))
+#+end_src
+
+** Ascii to Unicode
+:PROPERTIES:
+:HASH:     96f5de701c33f4de3301bf32a6699864
+:MODIFIED: [2019-09-09 Mon 16:58]
+:END:
+
+*** =ascii-art-to-unicode=
+:PROPERTIES:
+:HASH:     706def7f1688c2cba86562a72944e7b3
+:MODIFIED: [2019-09-09 Mon 16:59]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package ascii-art-to-unicode
+    :init
+    (defface aa2u-face '((t . nil))
+      "Face for aa2u box drawing characters")
+    (advice-add #'aa2u-1c :filter-return
+                (lambda (str) (propertize str 'face 'aa2u-face)))
+    (defun aa2u-org-brain-buffer ()
+      (let ((inhibit-read-only t))
+        (make-local-variable 'face-remapping-alist)
+        (add-to-list 'face-remapping-alist
+                     '(aa2u-face . org-brain-wires))
+        (ignore-errors (aa2u (point-min) (point-max)))))
+    (with-eval-after-load 'org-brain
+      (add-hook 'org-brain-after-visualize-hook #'aa2u-org-brain-buffer)))
 #+end_src
 
 ** TODO =defun= for repeat last interactive command              :moderate:
@@ -3044,8 +3074,8 @@ adds a "Capture" button.
 
 ** [[https://github.com/Kungsgeten/org-brain][=org-brain=]]
 :PROPERTIES:
-:HASH:     8f797500bea312f63a53e51aedab9397
-:MODIFIED: [2019-09-09 Mon 16:33]
+:HASH:     a7d3b1b824fcc9afe61d5378bb4badee
+:MODIFIED: [2019-09-09 Mon 16:59]
 :END:
 
 #+begin_quote
@@ -3058,6 +3088,7 @@ org-mode.
     :straight
     (:host github :repo "Kungsgeten/org-brain")
     :init
+    (require 'ascii-art-to-unicode)
     (setq org-brain-path "~/org/")
     (with-eval-after-load 'evil
       (evil-set-initial-state 'org-brain-visualize-mode 'normal))
