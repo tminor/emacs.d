@@ -3044,8 +3044,8 @@ adds a "Capture" button.
 
 ** [[https://github.com/Kungsgeten/org-brain][=org-brain=]]
 :PROPERTIES:
-:HASH:     a36d966f26649505bbae2986c517186d
-:MODIFIED: [2019-09-07 Sat 15:21]
+:HASH:     8f797500bea312f63a53e51aedab9397
+:MODIFIED: [2019-09-09 Mon 16:33]
 :END:
 
 #+begin_quote
@@ -3058,9 +3058,9 @@ org-mode.
     :straight
     (:host github :repo "Kungsgeten/org-brain")
     :init
-    (setq org-brain-path "~/org/brain/")
+    (setq org-brain-path "~/org/")
     (with-eval-after-load 'evil
-      (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
+      (evil-set-initial-state 'org-brain-visualize-mode 'normal))
     :config
     (setq org-id-track-globally t)
     (setq org-id-locations-file (concat no-littering-var-directory
