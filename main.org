@@ -2089,8 +2089,8 @@ Reminders a la Gmail about sent mail that hasn't received a response.
 
 ** Notmuch
 :PROPERTIES:
-:HASH:     78e4531a1140ef2114438b14eb9f30ec
-:MODIFIED: [2019-09-05 Thu 09:11]
+:HASH:     fa781a246029a5aadec3bf71ca2a6556
+:MODIFIED: [2019-09-10 Tue 08:40]
 :END:
 :LOGBOOK:
 - State "TODO"       from              [2019-03-05 Tue 10:30]
@@ -2104,6 +2104,7 @@ Reminders a la Gmail about sent mail that hasn't received a response.
     (use-package htmlize)
     (use-package org-mime)
     (require 'org-mime)
+    (require 'ol-notmuch)
     (use-package w3m
       :if (executable-find "w3m"))
     :general
