@@ -2589,12 +2589,30 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     :general
     (:keymaps 'org-agenda-mode-map
      :states '(normal motion)
-     "gp" 'org-pomodoro))
+     "gp" 'org-pomodoro)
     :config
     (defadvice org-pomodoro-notify
         (after tm/org-pomodoro-alert)
       "Send desktop notifications for `org-pomodoro'."
       (notifications-notify :title title :body message))
+    :hook
+    (org-pomodoro-finished
+     .
+     (lambda ()
+       (interactive)
+       (call-process "yadKill")
+       (start-process-shell-command "yad Break timers command"
+                                    nil
+                                    "yadBreakTime")))
+    (org-pomodoro-started
+     .
+     (lambda ()
+       (interactive)
+       ;; Kill of old break timer window if it exist.
+       (call-process "yadKill")
+       (start-process-shell-command "yad Break timers command"
+                                    nil
+                                    "yadBottomProgressBar"))))
 #+end_src
 
 *** TODO Add custom org link for emails                         :moderate:
