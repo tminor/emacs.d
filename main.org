@@ -2661,8 +2661,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     864a0b350564566d32cb257b42d1980a
-:MODIFIED: [2019-09-09 Mon 14:22]
+:HASH:     9d9338e373fc74ec647d40da953ea714
+:MODIFIED: [2019-09-11 Wed 09:37]
 :END:
 
 #+BEGIN_SRC emacs-lisp
