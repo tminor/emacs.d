@@ -2815,14 +2815,15 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
                     :order 5)
                    (:name "WAITing tasks"
                     :todo "WAIT"
-                    :order 4)
+                    :discard (:scheduled t)
+                    :order 1)
                    (:name "Refileable items"
                     :tag "REFILE"
                     :discard (:scheduled t :tag "HOME")
                     :order 3)
                    (:name "Attic: Tasks for the Future"
                     :tag "FUTURE"
-                    :order 1)
+                    :order 4)
                    (:name "Projects"
                     :todo "PROJECT"
                     :order 2)
