@@ -3378,8 +3378,8 @@ completion from the fish shell.
 
 *** =exec-path-from-shell=
 :PROPERTIES:
-:HASH:     39648dcaf4fe621422ff0fb0d927b1e7
-:MODIFIED: [2019-08-23 Fri 09:15]
+:HASH:     0cc6d7eb95061945a2628f2eadf42f1c
+:MODIFIED: [2019-09-11 Wed 15:00]
 :END:
 
 Get environment variables from =$SHELL=.
@@ -3391,7 +3391,8 @@ Get environment variables from =$SHELL=.
     (setq tm/environment-variables '("REPODIR"
                                      "RUBYLIB"
                                      "RUBYBINDIR"
-                                     "PUPPETDIR"))
+                                     "PUPPETDIR"
+                                     "PATH"))
     (dolist (env-var tm/environment-variables)
       (add-to-list 'exec-path-from-shell-variables env-var))
     ;; https://github.com/purcell/exec-path-from-shell/issues/87
