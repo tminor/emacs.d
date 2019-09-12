@@ -2580,8 +2580,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** [[https://github.com/marcinkoziej/org-pomodoro][=org-pomodoro=]]
 :PROPERTIES:
-:HASH:     cd94cc9be02b6561bb99f29774467e3b
-:MODIFIED: [2019-07-10 Wed 12:08]
+:HASH:     fb6a80e2e901f09a704209a2ba8f0f6b
+:MODIFIED: [2019-09-12 Thu 14:18]
 :END:
 
 #+begin_src emacs-lisp
@@ -2590,6 +2590,11 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (:keymaps 'org-agenda-mode-map
      :states '(normal motion)
      "gp" 'org-pomodoro))
+    :config
+    (defadvice org-pomodoro-notify
+        (after tm/org-pomodoro-alert)
+      "Send desktop notifications for `org-pomodoro'."
+      (notifications-notify :title title :body message))
 #+end_src
 
 *** TODO Add custom org link for emails                         :moderate:
