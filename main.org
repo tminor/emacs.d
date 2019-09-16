@@ -49,8 +49,8 @@ them for fear of them disappearing!
 
 ** Table of Contents                                                  :TOC:
 :PROPERTIES:
-:HASH:     7df05da369479990b4ef882e10eba170
-:MODIFIED: [2019-09-07 Sat 15:06]
+:HASH:     51b3bd6f55dfb7536f5f23de509e2594
+:MODIFIED: [2019-09-16 Mon 10:24]
 :END:
 
 - [[#intro][Intro]]
@@ -83,13 +83,15 @@ them for fear of them disappearing!
   - [[#reminders-for-sent-mail][Reminders for sent mail]]
   - [[#notmuch][Notmuch]]
   - [[#gnus][Gnus]]
-- [[#org-mode][Org-mode]]
-  - [[#org-mode-1][Org-mode]]
+- [[#organize][Organize]]
+  - [[#org-mode][Org-mode]]
   - [[#org-journal][Org-journal]]
   - [[#org-agenda][Org-agenda]]
   - [[#org-capture][Org-capture]]
   - [[#org-brain][=org-brain=]]
+  - [[#org-notify][Org-notify]]
   - [[#pdfs][PDFs]]
+  - [[#org-caldav][Org-caldav]]
   - [[#blog-publishing][Blog Publishing]]
 - [[#shell-and-term-modes][Shell and Term Modes]]
   - [[#term-mode][Term-mode]]
@@ -2342,10 +2344,10 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
                          :repo "tlikonen/nnnotmuch"))
 #+end_src
 
-* Org-mode
+* Organize
 :PROPERTIES:
-:HASH:     1ec6d96ffcc20597ffd547966ecf91ee
-:MODIFIED: 2019-03-08 15:48:05
+:HASH:     c3fc42b6a31bfd97c79bfe477501d7a0
+:MODIFIED: [2019-09-14 Sat 13:51]
 :END:
 
 ** Org-mode
