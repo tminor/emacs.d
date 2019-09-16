@@ -2028,8 +2028,8 @@ This library configures Magit and Evil to play well with each other.
 
 *** [[https://github.com/benma/visual-regexp.el][=visual-regexp=]] and [[https://github.com/benma/visual-regexp-steroids.el/][=visual-regexp-steroids=]]
 :PROPERTIES:
-:HASH:     bbd50ee2a1d2e707655568f4dd0eac2a
-:MODIFIED: [2019-09-07 Sat 15:06]
+:HASH:     dea9d1d1a0fc5b524b820aa2ad15f7a2
+:MODIFIED: [2019-09-16 Mon 10:24]
 :END:
 
 #+begin_quote
@@ -2054,8 +2054,9 @@ the use of modern regexp engines.
     :init
     (use-package visual-regexp-steroids
       :straight
-      (:host github :repo "benma/visual-regexp-steroids.el"))
-    :config
+      (:host github :repo "benma/visual-regexp-steroids.el")
+      :init
+      (setq vr/engine 'pcre2el))
     (require 'visual-regexp-steroids)
     (use-package pcre2el)
     (require 'pcre2el))
