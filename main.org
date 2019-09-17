@@ -1727,6 +1727,22 @@ An Emacs major mode for CoffeeScript and IcedCoffeeScript.
           (inhibit-file-name-operation operation))
       (apply operation args)))
 #+end_src
+
+*** PHP
+:PROPERTIES:
+:HASH:     4a6613795ff293f64abe562e01bf7cc5
+:MODIFIED: [2019-09-17 Tue 08:21]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package php-mode
+    :straight
+    (:host github :repo "emacs-php/php-mode")
+    :init
+    (add-to-list 'auto-mode-alist
+                 '("\\.\\(?:php\\|phtml\\)\\'" . php-mode)))
+#+end_src
+
 ** Complete any mode
 :PROPERTIES:
 :HASH:     b4700351353a55ee4d33115f836b7a4b
