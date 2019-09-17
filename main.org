@@ -812,36 +812,6 @@ Install [[https://github.com/seagle0128/doom-modeline][doom-modeline]] for fun t
     :hook (after-init . doom-modeline-init))
 #+END_SRC
 
-*** [[https://github.com/ema2159/centaur-tabs#projectile-integration][=centaur-tabs=]]
-:PROPERTIES:
-:HASH:     4d8fa6adc79ce18545c8c48eb6fbf3ee
-:MODIFIED: [2019-09-08 Sun 12:06]
-:END:
-
-#+begin_quote
-Emacs plugin aiming to become an aesthetic, modern looking tabs plugin
-#+end_quote
-
-#+begin_src emacs-lisp
-  (use-package centaur-tabs
-    :demand t
-    :straight
-    (:host github :repo "ema2159/centaur-tabs")
-    :general
-    (:keymaps 'override
-     :states 'motion
-     "gt" 'centaur-fast-switch/body)
-    :config
-    (centaur-tabs-mode t)
-    (centaur-tabs-group-by-projectile-project)
-    :custom
-    (centaur-tabs-height 35)
-    (centaur-tabs-set-icons t)
-    (centaur-tabs-gray-out-icons 'buffer)
-    (centaur-tabs-close-button "X")
-    (centaur-tabs-set-modified-marker t))
-#+end_src
-
 ** Help/Info
 :PROPERTIES:
 :HASH:     75a7710ab06afdfc79a12143c22390b7
