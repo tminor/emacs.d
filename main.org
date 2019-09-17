@@ -3215,6 +3215,65 @@ sync when you scroll through the document, but that are external to
 it - the notes themselves live in an Org-mode file.
 #+end_quote
 
+** Org-caldav
+:PROPERTIES:
+:HASH:     9543422234bf133614b4f01aa129f5b4
+:MODIFIED: [2019-09-16 Mon 14:44]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package org-caldav
+    :straight
+    (:host github :repo "dengste/org-caldav")
+    :init
+    ;; This is the sync on close function; it also prompts for save after syncing so
+    ;; no late changes get lost
+    (defun org-caldav-sync-at-close ()
+      (org-caldav-sync)
+      (save-some-buffers))
+
+    ;; This is the delayed sync function; it waits until emacs has been idle for
+    ;; "secs" seconds before syncing.  The delay is important because the caldav-sync
+    ;; can take five or ten seconds, which would be painful if it did that right at save.
+    ;; This way it just waits until you've been idle for a while to avoid disturbing
+    ;; the user.
+    (defvar org-caldav-sync-timer nil
+      "Timer that `org-caldav-push-timer' used to reschedule itself, or nil.")
+    (defun org-caldav-sync-with-delay (secs)
+      (when org-caldav-sync-timer
+        (cancel-timer org-caldav-sync-timer))
+      (setq org-caldav-sync-timer
+            (run-with-idle-timer
+             (* 1 secs) nil 'org-caldav-sync)))
+
+    ;; Actual calendar configuration edit this to meet your specific needs
+    (setq org-caldav-url "https://outlook.office365.com/owa/calendar/42e4a48bfdef446dbd1fa75c179bf353@usg.edu/506aabb7cb6644fa92df0458ac1a26ac4263737238637684450/calendar.ics")
+    (setq org-caldav-calendars
+          '((:calendar-id "Org-mode"
+             :files ("~/org/calendar/Org-mode.org")
+             :inbox "~/org/calendar/org-caldav-inbox.org")))
+    (setq org-caldav-backup-file "~/org/calendar/org-caldav-backup.org")
+    (setq org-caldav-save-directory "~/org/")
+
+    :config
+    (setq org-icalendar-alarm-time 1)
+    ;; This makes sure to-do items as a category can show up on the calendar
+    (setq org-icalendar-include-todo t)
+    ;; This ensures all org "deadlines" show up, and show up as due dates
+    (setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo todo-due))
+    ;; This ensures "scheduled" org items show up, and show up as start times
+    (setq org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo))
+
+    ;; :hook
+    ;; Add the delayed save hook with a five minute idle timer
+    (add-hook 'after-save-hook
+              (lambda ()
+                (when (eq major-mode 'org-mode)
+                  (org-caldav-sync-with-delay 300))))
+    ;; Add the close emacs hook
+    (add-hook 'kill-emacs-hook 'org-caldav-sync-at-close))
+#+end_src
+
 ** Blog Publishing
 :PROPERTIES:
 :HASH:     8b354a10182b63dd89078424ec136ce0
