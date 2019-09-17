@@ -3163,6 +3163,27 @@ org-mode.
           org-brain-file-entries-use-title nil))
 #+end_src
 
+** Org-notify
+:PROPERTIES:
+:HASH:     fc29ee1e9e4269dfe1f9b6d9414d6bfd
+:MODIFIED: [2019-09-14 Sat 13:51]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package org-notify
+    :straight nil
+    :after 'org
+    :config
+    (setq user-mail-address "thomas.minor@usg.edu")
+    (org-notify-add 'todo
+                    '(:time "15m" :period "20s" :duration 10
+                      :actions (-notify/window -message))
+                    '(:time "5m" :period "20s" :duration 10
+                      :actions (-notify/window -message))
+                    '(:time "1m" :period "20s" :duration 10
+                      :actions (-notify/window -message -ding))))
+#+end_src
+
 ** PDFs
 :PROPERTIES:
 :HASH:     81ed0414e9049c67138b55f758d3d1fe
