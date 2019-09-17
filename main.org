@@ -1686,6 +1686,47 @@ An Emacs major mode for CoffeeScript and IcedCoffeeScript.
     (coffee-tab-width 2))
 #+end_src
 
+*** Java
+:PROPERTIES:
+:HASH:     1848b6dae75a4d11acaf7e5d82bcdea5
+:MODIFIED: [2019-09-13 Fri 15:01]
+:END:
+
+**** [[https://gist.github.com/skeeto/3178747][=javap-handler=]]
+:PROPERTIES:
+:HASH:     1ec197116ebebe5e10582a9e1c69efb4
+:MODIFIED: [2019-09-13 Fri 15:04]
+:END:
+
+#+begin_src emacs-lisp
+  (add-to-list 'file-name-handler-alist '("\\.class$" . javap-handler))
+
+  (defun javap-handler (op &rest args)
+    "Handle .class files by putting the output of javap in the buffer."
+    (cond
+     ((eq op 'get-file-buffer)
+      (let ((file (car args)))
+        (with-current-buffer (create-file-buffer file)
+          (call-process "javap" nil (current-buffer) nil "-verbose"
+                        "-classpath" (file-name-directory file)
+                        (file-name-sans-extension (file-name-nondirectory file)))
+          (setq buffer-file-name file)
+          (setq buffer-read-only t)
+          (set-buffer-modified-p nil)
+          (goto-char (point-min))
+          (java-mode)
+          (current-buffer))))
+     ((javap-handler-real op args))))
+
+  (defun javap-handler-real (operation args)
+    "Run the real handler without the javap handler installed."
+    (let ((inhibit-file-name-handlers
+           (cons 'javap-handler
+                 (and (eq inhibit-file-name-operation operation)
+                      inhibit-file-name-handlers)))
+          (inhibit-file-name-operation operation))
+      (apply operation args)))
+#+end_src
 ** Complete any mode
 :PROPERTIES:
 :HASH:     b4700351353a55ee4d33115f836b7a4b
