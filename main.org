@@ -3217,8 +3217,8 @@ it - the notes themselves live in an Org-mode file.
 
 ** Org-caldav
 :PROPERTIES:
-:HASH:     9543422234bf133614b4f01aa129f5b4
-:MODIFIED: [2019-09-16 Mon 14:44]
+:HASH:     24c887d923cebbf92da4fb37287dd83d
+:MODIFIED: [2019-09-18 Wed 17:00]
 :END:
 
 #+begin_src emacs-lisp
@@ -3247,9 +3247,10 @@ it - the notes themselves live in an Org-mode file.
              (* 1 secs) nil 'org-caldav-sync)))
 
     ;; Actual calendar configuration edit this to meet your specific needs
-    (setq org-caldav-url "https://outlook.office365.com/owa/calendar/42e4a48bfdef446dbd1fa75c179bf353@usg.edu/506aabb7cb6644fa92df0458ac1a26ac4263737238637684450/calendar.ics")
+    (setq org-caldav-uuid-extension ".EML")
     (setq org-caldav-calendars
-          '((:calendar-id "Org-mode"
+          '((:calendar-id "calendar"
+             :url "http://localhost:1080/users/thomas.minor@usg.edu"
              :files ("~/org/calendar/Org-mode.org")
              :inbox "~/org/calendar/org-caldav-inbox.org")))
     (setq org-caldav-backup-file "~/org/calendar/org-caldav-backup.org")
