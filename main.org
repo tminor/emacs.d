@@ -3165,13 +3165,14 @@ org-mode.
 
 ** Org-notify
 :PROPERTIES:
-:HASH:     fc29ee1e9e4269dfe1f9b6d9414d6bfd
-:MODIFIED: [2019-09-14 Sat 13:51]
+:HASH:     e4cfcdb26ab12fced362daf316944449
+:MODIFIED: [2019-09-19 Thu 08:55]
 :END:
 
 #+begin_src emacs-lisp
   (use-package org-notify
     :straight nil
+    :demand t
     :after 'org
     :config
     (setq user-mail-address "thomas.minor@usg.edu")
