@@ -3550,8 +3550,8 @@ completion from the fish shell.
 
 *** =exec-path-from-shell=
 :PROPERTIES:
-:HASH:     0cc6d7eb95061945a2628f2eadf42f1c
-:MODIFIED: [2019-09-11 Wed 15:00]
+:HASH:     c02980fdffa261fa3e33cc4c550064a1
+:MODIFIED: [2019-09-16 Mon 16:36]
 :END:
 
 Get environment variables from =$SHELL=.
@@ -3559,7 +3559,7 @@ Get environment variables from =$SHELL=.
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :straight t
-    :config
+    :init
     (setq tm/environment-variables '("REPODIR"
                                      "RUBYLIB"
                                      "RUBYBINDIR"
