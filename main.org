@@ -3175,8 +3175,8 @@ adds a "Capture" button.
 
 ** [[https://github.com/Kungsgeten/org-brain][=org-brain=]]
 :PROPERTIES:
-:HASH:     a7d3b1b824fcc9afe61d5378bb4badee
-:MODIFIED: [2019-09-09 Mon 16:59]
+:HASH:     74f1d3f6d46d712cd6a4a2d8c41c6cda
+:MODIFIED: [2019-09-09 Mon 17:27]
 :END:
 
 #+begin_quote
@@ -3201,7 +3201,7 @@ org-mode.
             "* %i%?" :empty-lines 1)
           org-capture-templates)
     (setq org-brain-visualize-default-choices 'all)
-    (setq org-brain-title-max-length 12)
+    (setq org-brain-title-max-length 18)
     (setq org-brain-include-file-entries nil
           org-brain-file-entries-use-title nil))
 #+end_src
