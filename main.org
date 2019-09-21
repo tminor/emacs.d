@@ -2723,8 +2723,8 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
 
 *** Config
 :PROPERTIES:
-:HASH:     9d9338e373fc74ec647d40da953ea714
-:MODIFIED: [2019-09-11 Wed 09:37]
+:HASH:     c1546de39b2d74c65cc78257efab5680
+:MODIFIED: [2019-09-19 Thu 08:55]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2770,9 +2770,10 @@ Notmuch search engine back-end for Gnus (Emacs's mail and news client)
     (setq org-agenda-files
           `(,(concat org-base-directory "mobile-capture.org")
             ,(concat org-base-directory "capture.org")
-            ,(concat org-base-directory "calendar/workcal.org")
-            ,(concat org-base-directory "calendar/homecal.org")
-            ,(concat org-base-directory "calendar/oncallcal.org")
+            ,(concat org-base-directory "calendar/org-caldav-inbox.org")
+            ;; ,(concat org-base-directory "calendar/workcal.org")
+            ;; ,(concat org-base-directory "calendar/homecal.org")
+            ;; ,(concat org-base-directory "calendar/oncallcal.org")
             ,(concat org-base-directory "notes.org")
             ,(concat org-base-directory "todo.org")))
 
