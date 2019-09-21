@@ -8,4 +8,4 @@
 /etc/custom.el
 /auto-save-list/*
 /org-recent-headings
-/etc/signatures/formal
+/etc/signatures/*
