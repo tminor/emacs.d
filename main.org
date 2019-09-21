@@ -3067,6 +3067,18 @@ Provides notifications for scheduled or deadlined agenda entries.
                  ":END:\n")
         :empty-lines 1)
 
+       ("d" "Doing now (switch clocked task)" entry
+        ;; Target
+        (file+function "~/org/todo.org" tm/org-get-headings-todo)
+        ;; Template
+        ,(concat "* TODO %?\n"
+                 ":LOGBOOK:\n"
+                 "- State \"TODO\"    from \"\"        %U\n"
+                 ":END:\n")
+        :empty-lines 1
+        :clock-in t
+        :clock-keep t)
+
        ("t" "Task" entry
         ;; Target
         (file+function "~/org/todo.org" tm/org-get-headings-todo)
