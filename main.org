@@ -3261,8 +3261,8 @@ it - the notes themselves live in an Org-mode file.
 
 ** Org-caldav
 :PROPERTIES:
-:HASH:     24c887d923cebbf92da4fb37287dd83d
-:MODIFIED: [2019-09-18 Wed 17:00]
+:HASH:     40cdf8b077371bd223272e4ded70ab1d
+:MODIFIED: [2019-09-19 Thu 19:25]
 :END:
 
 #+begin_src emacs-lisp
@@ -3270,19 +3270,26 @@ it - the notes themselves live in an Org-mode file.
     :straight
     (:host github :repo "dengste/org-caldav")
     :init
-    ;; This is the sync on close function; it also prompts for save after syncing so
-    ;; no late changes get lost
+    (setq org-caldav-delete-org-entries 'never)
+    (setq org-caldav-resume-aborted 'always)
+    (setq org-caldav-show-sync-results nil)
+    (setq org-icalendar-timezone "America/New_York")
+    (setq org-caldav-files `(,(concat org-directory "/todo.org")))
+    (setq org-caldav-inbox (concat org-directory "/calendar/org-caldav-inbox.org"))
+
+    ;; This is the sync on close function; it also prompts for save
+    ;; after syncing so no late changes get lost
     (defun org-caldav-sync-at-close ()
       (org-caldav-sync)
       (save-some-buffers))
 
-    ;; This is the delayed sync function; it waits until emacs has been idle for
-    ;; "secs" seconds before syncing.  The delay is important because the caldav-sync
-    ;; can take five or ten seconds, which would be painful if it did that right at save.
-    ;; This way it just waits until you've been idle for a while to avoid disturbing
-    ;; the user.
+    ;; This is the delayed sync function; it waits until emacs has been
+    ;; idle for "secs" seconds before syncing.  The delay is important
+    ;; because the caldav-sync can take five or ten seconds, which would
+    ;; be painful if it did that right at save.  This way it just waits
+    ;; until you've been idle for a while to avoid disturbing the user.
     (defvar org-caldav-sync-timer nil
-      "Timer that `org-caldav-push-timer' used to reschedule itself, or nil.")
+      "Timer that `org-caldav-push-timer' uses to reschedule itself, or nil.")
     (defun org-caldav-sync-with-delay (secs)
       (when org-caldav-sync-timer
         (cancel-timer org-caldav-sync-timer))
@@ -3290,23 +3297,31 @@ it - the notes themselves live in an Org-mode file.
             (run-with-idle-timer
              (* 1 secs) nil 'org-caldav-sync)))
 
-    ;; Actual calendar configuration edit this to meet your specific needs
+    ;; Actual calendar configuration: edit this to meet your specific
+    ;; needs
     (setq org-caldav-uuid-extension ".EML")
     (setq org-caldav-calendars
           '((:calendar-id "calendar"
              :url "http://localhost:1080/users/thomas.minor@usg.edu"
-             :files ("~/org/calendar/Org-mode.org")
-             :inbox "~/org/calendar/org-caldav-inbox.org")))
+             :files ("~/org/todo.org")
+             :inbox "~/org/calendar/org-caldav-inbox.org")
+            (:calendar-id "on-call"
+             :url "http://localhost:1080/users/thomas.minor@usg.edu"
+             :inbox "~/org/calendar/on-call.org")))
+  
     (setq org-caldav-backup-file "~/org/calendar/org-caldav-backup.org")
     (setq org-caldav-save-directory "~/org/")
 
     :config
     (setq org-icalendar-alarm-time 1)
-    ;; This makes sure to-do items as a category can show up on the calendar
+    ;; This makes sure to-do items as a category can show up on the
+    ;; calendar
     (setq org-icalendar-include-todo t)
-    ;; This ensures all org "deadlines" show up, and show up as due dates
+    ;; This ensures all org "deadlines" show up, and show up as due
+    ;; dates
     (setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo todo-due))
-    ;; This ensures "scheduled" org items show up, and show up as start times
+    ;; This ensures "scheduled" org items show up, and show up as start
+    ;; times
     (setq org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo))
 
     ;; :hook
