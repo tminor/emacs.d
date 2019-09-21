@@ -1664,6 +1664,36 @@ of macros in Emacs Lisp source code.
      "ze" 'macrostep-expand))
 #+end_src
 
+**** [[https://github.com/jwiegley/emacs-async][=emacs-async=]]
+:PROPERTIES:
+:HASH:     f45df9926027e2495462b43a80eb3973
+:MODIFIED: [2019-09-19 Thu 13:27]
+:END:
+
+#+begin_src emacs-lisp
+  (use-package async
+    :straight
+    (:host github :repo "jwiegley/emacs-async")
+    :demand t)
+#+end_src
+
+**** [[https://github.com/skeeto/emacs-aio][=emacs-aio=]]
+:PROPERTIES:
+:HASH:     d1fab2740fc32f6d5082bd03bccc9002
+:MODIFIED: [2019-09-19 Thu 13:29]
+:END:
+
+#+begin_quote
+async/await for Emacs Lisp
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package aio
+    :demand t
+    :straight
+    (:host github :repo "skeeto/emacs-aio"))
+#+end_src
+
 *** CoffeeScript
 :PROPERTIES:
 :HASH:     17c6c7a3c61e8c679a427ef0a20c0a8a
